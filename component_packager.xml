@@ -17,7 +17,7 @@
 	<!-- Name of extension -->
 	<property name="extension" value="${comp.name}" override="true"/>
 
-	<!-- Folder where the redITEM repository is located  -->
+	<!-- Folder where the redSLIDER repository is located  -->
 	<property name="extpath" value="${repo.dir}" override="true"/>
 
 	<!-- Load extension property in XML file -->

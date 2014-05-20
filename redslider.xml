@@ -37,7 +37,7 @@
     </media>
 
 	<administration>
-		<menu img="../media/com_redslider/images/reditem16.png">COM_REDSLIDER</menu>
+		<menu img="../media/com_redslider/images/redslider16.png">COM_REDSLIDER</menu>
 		<files folder="component/admin">
 			<folder>controllers</folder>
 			<folder>helpers</folder>
