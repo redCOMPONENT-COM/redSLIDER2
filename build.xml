@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ==================================================================    -->
+<!-- redSLIDER copier                                                        -->
+<!-- This PHING build file copies the current extension files form repo    -->
+<!-- to a testing joomla site.                                             -->
+<!-- You can also achieve the same goal by using:                          -->
+<!-- Joomla Installer => install from folder => choose this repo as folder -->
+<!-- ==================================================================    -->
+<project name="redSLIDER" default="site" basedir=".">
+	<import file="./redCORE/build.xml"/>
+
+	<!-- Do initialization stuff -->
+	<target name="init" >
+		<if>
+			<not>
+				 <available file="build.properties"/>
+			</not>
+			<then>
+				<fail message="The file build.properties does not exists." />
+			</then>
+			<else>
+				<property file="build.properties"  override="true"/>
+				<echo message="build.properties File included successfully." />
+			</else>
+		</if>
+		<property name="src" value="./" />
+	</target>
+
+	<target name="prepare" >
+		<property file="build.properties"  override="true"/>
+		<if>
+			<equals arg1="${extension}" arg2="" />
+			<then>
+				<fail message="Extension not specified, use -Dextension=EXTENSION" />
+			</then>
+			<else>
+				<!--<property file="${extension}.properties"  override="true"/>-->
+			</else>
+		</if>
+
+		<!-- Clean old files -->
+        <delete dir="${www.dir}/administrator/components/com_${comp.name}" quiet="yes" includeemptydirs="true"/>
+        <delete dir="${www.dir}/libraries/${comp.name}" quiet="yes" includeemptydirs="true"/>
+	</target>
+
+	<property name="src" value="./" />
+
+	<target name="site" description="Copies files to a existing joomla site" depends="init, redCORE-submodule, prepare">
+		<echo message="Copying administrator component..." />
+
+		<!-- Manifest & install script -->
+		<echo message="Copying manifest..." />
+		<copy file="${src}/${comp.name}.xml" tofile="${www.dir}/administrator/components/com_${comp.name}/${comp.name}.xml" overwrite="true" >
+			<!-- trick to replace extension folders in the manifest-->
+			<filterchain>
+			 	<replacetokens begintoken="comp" endtoken="/admin">
+					<token key="onent" value="administrator/components/${comp.name}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+
+		<!-- Backend component -->
+		<copy todir="${www.dir}/administrator/components/com_${comp.name}" overwrite="true">
+			<fileset dir="${src}/component/admin">
+				<include name="**" />
+			</fileset>
+		</copy>
+
+		<!-- Backend languages -->
+		<copy todir="${www.dir}/administrator/language" overwrite="true">
+			<fileset dir="${src}/component/admin/language">
+				<include name="**" />
+			</fileset>
+		</copy>
+
+		<!-- Libraries -->
+		<echo message="Copying libraries..." />
+		<copy todir="${www.dir}/libraries" overwrite="true">
+			<fileset dir="${src}/libraries">
+				<include name="**" />
+			</fileset>
+		</copy>
+
+		<!-- Media -->
+		<echo message="Copying media folder..." />
+		<copy todir="${www.dir}/media" overwrite="true">
+			<fileset dir="${src}/media">
+				<include name="**" />
+			</fileset>
+		</copy>
+
+		<!-- Modules - Site -->
+		<echo message="Copying frontend modules..." />
+		<copy todir="${www.dir}/modules" overwrite="true">
+			<fileset dir="${src}/modules/site">
+				<include name="**" />
+			</fileset>
+		</copy>
+
+		<!-- Modules - Languages -->
+		<copy todir="${www.dir}/language" overwrite="true">
+			<fileset dir="${src}/modules/site/mod_redslider/language">
+				<include name="**" />
+			</fileset>
+		</copy>
+
+		<!-- Plugins -->
+		<echo message="Copying plugins..." />
+		<copy todir="${www.dir}/plugins" overwrite="true">
+			<fileset dir="${src}/plugins">
+				<include name="**" />
+			</fileset>
+		</copy>
+
+		<!-- Plugins - Languages -->
+		<echo message="Copying plugins language..." />
+	</target>
+</project>
