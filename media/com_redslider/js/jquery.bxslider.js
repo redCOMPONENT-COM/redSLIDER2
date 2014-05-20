@@ -321,7 +321,7 @@
 			if (slider.settings.controls) updateDirectionControls();
 			// if touchEnabled is true, setup the touch events
 			if (slider.settings.touchEnabled && !slider.settings.ticker) initTouch();
-			// redITEM: body resize listener for IE <= 9
+			// redSLIDER: body resize listener for IE <= 9
 			if(ie() <= 9){ $(el).resize(function() { el.reloadSlider(); }); }
 		}
 
