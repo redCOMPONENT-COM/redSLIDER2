@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="2.5" client="site" method="upgrade">
+	<name>MOD_REDSLIDER</name>
+	<version>2.0</version>
+	<creationDate>MAY 2014</creationDate>
+	<author>redCOMPONENT.com</author>
+	<authorEmail>email@redcomponent.com</authorEmail>
+	<copyright>redCOMPONENT.com</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<description>MOD_REDSLIDER_DESC</description>
+	<redcore version="1.0" />
+	<files>
+		<filename module="mod_redslider">helper.php</filename>
+		<filename module="mod_redslider">mod_redslider.php</filename>
+		<filename module="mod_redslider">tmpl/default.php</filename>
+	</files>
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.mod_redslider.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.mod_redslider.sys.ini</language>
+		<language tag="da-DK">language/da-DK/da-DK.mod_redslider.ini</language>
+		<language tag="da-DK">language/da-DK/da-DK.mod_redslider.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params" addfieldpath="/libraries/redslider/form/fields">
+			<fieldset name="basic">
+			</fieldset>
+			<fieldset
+				name="advanced">
+				<field
+					name="layout"
+					type="modulelayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+				<field
+					name="moduleclass_sfx"
+					type="text"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+				<field
+					name="cache"
+					type="list"
+					default="0"
+					label="COM_MODULES_FIELD_CACHING_LABEL"
+					description="COM_MODULES_FIELD_CACHING_DESC">
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
