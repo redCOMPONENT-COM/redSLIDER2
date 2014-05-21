@@ -19,7 +19,7 @@ if ($this->item->id)
 
 ?>
 <form enctype="multipart/form-data"
-	action="index.php?option=com_reditem&task=gallery.edit&id=<?php echo $this->item->id; ?>"
+	action="index.php?option=com_redslider&task=gallery.edit&id=<?php echo $this->item->id; ?>"
 	method="post" name="adminForm" class="form-validate form-horizontal" id="adminForm">
 	<div class="row-fluid">
 		<div class="control-group">
