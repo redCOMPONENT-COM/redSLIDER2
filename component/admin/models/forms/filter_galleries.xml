@@ -12,9 +12,9 @@
 			name="published"
 			type="ripublishedlist"
 			onchange="this.form.submit();"
-			label="COM_REDITEM_FILTER_PUBLISHED"
+			label="COM_REDSLIDER_FILTER_PUBLISHED"
 			>
-			<option value="">COM_REDITEM_FILTER_PUBLISHED</option>
+			<option value="">COM_REDSLIDER_FILTER_PUBLISHED</option>
 		</field>
 	</fields>
 	<fields name="list">

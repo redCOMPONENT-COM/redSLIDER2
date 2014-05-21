@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 /**
  * RedITEM gallery Model
  *
- * @package     RedITEM.Component
+ * @package     RedSLIDER.Component
  * @subpackage  Models.gallery
  * @since       2.0.0
  *

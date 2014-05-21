@@ -10,11 +10,11 @@
 defined('_JEXEC') or die;
 
 /**
- * RedITEM templates Model
+ * RedSLIDER galleries Model
  *
  * @package     RedSLIDER.Component
  * @subpackage  Models.galleries
- * @since       0.9.1
+ * @since       2.0.0
  *
  */
 class RedsliderModelGalleries extends RModelList
