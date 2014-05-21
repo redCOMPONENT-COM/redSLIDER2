@@ -9,7 +9,7 @@
 
 defined('_JEXEC') or die;
 /**
- * RedITEM gallery Model
+ * RedSLIDER gallery Model
  *
  * @package     RedSLIDER.Component
  * @subpackage  Models.gallery

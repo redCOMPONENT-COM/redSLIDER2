@@ -11,10 +11,10 @@
 defined('_JEXEC') or die;
 
 /**
- * The templates controller
+ * The galleries controller
  *
  * @package     RedSLIDER.Backend
- * @subpackage  Controller.Templates
+ * @subpackage  Controller.galleries
  * @since       2.0
  */
 class RedsliderControllerGalleries extends RControllerAdmin

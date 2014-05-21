@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 /**
- * Templates List View
+ * Galleries List View
  *
  * @package     RedSLIDER.Backend
  * @subpackage  View
@@ -19,7 +19,7 @@ defined('_JEXEC') or die;
 class RedsliderViewGalleries extends RedsliderView
 {
 	/**
-	 * Display the template list
+	 * Display the galleries list
 	 *
 	 * @param   string  $tpl  The template file to use
 	 *
