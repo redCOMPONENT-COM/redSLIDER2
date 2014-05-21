@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ==================================================================  -->
+<!-- redSLIDER 2.0 packager                                              -->
+<!-- This PHING build file generates the redSLIDER 2.0 Modules package   -->
+<!-- To use in your environment do the following steps:                  -->
+<!--    Change the following variables in build.properties file          -->
+<!--            (copy variables from build.properties.dist )             -->
+<!--    - change the version in variable comp.version                    -->
+<!--    - change the source folder path in variable repo.dir             -->
+<!--    - change the package folder path in variable package.dir         -->
+<!--    - execute this PHING build file                                  -->
+<!-- ==================================================================  -->
+
+<project name="modules packager" basedir="." default="main">
+
+	<!-- Do initialization stuff -->
+	<property file="build.properties" override="true"/>
+
+	<!-- Folder where the redSLIDER 2.0 repository modules are located  -->
+	<property name="extpath" value="${repo.dir}/modules/" override="true" />
+
+	<!-- Target dir where media folder -->
+	<property name="mediapath" value="${repo.dir}/media/" override="true" />
+
+	<!-- Target dir where module packages will be created  -->
+	<property
+			name="targetdir"
+			value="${package.dir}/redSLIDER2-Modules/"
+			override="true" />
+
+	<!-- Version of the redSLIDER 2.0 for witch the module is intended to  -->
+	<property
+			name="version"
+			value="${comp.version}"
+			override="true" />
+
+	<!-- Version of the redSLIDER 2.0 for witch the module is intended to  -->
+	<property
+			name="joomla_version"
+			value="25"
+			override="true" />
+
+	<!-- MAIN -->
+	<target name="main" description="Loops through folders creating module packages">
+
+		<!-- Cleanup build area -->
+		<delete dir="${targetdir}" />
+		<mkdir dir="${targetdir}" />
+
+		<!-- Generate site modules packages -->
+		<foreach param="dirname" absparam="absname" target="site_modules">
+			<fileset dir="${extpath}/site/">
+				<type type="dir" />
+				<depth max="0" min="0" />
+			</fileset>
+		</foreach>
+	</target>
+
+	<target name="subtask">
+		<echo msg="${dirname} ${absname}" />
+	</target>
+
+	<target name="site_modules" description="Packages the extension for delivery">
+		<!-- Create temporary folder -->
+		<mkdir dir="${targetdir}/site/${dirname}" />
+
+		<!-- Copy module files & folder -->
+		<copy todir="${targetdir}/site/${dirname}">
+			<fileset dir="${extpath}/site/${dirname}">
+				<include name="**"/>
+				<exclude name=".*"/>
+			</fileset>
+		</copy>
+
+		<!-- Check if media folder of module exist -->
+		<if>
+			<available file='${mediapath}/${dirname}' type='dir' />
+			<then>
+				<copy todir="${targetdir}/site/${dirname}/media/${dirname}">
+					<fileset dir="${mediapath}/${dirname}">
+						<include name="**"/>
+						<exclude name=".*"/>
+					</fileset>
+				</copy>
+			</then>
+		</if>
+
+		<!-- Create zip files -->
+		<zip destfile="${targetdir}/site/${dirname}_${version}_${joomla_version}j.zip" basedir="${targetdir}/site/${dirname}">
+			<fileset dir="${targetdir}/site/${dirname}">
+				<include name="**" />
+				<exclude name=".*" />
+			</fileset>
+		</zip>
+
+		<!-- Clean up the temporary folder -->
+		<delete dir="${targetdir}/site/${dirname}" />
+	</target>
+
+	<target name="admin_modules" description="Packages the extension for delivery">
+
+		<mkdir dir="${targetdir}/admin/${dirname}" />
+
+		<zip destfile="${targetdir}/admin/${dirname}_${version}_${joomla_version}j.zip" basedir="${extpath}/admin/${dirname}">
+			<fileset dir="${extpath}/admin/${dirname}">
+				<include name="**" />
+				<exclude name=".*" />
+			</fileset>
+		</zip>
+
+		<delete dir="${targetdir}/admin/${dirname}" />
+	</target>
+
+</project>
