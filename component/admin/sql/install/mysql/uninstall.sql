@@ -1,3 +1,5 @@
 SET FOREIGN_KEY_CHECKS=0;
 
+DROP TABLE IF EXISTS `#__redslider_galleries`;
+
 SET FOREIGN_KEY_CHECKS=1;

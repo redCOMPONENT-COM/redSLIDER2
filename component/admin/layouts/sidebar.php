@@ -19,7 +19,7 @@ if (isset($data['active']))
 }
 
 $sidebars = array(
-	array('view' => 'categories', 'icon' => 'icon-folder-open', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_CATEGORIES')),
+	array('view' => 'galleries', 'icon' => 'icon-folder-open', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_GALLERIES')),
 	array('view' => 'sliders', 'icon' => 'icon-file', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_SLIDERS')),
 	array('view' => 'templates', 'icon' => 'icon-hdd', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_TEMPLATES'))
 );
