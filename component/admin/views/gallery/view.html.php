@@ -12,11 +12,11 @@ defined('_JEXEC') or die;
 require_once JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
 
 /**
- * Category edit view
+ * Gallery edit view
  *
  * @package     RedSLIDER.Backend
  * @subpackage  View
- * @since       0.9.1
+ * @since       2.0.0
  */
 class RedsliderViewGallery extends RedsliderView
 {
@@ -26,13 +26,13 @@ class RedsliderViewGallery extends RedsliderView
 	protected $displaySidebar = true;
 
 	/**
-	 * Display the category edit page
+	 * Display the gallery edit page
 	 *
 	 * @param   string  $tpl  The template file to use
 	 *
 	 * @return   string
 	 *
-	 * @since   0.9.1
+	 * @since   2.0.0
 	 */
 	public function display($tpl = null)
 	{
