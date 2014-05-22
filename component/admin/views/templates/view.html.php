@@ -29,6 +29,9 @@ class RedsliderViewTemplates extends RedsliderView
 	 */
 	public function display($tpl = null)
 	{
+		$app = JFactory::getApplication();
+		$app->setUserState('com_redslider.global.template.section', null);
+
 		$this->items			= $this->get('Items');
 		$this->state			= $this->get('State');
 		$this->pagination		= $this->get('Pagination');

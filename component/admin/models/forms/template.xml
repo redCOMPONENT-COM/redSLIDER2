@@ -25,6 +25,27 @@
 				label="COM_REDSLIDER_TEMPLATE_ALIAS"
 				description="COM_REDSLIDER_TEMPLATE_ALIAS_DESC"
 				/>
+		
+		<field name="section"
+			type="rlsectionlist"
+			label="COM_REDSLIDER_TEMPLATE_SECTION"
+			required="true"
+			onchange="submitform('template.setSection');"
+			description="COM_REDSLIDER_TEMPLATE_SECTION_DESC"
+			>
+			<option value="">COM_REDSLIDER_SELECT</option>
+		</field>
+
+		<field name="content"
+			type="editor"
+			default=""
+			label="COM_REDSLIDER_TEMPLATE_CONTENT"
+			description="COM_REDSLIDER_TEMPLATE_CONTENT_DESC"
+			cols="80"
+			filter="safehtml"
+			buttons="true"
+		/>
+
 		<field name="published" type="radio"
 			   label="JPUBLISHED"
 			   class="btn-group"
