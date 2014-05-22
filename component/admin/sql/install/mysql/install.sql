@@ -16,4 +16,17 @@ CREATE TABLE IF NOT EXISTS `#__redslider_galleries` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
+CREATE TABLE IF NOT EXISTS `#__redslider_templates` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `alias` varchar(255) NOT NULL,
+  `section` varchar(255) NOT NULL,
+  `content` longtext,
+  `published` tinyint(1) NOT NULL DEFAULT '1',
+  `ordering` int(11) DEFAULT '0',
+  `checked_out` int(11) DEFAULT NULL,
+  `checked_out_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 SET FOREIGN_KEY_CHECKS = 1;
