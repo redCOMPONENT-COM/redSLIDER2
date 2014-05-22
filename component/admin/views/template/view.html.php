@@ -36,11 +36,28 @@ class RedsliderViewTemplate extends RedsliderView
 	 */
 	public function display($tpl = null)
 	{
+		$app = JFactory::getApplication();
 		$document = JFactory::getDocument();
 
 		$this->form	= $this->get('Form');
 		$this->item	= $this->get('Item');
 		$this->tags = $this->get('Tags');
+		$this->templateTags = array();
+		$this->sectionId = $app->getUserState('com_redslider.global.template.section', '');
+
+		// Get template's tags
+		if ($this->sectionId)
+		{
+			// Get list of sections' name
+			JPluginHelper::importPlugin('redslider_sections');
+			$dispatcher = JDispatcher::getInstance();
+			$tagsTmp = $dispatcher->trigger('getTagNames', array($this->sectionId));
+
+			if (count($tagsTmp))
+			{
+				$this->templateTags = $tagsTmp[0];
+			}
+		}
 
 		// Display the template
 		parent::display($tpl);
