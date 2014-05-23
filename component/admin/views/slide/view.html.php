@@ -44,6 +44,16 @@ class RedsliderViewSlide extends RedsliderView
 		$this->tags = $this->get('Tags');
 		$this->sectionId = $app->getUserState('com_redslider.global.slide.section', '');
 
+		if ($this->sectionId)
+		{
+			// Add form field from plugin section
+			JPluginHelper::importPlugin('redslider_sections');
+			$dispatcher = JDispatcher::getInstance();
+			$dispatcher->trigger('onSlidePrepareForm', array($this->form, $this->sectionId));
+
+			$editData = $app->getUserState('com_redslider.edit.slide.data', array());
+		}
+
 		// Display the slide
 		parent::display($tpl);
 	}

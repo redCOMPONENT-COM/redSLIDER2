@@ -65,4 +65,30 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 			// Do nothing because section standard has got no tag
 		}
 	}
+
+	/**
+	 * Add forms fields of section to slide view
+	 *
+	 * @param   mixed   $form       joomla form object
+	 * @param   string  $sectionId  section's id
+	 *
+	 * @return  boolean
+	 */
+	public function onSlidePrepareForm($form, $sectionId)
+	{
+		$return = false;
+
+		if ($sectionId === $this->sectionId)
+		{
+			$app = JFactory::getApplication();
+
+			if ($app->isAdmin())
+			{
+				JForm::addFormPath(__DIR__ . '/forms/');
+				$return = $form->loadFile('fields_standard', false);
+			}
+		}
+
+		return $return;
+	}
 }
