@@ -29,4 +29,18 @@ CREATE TABLE IF NOT EXISTS `#__redslider_templates` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS `#__redslider_slides` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `alias` varchar(255) NOT NULL,
+  `gallery_id` int(11) NOT NULL,
+  `template_id` int(11) NOT NULL,
+  `section` varchar(255) NOT NULL,
+  `published` tinyint(1) NOT NULL DEFAULT '1',
+  `checked_out` int(11) DEFAULT NULL,
+  `checked_out_time` datetime DEFAULT NULL,
+  `params` varchar(2048) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 SET FOREIGN_KEY_CHECKS = 1;

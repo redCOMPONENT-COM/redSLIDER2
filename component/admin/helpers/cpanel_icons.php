@@ -43,11 +43,11 @@ class RedsliderHelperCpanelIcons extends JObject
 					"title"     => "GALLERIES",
 					'cpanelDisplay' => true,
 				),
-				"sliders" => array(
-					"name"      => "sliders",
+				"slides" => array(
+					"name"      => "slides",
 					"icon"      => "icon-file",
 					"oldIcon"   => "redslider_items48.png",
-					"title"     => "SLIDERS",
+					"title"     => "SLIDES",
 					'cpanelDisplay' => true,
 				),
 				"templates" => array(
