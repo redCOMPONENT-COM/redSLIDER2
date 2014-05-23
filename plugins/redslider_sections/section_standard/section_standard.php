@@ -91,4 +91,30 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 
 		return $return;
 	}
+
+	/**
+	 * Add template of section to template slide
+	 *
+	 * @param   object  $view       JView object
+	 * @param   string  $sectionId  section's id
+	 *
+	 * @return boolean
+	 */
+	public function onSlidePrepareTemplate($view, $sectionId)
+	{
+		$return = false;
+
+		if ($sectionId === $this->sectionId)
+		{
+			$app = JFactory::getApplication();
+
+			if ($app->isAdmin())
+			{
+				$view->addTemplatePath(__DIR__ . '/tmpl/');
+				$return = $view->loadTemplate('standard');
+			}
+		}
+
+		return $return;
+	}
 }
