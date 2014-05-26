@@ -40,4 +40,36 @@ class RedsliderTableSlide extends RTable
 	 * @var  string
 	 */
 	protected $_tableFieldState = 'published';
+
+	/**
+	 * Method to store a node in the database table.
+	 *
+	 * @param   boolean  $updateNulls  True to update fields even if they are null.
+	 *
+	 * @return  boolean  True on success.
+	 */
+	public function store($updateNulls = false)
+	{
+		$db = JFactory::getDBO();
+		$input = JFactory::getApplication()->input;
+
+		$dispatcher = JDispatcher::getInstance();
+		JPluginHelper::importPlugin('redslider_sections');
+		$dispatcher->trigger('onSlideStore', array($this, $input));
+
+		$jform = $input->get('jform', null, 'array');
+
+		if (isset($jform['params']))
+		{
+			$params = new JRegistry($jform['params']);
+			$this->params = $params->toString();
+		}
+
+		if (!parent::store($updateNulls))
+		{
+			return false;
+		}
+
+		return true;
+	}
 }

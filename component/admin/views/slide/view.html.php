@@ -52,6 +52,24 @@ class RedsliderViewSlide extends RedsliderView
 			$dispatcher->trigger('onSlidePrepareForm', array($this->form, $this->sectionId));
 
 			$editData = $app->getUserState('com_redslider.edit.slide.data', array());
+
+			if (isset($editData['params']) && is_array($editData['params']))
+			{
+				foreach ($editData['params'] as $key => $value)
+				{
+					$this->form->setValue($key, 'params', $value);
+				}
+			}
+			elseif (isset($this->item->params))
+			{
+				$params = new JRegistry($this->item->params);
+				$params = $params->toArray();
+
+				foreach ($params as $key => $value)
+				{
+					$this->form->setValue($key, 'params', $value);
+				}
+			}
 		}
 
 		// Display the slide
