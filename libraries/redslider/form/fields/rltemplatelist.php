@@ -12,21 +12,21 @@ JLoader::import('joomla.form.formfield');
 JFormHelper::loadFieldClass('list');
 
 /**
- * RedSLIDER section select list
+ * RedSLIDER template select list
  *
  * @package     RedSLIDER.Backend
- * @subpackage  Field.RLGalleryLst
+ * @subpackage  Field.RLTemplateLst
  *
  * @since       2.0
  */
-class JFormFieldRLGalleryList extends JFormFieldList
+class JFormFieldRLTemplateList extends JFormFieldList
 {
 	/**
 	 * The form field type.
 	 *
 	 * @var		string
 	 */
-	protected $type = 'RLGalleryList';
+	protected $type = 'RLTemplateList';
 
 	/**
 	 * Method to get the field input markup for a generic list.
@@ -36,16 +36,23 @@ class JFormFieldRLGalleryList extends JFormFieldList
 	 */
 	public function getInput()
 	{
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
+		$app = JFactory::getApplication();
+		$section = $app->getUserState('com_redslider.global.slide.section', '');
+		$items = array();
 
-		$query->select($db->qn('id') . ', ' . $db->qn('title'))
-			->from($db->qn('#__redslider_galleries'))
-			->where($db->qn('published') . ' = ' . $db->q('1'));
+		if ($section)
+		{
+			$db = JFactory::getDbo();
+			$query = $db->getQuery(true);
 
-		$db->setQuery($query);
+			$query->select($db->qn('id') . ', ' . $db->qn('title'))
+				->from($db->qn('#__redslider_templates'))
+				->where($db->qn('section') . ' = ' . $db->q($section) . ' AND ' . $db->qn('published') . ' = ' . $db->q('1'));
 
-		$items = $db->loadObjectList();
+			$db->setQuery($query);
+
+			$items = $db->loadObjectList();
+		}
 
 		$options = array();
 

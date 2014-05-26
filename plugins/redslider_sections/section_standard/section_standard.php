@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 jimport('joomla.plugin.plugin');
 jimport('redcore.bootstrap');
 
+require_once JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
+
 /**
  * Plugins RedSLIDER section standard
  *
@@ -116,5 +118,50 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 		}
 
 		return $return;
+	}
+
+	/**
+	 * Event on store a slide
+	 *
+	 * @param   object  $jtable  JTable object
+	 * @param   object  $jinput  JForm data
+	 *
+	 * @return boolean
+	 */
+	public function onSlideStore($jtable, $jinput)
+	{
+		$jform = $jinput->get('jform', null, 'array');
+		$files = $jinput->files->get('jform');
+
+		if ($jform['section'] === $this->sectionId)
+		{
+			if (isset($files['params']))
+			{
+				$images = $files['params'];
+
+				$imageFolder = JPATH_ROOT . '/media/com_redslider/images/slides/';
+
+				/* if (!JFolder::exists($imageFolder))
+				{
+					JFolder::create($imageFolder);
+				} */
+
+				// Upload and save image
+				if ($images['slide_image_file']['name'] != '')
+				{
+					$images['slide_image_file']['name'] = time() . '_' . RedsliderHelperHelper::replaceSpecial($images['slide_image_file']['name']);
+					$itemImageUpload = true;
+					$jform['params']['slide_image_file'] = $images['slide_image_file']['name'];
+					$jinput->set('jform', $jform);
+				}
+
+				if ($itemImageUpload)
+				{
+					JFile::upload($images['slide_image_file']['tmp_name'], $imageFolder . $images['slide_image_file']['name']);
+				}
+			}
+		}
+
+		return true;
 	}
 }

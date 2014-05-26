@@ -19,4 +19,20 @@ defined('_JEXEC') or die;
  */
 class RedsliderHelperHelper
 {
+	/**
+	 * Replace special character in filename.
+	 *
+	 * @param   string  $name  Name of file
+	 *
+	 * @return  string
+	 */
+	public static function replaceSpecial($name)
+	{
+		$filetype = JFile::getExt($name);
+		$filename = JFile::stripExt($name);
+		$value = preg_replace("/[&'#]/", "", $filename);
+		$value = JFilterOutput::stringURLSafe($value) . '.' . $filetype;
+
+		return $value;
+	}
 }
