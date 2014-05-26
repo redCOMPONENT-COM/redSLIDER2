@@ -10,6 +10,7 @@
 	<files>
 		<filename plugin="section_standard">section_standard.php</filename>
 		<folder plugin="section_standard">forms</folder>
+		<folder plugin="section_standard">tmpl</folder>
 	</files>
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_standard.ini</language>
