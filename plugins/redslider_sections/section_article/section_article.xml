@@ -9,6 +9,9 @@
 	<description>PLG_SECTION_ARTICLE_DESC</description>
 	<files>
 		<filename plugin="section_article">section_article.php</filename>
+		<folder plugin="section_article">forms</folder>
+		<folder plugin="section_article">fields</folder>
+		<folder plugin="section_article">tmpl</folder>
 	</files>
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_article.ini</language>
