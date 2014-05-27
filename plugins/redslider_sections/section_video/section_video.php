@@ -64,7 +64,9 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 		{
 			$tags = array(
 					"{youtube}" => JText::_("COM_REDSLIDER_TAG_VIDEO_YOUTUBE_DESC"),
-					"{vimeo}" => JText::_("COM_REDSLIDER_TAG_VIDEO_VIMEO_DESC")
+					"{vimeo}" => JText::_("COM_REDSLIDER_TAG_VIDEO_VIMEO_DESC"),
+					"{local}" => JText::_("COM_REDSLIDER_TAG_VIDEO_LOCAL_DESC"),
+					"{other}" => JText::_("COM_REDSLIDER_TAG_VIDEO_OTHER_DESC"),
 				);
 
 			return $tags;
@@ -115,6 +117,31 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 
 			if ($app->isAdmin())
 			{
+				$fields = $view->form->getGroup('params');
+
+				if (count($fields))
+				{
+					foreach ($fields as $field)
+					{
+						if (JString::strpos($field->id, "jform_params_vimeo") !== false)
+						{
+							$view->outputFields["COM_REDSLIDER_SECTION_VIDEO_PANE_VIMEO"][] = $field;
+						}
+						elseif (JString::strpos($field->id, "jform_params_youtube") !== false)
+						{
+							$view->outputFields["COM_REDSLIDER_SECTION_VIDEO_PANE_YOUTUBE"][] = $field;
+						}
+						elseif (JString::strpos($field->id, "jform_params_local") !== false)
+						{
+							$view->outputFields["COM_REDSLIDER_SECTION_VIDEO_PANE_LOCAL"][] = $field;
+						}
+						elseif (JString::strpos($field->id, "jform_params_other") !== false)
+						{
+							$view->outputFields["COM_REDSLIDER_SECTION_VIDEO_PANE_OTHER"][] = $field;
+						}
+					}
+				}
+
 				$view->addTemplatePath(__DIR__ . '/tmpl/');
 				$return = $view->loadTemplate('video');
 			}
