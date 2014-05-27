@@ -9,6 +9,7 @@
 
 // No direct access
 defined('_JEXEC') or die;
+
 ?>
 <?php foreach ($this->form->getGroup('params') as $field) : ?>
 <div class="control-group">
@@ -28,7 +29,7 @@ defined('_JEXEC') or die;
 	<div class="controls">
 		<?php echo $field->input; ?>
 		<?php if (isset($this->item->params['slide_image_file'])): ?>
-			<?php $img_src = JURI::root() . 'media/com_redslider/images/slides/' . $this->item->params['slide_image_file'] ?>
+			<?php $img_src = JURI::root() . 'media/com_redslider/images/slides/' . $this->item->gallery_id . '/' . $this->item->params['slide_image_file'] ?>
 			<img style="max-width: 300px; max-height: 300px; margin-right: 20px;" class="preview_img img-polaroid pull-left" src="<?php echo $img_src; ?>" />
 		<?php endif; ?>
 	</div>

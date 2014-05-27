@@ -34,7 +34,7 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 		parent::__construct($subject, $config);
 		$this->loadLanguage();
 		$this->sectionId = "SECTION_VIDEO";
-		$this->sectionName = "Video";
+		$this->sectionName = JText::_("PLG_SECTION_VIDEO_NAME");
 	}
 
 	/**
@@ -64,10 +64,102 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 		{
 			$tags = array(
 					"{youtube}" => JText::_("COM_REDSLIDER_TAG_VIDEO_YOUTUBE_DESC"),
-					"{vimeo}" => JText::_("COM_REDSLIDER_TAG_VIDEO_VIMEO_DESC")
+					"{vimeo}" => JText::_("COM_REDSLIDER_TAG_VIDEO_VIMEO_DESC"),
+					"{local}" => JText::_("COM_REDSLIDER_TAG_VIDEO_LOCAL_DESC"),
+					"{other}" => JText::_("COM_REDSLIDER_TAG_VIDEO_OTHER_DESC"),
 				);
 
 			return $tags;
 		}
+	}
+
+	/**
+	 * Add forms fields of section to slide view
+	 *
+	 * @param   mixed   $form       joomla form object
+	 * @param   string  $sectionId  section's id
+	 *
+	 * @return  boolean
+	 */
+	public function onSlidePrepareForm($form, $sectionId)
+	{
+		$return = false;
+
+		if ($sectionId === $this->sectionId)
+		{
+			$app = JFactory::getApplication();
+
+			if ($app->isAdmin())
+			{
+				JForm::addFormPath(__DIR__ . '/forms/');
+				$return = $form->loadFile('fields_video', false);
+			}
+		}
+
+		return $return;
+	}
+
+	/**
+	 * Add template of section to template slide
+	 *
+	 * @param   object  $view       JView object
+	 * @param   string  $sectionId  section's id
+	 *
+	 * @return boolean
+	 */
+	public function onSlidePrepareTemplate($view, $sectionId)
+	{
+		$return = false;
+
+		if ($sectionId === $this->sectionId)
+		{
+			$app = JFactory::getApplication();
+
+			if ($app->isAdmin())
+			{
+				$fields = $view->form->getGroup('params');
+
+				if (count($fields))
+				{
+					foreach ($fields as $field)
+					{
+						if (JString::strpos($field->id, "jform_params_vimeo") !== false)
+						{
+							$view->outputFields["COM_REDSLIDER_SECTION_VIDEO_PANE_VIMEO"][] = $field;
+						}
+						elseif (JString::strpos($field->id, "jform_params_youtube") !== false)
+						{
+							$view->outputFields["COM_REDSLIDER_SECTION_VIDEO_PANE_YOUTUBE"][] = $field;
+						}
+						elseif (JString::strpos($field->id, "jform_params_local") !== false)
+						{
+							$view->outputFields["COM_REDSLIDER_SECTION_VIDEO_PANE_LOCAL"][] = $field;
+						}
+						elseif (JString::strpos($field->id, "jform_params_other") !== false)
+						{
+							$view->outputFields["COM_REDSLIDER_SECTION_VIDEO_PANE_OTHER"][] = $field;
+						}
+					}
+				}
+
+				$view->addTemplatePath(__DIR__ . '/tmpl/');
+				$return = $view->loadTemplate('video');
+			}
+		}
+
+		return $return;
+	}
+
+	/**
+	 * Event on store a slide
+	 *
+	 * @param   object  $jtable  JTable object
+	 * @param   object  $jinput  JForm data
+	 *
+	 * @return boolean
+	 */
+	public function onSlideStore($jtable, $jinput)
+	{
+		return true;
 	}
 }

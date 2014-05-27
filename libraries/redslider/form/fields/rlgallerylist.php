@@ -41,7 +41,7 @@ class JFormFieldRLGalleryList extends JFormFieldList
 
 		$query->select($db->qn('id') . ', ' . $db->qn('title'))
 			->from($db->qn('#__redslider_galleries'))
-			->where($db->qn('published') . ' = ' . $db->q('1'));
+			->where($db->qn('published') . ' = 1');
 
 		$db->setQuery($query);
 
