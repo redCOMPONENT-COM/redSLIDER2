@@ -1,5 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form enctype="multipart/form-data">
 	<fields name="params">
+		<field name="vimeo_id"
+			type="text"
+			default=""
+			label="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_ID"
+			description="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_ID_DESC"
+		/>
+		<field name="vimeo_portrait"
+			type="radio"
+			class="btn-group"
+			label="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_PORTRAIT"
+			description="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_PORTRAIT_DESC"
+			default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field name="vimeo_title"
+			type="radio"
+			class="btn-group"
+			label="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_TITLE"
+			description="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_TITLE_DESC"
+			default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field name="vimeo_byline"
+			type="radio"
+			class="btn-group"
+			label="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_BYLINE"
+			description="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_BYLINE_DESC"
+			default="1">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field name="vimeo_color"
+			type="color"
+			default="#FFFFFF"
+			label="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_COLOR"
+			description="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_COLOR_DESC"
+		/>
 	</fields>
 </form>

@@ -36,7 +36,7 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 		parent::__construct($subject, $config);
 		$this->loadLanguage();
 		$this->sectionId = "SECTION_STANDARD";
-		$this->sectionName = "Standard";
+		$this->sectionName = JText::_("PLG_SECTION_STANDARD_NAME");
 	}
 
 	/**
@@ -132,6 +132,7 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	{
 		$jform = $jinput->get('jform', null, 'array');
 		$files = $jinput->files->get('jform');
+		$gallery_id = $jform['gallery_id'];
 
 		if ($jform['section'] === $this->sectionId)
 		{
@@ -139,17 +140,17 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 			{
 				$images = $files['params'];
 
-				$imageFolder = JPATH_ROOT . '/media/com_redslider/images/slides/';
+				$imageFolder = JPATH_ROOT . '/media/com_redslider/images/slides/' . $gallery_id . '/';
 
-				/* if (!JFolder::exists($imageFolder))
+				if (!JFolder::exists($imageFolder))
 				{
 					JFolder::create($imageFolder);
-				} */
+				}
 
 				// Upload and save image
 				if ($images['slide_image_file']['name'] != '')
 				{
-					$images['slide_image_file']['name'] = time() . '_' . RedsliderHelperHelper::replaceSpecial($images['slide_image_file']['name']);
+					$images['slide_image_file']['name'] = time() . '_' . JFile::makeSafe($images['slide_image_file']['name']);
 					$itemImageUpload = true;
 					$jform['params']['slide_image_file'] = $images['slide_image_file']['name'];
 					$jinput->set('jform', $jform);

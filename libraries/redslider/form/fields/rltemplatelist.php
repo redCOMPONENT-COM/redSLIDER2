@@ -47,7 +47,7 @@ class JFormFieldRLTemplateList extends JFormFieldList
 
 			$query->select($db->qn('id') . ', ' . $db->qn('title'))
 				->from($db->qn('#__redslider_templates'))
-				->where($db->qn('section') . ' = ' . $db->q($section) . ' AND ' . $db->qn('published') . ' = ' . $db->q('1'));
+				->where($db->qn('section') . ' = ' . $db->q($section) . ' AND ' . $db->qn('published') . ' = 1');
 
 			$db->setQuery($query);
 

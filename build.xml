@@ -114,5 +114,15 @@
 
 		<!-- Plugins - Languages -->
 		<echo message="Copying plugins language..." />
+		<copy todir="${www.dir}/language" overwrite="true">
+			<fileset dir="${src}/plugins/redslider_sections/section_standard/language">
+				<include name="**" />
+			</fileset>
+		</copy>
+		<copy todir="${www.dir}/language" overwrite="true">
+			<fileset dir="${src}/plugins/redslider_sections/section_video/language">
+				<include name="**" />
+			</fileset>
+		</copy>
 	</target>
 </project>
