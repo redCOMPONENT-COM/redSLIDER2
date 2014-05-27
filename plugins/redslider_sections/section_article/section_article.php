@@ -34,7 +34,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 		parent::__construct($subject, $config);
 		$this->loadLanguage();
 		$this->sectionId = "SECTION_ARTICLE";
-		$this->sectionName = "Article";
+		$this->sectionName = JText::_("PLG_SECTION_ARTICLE_NAME");
 	}
 
 	/**
@@ -71,5 +71,70 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 
 			return $tags;
 		}
+	}
+
+	/**
+	 * Add forms fields of section to slide view
+	 *
+	 * @param   mixed   $form       joomla form object
+	 * @param   string  $sectionId  section's id
+	 *
+	 * @return  boolean
+	 */
+	public function onSlidePrepareForm($form, $sectionId)
+	{
+		$return = false;
+
+		if ($sectionId === $this->sectionId)
+		{
+			$app = JFactory::getApplication();
+
+			if ($app->isAdmin())
+			{
+				JForm::addFormPath(__DIR__ . '/forms/');
+				$return = $form->loadFile('fields_article', false);
+			}
+		}
+
+		return $return;
+	}
+
+	/**
+	 * Add template of section to template slide
+	 *
+	 * @param   object  $view       JView object
+	 * @param   string  $sectionId  section's id
+	 *
+	 * @return boolean
+	 */
+	public function onSlidePrepareTemplate($view, $sectionId)
+	{
+		$return = false;
+
+		if ($sectionId === $this->sectionId)
+		{
+			$app = JFactory::getApplication();
+
+			if ($app->isAdmin())
+			{
+				$view->addTemplatePath(__DIR__ . '/tmpl/');
+				$return = $view->loadTemplate('article');
+			}
+		}
+
+		return $return;
+	}
+
+	/**
+	 * Event on store a slide
+	 *
+	 * @param   object  $jtable  JTable object
+	 * @param   object  $jinput  JForm data
+	 *
+	 * @return boolean
+	 */
+	public function onSlideStore($jtable, $jinput)
+	{
+		return true;
 	}
 }
