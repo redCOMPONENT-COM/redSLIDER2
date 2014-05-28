@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 jimport('joomla.plugin.plugin');
 jimport('redcore.bootstrap');
 
+require_once JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
+
 /**
  * Plugins RedSLIDER section redSHOP
  *
@@ -22,6 +24,10 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 	private $sectionId;
 
 	private $sectionName;
+
+	private $extensionName;
+
+	private $msgLevel;
 
 	/**
 	 * Constructor - note in Joomla 2.5 PHP4.x is no longer supported so we can use this.
@@ -35,6 +41,8 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 		$this->loadLanguage();
 		$this->sectionId = "SECTION_REDSHOP";
 		$this->sectionName = JText::_('PLG_SECTION_REDSHOP_NAME');
+		$this->extensionName = "com_redshop";
+		$this->msgLevel = "Warning";
 	}
 
 	/**
@@ -62,6 +70,14 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 	{
 		if ($sectionId === $this->sectionId)
 		{
+			$app = JFactory::getApplication();
+
+			// Check if component redSHOP is not installed
+			if (!RedsliderHelperHelper::checkExtension($this->extensionName))
+			{
+				$app->enqueueMessage(JText::_('PLG_REDSLIDER_SECTION_REDSHOP_INSTALL_COM_REDSHOP_FIRST'), $this->msgLevel);
+			}
+
 			$tags = array(
 					"{product_name}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_NAME_DESC"),
 					"{product_description}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_DESCRIPTION_DESC"),
@@ -94,8 +110,15 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 
 			if ($app->isAdmin())
 			{
-				JForm::addFormPath(__DIR__ . '/forms/');
-				$return = $form->loadFile('fields_redshop', false);
+				if (RedsliderHelperHelper::checkExtension($this->extensionName))
+				{
+					JForm::addFormPath(__DIR__ . '/forms/');
+					$return = $form->loadFile('fields_redshop', false);
+				}
+				else
+				{
+					$app->enqueueMessage(JText::_('PLG_REDSLIDER_SECTION_REDSHOP_INSTALL_COM_REDSHOP_FIRST'), $this->msgLevel);
+				}
 			}
 		}
 

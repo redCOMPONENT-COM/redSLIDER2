@@ -35,6 +35,16 @@ class JFormFieldModal_Product extends JFormField
 	 */
 	protected function getInput()
 	{
+		// Check if component redSHOP is not installed
+		$app = JFactory::getApplication();
+
+		if (!RedsliderHelperHelper::checkExtension('com_redshop'))
+		{
+			$app->enqueueMessage(JText::_('PLG_REDSLIDER_SECTION_REDSHOP_INSTALL_COM_REDSHOP_FIRST'), 'Warning');
+
+			return '';
+		}
+
 		// Load the modal behavior script.
 		JHtml::_('behavior.modal', 'a.modalRedshopProductAjax');
 
