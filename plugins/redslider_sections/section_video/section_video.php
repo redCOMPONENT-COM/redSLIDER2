@@ -182,6 +182,64 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 			// Case Vimeo
 			if (preg_match_all('/{vimeo[^}]*}/i', $content, $matches) > 0)
 			{
+				$vimeo = new stdClass;
+				$vimeo->id = $params->get('vimeo_id');
+				$vimeo->width = $params->get('vimeo_width');
+				$vimeo->height = $params->get('vimeo_height');
+				$vimeo->portrait = $params->get('vimeo_portrait');
+				$vimeo->title = $params->get('vimeo_title');
+				$vimeo->byline = $params->get('vimeo_byline');
+				$vimeo->autoplay = $params->get('vimeo_autoplay');
+				$vimeo->loop = $params->get('vimeo_loop');
+				$vimeo->color = $params->get('vimeo_color');
+
+				$replaceString = '';
+
+				if (isset($vimeo->id) && (JString::trim($vimeo->id)))
+				{
+					$replaceString .= '<iframe ';
+					$replaceString .= 'src="//player.vimeo.com/video/' . JString::trim($vimeo->id) . '?color=' . JString::trim($vimeo->color);
+
+					if ($vimeo->loop)
+					{
+						$replaceString .= '&amp;loop=1';
+					}
+
+					if ($vimeo->autoplay)
+					{
+						$replaceString .= '&amp;autoplay=1';
+					}
+
+					$replaceString .= '" ';
+
+					if (!is_numeric($vimeo->width))
+					{
+						$replaceString .= 'width="560" ';
+					}
+					else
+					{
+						$replaceString .= 'width="' . JString::trim($vimeo->width) . '" ';
+					}
+
+					if (!is_numeric($vimeo->height))
+					{
+						$replaceString .= 'height="315" ';
+					}
+					else
+					{
+						$replaceString .= 'height="' . JString::trim($vimeo->height) . '" ';
+					}
+
+					$replaceString .= 'frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+				}
+
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $replaceString, $content);
+					}
+				}
 			}
 			// Case Youtube
 			if (preg_match_all('/{youtube[^}]*}/i', $content, $matches) > 0)
