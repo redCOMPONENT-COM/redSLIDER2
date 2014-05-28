@@ -31,6 +31,17 @@
 					<option>MOD_REDSLIDER_GALLERY_SELECT</option>
 				</field>
 			</fieldset>
+			<fieldset name="STYLE" addfieldpath="/libraries/redslider/form/fields">
+				<field
+					name="slider_class"
+					type="text"
+					label="MOD_REDSLIDER_STYLE_SLIDER_CLASS"
+					description="MOD_REDSLIDER_STYLE_SLIDER_CLASS_DESC"
+					default="flexslider">
+					<option value="slide">MOD_REDSLIDER_EFFECT_TYPE_SLIDE</option>
+				</field>
+
+			</fieldset>
 			<fieldset name="EFFECTS" addfieldpath="/libraries/redslider/form/fields">
 				<field
 					name="effect_type"
