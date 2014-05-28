@@ -8,4 +8,27 @@
  */
 
 defined('_JEXEC') or die;
-echo $slides[3]->template_content;
+
+JHtml::_('rjquery.flexslider');
+
+echo '<div class="flexslider">';
+
+if (count($slides))
+{
+	echo '<ul class="slides">';
+
+	foreach ($slides as $slide)
+	{
+		if (isset($slide->template_content))
+		{
+			echo '<li>';
+			echo $slide->template_content;
+			echo '</li>';
+		}
+	}
+
+	echo '<li>Some Test</li>';
+	echo '</ul>';
+}
+
+echo '</div>';

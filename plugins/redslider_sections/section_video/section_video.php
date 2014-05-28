@@ -192,6 +192,7 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 				$vimeo->autoplay = $params->get('vimeo_autoplay');
 				$vimeo->loop = $params->get('vimeo_loop');
 				$vimeo->color = $params->get('vimeo_color');
+				$vimeo->color = JString::str_ireplace("#", "", $vimeo->color);
 
 				$replaceString = '';
 
