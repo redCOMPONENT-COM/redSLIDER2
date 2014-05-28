@@ -9,6 +9,9 @@
 	<description>PLG_SECTION_REDSHOP_DESC</description>
 	<files>
 		<filename plugin="section_redshop">section_redshop.php</filename>
+		<folder plugin="section_redshop">forms</folder>
+		<folder plugin="section_redshop">fields</folder>
+		<folder plugin="section_redshop">tmpl</folder>
 	</files>
 	<languages folder="language">
 		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_redshop.ini</language>
