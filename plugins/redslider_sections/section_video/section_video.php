@@ -162,4 +162,106 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 	{
 		return true;
 	}
+
+	/**
+	 * Prepare content for slide show in module
+	 *
+	 * @param   string  $content  Template Content
+	 * @param   object  $slide    Slide result object
+	 *
+	 * @return  string  $content  repaced content
+	 */
+	public function onPrepareTemplateContent($content, $slide)
+	{
+		if ($slide->section === $this->sectionId)
+		{
+			$params = new JRegistry($slide->params);
+
+			$matches = array();
+
+			// Case Vimeo
+			if (preg_match_all('/{vimeo[^}]*}/i', $content, $matches) > 0)
+			{
+			}
+			// Case Youtube
+			if (preg_match_all('/{youtube[^}]*}/i', $content, $matches) > 0)
+			{
+				$youtube = new stdClass;
+				$youtube->id = $params->get('youtube_id');
+				$youtube->width = $params->get('youtube_width');
+				$youtube->height = $params->get('youtube_height');
+				$youtube->suggested = $params->get('youtube_suggested');
+				$youtube->privacy_enhance = $params->get('youtube_privacy_enhanced');
+
+				$replaceString = '';
+
+				if (isset($youtube->id) && (JString::trim($youtube->id)))
+				{
+					$replaceString .= '<iframe ';
+
+					if (!is_numeric($youtube->width))
+					{
+						$replaceString .= 'width="560" ';
+					}
+					else
+					{
+						$replaceString .= 'width="' . JString::trim($youtube->width) . '" ';
+					}
+
+					if (!is_numeric($youtube->height))
+					{
+						$replaceString .= 'height="315" ';
+					}
+					else
+					{
+						$replaceString .= 'height="' . JString::trim($youtube->height) . '" ';
+					}
+
+					if ($youtube->privacy_enhance)
+					{
+						$replaceString .= 'src="//www.youtube-nocookie.com/embed/' . JString::trim($youtube->id) . ' ';
+					}
+					else
+					{
+						$replaceString .= 'src="//www.youtube.com/embed/' . JString::trim($youtube->id) . ' ';
+					}
+
+					if (!$youtube->suggested)
+					{
+						$replaceString .= '?rel=0" ';
+					}
+					else
+					{
+						$replaceString .= '" ';
+					}
+
+					$replaceString .= 'frameborder="0" allowfullscreen></iframe>';
+				}
+
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $replaceString, $content);
+					}
+				}
+			}
+
+			// Case Local Video
+			if (preg_match_all('/{local[^}]*}/i', $content, $matches) > 0)
+			{
+				var_dump($matches);
+				exit;
+			}
+
+			// Case Other Iframe Video Embed
+			if (preg_match_all('/{other[^}]*}/i', $content, $matches) > 0)
+			{
+				var_dump($matches);
+				exit;
+			}
+
+			return $content;
+		}
+	}
 }

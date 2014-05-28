@@ -8,3 +8,4 @@
  */
 
 defined('_JEXEC') or die;
+echo $slides[3]->template_content;

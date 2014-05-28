@@ -54,6 +54,7 @@ class RedsliderModelSlides extends RModelList
 			$config['filter_fields'] = array(
 				's.title', 'title',
 				's.published', 'published',
+				's.gallery_id', 'gallery_id',
 				's.id',
 			);
 		}
@@ -96,6 +97,14 @@ class RedsliderModelSlides extends RModelList
 		elseif ($published === '')
 		{
 			$query->where('(s.published IN (0, 1))');
+		}
+
+		// Filter by gallery id
+		$galleryId = $this->getState('filter.gallery_id');
+
+		if (is_numeric($galleryId))
+		{
+			$query->where('s.gallery_id = ' . (int) $galleryId);
 		}
 
 		// Get the ordering modifiers
