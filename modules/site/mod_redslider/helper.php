@@ -29,39 +29,4 @@ class ModredSLIDERHelper
 	{
 		return RedsliderHelperHelper::getSlides($galleryId);
 	}
-
-	/**
-	 * Generate HTML of sliders to show in frontend
-	 *
-	 * @param   object  $slides  result set of slides
-	 * @param   string  $class   CSS Class
-	 *
-	 * @return  string  html
-	 */
-
-	public static function getHTML($slides, $class)
-	{
-		JHtml::_('rjquery.flexslider', '.' . $class);
-
-		$html = array();
-
-		$html[] = '<div class="' . $class . '">';
-
-		if (count($slides))
-		{
-			$html[] = '<ul class="slides">';
-
-			foreach ($slides as $slide)
-			{
-				if (isset($slide->template_content))
-				{
-					$html[] = '<li>' . $slide->template_content . '</li>';
-				}
-			}
-
-			$html[] = '</ul>';
-		}
-
-		return implode("\n", $html);
-	}
 }

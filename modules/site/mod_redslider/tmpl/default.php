@@ -8,4 +8,27 @@
  */
 
 defined('_JEXEC') or die;
-echo $html;
+
+?>
+
+<div class="<?php echo $class ?>">
+
+<?php if (count($slides)): ?>
+
+	<ul class="slides">
+
+		<?php foreach ($slides as $slide): ?>
+
+			<?php if (isset($slide->template_content)): ?>
+
+				<li><?php echo $slide->template_content ?></li>
+
+			<?php endif ?>
+
+		<?php endforeach ?>
+
+	</ul>
+
+	<?php endif ?>
+
+</div>

@@ -60,12 +60,12 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 	 */
 	public function getTagNames($sectionId)
 	{
+		// TODO: Local video - waiting for opinion
 		if ($sectionId === $this->sectionId)
 		{
 			$tags = array(
 					"{youtube}" => JText::_("COM_REDSLIDER_TAG_VIDEO_YOUTUBE_DESC"),
 					"{vimeo}" => JText::_("COM_REDSLIDER_TAG_VIDEO_VIMEO_DESC"),
-					"{local}" => JText::_("COM_REDSLIDER_TAG_VIDEO_LOCAL_DESC"),
 					"{other}" => JText::_("COM_REDSLIDER_TAG_VIDEO_OTHER_DESC"),
 				);
 
@@ -109,6 +109,7 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 	 */
 	public function onSlidePrepareTemplate($view, $sectionId)
 	{
+		// TODO: Local video - waiting for opinion
 		$return = false;
 
 		if ($sectionId === $this->sectionId)
@@ -130,10 +131,6 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 						elseif (JString::strpos($field->id, "jform_params_youtube") !== false)
 						{
 							$view->outputFields["COM_REDSLIDER_SECTION_VIDEO_PANE_YOUTUBE"][] = $field;
-						}
-						elseif (JString::strpos($field->id, "jform_params_local") !== false)
-						{
-							$view->outputFields["COM_REDSLIDER_SECTION_VIDEO_PANE_LOCAL"][] = $field;
 						}
 						elseif (JString::strpos($field->id, "jform_params_other") !== false)
 						{
@@ -309,15 +306,27 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 			// Case Local Video
 			if (preg_match_all('/{local[^}]*}/i', $content, $matches) > 0)
 			{
-				var_dump($matches);
-				exit;
+				$local = new stdClass;
+				$local->media = $params->get('local_media');
+				$local->width = $params->get('local_width');
+				$local->height = $params->get('local_height');
+
+				// TODO: Waiting opinion what video player will be used to stream local video from media manager
 			}
 
 			// Case Other Iframe Video Embed
 			if (preg_match_all('/{other[^}]*}/i', $content, $matches) > 0)
 			{
-				var_dump($matches);
-				exit;
+				$other = new stdClass;
+				$other->iframe = $params->get('other_iframe', '');
+
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $other->iframe, $content);
+					}
+				}
 			}
 
 			return $content;

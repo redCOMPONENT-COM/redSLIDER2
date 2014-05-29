@@ -29,7 +29,7 @@ $class = $params->get('slider_class', 'flexslider');
 
 $slides = ModredSLIDERHelper::getSlides($galleryId);
 
-$html = ModredSLIDERHelper::getHTML($slides, $class);
+JHtml::_('rjquery.flexslider', '.' . $class);
 
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 $displayType = $params->get('display', 0);
