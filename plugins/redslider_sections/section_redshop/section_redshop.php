@@ -12,7 +12,13 @@ defined('_JEXEC') or die;
 jimport('joomla.plugin.plugin');
 jimport('redcore.bootstrap');
 
+require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/redshop.cfg.php';
+require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/configuration.php';
 require_once JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
+require_once JPATH_SITE . '/components/com_redshop/helpers/product.php';
+
+$Redconfiguration = new Redconfiguration;
+$Redconfiguration->defineDynamicVars();
 
 /**
  * Plugins RedSLIDER section redSHOP
@@ -80,11 +86,15 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 
 			$tags = array(
 					"{product_name}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_NAME_DESC"),
+					"{product_short_description}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_SHORT_DESCRIPTION_DESC"),
 					"{product_description}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_DESCRIPTION_DESC"),
 					"{product_attribute}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_ATTRIBUTE_DESC"),
 					"{product_quantity}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_QUANTITY_DESC"),
 					"{addtocart_button}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_ADDTOCART_BUTTON_DESC"),
-					"{product_image}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_DESC"),
+					"{product_thumb_image|<em>width</em>|<em>height</em>}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_THUMB_IMAGE_DESC"),
+					"{product_thumb_image_link}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_THUMB_IMAGE_LINK_DESC"),
+					"{product_image|<em>width</em>|<em>height</em>}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_DESC"),
+					"{product_image_link}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_LINK_DESC"),
 					"{product_price}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_PRICE_DESC"),
 				);
 
@@ -162,5 +172,195 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 	public function onSlideStore($jtable, $jinput)
 	{
 		return true;
+	}
+
+	/**
+	 * Prepare content for slide show in module
+	 *
+	 * @param   string  $content  Template Content
+	 * @param   object  $slide    Slide result object
+	 *
+	 * @return  string  $content  repaced content
+	 */
+	public function onPrepareTemplateContent($content, $slide)
+	{
+		if ($slide->section === $this->sectionId)
+		{
+			if (RedsliderHelperHelper::checkExtension($this->extensionName))
+			{
+				$user = JFactory::getUser();
+				$params = new JRegistry($slide->params);
+				$product = new stdClass;
+				$product->id = (int) $params->get('product_id', '0');
+				$product->background = JString::trim($params->get('redshop_slide_backgroundimage', ''));
+				$product->slideClass = JString::trim($params->get('redshop_slide_class', 'redshop_slide'));
+				$product->folder = '/components/com_redshop/assets/images/product/';
+
+				$productHelper   = new producthelper;
+
+				$product->instance = $productHelper->getProductById($product->id);
+				$product->prices = $productHelper->getProductNetPrice($product->id, $user->id);
+
+				if (preg_match_all('/{product_name[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							$content = JString::str_ireplace($match[0], $product->instance->product_name, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{product_short_description[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							$content = JString::str_ireplace($match[0], $product->instance->product_s_desc, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{product_description[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							$content = JString::str_ireplace($match[0], $product->instance->product_desc, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{product_price[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							$content = JString::str_ireplace($match[0], $product->prices->product_price, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{product_image[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							if (isset($product->instance->product_full_image) && $product->instance->product_full_image)
+							{
+								$middleMan = strip_tags($match[0]);
+								$middleMan = JString::str_ireplace('{', '', $middleMan);
+								$middleMan = JString::str_ireplace('}', '', $middleMan);
+								$middleMan = explode('|', $middleMan);
+
+								$replaceString = '<img src="' . JURI::base() . $product->folder . $product->instance->product_full_image . '" ';
+
+								if (isset($middleMan[1]) && is_numeric($middleMan[1]))
+								{
+									$replaceString .= 'width="' . $middleMan[1] . '" ';
+								}
+
+								if (isset($middleMan[2]) && is_numeric($middleMan[2]))
+								{
+									$replaceString .= 'height="' . $middleMan[2] . '" ';
+								}
+
+								$replaceString .= '/>';
+							}
+							else
+							{
+								$replaceString = '';
+							}
+
+							$content = JString::str_ireplace($match[0], $replaceString, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{product_image_link[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							if (isset($product->instance->product_full_image) && $product->instance->product_full_image)
+							{
+								$replaceString = JURI::base() . $product->folder . $product->instance->product_full_image;
+							}
+							else
+							{
+								$replaceString = '';
+							}
+
+							$content = JString::str_ireplace($match[0], $replaceString, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{product_thumb_image[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							if (isset($product->instance->product_thumb_image) && $product->instance->product_thumb_image)
+							{
+								$middleMan = strip_tags($match[0]);
+								$middleMan = JString::str_ireplace('{', '', $middleMan);
+								$middleMan = JString::str_ireplace('}', '', $middleMan);
+								$middleMan = explode('|', $middleMan);
+
+								$replaceString = '<img src="' . JURI::base() . $product->folder . $product->instance->product_thumb_image . '" ';
+
+								if (isset($middleMan[1]) && is_numeric($middleMan[1]))
+								{
+									$replaceString .= 'width="' . $middleMan[1] . '" ';
+								}
+
+								if (isset($middleMan[2]) && is_numeric($middleMan[2]))
+								{
+									$replaceString .= 'height="' . $middleMan[2] . '" ';
+								}
+
+								$replaceString .= '/>';
+							}
+							else
+							{
+								$replaceString = '';
+							}
+
+							$content = JString::str_ireplace($match[0], $replaceString, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{product_thumb_image_link[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							if (isset($product->instance->product_thumb_image) && $product->instance->product_thumb_image)
+							{
+								$replaceString = JURI::base() . $product->folder . $product->instance->product_thumb_image;
+							}
+							else
+							{
+								$replaceString = '';
+							}
+
+							$content = JString::str_ireplace($match[0], $replaceString, $content);
+						}
+					}
+				}
+
+				return $content;
+			}
+		}
 	}
 }
