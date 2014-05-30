@@ -13,5 +13,12 @@
 			label="COM_REDSLIDER_SECTION_ARTICLE_FIELD_ARTICLE_IMAGE"
 			description="COM_REDSLIDER_SECTION_ARTICLE_FIELD_ARTICLE_IMAGE_DESC"
 		/>
+		<field
+			name="article_slide_class"
+			type="text"
+			default="article_slide"
+			label="COM_REDSLIDER_SECTION_ARTICLE_FIELD_ARTICLE_SLIDE_CLASS"
+			description="COM_REDSLIDER_SECTION_ARTICLE_FIELD_ARTICLE_SLIDE_CLASS_DESC"
+		/>
 	</fields>
 </form>

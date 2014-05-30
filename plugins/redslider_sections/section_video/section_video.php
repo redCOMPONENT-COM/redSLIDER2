@@ -208,6 +208,21 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 						$replaceString .= '&amp;autoplay=1';
 					}
 
+					if (!$vimeo->byline)
+					{
+						$replaceString .= '&amp;byline=0';
+					}
+
+					if (!$vimeo->title)
+					{
+						$replaceString .= '&amp;title=0';
+					}
+
+					if (!$vimeo->portrait)
+					{
+						$replaceString .= '&amp;portrait=0';
+					}
+
 					$replaceString .= '" ';
 
 					if (!is_numeric($vimeo->width))

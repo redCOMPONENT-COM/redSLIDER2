@@ -7,5 +7,18 @@
 			label="COM_REDSLIDER_SECTION_REDSHOP_FIELD_PRODUCT_ID"
 			description="COM_REDSLIDER_SECTION_REDSHOP_FIELD_PRODUCT_ID_DESC"
 		/>
+		<field
+			name="redshop_slide_backgroundimage"
+			type="rmedia"
+			label="COM_REDSLIDER_SECTION_REDSHOP_FIELD_SLIDE_BACKGROUND_IMAGE"
+			description="COM_REDSLIDER_SECTION_REDSHOP_FIELD_SLIDE_BACKGROUND_IMAGE_DESC"
+		/>
+		<field
+			name="redshop_slide_class"
+			type="text"
+			default="redshop_slide"
+			label="COM_REDSLIDER_SECTION_REDSHOP_FIELD_REDSHOP_SLIDE_CLASS"
+			description="COM_REDSLIDER_SECTION_REDSHOP_FIELD_REDSHOP_SLIDE_CLASS_DESC"
+		/>
 	</fields>
 </form>

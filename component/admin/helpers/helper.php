@@ -84,7 +84,7 @@ class RedsliderHelperHelper
 
 					if (count($replacedContent))
 					{
-						$slide->template_content = $replacedContent[0];
+						$slide->template_content = JHtml::_('content.prepare', $replacedContent[0]);
 					}
 				}
 			}
@@ -93,5 +93,37 @@ class RedsliderHelperHelper
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Replace tags for HTML content
+	 *
+	 * @param   string  $match          tag search string (maybe include HTML tags)
+	 * @param   string  $replaceString  replaceString
+	 * @param   string  $content        content string
+	 * 
+	 * @return  string  $content
+	 */
+	public static function replaceTagsHTML($match, $replaceString, $content)
+	{
+		$middleMan = strip_tags($match);
+
+		$middleMan = JString::str_ireplace("{", "", $middleMan);
+		$middleMan = JString::str_ireplace("}", "", $middleMan);
+		$middleMan = explode("|", $middleMan);
+
+		if (count($middleMan) > 1)
+		{
+			if (is_numeric($middleMan[1]))
+			{
+				$limit = (int) $middleMan[1];
+
+				$replaceString = JHtml::_('string.truncate', $replaceString, $limit, false, false);
+			}
+		}
+
+		$content = JString::str_ireplace($match, $replaceString, $content);
+
+		return $content;
 	}
 }

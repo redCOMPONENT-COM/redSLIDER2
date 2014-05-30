@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 jimport('joomla.plugin.plugin');
 jimport('redcore.bootstrap');
 
+require_once JPATH_SITE . '/components/com_content/helpers/route.php';
+
 /**
  * Plugins RedSLIDER section article
  *
@@ -64,9 +66,10 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 		{
 			$tags = array(
 					"{article_title}" => JText::_("COM_REDSLIDER_TAG_ARTICLE_TITLE_DESC"),
-					"{article_introtext}" => JText::_("COM_REDSLIDER_TAG_ARTICLE_INTROTEXT_DESC"),
-					"{article_fulltext}" => JText::_("COM_REDSLIDER_TAG_ARTICLE_FULLTEXT_DESC"),
-					"{article_date}" => JText::_("COM_REDSLIDER_TAG_ARTICLE_DATE_DESC")
+					"{article_introtext|<em>limit</em>}" => JText::_("COM_REDSLIDER_TAG_ARTICLE_INTROTEXT_DESC"),
+					"{article_fulltext|<em>limit</em>}" => JText::_("COM_REDSLIDER_TAG_ARTICLE_FULLTEXT_DESC"),
+					"{article_date}" => JText::_("COM_REDSLIDER_TAG_ARTICLE_DATE_DESC"),
+					"{article_link}" => JText::_("COM_REDSLIDER_TAG_ARTICLE_LINK_DESC"),
 				);
 
 			return $tags;
@@ -136,5 +139,95 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 	public function onSlideStore($jtable, $jinput)
 	{
 		return true;
+	}
+
+	/**
+	 * Prepare content for slide show in module
+	 *
+	 * @param   string  $content  Template Content
+	 * @param   object  $slide    Slide result object
+	 *
+	 * @return  string  $content  repaced content
+	 */
+	public function onPrepareTemplateContent($content, $slide)
+	{
+		if ($slide->section === $this->sectionId)
+		{
+			$params = new JRegistry($slide->params);
+			$article = new stdClass;
+
+			$article->id = (int) $params->get('article_id', '0');
+			$article->image = JString::trim($params->get('article_image', ''));
+			$article->slide_class = JString::trim($params->get('article_slide_class', 'article_slide'));
+
+			$articleModel = RModel::getAdminInstance('Article', array('ignore_request' => false), 'com_content');
+			$article->instance = $articleModel->getItem($article->id);
+
+			$matches = array();
+
+			if (preg_match_all('/{article_title[^}]*}/i', $content, $matches) > 0)
+			{
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $article->instance->title, $content);
+					}
+				}
+			}
+
+			if (preg_match_all('/{article_introtext[^}]*}/i', $content, $matches) > 0)
+			{
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = RedsliderHelperHelper::replaceTagsHTML($match[0], $article->instance->introtext, $content);
+					}
+				}
+			}
+
+			if (preg_match_all('/{article_fulltext[^}]*}/i', $content, $matches) > 0)
+			{
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = RedsliderHelperHelper::replaceTagsHTML($match[0], $article->instance->fulltext, $content);
+					}
+				}
+			}
+
+			if (preg_match_all('/{article_date[^}]*}/i', $content, $matches) > 0)
+			{
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $article->instance->created, $content);
+					}
+				}
+			}
+
+			if (preg_match_all('/{article_link[^}]*}/i', $content, $matches) > 0)
+			{
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], ContentHelperRoute::getArticleRoute($article->id), $content);
+					}
+				}
+			}
+
+			// Adding background image to article slide
+			$html  = '<div class=\'' . $article->slide_class . '\' style=\'background-image:url("' . JURI::base() . $article->image . '")\';>';
+			$html .= $content;
+			$html .= '</div>';
+
+			$content = $html;
+
+			return $content;
+		}
 	}
 }
