@@ -15,7 +15,8 @@
 			message="COM_REDSLIDER_SECTION_STANDARD_FIELD_CAPTION_DESC"
 		/>
 		<field name="description"
-			type="textarea"
+			type="editor"
+			cols="80"
 			default=""
 			label="COM_REDSLIDER_SECTION_STANDARD_FIELD_DESCRIPTION"
 			description="COM_REDSLIDER_SECTION_STANDARD_FIELD_DESCRIPTION_DESC"
