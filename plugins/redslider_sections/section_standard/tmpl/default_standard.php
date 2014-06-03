@@ -22,17 +22,6 @@ defined('_JEXEC') or die;
 		<?php echo $field->label; ?>
 	<?php elseif ($field->hidden) : ?>
 		<?php echo $field->input; ?>
-	<?php elseif ($field->name == 'jform[params][slide_image_file]') : ?>
-	<div class="control-label">
-		<?php echo $field->label; ?>
-	</div>
-	<div class="controls">
-		<?php echo $field->input; ?>
-		<?php if (isset($this->item->params['slide_image_file'])): ?>
-			<?php $img_src = JURI::root() . 'media/com_redslider/images/slides/' . $this->item->gallery_id . '/' . $this->item->params['slide_image_file'] ?>
-			<img style="max-width: 300px; max-height: 300px; margin-right: 20px;" class="preview_img img-polaroid pull-left" src="<?php echo $img_src; ?>" />
-		<?php endif; ?>
-	</div>
 	<?php else : ?>
 	<div class="control-label">
 		<?php echo $field->label; ?>

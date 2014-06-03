@@ -3,8 +3,7 @@
 	<fields name="params">
 		<field
 			name="slide_image_file"
-			type="file"
-			accept="image/*"
+			type="rmedia"
 			label="COM_REDSLIDER_STANDARD_IMAGE_FILE"
 			description="COM_REDSLIDER_STANDARD_IMAGE_FILE_DESC"
 		/>
