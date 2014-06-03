@@ -15,10 +15,17 @@ jimport('redcore.bootstrap');
 require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/redshop.cfg.php';
 require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/configuration.php';
 require_once JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
+require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/template.php';
 require_once JPATH_SITE . '/components/com_redshop/helpers/product.php';
+require_once JPATH_ROOT . '/components/com_redshop/helpers/redshop.js.php';
+require_once JPATH_SITE . '/components/com_redshop/helpers/extra_field.php';
 
 $Redconfiguration = new Redconfiguration;
 $Redconfiguration->defineDynamicVars();
+
+JHTML::Script('fetchscript.js', 'components/com_redshop/assets/js/', false);
+JHTML::Script('attribute.js', 'components/com_redshop/assets/js/', false);
+JHTML::Script('common.js', 'components/com_redshop/assets/js/', false);
 
 /**
  * Plugins RedSLIDER section redSHOP
@@ -190,16 +197,58 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 			{
 				$user = JFactory::getUser();
 				$params = new JRegistry($slide->params);
+				$productHelper   = new producthelper;
+				$redTemplate = new Redtemplate;
+				$extraField = new extraField;
+
 				$product = new stdClass;
 				$product->id = (int) $params->get('product_id', '0');
 				$product->background = JString::trim($params->get('redshop_slide_backgroundimage', ''));
 				$product->slideClass = JString::trim($params->get('redshop_slide_class', 'redshop_slide'));
 				$product->folder = '/components/com_redshop/assets/images/product/';
 
-				$productHelper   = new producthelper;
-
 				$product->instance = $productHelper->getProductById($product->id);
 				$product->prices = $productHelper->getProductNetPrice($product->id, $user->id);
+				$product->template = $redTemplate->getTemplate("product", $product->instance->product_template);
+
+				if (count($product->template))
+				{
+					$product->template = $product->template[0];
+				}
+
+				$temp = $productHelper->getProductUserfieldFromTemplate($product->template->template_desc);
+
+				$product->fields = new stdClass;
+				$product->fields->template = $temp[0];
+				$product->fields->data = $temp[1];
+				$product->totalFields = count($product->fields->data);
+
+				$product->children = $productHelper->getChildProduct($product->id);
+				$product->isChild = (bool) count($product->children);
+
+				$product->accessories = $productHelper->getProductAccessory(0, $product->id);
+
+				if ($product->isChild)
+				{
+					$product->attributes = array();
+				}
+				else
+				{
+					$attributes_set = array();
+
+					if ($product->instance->attribute_set_id > 0)
+					{
+						$attributes_set = $productHelper->getProductAttribute(0, $product->instance->attribute_set_id, 0, 1);
+					}
+
+					$product->attributes = $productHelper->getProductAttribute($product->id);
+					$product->attributes = array_merge($product->attributes, $attributes_set);
+				}
+
+				$product->totalAttributes = count($product->attributes);
+				$product->totalAccessories = count($product->accessories);
+
+				// Repalce tags
 
 				if (preg_match_all('/{product_name[^}]*}/i', $content, $matches) > 0)
 				{
@@ -240,7 +289,14 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = JString::str_ireplace($match[0], $product->prices->product_price, $content);
+							$price = '';
+
+							if (isset($product->prices['product_price']))
+							{
+								$price = $productHelper->getProductFormattedPrice($product->prices['product_price']);
+							}
+
+							$content = JString::str_ireplace($match[0], $price, $content);
 						}
 					}
 				}
@@ -353,6 +409,31 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 							{
 								$replaceString = '';
 							}
+
+							$content = JString::str_ireplace($match[0], $replaceString, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{form_addtocart:[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							$template = strip_tags($match[0]);
+							$replaceString = $productHelper->replaceCartTemplate(
+													$product->id,
+													0,
+													0,
+													0,
+													$template,
+													$product->isChild,
+													$product->fields->data,
+													$product->totalAttributes,
+													$product->totalAccessories,
+													$product->totalFields
+												);
 
 							$content = JString::str_ireplace($match[0], $replaceString, $content);
 						}
