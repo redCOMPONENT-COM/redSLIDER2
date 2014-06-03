@@ -53,7 +53,7 @@
 		</field>
 
 		<field
-			name="lft"		
+			name="slide_ordering"		
 			type="rlslideordering"
 			label="COM_REDSLIDER_SLIDE_ORDERING"
 			description="COM_REDSLIDER_SLIDE_ORDERING_DESC"
@@ -68,5 +68,15 @@
 			<option value="1">JPUBLISHED</option>
 			<option value="0">JUNPUBLISHED</option>
 		</field>
+
+		<field
+			name="lft"
+			type="hidden"
+			filter="unset"/>
+
+		<field
+			name="rgt"
+			type="hidden"
+			filter="unset"/>
 	</fieldset>
 </form>
