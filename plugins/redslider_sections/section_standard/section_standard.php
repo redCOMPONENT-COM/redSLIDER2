@@ -64,7 +64,13 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	{
 		if ($sectionId === $this->sectionId)
 		{
-			// Do nothing because section standard has got no tag
+			$tags = array(
+					'{standard_description}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_DESCRIPTION_DESC"),
+					'{standard_link}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_LINK_DESC"),
+					'{standard_linktext}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_LINKTEXT_DESC"),
+				);
+
+			return $tags;
 		}
 	}
 
@@ -131,5 +137,73 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	public function onSlideStore($jtable, $jinput)
 	{
 		return true;
+	}
+
+	/**
+	 * Prepare content for slide show in module
+	 *
+	 * @param   string  $content  Template Content
+	 * @param   object  $slide    Slide result object
+	 *
+	 * @return  string  $content  repaced content
+	 */
+	public function onPrepareTemplateContent($content, $slide)
+	{
+		if ($slide->section === $this->sectionId)
+		{
+			$params = new JRegistry($slide->params);
+
+			$standard = new stdClass;
+			$standard->background = $params->get('slide_image_file', '');
+			$standard->caption = $params->get('caption', '');
+			$standard->description = $params->get('description', '');
+			$standard->link = $params->get('link', '');
+			$standard->linktext = $params->get('linktext', '');
+			$standard->suffixClass = $params->get('suffix_class', 'standard_slide');
+
+			$matches = array();
+
+			if (preg_match_all('/{standard_description[^}]*}/i', $content, $matches) > 0)
+			{
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $standard->description, $content);
+					}
+				}
+			}
+
+			if (preg_match_all('/{standard_link[^}]*}/i', $content, $matches) > 0)
+			{
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $standard->link, $content);
+					}
+				}
+			}
+
+			if (preg_match_all('/{standard_linktext[^}]*}/i', $content, $matches) > 0)
+			{
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $standard->linktext, $content);
+					}
+				}
+			}
+
+			// Adding background image to standard slide
+			$html  = '<div class=\'' . $standard->suffixClass . '\' style=\'background-image:url("' . JURI::base() . $standard->background . '")\';>';
+			$html .= $content;
+			$html .= '</div>';
+
+			$content = $html;
+
+			return $content;
+		}
 	}
 }

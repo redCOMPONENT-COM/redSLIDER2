@@ -44,7 +44,7 @@
 		/>
 		<field name="suffix_class"
 			type="text"
-			default=""
+			default="standard_slide"
 			label="COM_REDSLIDER_SECTION_STANDARD_FIELD_SUFFIX_CLASS"
 			description="COM_REDSLIDER_SECTION_STANDARD_FIELD_SUFFIX_CLASS_DESC"
 			message="COM_REDSLIDER_SECTION_STANDARD_FIELD_SUFFIX_CLASS_DESC"
