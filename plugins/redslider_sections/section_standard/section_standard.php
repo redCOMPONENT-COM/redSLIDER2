@@ -84,10 +84,10 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	 */
 	public function onSlidePrepareForm($form, $sectionId)
 	{
-		$return = false;
-
 		if ($sectionId === $this->sectionId)
 		{
+			$return = false;
+
 			$app = JFactory::getApplication();
 
 			if ($app->isAdmin())
@@ -95,9 +95,9 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 				JForm::addFormPath(__DIR__ . '/forms/');
 				$return = $form->loadFile('fields_standard', false);
 			}
-		}
 
-		return $return;
+			return $return;
+		}
 	}
 
 	/**
@@ -110,10 +110,10 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	 */
 	public function onSlidePrepareTemplate($view, $sectionId)
 	{
-		$return = false;
-
 		if ($sectionId === $this->sectionId)
 		{
+			$return = false;
+
 			$app = JFactory::getApplication();
 
 			if ($app->isAdmin())
@@ -121,9 +121,9 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 				$view->addTemplatePath(__DIR__ . '/tmpl/');
 				$return = $view->loadTemplate('standard');
 			}
-		}
 
-		return $return;
+			return $return;
+		}
 	}
 
 	/**

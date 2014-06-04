@@ -95,9 +95,8 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 					"{product_name}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_NAME_DESC"),
 					"{product_short_description}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_SHORT_DESCRIPTION_DESC"),
 					"{product_description}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_DESCRIPTION_DESC"),
-					"{product_attribute}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_ATTRIBUTE_DESC"),
-					"{product_quantity}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_QUANTITY_DESC"),
-					"{addtocart_button}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_ADDTOCART_BUTTON_DESC"),
+					"{attribute_template:<em>template</em>}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_ATTRIBUTE_DESC"),
+					"{form_addtocart:<em>template</em>}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_ADDTOCART_BUTTON_DESC"),
 					"{product_thumb_image|<em>width</em>|<em>height</em>}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_THUMB_IMAGE_DESC"),
 					"{product_thumb_image_link}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_THUMB_IMAGE_LINK_DESC"),
 					"{product_image|<em>width</em>|<em>height</em>}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_DESC"),
@@ -119,10 +118,10 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 	 */
 	public function onSlidePrepareForm($form, $sectionId)
 	{
-		$return = false;
-
 		if ($sectionId === $this->sectionId)
 		{
+			$return = false;
+
 			$app = JFactory::getApplication();
 
 			if ($app->isAdmin())
@@ -137,9 +136,9 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 					$app->enqueueMessage(JText::_('PLG_REDSLIDER_SECTION_REDSHOP_INSTALL_COM_REDSHOP_FIRST'), $this->msgLevel);
 				}
 			}
-		}
 
-		return $return;
+			return $return;
+		}
 	}
 
 	/**
@@ -152,10 +151,10 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 	 */
 	public function onSlidePrepareTemplate($view, $sectionId)
 	{
-		$return = false;
-
 		if ($sectionId === $this->sectionId)
 		{
+			$return = false;
+
 			$app = JFactory::getApplication();
 
 			if ($app->isAdmin())
@@ -163,9 +162,9 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 				$view->addTemplatePath(__DIR__ . '/tmpl/');
 				$return = $view->loadTemplate('redshop');
 			}
-		}
 
-		return $return;
+			return $return;
+		}
 	}
 
 	/**
@@ -434,6 +433,24 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 													$product->totalAccessories,
 													$product->totalFields
 												);
+
+							$content = JString::str_ireplace($match[0], $replaceString, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{attribute_template:[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							$template = strip_tags($match[0]);
+
+							$replaceString = $productHelper->replaceAttributeData($product->instance->product_id, 0, 0, $product->attributes, $template);
+
+							var_dump($replaceString);
+							exit;
 
 							$content = JString::str_ireplace($match[0], $replaceString, $content);
 						}

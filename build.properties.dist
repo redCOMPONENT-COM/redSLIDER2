@@ -3,15 +3,15 @@
 # more info at: https://redweb.atlassian.net/wiki/display/RWEB/Using+PHING+for+packaging+and+testing+an+extension
 
 # Extension details:
-extension.name=redslider
-extension.version=2
+comp.name=redslider
+comp.version=2.0.0
 
 # Testing Joomla site localhost folder used by build.xml
-www.dir=/var/www/redSHOP2
+www.dir=/var/www/redslider2
 joomla.version=2.5
 
 # The current GIT repository location
-repo.dir=/wamp/www/redslider2
+repo.dir=/home/albert/github/redSLIDER2
 
 # Folder to create the extension .zip build package used by component_packager.xml
-package.dir=/wamp/www/builds
+package.dir=/home/albert/git.package
