@@ -21,6 +21,16 @@ RBootstrap::bootstrap();
 
 require_once JPATH_SITE . '/modules/mod_redslider/helper.php';
 
+// Get params
+$galleryId = (int) $params->get('gallery_id', 0);
+$effectType = $params->get('effect_type', 'slide');
+$class = $params->get('slider_class', 'flexslider');
+
+
+$slides = ModredSLIDERHelper::getSlides($galleryId);
+
+JHtml::_('rjquery.flexslider', '.' . $class);
+
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 $displayType = $params->get('display', 0);
 

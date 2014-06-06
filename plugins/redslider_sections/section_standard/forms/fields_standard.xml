@@ -3,8 +3,7 @@
 	<fields name="params">
 		<field
 			name="slide_image_file"
-			type="file"
-			accept="image/*"
+			type="rmedia"
 			label="COM_REDSLIDER_STANDARD_IMAGE_FILE"
 			description="COM_REDSLIDER_STANDARD_IMAGE_FILE_DESC"
 		/>
@@ -16,7 +15,8 @@
 			message="COM_REDSLIDER_SECTION_STANDARD_FIELD_CAPTION_DESC"
 		/>
 		<field name="description"
-			type="textarea"
+			type="editor"
+			cols="80"
 			default=""
 			label="COM_REDSLIDER_SECTION_STANDARD_FIELD_DESCRIPTION"
 			description="COM_REDSLIDER_SECTION_STANDARD_FIELD_DESCRIPTION_DESC"
@@ -41,11 +41,11 @@
 			default=""
 			label="COM_REDSLIDER_SECTION_STANDARD_FIELD_LINKTEXT"
 			description="COM_REDSLIDER_SECTION_STANDARD_FIELD_LINKTEXT_DESC"
-			message="COM_REDSLIDER_SECTION_STANDARD_FIELD_LINK_DESC"
+			message="COM_REDSLIDER_SECTION_STANDARD_FIELD_LINKTEXT_DESC"
 		/>
 		<field name="suffix_class"
 			type="text"
-			default=""
+			default="standard_slide"
 			label="COM_REDSLIDER_SECTION_STANDARD_FIELD_SUFFIX_CLASS"
 			description="COM_REDSLIDER_SECTION_STANDARD_FIELD_SUFFIX_CLASS_DESC"
 			message="COM_REDSLIDER_SECTION_STANDARD_FIELD_SUFFIX_CLASS_DESC"

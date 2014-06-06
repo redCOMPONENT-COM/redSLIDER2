@@ -60,12 +60,12 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 	 */
 	public function getTagNames($sectionId)
 	{
+		// TODO: Local video - waiting for opinion
 		if ($sectionId === $this->sectionId)
 		{
 			$tags = array(
 					"{youtube}" => JText::_("COM_REDSLIDER_TAG_VIDEO_YOUTUBE_DESC"),
 					"{vimeo}" => JText::_("COM_REDSLIDER_TAG_VIDEO_VIMEO_DESC"),
-					"{local}" => JText::_("COM_REDSLIDER_TAG_VIDEO_LOCAL_DESC"),
 					"{other}" => JText::_("COM_REDSLIDER_TAG_VIDEO_OTHER_DESC"),
 				);
 
@@ -109,6 +109,7 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 	 */
 	public function onSlidePrepareTemplate($view, $sectionId)
 	{
+		// TODO: Local video - waiting for opinion
 		$return = false;
 
 		if ($sectionId === $this->sectionId)
@@ -130,10 +131,6 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 						elseif (JString::strpos($field->id, "jform_params_youtube") !== false)
 						{
 							$view->outputFields["COM_REDSLIDER_SECTION_VIDEO_PANE_YOUTUBE"][] = $field;
-						}
-						elseif (JString::strpos($field->id, "jform_params_local") !== false)
-						{
-							$view->outputFields["COM_REDSLIDER_SECTION_VIDEO_PANE_LOCAL"][] = $field;
 						}
 						elseif (JString::strpos($field->id, "jform_params_other") !== false)
 						{
@@ -161,5 +158,193 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 	public function onSlideStore($jtable, $jinput)
 	{
 		return true;
+	}
+
+	/**
+	 * Prepare content for slide show in module
+	 *
+	 * @param   string  $content  Template Content
+	 * @param   object  $slide    Slide result object
+	 *
+	 * @return  string  $content  repaced content
+	 */
+	public function onPrepareTemplateContent($content, $slide)
+	{
+		if ($slide->section === $this->sectionId)
+		{
+			$params = new JRegistry($slide->params);
+
+			$matches = array();
+
+			// Case Vimeo
+			if (preg_match_all('/{vimeo[^}]*}/i', $content, $matches) > 0)
+			{
+				$vimeo = new stdClass;
+				$vimeo->id = $params->get('vimeo_id');
+				$vimeo->width = $params->get('vimeo_width');
+				$vimeo->height = $params->get('vimeo_height');
+				$vimeo->portrait = $params->get('vimeo_portrait');
+				$vimeo->title = $params->get('vimeo_title');
+				$vimeo->byline = $params->get('vimeo_byline');
+				$vimeo->autoplay = $params->get('vimeo_autoplay');
+				$vimeo->loop = $params->get('vimeo_loop');
+				$vimeo->color = $params->get('vimeo_color');
+				$vimeo->color = JString::str_ireplace("#", "", $vimeo->color);
+
+				$replaceString = '';
+
+				if (isset($vimeo->id) && (JString::trim($vimeo->id)))
+				{
+					$replaceString .= '<iframe ';
+					$replaceString .= 'src="//player.vimeo.com/video/' . JString::trim($vimeo->id) . '?color=' . JString::trim($vimeo->color);
+
+					if ($vimeo->loop)
+					{
+						$replaceString .= '&amp;loop=1';
+					}
+
+					if ($vimeo->autoplay)
+					{
+						$replaceString .= '&amp;autoplay=1';
+					}
+
+					if (!$vimeo->byline)
+					{
+						$replaceString .= '&amp;byline=0';
+					}
+
+					if (!$vimeo->title)
+					{
+						$replaceString .= '&amp;title=0';
+					}
+
+					if (!$vimeo->portrait)
+					{
+						$replaceString .= '&amp;portrait=0';
+					}
+
+					$replaceString .= '" ';
+
+					if (!is_numeric($vimeo->width))
+					{
+						$replaceString .= 'width="560" ';
+					}
+					else
+					{
+						$replaceString .= 'width="' . JString::trim($vimeo->width) . '" ';
+					}
+
+					if (!is_numeric($vimeo->height))
+					{
+						$replaceString .= 'height="315" ';
+					}
+					else
+					{
+						$replaceString .= 'height="' . JString::trim($vimeo->height) . '" ';
+					}
+
+					$replaceString .= 'frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+				}
+
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $replaceString, $content);
+					}
+				}
+			}
+			// Case Youtube
+			if (preg_match_all('/{youtube[^}]*}/i', $content, $matches) > 0)
+			{
+				$youtube = new stdClass;
+				$youtube->id = $params->get('youtube_id');
+				$youtube->width = $params->get('youtube_width');
+				$youtube->height = $params->get('youtube_height');
+				$youtube->suggested = $params->get('youtube_suggested');
+				$youtube->privacy_enhance = $params->get('youtube_privacy_enhanced');
+
+				$replaceString = '';
+
+				if (isset($youtube->id) && (JString::trim($youtube->id)))
+				{
+					$replaceString .= '<iframe ';
+
+					if (!is_numeric($youtube->width))
+					{
+						$replaceString .= 'width="560" ';
+					}
+					else
+					{
+						$replaceString .= 'width="' . JString::trim($youtube->width) . '" ';
+					}
+
+					if (!is_numeric($youtube->height))
+					{
+						$replaceString .= 'height="315" ';
+					}
+					else
+					{
+						$replaceString .= 'height="' . JString::trim($youtube->height) . '" ';
+					}
+
+					if ($youtube->privacy_enhance)
+					{
+						$replaceString .= 'src="//www.youtube-nocookie.com/embed/' . JString::trim($youtube->id) . ' ';
+					}
+					else
+					{
+						$replaceString .= 'src="//www.youtube.com/embed/' . JString::trim($youtube->id) . ' ';
+					}
+
+					if (!$youtube->suggested)
+					{
+						$replaceString .= '?rel=0" ';
+					}
+					else
+					{
+						$replaceString .= '" ';
+					}
+
+					$replaceString .= 'frameborder="0" allowfullscreen></iframe>';
+				}
+
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $replaceString, $content);
+					}
+				}
+			}
+
+			// Case Local Video
+			if (preg_match_all('/{local[^}]*}/i', $content, $matches) > 0)
+			{
+				$local = new stdClass;
+				$local->media = $params->get('local_media');
+				$local->width = $params->get('local_width');
+				$local->height = $params->get('local_height');
+
+				// TODO: Waiting opinion what video player will be used to stream local video from media manager
+			}
+
+			// Case Other Iframe Video Embed
+			if (preg_match_all('/{other[^}]*}/i', $content, $matches) > 0)
+			{
+				$other = new stdClass;
+				$other->iframe = $params->get('other_iframe', '');
+
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $other->iframe, $content);
+					}
+				}
+			}
+
+			return $content;
+		}
 	}
 }

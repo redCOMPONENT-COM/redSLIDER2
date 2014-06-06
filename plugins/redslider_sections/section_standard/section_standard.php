@@ -64,7 +64,13 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	{
 		if ($sectionId === $this->sectionId)
 		{
-			// Do nothing because section standard has got no tag
+			$tags = array(
+					'{standard_description}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_DESCRIPTION_DESC"),
+					'{standard_link}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_LINK_DESC"),
+					'{standard_linktext}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_LINKTEXT_DESC"),
+				);
+
+			return $tags;
 		}
 	}
 
@@ -78,10 +84,10 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	 */
 	public function onSlidePrepareForm($form, $sectionId)
 	{
-		$return = false;
-
 		if ($sectionId === $this->sectionId)
 		{
+			$return = false;
+
 			$app = JFactory::getApplication();
 
 			if ($app->isAdmin())
@@ -89,9 +95,9 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 				JForm::addFormPath(__DIR__ . '/forms/');
 				$return = $form->loadFile('fields_standard', false);
 			}
-		}
 
-		return $return;
+			return $return;
+		}
 	}
 
 	/**
@@ -104,10 +110,10 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	 */
 	public function onSlidePrepareTemplate($view, $sectionId)
 	{
-		$return = false;
-
 		if ($sectionId === $this->sectionId)
 		{
+			$return = false;
+
 			$app = JFactory::getApplication();
 
 			if ($app->isAdmin())
@@ -115,9 +121,9 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 				$view->addTemplatePath(__DIR__ . '/tmpl/');
 				$return = $view->loadTemplate('standard');
 			}
-		}
 
-		return $return;
+			return $return;
+		}
 	}
 
 	/**
@@ -130,39 +136,74 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	 */
 	public function onSlideStore($jtable, $jinput)
 	{
-		$jform = $jinput->get('jform', null, 'array');
-		$files = $jinput->files->get('jform');
-		$gallery_id = $jform['gallery_id'];
+		return true;
+	}
 
-		if ($jform['section'] === $this->sectionId)
+	/**
+	 * Prepare content for slide show in module
+	 *
+	 * @param   string  $content  Template Content
+	 * @param   object  $slide    Slide result object
+	 *
+	 * @return  string  $content  repaced content
+	 */
+	public function onPrepareTemplateContent($content, $slide)
+	{
+		if ($slide->section === $this->sectionId)
 		{
-			if (isset($files['params']))
+			$params = new JRegistry($slide->params);
+
+			$standard = new stdClass;
+			$standard->background = $params->get('slide_image_file', '');
+			$standard->caption = $params->get('caption', '');
+			$standard->description = $params->get('description', '');
+			$standard->link = $params->get('link', '');
+			$standard->linktext = $params->get('linktext', '');
+			$standard->suffixClass = $params->get('suffix_class', 'standard_slide');
+
+			$matches = array();
+
+			if (preg_match_all('/{standard_description[^}]*}/i', $content, $matches) > 0)
 			{
-				$images = $files['params'];
-
-				$imageFolder = JPATH_ROOT . '/media/com_redslider/images/slides/' . $gallery_id . '/';
-
-				if (!JFolder::exists($imageFolder))
+				foreach ($matches as $match)
 				{
-					JFolder::create($imageFolder);
-				}
-
-				// Upload and save image
-				if ($images['slide_image_file']['name'] != '')
-				{
-					$images['slide_image_file']['name'] = time() . '_' . JFile::makeSafe($images['slide_image_file']['name']);
-					$itemImageUpload = true;
-					$jform['params']['slide_image_file'] = $images['slide_image_file']['name'];
-					$jinput->set('jform', $jform);
-				}
-
-				if ($itemImageUpload)
-				{
-					JFile::upload($images['slide_image_file']['tmp_name'], $imageFolder . $images['slide_image_file']['name']);
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $standard->description, $content);
+					}
 				}
 			}
-		}
 
-		return true;
+			if (preg_match_all('/{standard_link[^}]*}/i', $content, $matches) > 0)
+			{
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $standard->link, $content);
+					}
+				}
+			}
+
+			if (preg_match_all('/{standard_linktext[^}]*}/i', $content, $matches) > 0)
+			{
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $standard->linktext, $content);
+					}
+				}
+			}
+
+			// Adding background image to standard slide
+			$html  = '<div class=\'' . $standard->suffixClass . '\' style=\'background-image:url("' . JURI::base() . $standard->background . '")\';>';
+			$html .= $content;
+			$html .= '</div>';
+
+			$content = $html;
+
+			return $content;
+		}
 	}
 }

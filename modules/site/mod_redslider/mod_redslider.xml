@@ -21,11 +21,39 @@
 		<language tag="da-DK">language/da-DK/da-DK.mod_redslider.sys.ini</language>
 	</languages>
 	<config>
-		<fields name="params" addfieldpath="/libraries/redslider/form/fields">
-			<fieldset name="basic">
+		<fields name="params">
+			<fieldset name="basic" addfieldpath="/libraries/redslider/form/fields">
+				<field
+					name="gallery_id"
+					type="rlgallerylist"
+					label="MOD_REDSLIDER_GALLERY_ID"
+					description="MOD_REDSLIDER_GALLERY_ID_DESC">
+					<option>MOD_REDSLIDER_GALLERY_SELECT</option>
+				</field>
 			</fieldset>
-			<fieldset
-				name="advanced">
+			<fieldset name="STYLE" addfieldpath="/libraries/redslider/form/fields">
+				<field
+					name="slider_class"
+					type="text"
+					label="MOD_REDSLIDER_STYLE_SLIDER_CLASS"
+					description="MOD_REDSLIDER_STYLE_SLIDER_CLASS_DESC"
+					default="flexslider">
+					<option value="slide">MOD_REDSLIDER_EFFECT_TYPE_SLIDE</option>
+				</field>
+
+			</fieldset>
+			<fieldset name="EFFECTS" addfieldpath="/libraries/redslider/form/fields">
+				<field
+					name="effect_type"
+					type="list"
+					label="MOD_REDSLIDER_EFFECT_TYPE"
+					description="MOD_REDSLIDER_EFFECT_TYPE_DESC"
+					default="slide">
+					<option value="slide">MOD_REDSLIDER_EFFECT_TYPE_SLIDE</option>
+				</field>
+
+			</fieldset>
+			<fieldset name="advanced">
 				<field
 					name="layout"
 					type="modulelayout"

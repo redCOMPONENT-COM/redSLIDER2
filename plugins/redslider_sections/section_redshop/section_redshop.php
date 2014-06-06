@@ -12,7 +12,20 @@ defined('_JEXEC') or die;
 jimport('joomla.plugin.plugin');
 jimport('redcore.bootstrap');
 
+require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/redshop.cfg.php';
+require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/configuration.php';
 require_once JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
+require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/template.php';
+require_once JPATH_SITE . '/components/com_redshop/helpers/product.php';
+require_once JPATH_ROOT . '/components/com_redshop/helpers/redshop.js.php';
+require_once JPATH_SITE . '/components/com_redshop/helpers/extra_field.php';
+
+$Redconfiguration = new Redconfiguration;
+$Redconfiguration->defineDynamicVars();
+
+JHTML::Script('fetchscript.js', 'components/com_redshop/assets/js/', false);
+JHTML::Script('attribute.js', 'components/com_redshop/assets/js/', false);
+JHTML::Script('common.js', 'components/com_redshop/assets/js/', false);
 
 /**
  * Plugins RedSLIDER section redSHOP
@@ -80,11 +93,14 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 
 			$tags = array(
 					"{product_name}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_NAME_DESC"),
+					"{product_short_description}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_SHORT_DESCRIPTION_DESC"),
 					"{product_description}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_DESCRIPTION_DESC"),
-					"{product_attribute}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_ATTRIBUTE_DESC"),
-					"{product_quantity}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_QUANTITY_DESC"),
-					"{addtocart_button}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_ADDTOCART_BUTTON_DESC"),
-					"{product_image}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_DESC"),
+					"{attribute_template:<em>template</em>}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_ATTRIBUTE_DESC"),
+					"{form_addtocart:<em>template</em>}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_ADDTOCART_BUTTON_DESC"),
+					"{product_thumb_image|<em>width</em>|<em>height</em>}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_THUMB_IMAGE_DESC"),
+					"{product_thumb_image_link}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_THUMB_IMAGE_LINK_DESC"),
+					"{product_image|<em>width</em>|<em>height</em>}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_DESC"),
+					"{product_image_link}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_LINK_DESC"),
 					"{product_price}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_PRICE_DESC"),
 				);
 
@@ -102,10 +118,10 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 	 */
 	public function onSlidePrepareForm($form, $sectionId)
 	{
-		$return = false;
-
 		if ($sectionId === $this->sectionId)
 		{
+			$return = false;
+
 			$app = JFactory::getApplication();
 
 			if ($app->isAdmin())
@@ -120,9 +136,9 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 					$app->enqueueMessage(JText::_('PLG_REDSLIDER_SECTION_REDSHOP_INSTALL_COM_REDSHOP_FIRST'), $this->msgLevel);
 				}
 			}
-		}
 
-		return $return;
+			return $return;
+		}
 	}
 
 	/**
@@ -135,10 +151,10 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 	 */
 	public function onSlidePrepareTemplate($view, $sectionId)
 	{
-		$return = false;
-
 		if ($sectionId === $this->sectionId)
 		{
+			$return = false;
+
 			$app = JFactory::getApplication();
 
 			if ($app->isAdmin())
@@ -146,9 +162,9 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 				$view->addTemplatePath(__DIR__ . '/tmpl/');
 				$return = $view->loadTemplate('redshop');
 			}
-		}
 
-		return $return;
+			return $return;
+		}
 	}
 
 	/**
@@ -162,5 +178,291 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 	public function onSlideStore($jtable, $jinput)
 	{
 		return true;
+	}
+
+	/**
+	 * Prepare content for slide show in module
+	 *
+	 * @param   string  $content  Template Content
+	 * @param   object  $slide    Slide result object
+	 *
+	 * @return  string  $content  repaced content
+	 */
+	public function onPrepareTemplateContent($content, $slide)
+	{
+		if ($slide->section === $this->sectionId)
+		{
+			if (RedsliderHelperHelper::checkExtension($this->extensionName))
+			{
+				$user = JFactory::getUser();
+				$params = new JRegistry($slide->params);
+				$productHelper   = new producthelper;
+				$redTemplate = new Redtemplate;
+				$extraField = new extraField;
+
+				$product = new stdClass;
+				$product->id = (int) $params->get('product_id', '0');
+				$product->background = JString::trim($params->get('redshop_slide_backgroundimage', ''));
+				$product->slideClass = JString::trim($params->get('redshop_slide_class', 'redshop_slide'));
+				$product->folder = '/components/com_redshop/assets/images/product/';
+
+				$product->instance = $productHelper->getProductById($product->id);
+				$product->prices = $productHelper->getProductNetPrice($product->id, $user->id);
+				$product->template = $redTemplate->getTemplate("product", $product->instance->product_template);
+
+				if (count($product->template))
+				{
+					$product->template = $product->template[0];
+				}
+
+				$temp = $productHelper->getProductUserfieldFromTemplate($product->template->template_desc);
+
+				$product->fields = new stdClass;
+				$product->fields->template = $temp[0];
+				$product->fields->data = $temp[1];
+				$product->totalFields = count($product->fields->data);
+
+				$product->children = $productHelper->getChildProduct($product->id);
+				$product->isChild = (bool) count($product->children);
+
+				$product->accessories = $productHelper->getProductAccessory(0, $product->id);
+
+				if ($product->isChild)
+				{
+					$product->attributes = array();
+				}
+				else
+				{
+					$attributes_set = array();
+
+					if ($product->instance->attribute_set_id > 0)
+					{
+						$attributes_set = $productHelper->getProductAttribute(0, $product->instance->attribute_set_id, 0, 1);
+					}
+
+					$product->attributes = $productHelper->getProductAttribute($product->id);
+					$product->attributes = array_merge($product->attributes, $attributes_set);
+				}
+
+				$product->totalAttributes = count($product->attributes);
+				$product->totalAccessories = count($product->accessories);
+
+				// Repalce tags
+
+				if (preg_match_all('/{product_name[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							$content = JString::str_ireplace($match[0], $product->instance->product_name, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{product_short_description[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							$content = JString::str_ireplace($match[0], $product->instance->product_s_desc, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{product_description[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							$content = JString::str_ireplace($match[0], $product->instance->product_desc, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{product_price[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							$price = '';
+
+							if (isset($product->prices['product_price']))
+							{
+								$price = $productHelper->getProductFormattedPrice($product->prices['product_price']);
+							}
+
+							$content = JString::str_ireplace($match[0], $price, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{product_image[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							if (isset($product->instance->product_full_image) && $product->instance->product_full_image)
+							{
+								$middleMan = strip_tags($match[0]);
+								$middleMan = JString::str_ireplace('{', '', $middleMan);
+								$middleMan = JString::str_ireplace('}', '', $middleMan);
+								$middleMan = explode('|', $middleMan);
+
+								$replaceString = '<img src="' . JURI::base() . $product->folder . $product->instance->product_full_image . '" ';
+
+								if (isset($middleMan[1]) && is_numeric($middleMan[1]))
+								{
+									$replaceString .= 'width="' . $middleMan[1] . '" ';
+								}
+
+								if (isset($middleMan[2]) && is_numeric($middleMan[2]))
+								{
+									$replaceString .= 'height="' . $middleMan[2] . '" ';
+								}
+
+								$replaceString .= '/>';
+							}
+							else
+							{
+								$replaceString = '';
+							}
+
+							$content = JString::str_ireplace($match[0], $replaceString, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{product_image_link[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							if (isset($product->instance->product_full_image) && $product->instance->product_full_image)
+							{
+								$replaceString = JURI::base() . $product->folder . $product->instance->product_full_image;
+							}
+							else
+							{
+								$replaceString = '';
+							}
+
+							$content = JString::str_ireplace($match[0], $replaceString, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{product_thumb_image[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							if (isset($product->instance->product_thumb_image) && $product->instance->product_thumb_image)
+							{
+								$middleMan = strip_tags($match[0]);
+								$middleMan = JString::str_ireplace('{', '', $middleMan);
+								$middleMan = JString::str_ireplace('}', '', $middleMan);
+								$middleMan = explode('|', $middleMan);
+
+								$replaceString = '<img src="' . JURI::base() . $product->folder . $product->instance->product_thumb_image . '" ';
+
+								if (isset($middleMan[1]) && is_numeric($middleMan[1]))
+								{
+									$replaceString .= 'width="' . $middleMan[1] . '" ';
+								}
+
+								if (isset($middleMan[2]) && is_numeric($middleMan[2]))
+								{
+									$replaceString .= 'height="' . $middleMan[2] . '" ';
+								}
+
+								$replaceString .= '/>';
+							}
+							else
+							{
+								$replaceString = '';
+							}
+
+							$content = JString::str_ireplace($match[0], $replaceString, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{product_thumb_image_link[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							if (isset($product->instance->product_thumb_image) && $product->instance->product_thumb_image)
+							{
+								$replaceString = JURI::base() . $product->folder . $product->instance->product_thumb_image;
+							}
+							else
+							{
+								$replaceString = '';
+							}
+
+							$content = JString::str_ireplace($match[0], $replaceString, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{form_addtocart:[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							$template = strip_tags($match[0]);
+							$replaceString = $productHelper->replaceCartTemplate(
+													$product->id,
+													0,
+													0,
+													0,
+													$template,
+													$product->isChild,
+													$product->fields->data,
+													$product->totalAttributes,
+													$product->totalAccessories,
+													$product->totalFields
+												);
+
+							$content = JString::str_ireplace($match[0], $replaceString, $content);
+						}
+					}
+				}
+
+				if (preg_match_all('/{attribute_template:[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							$template = strip_tags($match[0]);
+
+							$replaceString = $productHelper->replaceAttributeData($product->instance->product_id, 0, 0, $product->attributes, $template);
+
+							$content = JString::str_ireplace($match[0], $replaceString, $content);
+						}
+					}
+				}
+
+				// Adding background image to redshop slide
+				$html  = '<div class=\'' . $product->slideClass . '\' style=\'background-image:url("' . JURI::base() . $product->background . '")\';>';
+				$html .= $content;
+				$html .= '</div>';
+
+				$content = $html;
+
+				return $content;
+			}
+		}
 	}
 }

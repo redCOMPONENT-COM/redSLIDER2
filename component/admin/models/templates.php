@@ -52,9 +52,9 @@ class RedsliderModelTemplates extends RModelList
 		if (empty($config['filter_fields']))
 		{
 			$config['filter_fields'] = array(
-				'g.title', 'title',
-				'g.published', 'published',
-				'g.id',
+				't.title', 'title',
+				't.published', 'published',
+				't.id',
 			);
 		}
 
@@ -94,6 +94,14 @@ class RedsliderModelTemplates extends RModelList
 		elseif ($published === '')
 		{
 			$query->where('(t.published IN (0, 1))');
+		}
+
+		// Filter by id
+		$templateId = $this->getState('t.id');
+
+		if (is_numeric($templateId))
+		{
+			$query->where('t.id = ' . (int) $templateId);
 		}
 
 		// Get the ordering modifiers
