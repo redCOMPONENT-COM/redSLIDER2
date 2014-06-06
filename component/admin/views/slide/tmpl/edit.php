@@ -67,10 +67,10 @@ if ($this->item->id)
 		</div>
 		<div class="control-group">
 			<div class="control-label">
-				<?php echo $this->form->getLabel('slide_ordering'); ?>
+				<?php echo $this->form->getLabel('ordering'); ?>
 			</div>
 			<div class="controls">
-				<?php echo $this->form->getInput('slide_ordering'); ?>
+				<?php echo $this->form->getInput('ordering'); ?>
 			</div>
 		</div>
 		<div class="control-group">

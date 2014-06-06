@@ -29,6 +29,8 @@ class JFormFieldRLSlideOrdering extends JFormFieldList
 	 */
 	protected $type = 'RLSlideOrdering';
 
+	protected $gallery = 0;
+
 	/**
 	 * Method to get the field input markup for a generic list.
 	 * Use the multiple attribute to enable multiselect.
@@ -41,14 +43,13 @@ class JFormFieldRLSlideOrdering extends JFormFieldList
 		$options = array();
 
 		$db = JFactory::getDbo();
+		$app = JFactory::getApplication();
 		$query = $db->getQuery(true);
 
-		$query->select('a.id AS value, a.title AS text');
-		$query->from('#__redslider_slides AS a');
-
-		$query->where('a.published >= 0');
-
-		$query->order('a.lft ASC');
+		$query->select($db->qn('a.id') . ' AS ' . $db->qn('value') . ', ' . $db->qn('a.title') . ' AS ' . $db->qn('text'))
+			->from($db->qn('#__redslider_slides', 'a'))
+			->where($db->qn('a.published') . ' >= 0 AND ' . $db->qn('a.gallery_id') . ' = ' . $this->gallery)
+			->order($db->qn('ordering') . ' ASC');
 
 		// Get the options.
 		$db->setQuery($query);
@@ -80,17 +81,15 @@ class JFormFieldRLSlideOrdering extends JFormFieldList
 	 */
 	protected function getInput()
 	{
-		$options = $this->getOptions();
+		if ($this->form->getValue('gallery_id', 0) == 0)
+		{
+			return '<span class="readonly">' . JText::_('COM_REDSLIDER_SLIDE_SELECT_GALLERY_FIRST') . '</span>';
+		}
+		else
+		{
+			$this->gallery = $this->form->getValue('gallery_id', 0);
 
-		$attr = '';
-
-		// Initialize some field attributes.
-		$attr .= $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
-		$attr .= $this->element['size'] ? ' size="' . (int) $this->element['size'] . '"' : '';
-
-		// Initialize JavaScript field attributes.
-		$attr .= $this->element['onchange'] ? ' onchange="' . (string) $this->element['onchange'] . '"' : '';
-
-		return JHTML::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
+			return parent::getInput();
+		}
 	}
 }

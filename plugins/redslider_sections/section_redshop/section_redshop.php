@@ -449,9 +449,6 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 
 							$replaceString = $productHelper->replaceAttributeData($product->instance->product_id, 0, 0, $product->attributes, $template);
 
-							var_dump($replaceString);
-							exit;
-
 							$content = JString::str_ireplace($match[0], $replaceString, $content);
 						}
 					}
