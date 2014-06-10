@@ -8,7 +8,7 @@
 			description="COM_REDSLIDER_SECTION_ARTICLE_FIELD_ARTICLE_ID_DESC"
 		/>
 		<field
-			name="article_image"
+			name="background_image"
 			type="rmedia"
 			label="COM_REDSLIDER_SECTION_ARTICLE_FIELD_ARTICLE_IMAGE"
 			description="COM_REDSLIDER_SECTION_ARTICLE_FIELD_ARTICLE_IMAGE_DESC"

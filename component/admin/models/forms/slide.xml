@@ -42,7 +42,6 @@
 			>
 			<option value="">COM_REDSLIDER_SELECT</option>
 		</field>
-		
 		<field name="section"
 			type="rlsectionlist"
 			label="COM_REDSLIDER_SLIDE_SECTION"
@@ -54,7 +53,7 @@
 		</field>
 
 		<field
-			name="ordering"		
+			name="ordering"
 			type="rlslideordering"
 			label="COM_REDSLIDER_SLIDE_ORDERING"
 			description="COM_REDSLIDER_SLIDE_ORDERING_DESC"

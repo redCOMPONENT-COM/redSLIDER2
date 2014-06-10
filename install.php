@@ -173,7 +173,7 @@ class Com_RedSliderInstallerScript extends Com_RedcoreInstallerScript
 
 	/**
 	 * Method for migration data from old version
-	 * 
+	 *
 	 * @return  boolean  True if success. False otherwise.
 	 */
 	public function migrationData()

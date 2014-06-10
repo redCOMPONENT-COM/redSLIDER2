@@ -34,29 +34,4 @@ class RedsliderModelSlide extends RModelAdmin
 
 		return $item;
 	}
-
-	/**
-	 * Method to get the row form.
-	 *
-	 * @param   array  $idArray   id's of rows to be reordered
-	 * @param   array  $lftArray  lft values of rows to be reordered
-	 *
-	 * @return	mixed	A JForm object on success, false on failure
-	 *
-	 * @since	1.6
-	 */
-	public function saveorder($idArray = null, $lftArray = null)
-	{
-		// Get an instance of the table object.
-		$table = $this->getTable();
-
-		if (!$table->saveorder($idArray, $lftArray))
-		{
-			$this->setError($table->getError());
-
-			return false;
-		}
-
-		return true;
-	}
 }

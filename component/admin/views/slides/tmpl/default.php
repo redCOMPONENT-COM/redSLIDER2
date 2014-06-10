@@ -13,10 +13,20 @@ JHtml::_('rdropdown.init');
 JHtml::_('rbootstrap.tooltip');
 JHtml::_('rjquery.chosen', 'select');
 
-$listOrder	= $this->escape($this->state->get('list.ordering'));
-$listDirn	= $this->escape($this->state->get('list.direction'));
+$saveOrderLink = 'index.php?option=com_redslider&task=slides.saveOrderAjax&tmpl=component';
+$listOrder = $this->state->get('list.ordering');
+$listDirn = $this->state->get('list.direction');
+$ordering = ($listOrder == 's.ordering');
+$saveOrder = ($listOrder == 's.ordering' && strtolower($listDirn) == 'asc');
+$search = $this->state->get('filter.search');
+
 $user = JFactory::getUser();
 $userId = $user->id;
+
+if ($saveOrder)
+{
+JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listDirn), $saveOrderLink, false, true);
+}
 
 ?>
 <script type="text/javascript">
@@ -66,7 +76,7 @@ $userId = $user->id;
 		</div>
 	</div>
 	<?php else : ?>
-	<table class="table table-striped">
+	<table class="table table-striped" id="table-items">
 		<thead>
 			<tr>
 				<th width="10" align="center">
@@ -89,6 +99,11 @@ $userId = $user->id;
 				<th class="title" width="auto">
 					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_TEMPLATE', 'template_title', $listDirn, $listOrder); ?>
 				</th>
+				<?php if ($search == ''): ?>
+				<th width="auto">
+					<?php echo JHTML::_('rsearchtools.sort', '<i class=\'icon-sort\'></i>', 's.ordering', $listDirn, $listOrder); ?>
+				</th>
+				<?php endif; ?>
 				<th width="10" nowrap="nowrap">
 					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_ID', 's.id', $listDirn, $listOrder); ?>
 				</th>
@@ -121,6 +136,14 @@ $userId = $user->id;
 				</td>
 				<td><?php echo $row->gallery_title; ?></td>
 				<td><?php echo $row->template_title; ?></td>
+				<?php if ($search == ''): ?>
+				<td class="order nowrap center">
+					<span class="sortable-handler hasTooltip <?php echo ($saveOrder) ? '' : 'inactive'; ?>">
+					<i class="icon-move"></i>
+					</span>
+					<input type="text" style="display:none" name="order[]" value="<?php echo $orderkey + 1;?>" class="text-area-order" />
+				</td>
+				<?php endif; ?>
 				<td>
 					<?php echo $row->id; ?>
 				</td>

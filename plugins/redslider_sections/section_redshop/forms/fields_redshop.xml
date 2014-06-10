@@ -8,7 +8,7 @@
 			description="COM_REDSLIDER_SECTION_REDSHOP_FIELD_PRODUCT_ID_DESC"
 		/>
 		<field
-			name="redshop_slide_backgroundimage"
+			name="background_image"
 			type="rmedia"
 			label="COM_REDSLIDER_SECTION_REDSHOP_FIELD_SLIDE_BACKGROUND_IMAGE"
 			description="COM_REDSLIDER_SECTION_REDSHOP_FIELD_SLIDE_BACKGROUND_IMAGE_DESC"

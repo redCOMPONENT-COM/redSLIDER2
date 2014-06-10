@@ -2,7 +2,7 @@
 <form enctype="multipart/form-data">
 	<fields name="params">
 		<field
-			name="slide_image_file"
+			name="background_image"
 			type="rmedia"
 			label="COM_REDSLIDER_STANDARD_IMAGE_FILE"
 			description="COM_REDSLIDER_STANDARD_IMAGE_FILE_DESC"
