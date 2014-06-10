@@ -154,7 +154,7 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 			$params = new JRegistry($slide->params);
 
 			$standard = new stdClass;
-			$standard->background = $params->get('slide_image_file', '');
+			$standard->background = $params->get('background_image', '');
 			$standard->caption = $params->get('caption', '');
 			$standard->description = $params->get('description', '');
 			$standard->link = $params->get('link', '');

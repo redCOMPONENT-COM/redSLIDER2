@@ -11,7 +11,9 @@ defined('_JEXEC') or die;
 
 ?>
 
-<div class="<?php echo $class ?>">
+<div id="redSLIDER2" class="<?php echo $moduleclass_sfx.$class ?>" >
+
+<div class="slider" >
 
 <?php if (count($slides)): ?>
 
@@ -30,5 +32,29 @@ defined('_JEXEC') or die;
 	</ul>
 
 	<?php endif ?>
+
+</div>
+
+<?php if (count($slides) && $slideThumbnail): ?>
+
+<div class="carousel" >
+
+	<ul class="slides">
+
+		<?php foreach ($slides as $slide): ?>
+
+			<?php $params = new JRegistry($slide->params); ?>
+
+			<?php $thumbnail = $params->get('background_image'); ?>
+
+				<li><img src="<?php echo JURI::base() . $thumbnail ?>" /></li>
+
+		<?php endforeach ?>
+
+	</ul>
+
+</div>
+
+<?php endif ?>
 
 </div>

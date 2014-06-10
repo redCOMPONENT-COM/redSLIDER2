@@ -53,6 +53,7 @@ class RedsliderModelSlides extends RModelList
 		{
 			$config['filter_fields'] = array(
 				's.title', 'title',
+				's.ordering', 'ordering',
 				's.published', 'published',
 				's.gallery_id', 'gallery_id',
 				's.section', 'section',
@@ -109,8 +110,8 @@ class RedsliderModelSlides extends RModelList
 		}
 
 		// Get the ordering modifiers
-		$orderCol	= $this->state->get('list.ordering', 's.id');
-		$orderDirn	= $this->state->get('list.direction', 'desc');
+		$orderCol	= $this->state->get('list.ordering', 's.ordering');
+		$orderDirn	= $this->state->get('list.direction', 'asc');
 		$query->order($db->escape($orderCol) . ' ' . $db->escape($orderDirn));
 
 		return $query;
@@ -144,7 +145,7 @@ class RedsliderModelSlides extends RModelList
 	 *
 	 * @return  void
 	 */
-	protected function populateState($ordering = 's.id', $direction = 'DESC')
+	protected function populateState($ordering = 's.ordering', $direction = 'ASC')
 	{
 		$app = JFactory::getApplication();
 

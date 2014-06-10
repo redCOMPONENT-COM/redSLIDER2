@@ -202,7 +202,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 
 				$product = new stdClass;
 				$product->id = (int) $params->get('product_id', '0');
-				$product->background = JString::trim($params->get('redshop_slide_backgroundimage', ''));
+				$product->background = JString::trim($params->get('background_image', ''));
 				$product->slideClass = JString::trim($params->get('redshop_slide_class', 'redshop_slide'));
 				$product->folder = '/components/com_redshop/assets/images/product/';
 

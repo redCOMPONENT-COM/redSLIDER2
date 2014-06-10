@@ -101,7 +101,7 @@ class RedsliderHelperHelper
 	 * @param   string  $match          tag search string (maybe include HTML tags)
 	 * @param   string  $replaceString  replaceString
 	 * @param   string  $content        content string
-	 * 
+	 *
 	 * @return  string  $content
 	 */
 	public static function replaceTagsHTML($match, $replaceString, $content)
