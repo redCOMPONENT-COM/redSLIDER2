@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form enctype="multipart/form-data">
+	<fields name="params" addfieldpath="plugins/redslider_sections/section_redform/fields">
+		<field
+			name="form_id"
+			type="rlformlist"
+			label="COM_REDSLIDER_SECTION_REDFORM_FIELD_REDFORM_ID"
+			description="COM_REDSLIDER_SECTION_REDFORM_FIELD_REDFORM_ID_DESC"
+		/>
+		<field
+			name="background_image"
+			type="rmedia"
+			label="COM_REDSLIDER_SECTION_REDFORM_FIELD_SLIDE_BACKGROUND_IMAGE"
+			description="COM_REDSLIDER_SECTION_REDFORM_FIELD_SLIDE_BACKGROUND_IMAGE_DESC"
+		/>
+		<field
+			name="redform_slide_class"
+			type="text"
+			default="redform_slide"
+			label="COM_REDSLIDER_SECTION_REDFORM_FIELD_REDFORM_SLIDE_CLASS"
+			description="COM_REDSLIDER_SECTION_REDFORM_FIELD_REDFORM_SLIDE_CLASS_DESC"
+		/>
+	</fields>
+</form>
