@@ -31,7 +31,7 @@ class JFormFieldRLTemplateList extends JFormFieldList
 	/**
 	 * Method to get the field input markup for a generic list.
 	 * Use the multiple attribute to enable multiselect.
-	 * 
+	 *
 	 * @return  string  The field input markup.
 	 */
 	public function getInput()

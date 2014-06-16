@@ -70,6 +70,12 @@ class RedsliderViewSlide extends RedsliderView
 					$this->form->setValue($key, 'params', $value);
 				}
 			}
+
+			// Check if this section need template or not
+			if ($this->sectionId != 'SECTION_REDFORM')
+			{
+				$this->form->setFieldAttribute('template_id', 'required', true);
+			}
 		}
 
 		// Display the slide
