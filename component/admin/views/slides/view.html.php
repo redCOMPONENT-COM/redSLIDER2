@@ -38,6 +38,17 @@ class RedsliderViewSlides extends RedsliderView
 		$this->filterForm		= $this->get('Form');
 		$this->activeFilters	= $this->get('ActiveFilters');
 
+		// Items ordering
+		$this->ordering = array();
+
+		if ($this->items)
+		{
+			foreach ($this->items as &$item)
+			{
+				$this->ordering[0][] = $item->id;
+			}
+		}
+
 		parent::display($tpl);
 	}
 

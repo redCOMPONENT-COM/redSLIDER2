@@ -110,8 +110,13 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 			</tr>
 		</thead>
 		<tbody>
+
 		<?php $n = count($this->items); ?>
+
 		<?php foreach ($this->items as $i => $row) : ?>
+
+		<?php $orderkey = array_search($row->id, $this->ordering[0]); ?>
+
 			<tr>
 				<td><?php echo $this->pagination->getRowOffset($i); ?></td>
 				<td><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
