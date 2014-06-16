@@ -147,5 +147,12 @@
 				<include name="**" />
 			</fileset>
 		</copy>
+
+		<echo message="Copying plugins language section_redform to ${www.dir}/language" />
+		<copy todir="${www.dir}/language" overwrite="true">
+			<fileset dir="${src}plugins/redslider_sections/section_redform/language">
+				<include name="**" />
+			</fileset>
+		</copy>
 	</target>
 </project>

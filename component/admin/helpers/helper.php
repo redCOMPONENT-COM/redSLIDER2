@@ -36,6 +36,7 @@ class RedsliderHelperHelper
 			->where($db->qn('name') . ' = ' . $db->q($extension));
 
 		$db->setQuery($query);
+
 		$result = $db->loadObject();
 
 		if (isset($result) && $result->enabled)

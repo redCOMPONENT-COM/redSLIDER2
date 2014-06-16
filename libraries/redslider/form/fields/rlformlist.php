@@ -12,21 +12,21 @@ JLoader::import('joomla.form.formfield');
 JFormHelper::loadFieldClass('list');
 
 /**
- * RedSLIDER template select list
+ * RedSLIDER section select list
  *
  * @package     RedSLIDER.Backend
- * @subpackage  Field.RLTemplateLst
+ * @subpackage  Field.RLGalleryLst
  *
  * @since       2.0
  */
-class JFormFieldRLTemplateList extends JFormFieldList
+class JFormFieldRLFormList extends JFormFieldList
 {
 	/**
 	 * The form field type.
 	 *
 	 * @var		string
 	 */
-	protected $type = 'RLTemplateList';
+	protected $type = 'RLFormList';
 
 	/**
 	 * Method to get the field input markup for a generic list.
@@ -36,31 +36,18 @@ class JFormFieldRLTemplateList extends JFormFieldList
 	 */
 	public function getInput()
 	{
-		$app = JFactory::getApplication();
-		$section = $app->getUserState('com_redslider.global.slide.section', '');
-		$items = array();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
 
-		if ($section)
-		{
-			$db = JFactory::getDbo();
-			$query = $db->getQuery(true);
-
-			$query->select($db->qn('id') . ', ' . $db->qn('title'))
-				->from($db->qn('#__redslider_templates'))
-				->where($db->qn('section') . ' = ' . $db->q($section) . ' AND ' . $db->qn('published') . ' = 1');
-
-			$db->setQuery($query);
-
-			$items = $db->loadObjectList();
-		}
-
+		$formsModel = RModel::getAdminInstance('Forms', array(), 'com_redform');
+		$items = $formsModel->getItems();
 		$options = array();
 
 		if (count($items) > 0)
 		{
 			foreach ($items as $item)
 			{
-				$options[] = JHTML::_('select.option', $item->id, $item->title);
+				$options[] = JHTML::_('select.option', $item->id, $item->formname);
 			}
 		}
 

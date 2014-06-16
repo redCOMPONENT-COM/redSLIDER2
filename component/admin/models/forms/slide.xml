@@ -37,7 +37,6 @@
 		<field name="template_id"
 			type="rltemplatelist"
 			label="COM_REDSLIDER_SLIDE_TEMPLATE"
-			required="true"
 			description="COM_REDSLIDER_SLIDE_TEMPLATE_DESC"
 			>
 			<option value="">COM_REDSLIDER_SELECT</option>
