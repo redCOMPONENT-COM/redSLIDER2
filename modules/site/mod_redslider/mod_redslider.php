@@ -42,7 +42,7 @@ $autoPlay = (bool) $params->get('auto_play', true);
 $pauseOnHover = $params->get('pause_on_hover', true);
 $speed = $params->get('slideshow_speed', 7000);
 $duration = $params->get('animation_duration', 600);
-$slides = ModredSLIDERHelper::getSlides($gallery_id);
+$slides = ModredSLIDERHelper::getSlides($galleryId);
 
 if ($slideThumbnail)
 {
@@ -54,7 +54,7 @@ if ($slideThumbnail)
 		'animationDuration' => $duration,
 		'directionNav' => false,
 		'maxItems' => $thumbNums,
-		'controlNav' => $slideControl,
+		'controlNav' => false,
 		'sync'	=> '.' . $class . '> .carousel'
 	);
 
@@ -63,7 +63,8 @@ if ($slideThumbnail)
 		'slideshow' => false,
 		'maxItems' => $thumbNums,
 		'itemWidth' => $thumbWidth,
-		'controlNav' => $thumbControl,
+		'controlNav' => $pager,
+		'directionNav' => false,
 		'asNavFor'	=> '.' . $class . '> .slider'
 	);
 }

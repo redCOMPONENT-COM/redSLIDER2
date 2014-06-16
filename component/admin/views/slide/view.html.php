@@ -48,7 +48,7 @@ class RedsliderViewSlide extends RedsliderView
 		{
 			// Add form field from plugin section
 			JPluginHelper::importPlugin('redslider_sections');
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = RFactory::getDispatcher();
 			$dispatcher->trigger('onSlidePrepareForm', array($this->form, $this->sectionId));
 
 			$editData = $app->getUserState('com_redslider.edit.slide.data', array());

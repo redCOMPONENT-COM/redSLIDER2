@@ -210,7 +210,6 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 				$product->prices = $productHelper->getProductNetPrice($product->id, $user->id);
 				$product->template = $redTemplate->getTemplate("product", $product->instance->product_template);
 
-				if (count($product->template))
 				{
 					$product->template = $product->template[0];
 				}
@@ -447,9 +446,50 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 						{
 							$template = strip_tags($match[0]);
 
-							$replaceString = $productHelper->replaceAttributeData($product->instance->product_id, 0, 0, $product->attributes, $template);
+							// Checking for child products
+							$childproduct = $productHelper->getChildProduct($product->instance->product_id);
 
-							$content = JString::str_ireplace($match[0], $replaceString, $content);
+							if (count($childproduct) > 0)
+							{
+								if (PURCHASE_PARENT_WITH_CHILD == 1)
+								{
+									$isChilds       = false;
+									$attributes_set = array();
+
+									if ($product->instance->attribute_set_id > 0)
+									{
+										$attributes_set = $productHelper->getProductAttribute(0, $product->instance->attribute_set_id, 0, 1);
+									}
+
+									$attributes = $productHelper->getProductAttribute($product->instance->product_id);
+									$attributes = array_merge($attributes, $attributes_set);
+								}
+								else
+								{
+									$isChilds   = true;
+									$attributes = array();
+								}
+							}
+							else
+							{
+								$isChilds       = false;
+								$attributes_set = array();
+
+								if ($product->instance->attribute_set_id > 0)
+								{
+									$attributes_set = $productHelper->getProductAttribute(0, $product->instance->attribute_set_id, 0, 1);
+								}
+
+								$attributes = $productHelper->getProductAttribute($product->instance->product_id);
+								$attributes = array_merge($attributes, $attributes_set);
+							}
+
+							$attribute_template = $productHelper->getAttributeTemplate($template);
+
+							$totalatt = count($attributes);
+							$template = $productHelper->replaceAttributeData($product->instance->product_id, 0, 0, $attributes, $template, $attribute_template, $isChilds);
+
+							$content = JString::str_ireplace($match[0], $template, $content);
 						}
 					}
 				}

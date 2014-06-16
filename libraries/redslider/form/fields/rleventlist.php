@@ -15,18 +15,18 @@ JFormHelper::loadFieldClass('list');
  * RedSLIDER section select list
  *
  * @package     RedSLIDER.Backend
- * @subpackage  Field.RLSectionList
+ * @subpackage  Field.RLGalleryLst
  *
  * @since       2.0
  */
-class JFormFieldRLSectionList extends JFormFieldList
+class JFormFieldRLEventList extends JFormFieldList
 {
 	/**
 	 * The form field type.
 	 *
 	 * @var		string
 	 */
-	protected $type = 'RLSectionList';
+	protected $type = 'RLEventList';
 
 	/**
 	 * Method to get the field input markup for a generic list.
@@ -36,11 +36,11 @@ class JFormFieldRLSectionList extends JFormFieldList
 	 */
 	public function getInput()
 	{
-		JPluginHelper::importPlugin('redslider_sections');
-		$dispatcher = RFactory::getDispatcher();
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
 
-		// Get list of sections' name
-		$items = $dispatcher->trigger('getSectionName', array());
+		$eventsModel = RModel::getAdminInstance('Events', array(), 'com_redevent');
+		$items = $eventsModel->getData();
 
 		$options = array();
 
@@ -48,7 +48,7 @@ class JFormFieldRLSectionList extends JFormFieldList
 		{
 			foreach ($items as $item)
 			{
-				$options[] = JHTML::_('select.option', $item->id, $item->name);
+				$options[] = JHTML::_('select.option', $item->id, $item->title);
 			}
 		}
 

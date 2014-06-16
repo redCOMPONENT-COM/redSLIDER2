@@ -50,7 +50,7 @@ class RedsliderViewTemplate extends RedsliderView
 		{
 			// Get list of sections' name
 			JPluginHelper::importPlugin('redslider_sections');
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = RFactory::getDispatcher();
 			$tagsTmp = $dispatcher->trigger('getTagNames', array($this->sectionId));
 
 			if (count($tagsTmp))
