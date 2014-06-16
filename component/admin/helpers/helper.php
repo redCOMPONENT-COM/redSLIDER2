@@ -67,7 +67,7 @@ class RedsliderHelperHelper
 
 		if (count($slides))
 		{
-			$dispatcher = JDispatcher::getInstance();
+			$dispatcher = RFactory::getDispatcher();
 			JPluginHelper::importPlugin('redslider_sections');
 
 			foreach ($slides as &$slide)

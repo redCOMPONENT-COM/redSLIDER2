@@ -53,7 +53,7 @@ class RedsliderTableSlide extends RTable
 		$db = JFactory::getDBO();
 		$input = JFactory::getApplication()->input;
 
-		$dispatcher = JDispatcher::getInstance();
+		$dispatcher = RFactory::getDispatcher();
 		JPluginHelper::importPlugin('redslider_sections');
 		$dispatcher->trigger('onSlideStore', array($this, $input));
 

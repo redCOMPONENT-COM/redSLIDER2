@@ -13,7 +13,7 @@ JHtml::_('rjquery.chosen', 'select');
 $isNew = true;
 $user = JFactory::getUser();
 JPluginHelper::importPlugin('redslider_sections');
-$dispatcher = JDispatcher::getInstance();
+$dispatcher = RFactory::getDispatcher();
 
 if ($this->item->id)
 {
@@ -81,7 +81,7 @@ if ($this->item->id)
 				<?php echo $this->form->getInput('published'); ?>
 			</div>
 		</div>
-		
+
 		<?php // Load template dynamically from plugin ?>
 		<?php if ($user->authorise('core.create', 'com_redslider') && $user->authorise('core.edit', 'com_redslider') && $user->authorise('core.edit.state', 'com_redslider')): ?>
 			<?php if ($this->sectionId): ?>

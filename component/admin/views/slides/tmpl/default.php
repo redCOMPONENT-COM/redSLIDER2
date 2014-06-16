@@ -101,7 +101,7 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 				</th>
 				<?php if ($search == ''): ?>
 				<th width="auto">
-					<?php echo JHTML::_('rsearchtools.sort', '<i class=\'icon-sort\'></i>', 's.ordering', $listDirn, $listOrder); ?>
+					<?php echo JHtml::_('rgrid.sort', null, 's.ordering', $listDirn, $listOrder, null, 'asc', '', 'icon-sort'); ?>
 				</th>
 				<?php endif; ?>
 				<th width="10" nowrap="nowrap">

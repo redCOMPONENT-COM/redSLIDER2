@@ -21,8 +21,8 @@ class RedsliderControllerGallery extends RControllerForm
 	/**
 	 * For edit an gallery
 	 *
-	 * @param   int     $key     [description]
-	 * @param   string  $urlVar  [description]
+	 * @param   int     $key     Gallery key to edit
+	 * @param   string  $urlVar  Url variables
 	 *
 	 * @return void
 	 */
