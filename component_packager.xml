@@ -32,9 +32,6 @@
 	<!-- Target dir where packages will be created  -->
 	<property name="targetdir" value="${package.dir}/package-${extension}-v${version}" override="true"/>
 
-	<!-- Target dir where packages will be created  -->
-	<property name="targetdir" value="${package.dir}/com_${extension}-v${version}" override="true" />
-
 	<!-- ============================================  -->
 	<!-- Create packages folder                        -->
 	<!-- ============================================  -->
