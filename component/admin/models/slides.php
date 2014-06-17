@@ -155,6 +155,9 @@ class RedsliderModelSlides extends RModelList
 		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
 		$this->setState('filter.published', $published);
 
+		$gallery_id = $this->getUserStateFromRequest($this->context . '.filter.gallery_id', 'filter_gallery_id', '');
+		$this->setState('filter.gallery_id', $gallery_id);
+
 		$value = $app->getUserStateFromRequest('global.list.limit', $this->paginationPrefix . 'limit', $app->getCfg('list_limit'), 'uint');
 		$limit = $value;
 		$this->setState('list.limit', $limit);
