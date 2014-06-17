@@ -294,7 +294,7 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 					}
 					else
 					{
-						$replaceString .= 'src="//www.youtube.com/embed/' . JString::trim($youtube->id) . ' ';
+						$replaceString .= 'src="//www.youtube.com/embed/' . JString::trim($youtube->id);
 					}
 
 					if (!$youtube->suggested)

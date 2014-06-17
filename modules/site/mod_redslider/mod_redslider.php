@@ -21,8 +21,13 @@ RBootstrap::bootstrap();
 
 require_once JPATH_SITE . '/modules/mod_redslider/helper.php';
 
-// Get params
+// Main slider settings
+$opt = array();
 
+// Thumbnails slider settings
+$optThumb = array();
+
+// Get params
 $galleryId = (int) $params->get('gallery_id', 0);
 $class = $params->get('slider_class', 'flexslider');
 $slideWidth = (int) $params->get('slide_width', 756);
@@ -80,7 +85,6 @@ else
 		'controlNav' => $pager,
 	);
 }
-
 
 // Initialize the slider with settings
 JHtml::_('rjquery.flexslider', '.' . $class . '> .slider', $opt);
