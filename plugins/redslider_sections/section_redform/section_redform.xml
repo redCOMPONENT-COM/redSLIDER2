@@ -8,11 +8,11 @@
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<description>PLG_SECTION_REDFORM_DESC</description>
 	<files>
-		<filename plugin="section_redform">section_form.php</filename>
+		<filename plugin="section_redform">section_redform.php</filename>
 	</files>
 	<languages folder="language">
-		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_redevent.ini</language>
-		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_redevent.sys.ini</language>
+		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_redform.ini</language>
+		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_redform.sys.ini</language>
 	</languages>
 	<config>
 		<fields name="params" addfieldpath="/libraries/redslider/form/fields">
