@@ -169,7 +169,7 @@ class PlgRedslider_SectionsSection_Redform extends JPlugin
 			$form->slideClass = JString::trim($params->get('form_slide_class', 'form_slide'));
 
 			// Adding background image to redEVENT slide
-			$html  = '<div class=\'' . $form->slideClass . '\' style=\'background-image:url("' . JURI::base() . $form->image . '")\';>';
+			$html  = '<div class=\'' . $form->slideClass . '\' style=\'background-image:url("' . JURI::base() . $form->background . '")\';>';
 			$html .= '{redform}' . $formId . '{/redform}';
 			$html .= '</div>';
 

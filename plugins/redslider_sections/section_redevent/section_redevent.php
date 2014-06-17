@@ -12,13 +12,6 @@ defined('_JEXEC') or die;
 jimport('joomla.plugin.plugin');
 jimport('redcore.bootstrap');
 
-require_once JPATH_LIBRARIES . '/redevent/tags/tags.php';
-require_once JPATH_LIBRARIES . '/redevent/helper/helper.php';
-require_once JPATH_LIBRARIES . '/redevent/helper/attachment.php';
-require_once JPATH_LIBRARIES . '/redevent/helper/output.php';
-require_once JPATH_LIBRARIES . '/redform/core/model/form.php';
-require_once JPATH_LIBRARIES . '/redform/core/core.php';
-
 /**
  * Plugins RedSLIDER section redevent
  *
@@ -186,6 +179,13 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
+		require_once JPATH_LIBRARIES . '/redevent/tags/tags.php';
+		require_once JPATH_LIBRARIES . '/redevent/helper/helper.php';
+		require_once JPATH_LIBRARIES . '/redevent/helper/attachment.php';
+		require_once JPATH_LIBRARIES . '/redevent/helper/output.php';
+		require_once JPATH_LIBRARIES . '/redform/core/model/form.php';
+		require_once JPATH_LIBRARIES . '/redform/core/core.php';
+
 		if ($slide->section === $this->sectionId)
 		{
 			$params = new JRegistry($slide->params);

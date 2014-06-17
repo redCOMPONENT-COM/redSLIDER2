@@ -12,17 +12,6 @@ defined('_JEXEC') or die;
 jimport('joomla.plugin.plugin');
 jimport('redcore.bootstrap');
 
-require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/redshop.cfg.php';
-require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/configuration.php';
-require_once JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
-require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/template.php';
-require_once JPATH_SITE . '/components/com_redshop/helpers/product.php';
-require_once JPATH_ROOT . '/components/com_redshop/helpers/redshop.js.php';
-require_once JPATH_SITE . '/components/com_redshop/helpers/extra_field.php';
-
-$Redconfiguration = new Redconfiguration;
-$Redconfiguration->defineDynamicVars();
-
 JHTML::Script('fetchscript.js', 'components/com_redshop/assets/js/', false);
 JHTML::Script('attribute.js', 'components/com_redshop/assets/js/', false);
 JHTML::Script('common.js', 'components/com_redshop/assets/js/', false);
@@ -190,6 +179,17 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
+		require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/redshop.cfg.php';
+		require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/configuration.php';
+		require_once JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
+		require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/template.php';
+		require_once JPATH_SITE . '/components/com_redshop/helpers/product.php';
+		require_once JPATH_ROOT . '/components/com_redshop/helpers/redshop.js.php';
+		require_once JPATH_SITE . '/components/com_redshop/helpers/extra_field.php';
+
+		$Redconfiguration = new Redconfiguration;
+		$Redconfiguration->defineDynamicVars();
+
 		if ($slide->section === $this->sectionId)
 		{
 			if (RedsliderHelperHelper::checkExtension($this->extensionName))
