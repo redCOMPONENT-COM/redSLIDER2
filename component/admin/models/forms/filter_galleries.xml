@@ -10,9 +10,10 @@
 			/>
 		<field
 			name="published"
-			type="ripublishedlist"
+			type="rpublished"
 			onchange="this.form.submit();"
 			label="COM_REDSLIDER_FILTER_PUBLISHED"
+			statuses="0,1"
 			>
 			<option value="">COM_REDSLIDER_FILTER_PUBLISHED</option>
 		</field>
