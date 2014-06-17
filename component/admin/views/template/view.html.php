@@ -23,7 +23,7 @@ class RedsliderViewTemplate extends RedsliderView
 	/**
 	 * @var  boolean
 	 */
-	protected $displaySidebar = true;
+	protected $displaySidebar = false;
 
 	/**
 	 * Display the template edit page

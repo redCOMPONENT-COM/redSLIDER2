@@ -23,7 +23,7 @@ class RedsliderViewSlide extends RedsliderView
 	/**
 	 * @var  boolean
 	 */
-	protected $displaySidebar = true;
+	protected $displaySidebar = false;
 
 	/**
 	 * Display the slide edit page
