@@ -23,7 +23,7 @@ class RedsliderViewGallery extends RedsliderView
 	/**
 	 * @var  boolean
 	 */
-	protected $displaySidebar = true;
+	protected $displaySidebar = false;
 
 	/**
 	 * Display the gallery edit page
