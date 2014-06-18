@@ -45,6 +45,8 @@ class Com_RedSliderInstallerScript extends Com_RedcoreInstallerScript
 		parent::installOrUpdate($parent);
 
 		$this->com_install();
+		$this->installModules($parent);
+		$this->installPlugins($parent);
 
 		return true;
 	}
@@ -96,6 +98,8 @@ class Com_RedSliderInstallerScript extends Com_RedcoreInstallerScript
 
 		// Uninstall extensions
 		$this->com_uninstall();
+		$this->uninstallModules($parent);
+		$this->uninstallPlugins($parent);
 	}
 
 	/**
@@ -105,6 +109,216 @@ class Com_RedSliderInstallerScript extends Com_RedcoreInstallerScript
 	 */
 	private function com_uninstall()
 	{
+	}
+
+	/**
+	 * Install the package modules
+	 *
+	 * @param   object  $parent  class calling this method
+	 *
+	 * @return  void
+	 */
+	protected function installModules($parent)
+	{
+		// Required objects
+		$installer = $this->getInstaller();
+		$manifest  = $parent->get('manifest');
+		$src       = $parent->getParent()->getPath('source');
+
+		if ($nodes = $manifest->modules->module)
+		{
+			foreach ($nodes as $node)
+			{
+				$extName   = $node->attributes()->name;
+				$extClient = $node->attributes()->client;
+				$extPath   = $src . '/modules/' . $extClient . '/' . $extName;
+				$result    = 0;
+
+				if (is_dir($extPath))
+				{
+					$result = $installer->install($extPath);
+				}
+
+				$this->_storeStatus('modules', array('name' => $extName, 'client' => $extClient, 'result' => $result));
+			}
+		}
+	}
+
+	/**
+	 * Install the package libraries
+	 *
+	 * @param   object  $parent  class calling this method
+	 *
+	 * @return  void
+	 */
+	protected function installPlugins($parent)
+	{
+		// Required objects
+		$installer = $this->getInstaller();
+		$manifest  = $parent->get('manifest');
+		$src       = $parent->getParent()->getPath('source');
+
+		if ($nodes = $manifest->plugins->plugin)
+		{
+			foreach ($nodes as $node)
+			{
+				$extName  = $node->attributes()->name;
+				$extGroup = $node->attributes()->group;
+				$extPath  = $src . '/plugins/' . $extGroup . '/' . $extName;
+				$result   = 0;
+
+				if (is_dir($extPath))
+				{
+					$result = $installer->install($extPath);
+				}
+
+				// Store the result to show install summary later
+				$this->_storeStatus('plugins', array('name' => $extName, 'group' => $extGroup, 'result' => $result));
+
+				// Enable the installed plugin
+				if ($result)
+				{
+					$db = JFactory::getDbo();
+					$query = $db->getQuery(true);
+					$query->update($db->quoteName("#__extensions"));
+					$query->set("enabled=1");
+					$query->where("type='plugin'");
+					$query->where("element=" . $db->quote($extName));
+					$query->where("folder=" . $db->quote($extGroup));
+					$db->setQuery($query);
+					$db->query();
+				}
+			}
+		}
+	}
+
+	/**
+	 * Uninstall the package libraries
+	 *
+	 * @param   object  $parent  class calling this method
+	 *
+	 * @return  void
+	 */
+	protected function uninstallLibraries($parent)
+	{
+		// Required objects
+		$installer = $this->getInstaller();
+		$manifest  = $parent->get('manifest');
+		$src       = $parent->getParent()->getPath('source');
+
+		if ($nodes = $manifest->libraries->library)
+		{
+			foreach ($nodes as $node)
+			{
+				$extName = $node->attributes()->name;
+				$extPath = $src . '/libraries/' . $extName;
+				$result  = 0;
+
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true)
+					->select('extension_id')
+					->from($db->quoteName("#__extensions"))
+					->where("type='library'")
+					->where("element=" . $db->quote($extName));
+
+				$db->setQuery($query);
+
+				if ($extId = $db->loadResult())
+				{
+					$result = $installer->uninstall('library', $extId);
+				}
+
+				// Store the result to show install summary later
+				$this->_storeStatus('libraries', array('name' => $extName, 'result' => $result));
+			}
+		}
+	}
+
+	/**
+	 * Uninstall the package modules
+	 *
+	 * @param   object  $parent  class calling this method
+	 *
+	 * @return  void
+	 */
+	protected function uninstallModules($parent)
+	{
+		// Required objects
+		$installer = $this->getInstaller();
+		$manifest  = $parent->get('manifest');
+		$src       = $parent->getParent()->getPath('source');
+
+		if ($nodes = $manifest->modules->module)
+		{
+			foreach ($nodes as $node)
+			{
+				$extName   = $node->attributes()->name;
+				$extClient = $node->attributes()->client;
+				$extPath   = $src . '/modules/' . $extClient . '/' . $extName;
+				$result    = 0;
+
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true)
+					->select('extension_id')
+					->from($db->quoteName("#__extensions"))
+					->where("type='module'")
+					->where("element=" . $db->quote($extName));
+
+				$db->setQuery($query);
+
+				if ($extId = $db->loadResult())
+				{
+					$result = $installer->uninstall('module', $extId);
+				}
+
+				// Store the result to show install summary later
+				$this->_storeStatus('modules', array('name' => $extName, 'client' => $extClient, 'result' => $result));
+			}
+		}
+	}
+
+	/**
+	 * Uninstall the package plugins
+	 *
+	 * @param   object  $parent  class calling this method
+	 *
+	 * @return  void
+	 */
+	protected function uninstallPlugins($parent)
+	{
+		// Required objects
+		$installer = $this->getInstaller();
+		$manifest  = $parent->get('manifest');
+		$src       = $parent->getParent()->getPath('source');
+
+		if ($nodes = $manifest->plugins->plugin)
+		{
+			foreach ($nodes as $node)
+			{
+				$extName  = $node->attributes()->name;
+				$extGroup = $node->attributes()->group;
+				$extPath  = $src . '/plugins/' . $extGroup . '/' . $extName;
+				$result   = 0;
+
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true)
+					->select('extension_id')
+					->from($db->quoteName("#__extensions"))
+					->where("type='plugin'")
+					->where("element=" . $db->quote($extName))
+					->where("folder=" . $db->quote($extGroup));
+
+				$db->setQuery($query);
+
+				if ($extId = $db->loadResult())
+				{
+					$result = $installer->uninstall('plugin', $extId);
+				}
+
+				// Store the result to show install summary later
+				$this->_storeStatus('plugins', array('name' => $extName, 'group' => $extGroup, 'result' => $result));
+			}
+		}
 	}
 
 	/**
@@ -179,5 +393,46 @@ class Com_RedSliderInstallerScript extends Com_RedcoreInstallerScript
 	public function migrationData()
 	{
 		return true;
+	}
+
+	/**
+	 * Get the common JInstaller instance used to install all the extensions
+	 *
+	 * @return JInstaller The JInstaller object
+	 */
+	public function getInstaller()
+	{
+		if (is_null($this->installer))
+		{
+			$this->installer = new JInstaller;
+		}
+
+		return $this->installer;
+	}
+
+	/**
+	 * Store the result of trying to install an extension
+	 *
+	 * @param   string  $type    Type of extension (libraries, modules, plugins)
+	 * @param   array   $status  The status info
+	 *
+	 * @return void
+	 */
+	private function _storeStatus($type, $status)
+	{
+		// Initialise status object if needed
+		if (is_null($this->status))
+		{
+			$this->status = new stdClass;
+		}
+
+		// Initialise current status type if needed
+		if (!isset($this->status->{$type}))
+		{
+			$this->status->{$type} = array();
+		}
+
+		// Insert the status
+		array_push($this->status->{$type}, $status);
 	}
 }
