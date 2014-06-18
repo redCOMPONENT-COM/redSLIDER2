@@ -38,6 +38,15 @@ class RedsliderViewTemplates extends RedsliderView
 		$this->filterForm		= $this->get('Form');
 		$this->activeFilters	= $this->get('ActiveFilters');
 
+		// Get the section name
+		foreach ($this->items as $key => $item)
+		{
+			JPluginHelper::importPlugin('redslider_sections');
+			$dispatcher = RFactory::getDispatcher();
+			$list = $dispatcher->trigger('getSectionNameById', array($item->section));
+			$item->sectionName = $list[0];
+		}
+
 		parent::display($tpl);
 	}
 

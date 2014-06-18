@@ -54,6 +54,21 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 	}
 
 	/**
+	 * Get section name by section Id
+	 *
+	 * @param   string  $sectionId  Section's ID
+	 *
+	 * @return  string
+	 */
+	public function getSectionNameById($sectionId)
+	{
+		if ($sectionId === $this->sectionId)
+		{
+			return $this->sectionName;
+		}
+	}
+
+	/**
 	 * Get section's tags name
 	 *
 	 * @param   string  $sectionId  Section's ID

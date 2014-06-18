@@ -78,10 +78,13 @@ $userId = $user->id;
 				<th width="30" nowrap="nowrap">
 					<?php echo JHTML::_('rsearchtools.sort', 'JSTATUS', 't.published', $listDirn, $listOrder); ?>
 				</th>
-				<th width="1" align="center">
+				<th width="1" >
 				</th>
 				<th class="title" width="auto">
 					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_TEMPLATE', 't.title', $listDirn, $listOrder); ?>
+				</th>
+				<th class="title" width="auto">
+					<?php echo JText::_('COM_REDSLIDER_TEMPLATE_SECTION'); ?>
 				</th>
 				<th width="10" nowrap="nowrap">
 					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_ID', 't.id', $listDirn, $listOrder); ?>
@@ -112,6 +115,9 @@ $userId = $user->id;
 					<?php else : ?>
 						<?php echo JHtml::_('link', 'index.php?option=com_redslider&task=template.edit&id=' . $row->id, $row->title); ?>
 					<?php endif; ?>
+				</td>
+				<td>
+					<?php echo $row->sectionName; ?>
 				</td>
 				<td>
 					<?php echo $row->id; ?>

@@ -17,6 +17,15 @@
 			>
 			<option value="">COM_REDSLIDER_FILTER_PUBLISHED</option>
 		</field>
+		<field name="section"
+			type="rlsectionlist"
+			label="COM_REDSLIDER_TEMPLATE_SECTION"
+			required="true"
+			onchange="this.form.submit();"
+			description="COM_REDSLIDER_TEMPLATE_SECTION_DESC"
+			>
+			<option value="">COM_REDSLIDER_SELECT</option>
+		</field>
 	</fields>
 	<fields name="list">
 		<field
