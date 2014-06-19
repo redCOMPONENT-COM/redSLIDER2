@@ -44,7 +44,12 @@ class RedsliderViewTemplates extends RedsliderView
 			JPluginHelper::importPlugin('redslider_sections');
 			$dispatcher = RFactory::getDispatcher();
 			$list = $dispatcher->trigger('getSectionNameById', array($item->section));
-			$item->sectionName = $list[0];
+			$item->sectionName = "";
+
+			if (count($list))
+			{
+				$item->sectionName = $list[0];
+			}
 		}
 
 		parent::display($tpl);
