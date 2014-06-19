@@ -61,4 +61,16 @@
 	<libraries>
 		<library name="redslider"/>
 	</libraries>
+
+    <!-- Modules to install with the component -->
+    <modules>
+        <module name="mod_redslider" client="site" />
+    </modules>
+
+    <!-- Plugins to install with the component -->
+   <plugins>
+        <plugin name="section_article" group="redslider_sections" />
+        <plugin name="section_standard" group="redslider_sections" />
+        <plugin name="section_video" group="redslider_sections" />
+    </plugins>
 </extension>

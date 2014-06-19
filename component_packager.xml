@@ -88,6 +88,22 @@
 			</fileset>
 		</copy>
 
+		<echo msg="Copying MODULES folder to build directory..."/>
+		<copy todir="${targetdir}/modules">
+			<fileset dir="${extpath}/modules">
+				<include name="**"/>
+				<exclude name=".*"/>
+			</fileset>
+		</copy>
+
+		<echo msg="Copying PLUGINS folder to build directory..."/>
+		<copy todir="${targetdir}/plugins">
+			<fileset dir="${extpath}/plugins">
+				<include name="**"/>
+				<exclude name=".*"/>
+			</fileset>
+		</copy>
+
 		<echo msg="Copying MEDIA folder to build directory..."/>
 		<copy todir="${targetdir}/media/com_redslider">
 			<fileset dir="${extpath}/media/com_redslider">
