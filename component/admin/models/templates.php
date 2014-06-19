@@ -53,6 +53,7 @@ class RedsliderModelTemplates extends RModelList
 		{
 			$config['filter_fields'] = array(
 				't.title', 'title',
+				't.section', 'section',
 				't.published', 'published',
 				't.id',
 			);
@@ -104,6 +105,14 @@ class RedsliderModelTemplates extends RModelList
 			$query->where('t.id = ' . (int) $templateId);
 		}
 
+		// Filter by section
+		$filterSection = $this->getState('filter.section');
+
+		if ($filterSection)
+		{
+			$query->where('t.section = ' . $db->quote($filterSection));
+		}
+
 		// Get the ordering modifiers
 		$orderCol	= $this->state->get('list.ordering', 't.id');
 		$orderDirn	= $this->state->get('list.direction', 'desc');
@@ -149,6 +158,9 @@ class RedsliderModelTemplates extends RModelList
 
 		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
 		$this->setState('filter.published', $published);
+
+		$filterSection = $this->getUserStateFromRequest($this->context . '.filter.section', 'filter_section', '');
+		$this->setState('filter.section', $filterSection);
 
 		$value = $app->getUserStateFromRequest('global.list.limit', $this->paginationPrefix . 'limit', $app->getCfg('list_limit'), 'uint');
 		$limit = $value;

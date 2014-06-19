@@ -65,9 +65,16 @@
 	<target name="build" depends="prepare">
 
 		<echo msg="Copying INSTALLER files to build directory..."/>
+
 		<copy todir="${targetdir}">
 			<fileset dir="${extpath}/">
 				<include name="LICENSE.txt"/>
+				<include name="redslider.xml"/>
+				<include name="install.php"/>
+			</fileset>
+		</copy>
+		<copy todir="${targetdir}/component/admin">
+			<fileset dir="${extpath}/">
 				<include name="redslider.xml"/>
 				<include name="install.php"/>
 			</fileset>
