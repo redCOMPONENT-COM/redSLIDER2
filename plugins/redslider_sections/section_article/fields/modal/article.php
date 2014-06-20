@@ -86,7 +86,6 @@ class JFormFieldModal_Article extends JFormField
 		$html[] = '</div>';
 
 		// The active article id field.
-
 		if (0 == (int) $this->value)
 		{
 			$value = '';
