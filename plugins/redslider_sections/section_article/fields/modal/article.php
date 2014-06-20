@@ -80,7 +80,9 @@ class JFormFieldModal_Article extends JFormField
 		$html = array();
 		$html[] = '<div class="input-prepend input-append">';
 		$html[] = '<input type="text" class="input-small" id="' . $this->id . '_name" value="' . $title . '" disabled="disabled"/>';
-		$html[] = '<a class="btn modalArticleAjax" title="' . JText::_('PLG_REDSLIDER_SECTION_ARTICLE_SELECT_ARTICLE_BUTTON') . '" href="' . $link . '&amp;' . JSession::getFormToken() . '=1" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">' . JText::_('PLG_REDSLIDER_SECTION_ARTICLE_SELECT_ARTICLE_BUTTON') . '</a>';
+		$html[] = '<a class="btn modalArticleAjax" title="' . JText::_('PLG_REDSLIDER_SECTION_ARTICLE_SELECT_ARTICLE_BUTTON') . '"
+			href="' . $link . '&amp;' . JSession::getFormToken() . '=1" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">'
+			. JText::_('PLG_REDSLIDER_SECTION_ARTICLE_SELECT_ARTICLE_BUTTON') . '</a>';
 		$html[] = '</div>';
 
 		// The active article id field.
