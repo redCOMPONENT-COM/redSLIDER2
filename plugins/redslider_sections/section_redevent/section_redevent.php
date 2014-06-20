@@ -201,17 +201,22 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 		require_once JPATH_LIBRARIES . '/redform/core/model/form.php';
 		require_once JPATH_LIBRARIES . '/redform/core/core.php';
 
+		// Load stylesheet for each section
+		$css = 'redslider.' . strtolower($this->sectionId) . 'css';
+		RHelperAsset::load($css, 'com_redslider');
+
 		if ($slide->section === $this->sectionId)
 		{
 			$params = new JRegistry($slide->params);
 
 			$eventId = (int) $params->get('event_id', 0);
+			$background = $params->get('backgound_image');
 			$tags = new RedeventTags;
 			$tags->setEventId($eventId);
 			$content = $tags->ReplaceTags($content);
 
 			// Adding background image to redEVENT slide
-			$html  = '<div class=\'' . $article->slideClass . '\' style=\'background-image:url("' . JURI::base() . $event->image . '")\';>';
+			$html  = '<div class=\'' . $article->slideClass . '\' style=\'background-image:url("' . JURI::base() . $background . '")\';>';
 			$html .= $content;
 			$html .= '</div>';
 
