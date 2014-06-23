@@ -20,6 +20,7 @@ if (!file_exists($redcoreLoader) || !JPluginHelper::isEnabled('system', 'redcore
 RBootstrap::bootstrap();
 
 require_once JPATH_SITE . '/modules/mod_redslider/helper.php';
+RHelperAsset::load('redslider.css', 'com_redslider');
 
 // Main slider settings
 $opt = array();
@@ -30,6 +31,8 @@ $optThumb = array();
 // Get params
 $galleryId = (int) $params->get('gallery_id', 0);
 $class = $params->get('slider_class', 'flexslider');
+$layout = ' ';
+$layout .= $params->get('layouts', 'rstyle1');
 $slideWidth = (int) $params->get('slide_width', 756);
 $slideWidth .= "px";
 $slideHeight = (int) $params->get('slide_height', 420);
