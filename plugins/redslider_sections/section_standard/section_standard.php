@@ -165,7 +165,7 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	public function onPrepareTemplateContent($content, $slide)
 	{
 		// Load stylesheet for each section
-		$css = 'redslider.' . strtolower($this->sectionId) . '.css';
+		$css = 'redslider.' . JString::strtolower($this->sectionId) . '.css';
 		RHelperAsset::load($css, 'mod_redslider');
 
 		if ($slide->section === $this->sectionId)
