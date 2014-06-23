@@ -31,7 +31,7 @@ if (!class_exists('Com_RedcoreInstallerScript'))
  *
  * @since    2.0
  */
-class PlgRedslider_SectionsSection_RedeventInstallerScript extends Com_RedcoreInstallerScript
+class PlgRedslider_SectionsSection_RedshopInstallerScript extends Com_RedcoreInstallerScript
 {
 	/**
 	 * Method to install the component
@@ -64,26 +64,26 @@ class PlgRedslider_SectionsSection_RedeventInstallerScript extends Com_RedcoreIn
 		// Add Include path
 		JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
 		/*
-		 * Insert demo template for redEVENT section
+		 * Insert demo template for redSHOP section
 		 */
 		$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
 		$templateTable->id = null;
-		$templateTable->title = 'Template redEVENT';
-		$templateTable->section = 'SECTION_REDEVENT';
+		$templateTable->title = 'Template redSHOP';
+		$templateTable->section = 'SECTION_redSHOP';
 		$templateTable->published = 1;
-		$templateTable->content = "<div>[event_title]<div><div>[event_description]<div>";
+		$templateTable->content = '<div class="eachSlide">\r\n<div class="slideImg">\r\n<h3>{product_image|300|200}</h3>\r\n</div>\r\n<div class="slidePrice">\r\n<h3>{product_price}</h3>\r\n</div>\r\n<div class="slideTitle">\r\n<h3>{product_name}</h3>\r\n</div>\r\n<div class="slideText">{product_short_description}</div>\r\n<div class="slideForm">{form_addtocart:add_to_cart2}</div>\r\n</div>';
 		$templateTable->store();
 		$templateId = (int) $templateTable->id;
 		/*
-		 * Insert demo slide for redEVENT section
+		 * Insert demo slide for redSHOP section
 		 */
 		$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
 		$slideTable->gallery_id = 1;
 		$slideTable->template_id = $templateId;
-		$slideTable->title = 'Sample redEVENT';
-		$slideTable->section = 'SECTION_REDEVENT';
+		$slideTable->title = 'Sample redSHOP';
+		$slideTable->section = 'SECTION_REDSHOP';
 		$slideTable->published = 1;
-		$slideTable->params = '{"event_id":"1","background_image":"images\/joomla_black.gif","redevent_slide_class":"redevent_slide"}';
+		$slideTable->params = '{"product_id":"1","background_image":"images\\/joomla_logo_black.jpg","redshop_slide_class":"redshop_slide"}';
 		$slideTable->store();
 
 		unset($templateTable);

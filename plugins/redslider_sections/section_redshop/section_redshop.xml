@@ -7,6 +7,7 @@
 	<copyright>redCOMPONENT.com</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<description>PLG_SECTION_REDSHOP_DESC</description>
+	<scriptfile>redshop.script.php</scriptfile>
 	<files>
 		<filename plugin="section_redshop">section_redshop.php</filename>
 		<folder plugin="section_redshop">forms</folder>
@@ -17,6 +18,9 @@
 		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_redshop.ini</language>
 		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_redshop.sys.ini</language>
 	</languages>
+	<media destination="mod_redslider" folder="media/mod_redslider">
+       <folder>css</folder>
+    </media>
 	<config>
 		<fields name="params" addfieldpath="/libraries/redslider/form/fields">
 			<fieldset name="basic">

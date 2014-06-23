@@ -20,6 +20,7 @@ if (!file_exists($redcoreLoader) || !JPluginHelper::isEnabled('system', 'redcore
 RBootstrap::bootstrap();
 
 require_once JPATH_SITE . '/modules/mod_redslider/helper.php';
+RHelperAsset::load('redslider.css', 'com_redslider');
 
 // Main slider settings
 $opt = array();
