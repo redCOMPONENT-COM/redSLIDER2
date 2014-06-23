@@ -64,9 +64,89 @@ class RedSliderModelCpanel extends RModelAdmin
 	 */
 	public function demoContentInsert()
 	{
-		$db				= JFactory::getDbo();
-		$user			= JFactory::getUser();
-		$currentDate	= JFactory::getDate();
+		// Add Include path
+		JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
+		/*
+		 * Insert demo template for Gallery
+		 */
+		$gallery = JTable::getInstance('Gallery', 'RedsliderTable', array('ignore_request' => true));
+		$gallery->id = null;
+		$gallery->title = 'Sample Gallery';
+		$gallery->access = 1;
+		$gallery->published = 1;
+		$gallery->store();
+		$galleryId = $gallery->id;
+
+		/*
+		 * Insert demo template for Article section
+		 */
+		$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
+		$templateTable->id = null;
+		$templateTable->title = 'Template Article';
+		$templateTable->section = 'SECTION_ARTICLE';
+		$templateTable->published = 1;
+		$templateTable->content = '<h3>{article_title}</h3><div>{article_introtext|limit}</div>';
+		$templateTable->store();
+		$templateId = (int) $templateTable->id;
+		/*
+		 * Insert demo slide for Article section
+		 */
+		$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
+		$slideTable->gallery_id = $galleryId;
+		$slideTable->template_id = $templateId;
+		$slideTable->title = 'Sample Article';
+		$slideTable->section = 'SECTION_ARTICLE';
+		$slideTable->published = 1;
+		$slideTable->params = '{"article_id":"1","background_image":"images\/joomla_black.gif","article_slide_class":"article_slide"}';
+		$slideTable->store();
+		/*
+		 * Insert demo template for Standard section
+		 */
+		$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
+		$templateTable->id = null;
+		$templateTable->title = 'Template Standard';
+		$templateTable->section = 'SECTION_STANDARD';
+		$templateTable->published = 1;
+		$templateTable->content = '<div class="eachSlide">\r\n<div class="slideTitle">\r\n<h3><a href="{standard_link}">{standard_linktext}</a></h3>\r\n</div>\r\n<div class="slideText">{standard_description}</div>\r\n</div>';
+		$templateTable->store();
+		$templateId = (int) $templateTable->id;
+		/*
+		 * Insert demo slide for Standard section
+		 */
+		$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
+		$slideTable->gallery_id = $galleryId;
+		$slideTable->template_id = $templateId;
+		$slideTable->title = 'Sample Standard';
+		$slideTable->section = 'SECTION_STANDARD';
+		$slideTable->published = 1;
+		$slideTable->params = '{"background_image":"images\\/joomla_green.gif","caption":"Sample Standard","description":"<p>Sample Standard<\\/p>","link":"#","linktext":"Sample Standard","suffix_class":"standard_slide"}';
+		$slideTable->store();
+		/*
+		 * Insert demo template for Video section
+		 */
+		$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
+		$templateTable->id = null;
+		$templateTable->title = 'Template Video';
+		$templateTable->section = 'SECTION_VIDEO';
+		$templateTable->published = 1;
+		$templateTable->content = '<div>{youtube}</div>';
+		$templateTable->store();
+		$templateId = (int) $templateTable->id;
+		/*
+		 * Insert demo slide for Video section
+		 */
+		$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
+		$slideTable->gallery_id = $galleryId;
+		$slideTable->template_id = $templateId;
+		$slideTable->title = 'Sample Video';
+		$slideTable->section = 'SECTION_VIDEO';
+		$slideTable->published = 1;
+		$slideTable->params = '{"vimeo_id":"","vimeo_width":"500","vimeo_height":"281","vimeo_portrait":"0","vimeo_title":"0","vimeo_byline":"0","vimeo_autoplay":"0","vimeo_loop":"0","vimeo_color":"#FFFFFF","youtube_id":"niVbODz4Dnw","youtube_width":"500","youtube_height":"315","youtube_suggested":"0","youtube_privacy_enhanced":"0","other_iframe":""}';
+		$slideTable->store();
+
+		unset($gallery);
+		unset($templateTable);
+		unset($slideTable);
 
 		return true;
 	}

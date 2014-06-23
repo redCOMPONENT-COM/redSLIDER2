@@ -168,7 +168,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 	{
 		// Load stylesheet for each section
 		$css = 'redslider.' . strtolower($this->sectionId) . '.css';
-		RHelperAsset::load($css, 'com_redslider');
+		RHelperAsset::load($css, 'mod_redslider');
 
 		if ($slide->section === $this->sectionId)
 		{

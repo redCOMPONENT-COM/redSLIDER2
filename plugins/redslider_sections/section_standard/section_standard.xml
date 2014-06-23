@@ -16,6 +16,9 @@
 		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_standard.ini</language>
 		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_standard.sys.ini</language>
 	</languages>
+	<media destination="mod_redslider" folder="media/mod_redslider/css">
+       <folder>css</folder>
+    </media>
 	<config>
 		<fields name="params" addfieldpath="/libraries/redslider/form/fields">
 			<fieldset name="basic">

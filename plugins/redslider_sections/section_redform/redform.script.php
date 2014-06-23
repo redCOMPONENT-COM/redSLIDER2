@@ -31,7 +31,7 @@ if (!class_exists('Com_RedcoreInstallerScript'))
  *
  * @since    2.0
  */
-class PlgRedslider_SectionsSection_RedeventInstallerScript extends Com_RedcoreInstallerScript
+class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreInstallerScript
 {
 	/**
 	 * Method to install the component
@@ -64,26 +64,25 @@ class PlgRedslider_SectionsSection_RedeventInstallerScript extends Com_RedcoreIn
 		// Add Include path
 		JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
 		/*
-		 * Insert demo template for redEVENT section
+		 * Insert demo template for redFORM section
 		 */
 		$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
 		$templateTable->id = null;
-		$templateTable->title = 'Template redEVENT';
-		$templateTable->section = 'SECTION_REDEVENT';
+		$templateTable->title = 'Template redFORM';
+		$templateTable->section = 'SECTION_REDFORM';
 		$templateTable->published = 1;
-		$templateTable->content = "<div>[event_title]<div><div>[event_description]<div>";
 		$templateTable->store();
 		$templateId = (int) $templateTable->id;
 		/*
-		 * Insert demo slide for redEVENT section
+		 * Insert demo slide for redFORM section
 		 */
 		$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
 		$slideTable->gallery_id = 1;
 		$slideTable->template_id = $templateId;
-		$slideTable->title = 'Sample redEVENT';
-		$slideTable->section = 'SECTION_REDEVENT';
+		$slideTable->title = 'Sample redFORM';
+		$slideTable->section = 'SECTION_REDFORM';
 		$slideTable->published = 1;
-		$slideTable->params = '{"event_id":"1","background_image":"images\/joomla_black.gif","redevent_slide_class":"redevent_slide"}';
+		$slideTable->params = '{"form_id":"1","background_image":"images\/joomla_black.gif","redform_slide_class":"reform_slide"}';
 		$slideTable->store();
 
 		unset($templateTable);
