@@ -135,5 +135,13 @@
 			label="COM_REDSLIDER_SECTION_VIDEO_FIELD_OTHER_IFRAME"
 			description="COM_REDSLIDER_SECTION_VIDEO_FIELD_OTHER_IFRAME_DESC"
 		/>
+		<!-- Basic fields -->
+		<field
+			name="background_image"
+			type="rmedia"
+			default=""
+			label="COM_REDSLIDER_SECTION_VIDEO_FIELD_BACKGROUND_IMAGE"
+			description="COM_REDSLIDER_SECTION_VIDEO_FIELD_BACKGROUND_IMAGE_DESC"
+		/>
 	</fields>
 </form>
