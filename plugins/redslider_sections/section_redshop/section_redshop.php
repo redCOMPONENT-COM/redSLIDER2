@@ -513,13 +513,6 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 					}
 				}
 
-				// Adding background image to redshop slide
-				$html  = '<div class=\'' . $product->slideClass . '\' style=\'background-image:url("' . JURI::base() . $product->background . '")\';>';
-				$html .= $content;
-				$html .= '</div>';
-
-				$content = $html;
-
 				return $content;
 			}
 		}

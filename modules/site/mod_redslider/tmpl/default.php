@@ -21,9 +21,16 @@ defined('_JEXEC') or die;
 
 		<?php foreach ($slides as $slide): ?>
 
+			<?php $params = new JRegistry($slide->params); ?>
+
+			<?php $background = $params->get('background_image'); ?>
+
 			<?php if (isset($slide->template_content)): ?>
 
-				<li><?php echo $slide->template_content ?></li>
+				<li>
+					<div class="slide-content" ><?php echo $slide->template_content ?></div>
+					<div class="slide-img" ><img src="<?php echo JURI::base() . $background ?>" /></div>
+				</li>
 
 			<?php endif ?>
 
