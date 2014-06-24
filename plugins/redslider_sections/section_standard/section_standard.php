@@ -173,8 +173,6 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 			$params = new JRegistry($slide->params);
 
 			$standard = new stdClass;
-			$standard->background = $params->get('background_image', '');
-			$standard->caption = $params->get('caption', '');
 			$standard->description = $params->get('description', '');
 			$standard->link = $params->get('link', '');
 			$standard->linktext = $params->get('linktext', '');
@@ -214,13 +212,6 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 					}
 				}
 			}
-
-			// Adding background image to standard slide
-			$html  = '<div class=\'' . $standard->suffixClass . '\' style=\'background-image:url("' . JURI::base() . $standard->background . '")\';>';
-			$html .= $content;
-			$html .= '</div>';
-
-			$content = $html;
 
 			return $content;
 		}
