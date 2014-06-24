@@ -18,7 +18,7 @@
 		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_redshop.ini</language>
 		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_redshop.sys.ini</language>
 	</languages>
-	<media destination="mod_redslider" folder="media/mod_redslider">
+	<media destination="redslider_sections/section_redshop" folder="media/redslider_sections">
        <folder>css</folder>
     </media>
 	<config>

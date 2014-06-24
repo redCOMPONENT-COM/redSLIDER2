@@ -16,7 +16,7 @@
 		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_standard.ini</language>
 		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_standard.sys.ini</language>
 	</languages>
-	<media destination="mod_redslider" folder="media/mod_redslider/css">
+	<media destination="redslider_sections/section_standard" folder="media/redslider_sections">
        <folder>css</folder>
     </media>
 	<config>
