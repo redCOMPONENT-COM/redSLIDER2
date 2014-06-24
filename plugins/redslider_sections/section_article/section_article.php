@@ -176,9 +176,6 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 			$article = new stdClass;
 
 			$article->id = (int) $params->get('article_id', '0');
-			$article->image = JString::trim($params->get('background_image', ''));
-			$article->slideClass = JString::trim($params->get('article_slide_class', 'article_slide'));
-
 			$articleModel = RModel::getFrontInstance('Article', array('ignore_request' => false), 'com_content');
 			$article->instance = $articleModel->getItem($article->id);
 
@@ -238,13 +235,6 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 					}
 				}
 			}
-
-			// Adding background image to article slide
-			$html  = '<div class=\'' . $article->slideClass . '\' style=\'background-image:url("' . JURI::base() . $article->image . '")\';>';
-			$html .= $content;
-			$html .= '</div>';
-
-			$content = $html;
 
 			return $content;
 		}
