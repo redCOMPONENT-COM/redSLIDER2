@@ -31,6 +31,8 @@ $optThumb = array();
 // Get params
 $galleryId = (int) $params->get('gallery_id', 0);
 $class = $params->get('slider_class', 'flexslider');
+$layout = ' ';
+$layout .= $params->get('layouts', 'rstyle1');
 $slideWidth = (int) $params->get('slide_width', 756);
 $slideWidth .= "px";
 $slideHeight = (int) $params->get('slide_height', 420);

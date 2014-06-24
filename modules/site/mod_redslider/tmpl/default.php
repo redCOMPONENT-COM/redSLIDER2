@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 
 ?>
 
-<div id="redSLIDER2" class="<?php echo $moduleclass_sfx.$class ?>" >
+<div id="redSLIDER2" class="<?php echo $moduleclass_sfx.$class.$layout ?>" >
 
 <div class="slider" >
 
