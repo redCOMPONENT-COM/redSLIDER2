@@ -41,6 +41,16 @@
 					<option value="slide">MOD_REDSLIDER_EFFECT_TYPE_SLIDE</option>
 				</field>
 				<field
+					name="layouts"
+					type="list"
+					label="MOD_REDSLIDER_LAYOUTS"
+					description="MOD_REDSLIDER_LAYOUTS_DESC"
+					default="rstyle1">
+					<option value="rstyle1">MOD_REDSLIDER_LAYOUTS_RSTYLE1</option>
+					<option value="rstyle2">MOD_REDSLIDER_LAYOUTS_RSTYLE2</option>
+					<option value="rstyle3">MOD_REDSLIDER_LAYOUTS_RSTYLE3</option>
+				</field>
+				<field
 					name="slide_width"
 					type="text"
 					label="MOD_REDSLIDER_STYLE_SLIDE_WIDTH"

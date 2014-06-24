@@ -82,6 +82,7 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 					"{youtube}" => JText::_("COM_REDSLIDER_TAG_VIDEO_YOUTUBE_DESC"),
 					"{vimeo}" => JText::_("COM_REDSLIDER_TAG_VIDEO_VIMEO_DESC"),
 					"{other}" => JText::_("COM_REDSLIDER_TAG_VIDEO_OTHER_DESC"),
+					"{caption}" => JText::_("COM_REDSLIDER_TAG_VIDEO_CAPTION_DESC"),
 				);
 
 			return $tags;
@@ -151,6 +152,10 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 						{
 							$view->outputFields["COM_REDSLIDER_SECTION_VIDEO_PANE_OTHER"][] = $field;
 						}
+						else
+						{
+							$view->basicFields[] = $field;
+						}
 					}
 				}
 
@@ -195,6 +200,17 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 
 			$matches = array();
 
+			// Replace video caption
+			if (preg_match_all('/{caption[^}]*}/i', $content, $matches) > 0)
+			{
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $slide->title, $content);
+					}
+				}
+			}
 			// Case Vimeo
 			if (preg_match_all('/{vimeo[^}]*}/i', $content, $matches) > 0)
 			{
