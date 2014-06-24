@@ -187,7 +187,7 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 	{
 		// Load stylesheet for each section
 		$css = 'redslider.' . JString::strtolower($this->sectionId) . '.css';
-		RHelperAsset::load($css, 'mod_redslider');
+		RHelperAsset::load($css, 'reslider_sections/' . JString::strtolower($this->sectionId));
 
 		if ($slide->section === $this->sectionId)
 		{

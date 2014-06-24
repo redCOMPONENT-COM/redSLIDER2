@@ -204,7 +204,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 
 		// Load stylesheet for each section
 		$css = 'redslider.' . JString::strtolower($this->sectionId) . '.css';
-		RHelperAsset::load($css, 'mod_redslider');
+		RHelperAsset::load($css, 'reslider_sections/' . JString::strtolower($this->sectionId));
 
 		$Redconfiguration = new Redconfiguration;
 		$Redconfiguration->defineDynamicVars();
