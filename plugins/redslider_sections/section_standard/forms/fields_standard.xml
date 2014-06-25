@@ -43,7 +43,7 @@
 			description="COM_REDSLIDER_SECTION_STANDARD_FIELD_LINKTEXT_DESC"
 			message="COM_REDSLIDER_SECTION_STANDARD_FIELD_LINKTEXT_DESC"
 		/>
-		<field name="suffix_class"
+		<field name="slide_class"
 			type="text"
 			default="standard_slide"
 			label="COM_REDSLIDER_SECTION_STANDARD_FIELD_SUFFIX_CLASS"

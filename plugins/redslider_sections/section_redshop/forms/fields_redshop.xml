@@ -14,7 +14,7 @@
 			description="COM_REDSLIDER_SECTION_REDSHOP_FIELD_SLIDE_BACKGROUND_IMAGE_DESC"
 		/>
 		<field
-			name="redshop_slide_class"
+			name="slide_class"
 			type="text"
 			default="redshop_slide"
 			label="COM_REDSLIDER_SECTION_REDSHOP_FIELD_REDSHOP_SLIDE_CLASS"
