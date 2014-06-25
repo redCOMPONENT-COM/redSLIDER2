@@ -154,5 +154,47 @@
 				<include name="**" />
 			</fileset>
 		</copy>
+
+		<echo message="Copying css article to ${www.dir}/media/redslider_sections" />
+		<copy todir="${www.dir}/media/redslider_sections/section_article/css" overwrite="true">
+			<fileset dir="${src}plugins/redslider_sections/section_article/css">
+				<include name="**" />
+			</fileset>
+		</copy>
+
+		<echo message="Copying css redevent to ${www.dir}/media/redslider_sections" />
+		<copy todir="${www.dir}/media/redslider_sections/section_redevent/css" overwrite="true">
+			<fileset dir="${src}plugins/redslider_sections/section_redevent/css">
+				<include name="**" />
+			</fileset>
+		</copy>
+
+		<echo message="Copying css redform to ${www.dir}/media/redslider_sections" />
+		<copy todir="${www.dir}/media/redslider_sections/section_redform/css" overwrite="true">
+			<fileset dir="${src}plugins/redslider_sections/section_redform/css">
+				<include name="**" />
+			</fileset>
+		</copy>
+
+		<echo message="Copying css redshop to ${www.dir}/media/redslider_sections" />
+		<copy todir="${www.dir}/media/redslider_sections/section_redshop/css" overwrite="true">
+			<fileset dir="${src}plugins/redslider_sections/section_redshop/css">
+				<include name="**" />
+			</fileset>
+		</copy>
+
+		<echo message="Copying css standard to ${www.dir}/media/redslider_sections" />
+		<copy todir="${www.dir}/media/redslider_sections/section_standard/css" overwrite="true">
+			<fileset dir="${src}plugins/redslider_sections/section_standard/css">
+				<include name="**" />
+			</fileset>
+		</copy>
+
+		<echo message="Copying css video to ${www.dir}/media/redslider_sections" />
+		<copy todir="${www.dir}/media/redslider_sections/section_video/css" overwrite="true">
+			<fileset dir="${src}plugins/redslider_sections/section_video/css">
+				<include name="**" />
+			</fileset>
+		</copy>
 	</target>
 </project>
