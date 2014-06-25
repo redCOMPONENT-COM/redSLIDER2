@@ -25,9 +25,11 @@ defined('_JEXEC') or die;
 
 			<?php $background = $params->get('background_image'); ?>
 
+			<?php $class = $params->get('slide_class'); ?>
+
 			<?php if (isset($slide->template_content)): ?>
 
-				<li>
+				<li class="<?php echo $class; ?>">
 					<div class="slide-content" ><?php echo $slide->template_content ?></div>
 					<div class="slide-img" ><img src="<?php echo JURI::base() . $background ?>" /></div>
 				</li>
