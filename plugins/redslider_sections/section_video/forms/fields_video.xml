@@ -143,5 +143,11 @@
 			label="COM_REDSLIDER_SECTION_VIDEO_FIELD_BACKGROUND_IMAGE"
 			description="COM_REDSLIDER_SECTION_VIDEO_FIELD_BACKGROUND_IMAGE_DESC"
 		/>
+		<field name="slide_class"
+			type="text"
+			default="video_slide"
+			label="COM_REDSLIDER_SECTION_VIDEO_FIELD_SLIDE_CLASS"
+			description="COM_REDSLIDER_SECTION_VIDEO_FIELD_SLIDE_CLASS_DESC"
+		/>
 	</fields>
 </form>

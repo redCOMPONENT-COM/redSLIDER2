@@ -41,7 +41,7 @@ class PlgRedslider_SectionsSection_Redform extends JPlugin
 		$this->loadLanguage();
 		$this->sectionId = "SECTION_REDFORM";
 		$this->sectionName = JText::_('PLG_SECTION_REDFORM_NAME');
-		$this->extensionName = "com_redform";
+		$this->extensionName = "redform";
 		$this->msgLevel = "Warning";
 		$this->noTemplate = true;
 	}
