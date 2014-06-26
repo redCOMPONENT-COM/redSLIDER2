@@ -26,14 +26,3 @@
 	padding: 0;
 	margin: 15px 20px;
 }
-/*--------------------------@media screen and (max-width: 769px)----------------------------------*/
-@media screen and (max-width: 769px){
-	#redSLIDER2 .flex-control-nav{
-		display: inline;
-		width: 100%;
-	    right: 0;
-	    height: 10px;
-	    bottom: 2%;
-	    text-align: center;
-	}
-}
