@@ -187,7 +187,7 @@
 		<copy todir="${www.dir}/media/redslider_sections/section_standard/css" overwrite="true">
 			<fileset dir="${src}plugins/redslider_sections/section_standard/css">
 				<include name="**" />
-			</fileset>`
+			</fileset>
 		</copy>
 
 		<echo message="Copying css video to ${www.dir}/media/redslider_sections" />
