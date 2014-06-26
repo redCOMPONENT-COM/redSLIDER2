@@ -71,7 +71,7 @@ class PlgRedslider_SectionsSection_RedshopInstallerScript extends Com_RedcoreIns
 		$templateTable->title = 'Template redSHOP';
 		$templateTable->section = 'SECTION_redSHOP';
 		$templateTable->published = 1;
-		$templateTable->content = '<div class="eachSlide">\r\n<div class="slideImg">\r\n<h3>{product_image|300|200}</h3>\r\n</div>\r\n<div class="slidePrice">\r\n<h3>{product_price}</h3>\r\n</div>\r\n<div class="slideTitle">\r\n<h3>{product_name}</h3>\r\n</div>\r\n<div class="slideText">{product_short_description}</div>\r\n<div class="slideForm">{form_addtocart:add_to_cart2}</div>\r\n</div>';
+		$templateTable->content = '<div class="eachSlide"><div class="prod-show"><div class="slideImg">{product_image|300|200}</div><div class="slidePrice"><h3>{product_price}</h3></div></div><div class="prod-detail"><div class="slideTitle"><h3>{product_name}</h3></div><div class="slideText">{product_short_description}</div><div class="slideAttribute">{attribute_template:attributes}</div><div class="slideForm">{form_addtocart:add_to_cart2}</div></div></div>';
 		$templateTable->store();
 		$templateId = (int) $templateTable->id;
 		/*
@@ -83,7 +83,7 @@ class PlgRedslider_SectionsSection_RedshopInstallerScript extends Com_RedcoreIns
 		$slideTable->title = 'Sample redSHOP';
 		$slideTable->section = 'SECTION_REDSHOP';
 		$slideTable->published = 1;
-		$slideTable->params = '{"product_id":"1","background_image":"images\\/joomla_logo_black.jpg","redshop_slide_class":"redshop_slide"}';
+		$slideTable->params = '{"product_id":"1","background_image":"images/stories/redslider/bg_redshop_slider.png","slide_class":"redshop_slide"}';
 		$slideTable->store();
 
 		unset($templateTable);

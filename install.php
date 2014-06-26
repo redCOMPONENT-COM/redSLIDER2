@@ -47,6 +47,7 @@ class Com_RedSliderInstallerScript extends Com_RedcoreInstallerScript
 		$this->com_install();
 		$this->installModules($parent);
 		$this->installPlugins($parent);
+		$this->copyAssets();
 
 		return true;
 	}
@@ -434,5 +435,66 @@ class Com_RedSliderInstallerScript extends Com_RedcoreInstallerScript
 
 		// Insert the status
 		array_push($this->status->{$type}, $status);
+	}
+
+	/**
+	 * Copy sample slide images to images/stories folder
+	 *
+	 * @return  [type]  [description]
+	 */
+	private function copyAssets()
+	{
+		// Create new directory in images/stories
+		$this->createIndexFolder(JPATH_ROOT . '/images/stories');
+		$this->createIndexFolder(JPATH_ROOT . '/images/stories/redslider');
+
+		// Copy sample media
+		$src = JPATH_ROOT . '/media/com_redslider/images/slides';
+		$dst = JPATH_ROOT . '/images/stories/redslider';
+
+		if (JFolder::exists($dst))
+		{
+			if (!JFolder::delete($dst))
+			{
+				$app = JFactory::getApplication();
+				$app->enqueueMessage('Couldnt delete ' . $dst);
+			}
+		}
+
+		if (!JFolder::move($src, $dst))
+		{
+			$app = JFactory::getApplication();
+			$app->enqueueMessage('Couldnt move ' . $src . ' to ' . $dst);
+		}
+
+		if (is_dir($src))
+		{
+			JFolder::delete($src);
+		}
+	}
+
+	/**
+	 * creates a folder with empty html file
+	 *
+	 * @param   string  $path  Directory path
+	 *
+	 * @return  boolean
+	 */
+	public function createIndexFolder($path)
+	{
+		jimport('joomla.filesystem.file');
+		jimport('joomla.filesystem.folder');
+
+		if (JFolder::create($path))
+		{
+			if (!JFile::exists($path . '/index.html'))
+			{
+				JFile::copy(JPATH_ROOT . '/components/index.html', $path . '/index.html');
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 }

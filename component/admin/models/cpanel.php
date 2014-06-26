@@ -85,7 +85,7 @@ class RedSliderModelCpanel extends RModelAdmin
 		$templateTable->title = 'Template Article';
 		$templateTable->section = 'SECTION_ARTICLE';
 		$templateTable->published = 1;
-		$templateTable->content = '<h3>{article_title}</h3><div>{article_introtext|limit}</div>';
+		$templateTable->content = '<div class="articleSlide"><div class="slideTitle"><h3><a href="{article_link}">{article_title}</a></h3></div><div class="slideText"><p>{article_introtext|250}</p></div></div>';
 		$templateTable->store();
 		$templateId = (int) $templateTable->id;
 		/*
@@ -97,7 +97,7 @@ class RedSliderModelCpanel extends RModelAdmin
 		$slideTable->title = 'Sample Article';
 		$slideTable->section = 'SECTION_ARTICLE';
 		$slideTable->published = 1;
-		$slideTable->params = '{"article_id":"1","background_image":"images\/joomla_black.gif","article_slide_class":"article_slide"}';
+		$slideTable->params = '{"article_id":"1","background_image":"images/stories/redslider/standard_slider.jpg","slide_class":"article_slide"}';
 		$slideTable->store();
 		/*
 		 * Insert demo template for Standard section
@@ -107,7 +107,7 @@ class RedSliderModelCpanel extends RModelAdmin
 		$templateTable->title = 'Template Standard';
 		$templateTable->section = 'SECTION_STANDARD';
 		$templateTable->published = 1;
-		$templateTable->content = '<div class="eachSlide">\r\n<div class="slideTitle">\r\n<h3><a href="{standard_link}">{standard_linktext}</a></h3>\r\n</div>\r\n<div class="slideText">{standard_description}</div>\r\n</div>';
+		$templateTable->content = '<div class="eachSlide"><div class="slideTitle"><h3><a href="{standard_link}">{standard_linktext}</a></h3></div><div class="slideText"><p>{standard_description}</p></div></div>';
 		$templateTable->store();
 		$templateId = (int) $templateTable->id;
 		/*
@@ -119,7 +119,7 @@ class RedSliderModelCpanel extends RModelAdmin
 		$slideTable->title = 'Sample Standard';
 		$slideTable->section = 'SECTION_STANDARD';
 		$slideTable->published = 1;
-		$slideTable->params = '{"background_image":"images\\/joomla_green.gif","caption":"Sample Standard","description":"<p>Sample Standard<\\/p>","link":"#","linktext":"Sample Standard","suffix_class":"standard_slide"}';
+		$slideTable->params = '{"background_image":"images/stories/redslider/standard_slider.jpg","caption":"Sample Standard","description":"<p>Sample Standard</p>","link":"#","linktext":"Sample Standard","slide_class":"standard_slide"}';
 		$slideTable->store();
 		/*
 		 * Insert demo template for Video section
@@ -129,7 +129,7 @@ class RedSliderModelCpanel extends RModelAdmin
 		$templateTable->title = 'Template Video';
 		$templateTable->section = 'SECTION_VIDEO';
 		$templateTable->published = 1;
-		$templateTable->content = '<div>{youtube}</div>';
+		$templateTable->content = '<div class="video_Slide"><div class="videoSlide">{youtube}<div class="slideTitle"><h3>{caption}</h3></div></div></div>';
 		$templateTable->store();
 		$templateId = (int) $templateTable->id;
 		/*
@@ -141,7 +141,7 @@ class RedSliderModelCpanel extends RModelAdmin
 		$slideTable->title = 'Sample Video';
 		$slideTable->section = 'SECTION_VIDEO';
 		$slideTable->published = 1;
-		$slideTable->params = '{"vimeo_id":"","vimeo_width":"500","vimeo_height":"281","vimeo_portrait":"0","vimeo_title":"0","vimeo_byline":"0","vimeo_autoplay":"0","vimeo_loop":"0","vimeo_color":"#FFFFFF","youtube_id":"niVbODz4Dnw","youtube_width":"500","youtube_height":"315","youtube_suggested":"0","youtube_privacy_enhanced":"0","other_iframe":""}';
+		$slideTable->params = '{"local_media":"","local_width":"500","local_height":"315","background_image":"images/stories/redslider/bg_redshop_slider.png","slide_class":"video_slide","vimeo_id":"","vimeo_width":"500","vimeo_height":"281","vimeo_portrait":"0","vimeo_title":"0","vimeo_byline":"0","vimeo_autoplay":"0","vimeo_loop":"0","vimeo_color":"#FFFFFF","youtube_id":"oofSnsGkops","youtube_width":"500","youtube_height":"315","youtube_suggested":"0","youtube_privacy_enhanced":"0","other_iframe":""}';
 		$slideTable->store();
 
 		unset($gallery);
