@@ -166,72 +166,77 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
-		// Load stylesheet for each section
-		$css = 'redslider.' . JString::strtolower($this->sectionId) . '.css';
-		RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
-
 		if ($slide->section === $this->sectionId)
 		{
+			// Load stylesheet for each section
+			$css = 'redslider.' . JString::strtolower($this->sectionId) . '.css';
+			RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+
 			$params = new JRegistry($slide->params);
 			$article = new stdClass;
 
 			$article->id = (int) $params->get('article_id', '0');
-			$articleModel = RModel::getFrontInstance('Article', array('ignore_request' => false), 'com_content');
-			$article->instance = $articleModel->getItem($article->id);
+			$articleModel = RModel::getFrontInstance('Articles', array('ignore_request' => false), 'com_content');
+			$articleModel->setState('a.id', $article->id);
+			$article->instance = $articleModel->getItems($article->id);
 
-			$matches = array();
-
-			if (preg_match_all('/{article_title[^}]*}/i', $content, $matches) > 0)
+			if (count($article->instance))
 			{
-				foreach ($matches as $match)
+				$article->instance = $article->instance[0];
+				$matches = array();
+
+				if (preg_match_all('/{article_title[^}]*}/i', $content, $matches) > 0)
 				{
-					if (count($match))
+					foreach ($matches as $match)
 					{
-						$content = JString::str_ireplace($match[0], $article->instance->title, $content);
+						if (count($match))
+						{
+							$content = JString::str_ireplace($match[0], $article->instance->title, $content);
+						}
 					}
 				}
-			}
 
-			if (preg_match_all('/{article_introtext[^}]*}/i', $content, $matches) > 0)
-			{
-				foreach ($matches as $match)
+				if (preg_match_all('/{article_introtext[^}]*}/i', $content, $matches) > 0)
 				{
-					if (count($match))
+					foreach ($matches as $match)
 					{
-						$content = RedsliderHelperHelper::replaceTagsHTML($match[0], $article->instance->introtext, $content);
+						if (count($match))
+						{
+							$content = RedsliderHelperHelper::replaceTagsHTML($match[0], $article->instance->introtext, $content);
+						}
 					}
 				}
-			}
 
-			if (preg_match_all('/{article_fulltext[^}]*}/i', $content, $matches) > 0)
-			{
-				foreach ($matches as $match)
+				if (preg_match_all('/{article_fulltext[^}]*}/i', $content, $matches) > 0)
 				{
-					if (count($match))
+					foreach ($matches as $match)
 					{
-						$content = RedsliderHelperHelper::replaceTagsHTML($match[0], $article->instance->fulltext, $content);
+						if (count($match))
+						{
+							$content = RedsliderHelperHelper::replaceTagsHTML($match[0], $article->instance->fulltext, $content);
+						}
 					}
 				}
-			}
 
-			if (preg_match_all('/{article_date[^}]*}/i', $content, $matches) > 0)
-			{
-				foreach ($matches as $match)
+				if (preg_match_all('/{article_date[^}]*}/i', $content, $matches) > 0)
 				{
-					if (count($match))
+					foreach ($matches as $match)
 					{
-						$content = JString::str_ireplace($match[0], $article->instance->created, $content);
+						if (count($match))
+						{
+							$content = JString::str_ireplace($match[0], $article->instance->created, $content);
+						}
 					}
 				}
-			}
 
-			if (preg_match_all('/{article_link[^}]*}/i', $content, $matches) > 0)
-			{
-				foreach ($matches as $match)
+				if (preg_match_all('/{article_link[^}]*}/i', $content, $matches) > 0)
 				{
-					if (count($match))
+					foreach ($matches as $match)
 					{
-						$content = JString::str_ireplace($match[0], ContentHelperRoute::getArticleRoute($article->id), $content);
+						if (count($match))
+						{
+							$content = JString::str_ireplace($match[0], ContentHelperRoute::getArticleRoute($article->id), $content);
+						}
 					}
 				}
 			}
