@@ -141,7 +141,7 @@ class RedSliderModelCpanel extends RModelAdmin
 		$slideTable->title = 'Sample Video';
 		$slideTable->section = 'SECTION_VIDEO';
 		$slideTable->published = 1;
-		$slideTable->params = '{"local_media":"","local_width":"500","local_height":"315","background_image":"images/stories/redslider/bg_redshop_slider.png","slide_class":"video_slide","vimeo_id":"","vimeo_width":"500","vimeo_height":"281","vimeo_portrait":"0","vimeo_title":"0","vimeo_byline":"0","vimeo_autoplay":"0","vimeo_loop":"0","vimeo_color":"#FFFFFF","youtube_id":"oofSnsGkops","youtube_width":"500","youtube_height":"315","youtube_suggested":"0","youtube_privacy_enhanced":"0","other_iframe":""}';
+		$slideTable->params = '{"local_media":"","local_width":"500","local_height":"315","background_image":"images/stories/redslider/bg_redshop_slider.png","slide_class":"video_slide","vimeo_id":"","vimeo_width":"500","vimeo_height":"281","vimeo_portrait":"0","vimeo_title":"0","vimeo_byline":"0","vimeo_autoplay":"0","vimeo_loop":"0","vimeo_color":"#FFFFFF","youtube_id":"Qjnc0H8utks","youtube_width":"500","youtube_height":"315","youtube_suggested":"0","youtube_privacy_enhanced":"0","other_iframe":""}';
 		$slideTable->store();
 
 		unset($gallery);
