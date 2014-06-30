@@ -91,6 +91,8 @@ class PlgRedslider_SectionsSection_RedshopInstallerScript extends Com_RedcoreIns
 				"slide_class" => "redshop_slide"
 			);
 
+			$slideParams = new JRegistry($slideParams);
+
 			/*
 			 * Insert demo slide for redSHOP section
 			 */
@@ -100,7 +102,7 @@ class PlgRedslider_SectionsSection_RedshopInstallerScript extends Com_RedcoreIns
 			$slideTable->title = 'Sample redSHOP';
 			$slideTable->section = 'SECTION_REDSHOP';
 			$slideTable->published = $comExists? 1 : 0;
-			$slideTable->params = json_encode($slideParams);
+			$slideTable->params = $slideParams->toString();
 			$slideTable->store();
 
 			unset($templateTable);
