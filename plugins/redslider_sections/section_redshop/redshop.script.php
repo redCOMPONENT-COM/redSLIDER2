@@ -56,38 +56,58 @@ class PlgRedslider_SectionsSection_RedshopInstallerScript extends Com_RedcoreIns
 	 */
 	public function plugin_install()
 	{
-		$db					= JFactory::getDbo();
-		$user				= JFactory::getUser();
-		$query 				= $db->getQuery();
-		$currentDate		= JFactory::getDate();
+		$helperPath = JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
 
-		// Add Include path
-		JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
-		/*
-		 * Insert demo template for redSHOP section
-		 */
-		$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
-		$templateTable->id = null;
-		$templateTable->title = 'Template redSHOP';
-		$templateTable->section = 'SECTION_redSHOP';
-		$templateTable->published = 1;
-		$templateTable->content = '<div class="eachSlide"><div class="prod-show"><div class="slideImg">{product_image|300|200}</div><div class="slidePrice"><h3>{product_price}</h3></div></div><div class="prod-detail"><div class="slideTitle"><h3>{product_name}</h3></div><div class="slideText">{product_short_description}</div><div class="slideAttribute">{attribute_template:attributes}</div><div class="slideForm">{form_addtocart:add_to_cart2}</div></div></div>';
-		$templateTable->store();
-		$templateId = (int) $templateTable->id;
-		/*
-		 * Insert demo slide for redSHOP section
-		 */
-		$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
-		$slideTable->gallery_id = 1;
-		$slideTable->template_id = $templateId;
-		$slideTable->title = 'Sample redSHOP';
-		$slideTable->section = 'SECTION_REDSHOP';
-		$slideTable->published = 1;
-		$slideTable->params = '{"product_id":"1","background_image":"images/stories/redslider/bg_redshop_slider.png","slide_class":"redshop_slide"}';
-		$slideTable->store();
+		if (JFile::exists($helperPath))
+		{
+			require_once $helperPath;
 
-		unset($templateTable);
-		unset($slideTable);
+			$comExists = RedsliderHelperHelper::checkExtension('com_redshop');
+
+			$db					= JFactory::getDbo();
+			$user				= JFactory::getUser();
+			$query 				= $db->getQuery(true);
+			$currentDate		= JFactory::getDate();
+
+			// Add Include path
+			JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
+
+			/*
+			 * Insert demo template for redSHOP section
+			 */
+			$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
+			$templateTable->id = null;
+			$templateTable->title = 'Template redSHOP';
+			$templateTable->section = 'SECTION_REDSHOP';
+			$templateTable->published = $comExists ? 1 : 0;
+			$templateTable->content = '<div class="eachSlide"><div class="prod-show"><div class="slideImg">{product_image|300|200}</div><div class="slidePrice"><h3>{product_price}</h3></div></div><div class="prod-detail"><div class="slideTitle"><h3>{product_name}</h3></div><div class="slideText">{product_short_description}</div><div class="slideAttribute">{attribute_template:attributes}</div><div class="slideForm">{form_addtocart:add_to_cart2}</div></div></div>';
+			$templateTable->store();
+			$templateId = (int) $templateTable->id;
+
+			// Prepare params for demo redSHOP slide
+			$slideParams = array(
+				"product_id" => 1,
+				"background_image" => "images/stories/redslider/bg_redshop_slider.png",
+				"slide_class" => "redshop_slide"
+			);
+
+			$slideParams = new JRegistry($slideParams);
+
+			/*
+			 * Insert demo slide for redSHOP section
+			 */
+			$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
+			$slideTable->gallery_id = 1;
+			$slideTable->template_id = $templateId;
+			$slideTable->title = 'Sample redSHOP';
+			$slideTable->section = 'SECTION_REDSHOP';
+			$slideTable->published = $comExists? 1 : 0;
+			$slideTable->params = $slideParams->toString();
+			$slideTable->store();
+
+			unset($templateTable);
+			unset($slideTable);
+		}
 
 		return true;
 	}
