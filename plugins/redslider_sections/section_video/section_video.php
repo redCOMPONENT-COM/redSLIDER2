@@ -152,6 +152,10 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 						{
 							$view->outputFields["COM_REDSLIDER_SECTION_VIDEO_PANE_OTHER"][] = $field;
 						}
+						elseif (JString::strpos($field->id, "jform_params_local") !== false)
+						{
+							$view->outsizeFields["COM_REDSLIDER_SECTION_VIDEO_PANE_LOCAL"][] = $field;
+						}
 						else
 						{
 							$view->basicFields[] = $field;
