@@ -194,25 +194,28 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
-		require_once JPATH_LIBRARIES . '/redevent/tags/tags.php';
-		require_once JPATH_LIBRARIES . '/redevent/helper/helper.php';
-		require_once JPATH_LIBRARIES . '/redevent/helper/attachment.php';
-		require_once JPATH_LIBRARIES . '/redevent/helper/output.php';
-		require_once JPATH_LIBRARIES . '/redform/core/model/form.php';
-		require_once JPATH_LIBRARIES . '/redform/core/core.php';
-
-		// Load stylesheet for each section
-		$css = 'redslider.' . JString::strtolower($this->sectionId) . '.css';
-		RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
-
 		if ($slide->section === $this->sectionId)
 		{
-			$params = new JRegistry($slide->params);
+			if (RedsliderHelperHelper::checkExtension($this->extensionName))
+			{
+				require_once JPATH_LIBRARIES . '/redevent/tags/tags.php';
+				require_once JPATH_LIBRARIES . '/redevent/helper/helper.php';
+				require_once JPATH_LIBRARIES . '/redevent/helper/attachment.php';
+				require_once JPATH_LIBRARIES . '/redevent/helper/output.php';
+				require_once JPATH_LIBRARIES . '/redform/core/model/form.php';
+				require_once JPATH_LIBRARIES . '/redform/core/core.php';
 
-			$eventId = (int) $params->get('event_id', 0);
-			$tags = new RedeventTags;
-			$tags->setEventId($eventId);
-			$content = $tags->ReplaceTags($content);
+				// Load stylesheet for each section
+				$css = 'redslider.' . JString::strtolower($this->sectionId) . '.css';
+				RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+
+				$params = new JRegistry($slide->params);
+
+				$eventId = (int) $params->get('event_id', 0);
+				$tags = new RedeventTags;
+				$tags->setEventId($eventId);
+				$content = $tags->ReplaceTags($content);
+			}
 
 			return $content;
 		}
