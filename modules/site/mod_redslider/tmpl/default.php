@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 
 ?>
 
-<div id="redSLIDER2" class="<?php echo $moduleclass_sfx.$class.$layout ?>" >
+<div id="redSLIDER2" class="<?php echo $moduleclass_sfx . $class . $layout ?>" >
 
 <div class="slider" >
 
@@ -31,7 +31,11 @@ defined('_JEXEC') or die;
 
 				<li class="<?php echo $class; ?>">
 					<div class="slide-content" ><?php echo $slide->template_content ?></div>
-					<div class="slide-img" ><img src="<?php echo JURI::base() . $background ?>" /></div>
+					<div class="slide-img" >
+						<?php if (isset($background)): ?>
+							<img src="<?php echo JURI::base() . $background ?>" />
+						<?php endif; ?>
+					</div>
 				</li>
 
 			<?php endif ?>
