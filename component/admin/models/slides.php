@@ -75,8 +75,13 @@ class RedsliderModelSlides extends RModelList
 	{
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
-		$query->select('s.*,' . $db->qn('g.title') . ' AS ' . $db->qn('gallery_title') . ', ' . $db->qn('t.title') . ' AS ' . $db->qn('template_title'))
-			->from('#__redslider_slides AS s')
+		$query->select(
+			$this->getState(
+				'list.select',
+				's.*,' . $db->qn('g.title') . ' AS ' . $db->qn('gallery_title') . ', ' . $db->qn('t.title') . ' AS ' . $db->qn('template_title')
+			)
+		);
+		$query->from('#__redslider_slides AS s')
 			->leftJoin($db->qn('#__redslider_galleries', 'g') . ' ON ' . $db->qn('s.gallery_id') . ' = ' . $db->qn('g.id'))
 			->leftJoin($db->qn('#__redslider_templates', 't') . ' ON ' . $db->qn('s.template_id') . ' = ' . $db->qn('t.id'));
 
