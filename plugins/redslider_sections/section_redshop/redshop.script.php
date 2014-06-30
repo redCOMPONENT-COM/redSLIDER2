@@ -107,6 +107,15 @@ class PlgRedslider_SectionsSection_RedshopInstallerScript extends Com_RedcoreIns
 
 			unset($templateTable);
 			unset($slideTable);
+
+			// Set this plugin published
+			$query = $db->getQuery(true);
+
+			$query->update($db->qn("#__extensions"))
+				->set($db->qn('enabled') . ' = 1')
+				->where($db->qn('element') . ' = ' . $db->q('section_redshop') . ' AND ' . $db->qn('folder') . ' = ' . $db->q('redslider_sections'));
+			$db->setQuery($query);
+			$db->execute();
 		}
 
 		return true;

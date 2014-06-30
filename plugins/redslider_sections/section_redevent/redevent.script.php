@@ -56,38 +56,67 @@ class PlgRedslider_SectionsSection_RedeventInstallerScript extends Com_RedcoreIn
 	 */
 	public function plugin_install()
 	{
-		$db					= JFactory::getDbo();
-		$user				= JFactory::getUser();
-		$query 				= $db->getQuery();
-		$currentDate		= JFactory::getDate();
+		$helperPath = JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
 
-		// Add Include path
-		JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
-		/*
-		 * Insert demo template for redEVENT section
-		 */
-		$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
-		$templateTable->id = null;
-		$templateTable->title = 'Template redEVENT';
-		$templateTable->section = 'SECTION_REDEVENT';
-		$templateTable->published = 1;
-		$templateTable->content = "<div>[event_title]<div><div>[event_description]<div>";
-		$templateTable->store();
-		$templateId = (int) $templateTable->id;
-		/*
-		 * Insert demo slide for redEVENT section
-		 */
-		$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
-		$slideTable->gallery_id = 1;
-		$slideTable->template_id = $templateId;
-		$slideTable->title = 'Sample redEVENT';
-		$slideTable->section = 'SECTION_REDEVENT';
-		$slideTable->published = 1;
-		$slideTable->params = '{"event_id":"1","background_image":"images\/joomla_black.gif","redevent_slide_class":"redevent_slide"}';
-		$slideTable->store();
+		if (JFile::exists($helperPath))
+		{
+			require_once $helperPath;
 
-		unset($templateTable);
-		unset($slideTable);
+			$comExists = RedsliderHelperHelper::checkExtension('com_redevent');
+
+			$db					= JFactory::getDbo();
+			$user				= JFactory::getUser();
+			$query 				= $db->getQuery();
+			$currentDate		= JFactory::getDate();
+
+			// Add Include path
+			JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
+			/*
+			 * Insert demo template for redEVENT section
+			 */
+			$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
+			$templateTable->id = null;
+			$templateTable->title = 'Template redEVENT';
+			$templateTable->section = 'SECTION_REDEVENT';
+			$templateTable->published = $comExists? 1 : 0;
+			$templateTable->content = "<div>[event_title]<div><div>[event_description]<div>";
+			$templateTable->store();
+			$templateId = (int) $templateTable->id;
+
+			// Prepare params for redEVENT slide
+
+			$slideParams = array(
+				"event_id" => 1,
+				"background_image" => "images/joomla_black.gif",
+				"redevent_slide_class" => "redevent_slide"
+			);
+
+			$slideParams = new JRegistry($slideParams);
+
+			/*
+			 * Insert demo slide for redEVENT section
+			 */
+			$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
+			$slideTable->gallery_id = 1;
+			$slideTable->template_id = $templateId;
+			$slideTable->title = 'Sample redEVENT';
+			$slideTable->section = 'SECTION_REDEVENT';
+			$slideTable->published = $comExists? 1 : 0;
+			$slideTable->params = $slideParams->toString();
+			$slideTable->store();
+
+			unset($templateTable);
+			unset($slideTable);
+
+			// Set this plugin published
+			$query = $db->getQuery(true);
+
+			$query->update($db->qn("#__extensions"))
+				->set($db->qn('enabled') . ' = 1')
+				->where($db->qn('element') . ' = ' . $db->q('section_redevent') . ' AND ' . $db->qn('folder') . ' = ' . $db->q('redslider_sections'));
+			$db->setQuery($query);
+			$db->execute();
+		}
 
 		return true;
 	}
