@@ -44,49 +44,56 @@ class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreIns
 	{
 		parent::installOrUpdate($parent);
 
-		$this->plugin_install();
-
 		return true;
 	}
 
 	/**
-	 * Plugin install
+	 * Method to run after an install/update/uninstall method
+	 *
+	 * @param   object  $type    type of change (install, update or discover_install)
+	 * @param   object  $parent  class calling this method
 	 *
 	 * @return  boolean
 	 */
-	public function plugin_install()
+	public function postflight($type, $parent)
 	{
-		$db					= JFactory::getDbo();
-		$user				= JFactory::getUser();
-		$query 				= $db->getQuery();
-		$currentDate		= JFactory::getDate();
+		parent::postflight($type, $parent);
 
-		// Add Include path
-		JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
-		/*
-		 * Insert demo template for redFORM section
-		 */
-		$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
-		$templateTable->id = null;
-		$templateTable->title = 'Template redFORM';
-		$templateTable->section = 'SECTION_REDFORM';
-		$templateTable->published = 1;
-		$templateTable->store();
-		$templateId = (int) $templateTable->id;
-		/*
-		 * Insert demo slide for redFORM section
-		 */
-		$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
-		$slideTable->gallery_id = 1;
-		$slideTable->template_id = $templateId;
-		$slideTable->title = 'Sample redFORM';
-		$slideTable->section = 'SECTION_REDFORM';
-		$slideTable->published = 1;
-		$slideTable->params = '{"form_id":"1","background_image":"images\/joomla_black.gif","redform_slide_class":"reform_slide"}';
-		$slideTable->store();
+		// Migrating demo data
+		if ($type === 'install')
+		{
+			$db					= JFactory::getDbo();
+			$user				= JFactory::getUser();
+			$query 				= $db->getQuery();
+			$currentDate		= JFactory::getDate();
 
-		unset($templateTable);
-		unset($slideTable);
+			// Add Include path
+			JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
+			/*
+			 * Insert demo template for redFORM section
+			 */
+			$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
+			$templateTable->id = null;
+			$templateTable->title = 'Template redFORM';
+			$templateTable->section = 'SECTION_REDFORM';
+			$templateTable->published = 1;
+			$templateTable->store();
+			$templateId = (int) $templateTable->id;
+			/*
+			 * Insert demo slide for redFORM section
+			 */
+			$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
+			$slideTable->gallery_id = 1;
+			$slideTable->template_id = $templateId;
+			$slideTable->title = 'Sample redFORM';
+			$slideTable->section = 'SECTION_REDFORM';
+			$slideTable->published = 1;
+			$slideTable->params = '{"form_id":"1","background_image":"images\/joomla_black.gif","redform_slide_class":"reform_slide"}';
+			$slideTable->store();
+
+			unset($templateTable);
+			unset($slideTable);
+		}
 
 		return true;
 	}
