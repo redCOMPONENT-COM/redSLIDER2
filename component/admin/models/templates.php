@@ -73,7 +73,12 @@ class RedsliderModelTemplates extends RModelList
 	{
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
-		$query->select('t.*');
+		$query->select(
+			$this->getState(
+				'list.select',
+				't.*'
+			)
+		);
 		$query->from('#__redslider_templates AS t');
 
 		// Filter: like / search
