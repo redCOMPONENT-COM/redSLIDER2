@@ -118,6 +118,7 @@
 /*-------------------.rstyle2-----------------------------*/
 #redSLIDER2.rstyle2
 {
+    /*@TODO This line can be re-used in client project, so I leave it in comment */
     /*border:1px solid #FFFFFF;*/
 }
 #redSLIDER2.rstyle2 .flex-control-nav{
@@ -133,6 +134,7 @@
 }
 #redSLIDER2.rstyle2 .flex-direction-nav .flex-next
 {
+    /*@TODO This line can be re-used in client project, so I leave it in comment */
     /*margin-right:31%;*/
 }
 #redSLIDER2.rstyle2 .flex-direction-nav .flex-next:before
@@ -146,6 +148,7 @@
 /*-------------------.rstyle3-----------------------------*/
 #redSLIDER2.rstyle3
 {
+    /*@TODO This line can be re-used in client project, so I leave it in comment */
     /*border:1px solid #FFFFFF;*/
 }
 #redSLIDER2.rstyle3 .flex-control-nav{
