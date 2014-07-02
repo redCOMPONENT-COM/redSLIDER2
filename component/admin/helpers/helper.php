@@ -61,8 +61,8 @@ class RedsliderHelperHelper
 		$slidesModel = RModel::getAdminInstance('Slides', array('ignore_request' => true), 'com_redslider');
 		$slidesModel->setState('filter.published', 1);
 		$slidesModel->setState('filter.gallery_id', $galleryId);
-		$slidesModel->setState('list.ordering', 's.id');
-		$slidesModel->setState('list.direction', 'desc');
+		$slidesModel->setState('list.ordering', 's.ordering');
+		$slidesModel->setState('list.direction', 'asc');
 
 		$slides = $slidesModel->getItems();
 
