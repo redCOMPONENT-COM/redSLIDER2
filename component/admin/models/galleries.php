@@ -72,7 +72,12 @@ class RedsliderModelGalleries extends RModelList
 	{
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
-		$query->select('g.*');
+		$query->select(
+			$this->getState(
+				'list.select',
+				'g.*'
+			)
+		);
 		$query->from('#__redslider_galleries AS g');
 
 		// Filter: like / search

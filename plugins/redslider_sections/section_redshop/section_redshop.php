@@ -12,10 +12,6 @@ defined('_JEXEC') or die;
 jimport('joomla.plugin.plugin');
 jimport('redcore.bootstrap');
 
-JHTML::Script('fetchscript.js', 'components/com_redshop/assets/js/', false);
-JHTML::Script('attribute.js', 'components/com_redshop/assets/js/', false);
-JHTML::Script('common.js', 'components/com_redshop/assets/js/', false);
-
 /**
  * Plugins RedSLIDER section redSHOP
  *
@@ -194,25 +190,31 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
-		require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/redshop.cfg.php';
-		require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/configuration.php';
-		require_once JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
-		require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/template.php';
-		require_once JPATH_SITE . '/components/com_redshop/helpers/product.php';
-		require_once JPATH_ROOT . '/components/com_redshop/helpers/redshop.js.php';
-		require_once JPATH_SITE . '/components/com_redshop/helpers/extra_field.php';
-
-		// Load stylesheet for each section
-		$css = 'redslider.' . JString::strtolower($this->sectionId) . '.css';
-		RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
-
-		$Redconfiguration = new Redconfiguration;
-		$Redconfiguration->defineDynamicVars();
-
 		if ($slide->section === $this->sectionId)
 		{
 			if (RedsliderHelperHelper::checkExtension($this->extensionName))
 			{
+				// Load redSHOP's javascripts
+				JHTML::Script('fetchscript.js', 'components/com_redshop/assets/js/', false);
+				JHTML::Script('attribute.js', 'components/com_redshop/assets/js/', false);
+				JHTML::Script('common.js', 'components/com_redshop/assets/js/', false);
+
+				// Load redSHOP's helpers
+				require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/redshop.cfg.php';
+				require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/configuration.php';
+				require_once JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
+				require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/template.php';
+				require_once JPATH_SITE . '/components/com_redshop/helpers/product.php';
+				require_once JPATH_ROOT . '/components/com_redshop/helpers/redshop.js.php';
+				require_once JPATH_SITE . '/components/com_redshop/helpers/extra_field.php';
+
+				// Load stylesheet for each section
+				$css = 'redslider.' . JString::strtolower($this->sectionId) . '.css';
+				RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+
+				$Redconfiguration = new Redconfiguration;
+				$Redconfiguration->defineDynamicVars();
+
 				$user = JFactory::getUser();
 				$params = new JRegistry($slide->params);
 				$productHelper   = new producthelper;
@@ -226,251 +228,273 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 				$product->folder = '/components/com_redshop/assets/images/product/';
 
 				$product->instance = $productHelper->getProductById($product->id);
-				$product->prices = $productHelper->getProductNetPrice($product->id, $user->id);
-				$product->template = $redTemplate->getTemplate("product", $product->instance->product_template);
 
+				if (isset($product->instance))
 				{
-					$product->template = $product->template[0];
-				}
+					$product->prices = $productHelper->getProductNetPrice($product->id, $user->id);
+					$product->template = $redTemplate->getTemplate("product", $product->instance->product_template);
 
-				$temp = $productHelper->getProductUserfieldFromTemplate($product->template->template_desc);
-
-				$product->fields = new stdClass;
-				$product->fields->template = $temp[0];
-				$product->fields->data = $temp[1];
-				$product->totalFields = count($product->fields->data);
-
-				$product->children = $productHelper->getChildProduct($product->id);
-				$product->isChild = (bool) count($product->children);
-
-				$product->accessories = $productHelper->getProductAccessory(0, $product->id);
-
-				if ($product->isChild)
-				{
-					$product->attributes = array();
-				}
-				else
-				{
-					$attributes_set = array();
-
-					if ($product->instance->attribute_set_id > 0)
 					{
-						$attributes_set = $productHelper->getProductAttribute(0, $product->instance->attribute_set_id, 0, 1);
+						$product->template = $product->template[0];
 					}
 
-					$product->attributes = $productHelper->getProductAttribute($product->id);
-					$product->attributes = array_merge($product->attributes, $attributes_set);
-				}
+					$temp = $productHelper->getProductUserfieldFromTemplate($product->template->template_desc);
 
-				$product->totalAttributes = count($product->attributes);
-				$product->totalAccessories = count($product->accessories);
+					$product->fields = new stdClass;
+					$product->fields->template = $temp[0];
+					$product->fields->data = $temp[1];
+					$product->totalFields = count($product->fields->data);
 
-				// Repalce tags
+					$product->children = $productHelper->getChildProduct($product->id);
+					$product->isChild = (bool) count($product->children);
 
-				if (preg_match_all('/{product_name[^}]*}/i', $content, $matches) > 0)
-				{
-					foreach ($matches as $match)
+					$product->accessories = $productHelper->getProductAccessory(0, $product->id);
+
+					if ($product->isChild)
 					{
-						if (count($match))
+						$product->attributes = array();
+					}
+					else
+					{
+						$attributes_set = array();
+
+						if ($product->instance->attribute_set_id > 0)
 						{
-							$content = JString::str_ireplace($match[0], $product->instance->product_name, $content);
+							$attributes_set = $productHelper->getProductAttribute(0, $product->instance->attribute_set_id, 0, 1);
 						}
+
+						$product->attributes = $productHelper->getProductAttribute($product->id);
+						$product->attributes = array_merge($product->attributes, $attributes_set);
 					}
-				}
 
-				if (preg_match_all('/{product_short_description[^}]*}/i', $content, $matches) > 0)
-				{
-					foreach ($matches as $match)
+					$product->totalAttributes = count($product->attributes);
+					$product->totalAccessories = count($product->accessories);
+
+					// Repalce tags
+
+					if (preg_match_all('/{product_name[^}]*}/i', $content, $matches) > 0)
 					{
-						if (count($match))
+						foreach ($matches as $match)
 						{
-							$content = JString::str_ireplace($match[0], $product->instance->product_s_desc, $content);
-						}
-					}
-				}
-
-				if (preg_match_all('/{product_description[^}]*}/i', $content, $matches) > 0)
-				{
-					foreach ($matches as $match)
-					{
-						if (count($match))
-						{
-							$content = JString::str_ireplace($match[0], $product->instance->product_desc, $content);
-						}
-					}
-				}
-
-				if (preg_match_all('/{product_price[^}]*}/i', $content, $matches) > 0)
-				{
-					foreach ($matches as $match)
-					{
-						if (count($match))
-						{
-							$price = '';
-
-							if (isset($product->prices['product_price']))
+							if (count($match))
 							{
-								$price = $productHelper->getProductFormattedPrice($product->prices['product_price']);
+								$content = JString::str_ireplace($match[0], $product->instance->product_name, $content);
 							}
-
-							$content = JString::str_ireplace($match[0], $price, $content);
 						}
 					}
-				}
 
-				if (preg_match_all('/{product_image[^}]*}/i', $content, $matches) > 0)
-				{
-					foreach ($matches as $match)
+					if (preg_match_all('/{product_short_description[^}]*}/i', $content, $matches) > 0)
 					{
-						if (count($match))
+						foreach ($matches as $match)
 						{
-							if (isset($product->instance->product_full_image) && $product->instance->product_full_image)
+							if (count($match))
 							{
-								$middleMan = strip_tags($match[0]);
-								$middleMan = JString::str_ireplace('{', '', $middleMan);
-								$middleMan = JString::str_ireplace('}', '', $middleMan);
-								$middleMan = explode('|', $middleMan);
+								$content = JString::str_ireplace($match[0], $product->instance->product_s_desc, $content);
+							}
+						}
+					}
 
-								$replaceString = '<img src="' . JURI::base() . $product->folder . $product->instance->product_full_image . '" ';
+					if (preg_match_all('/{product_description[^}]*}/i', $content, $matches) > 0)
+					{
+						foreach ($matches as $match)
+						{
+							if (count($match))
+							{
+								$content = JString::str_ireplace($match[0], $product->instance->product_desc, $content);
+							}
+						}
+					}
 
-								if (isset($middleMan[1]) && is_numeric($middleMan[1]))
+					if (preg_match_all('/{product_price[^}]*}/i', $content, $matches) > 0)
+					{
+						foreach ($matches as $match)
+						{
+							if (count($match))
+							{
+								$price = '';
+
+								if (isset($product->prices['product_price']))
 								{
-									$replaceString .= 'width="' . $middleMan[1] . '" ';
+									$price = $productHelper->getProductFormattedPrice($product->prices['product_price']);
 								}
 
-								if (isset($middleMan[2]) && is_numeric($middleMan[2]))
+								$content = JString::str_ireplace($match[0], $price, $content);
+							}
+						}
+					}
+
+					if (preg_match_all('/{product_image[^}]*}/i', $content, $matches) > 0)
+					{
+						foreach ($matches as $match)
+						{
+							if (count($match))
+							{
+								if (isset($product->instance->product_full_image) && $product->instance->product_full_image)
 								{
-									$replaceString .= 'height="' . $middleMan[2] . '" ';
+									$middleMan = strip_tags($match[0]);
+									$middleMan = JString::str_ireplace('{', '', $middleMan);
+									$middleMan = JString::str_ireplace('}', '', $middleMan);
+									$middleMan = explode('|', $middleMan);
+
+									$replaceString = '<img src="' . JURI::base() . $product->folder . $product->instance->product_full_image . '" ';
+
+									if (isset($middleMan[1]) && is_numeric($middleMan[1]))
+									{
+										$replaceString .= 'width="' . $middleMan[1] . '" ';
+									}
+
+									if (isset($middleMan[2]) && is_numeric($middleMan[2]))
+									{
+										$replaceString .= 'height="' . $middleMan[2] . '" ';
+									}
+
+									$replaceString .= '/>';
+								}
+								else
+								{
+									$replaceString = '';
 								}
 
-								$replaceString .= '/>';
+								$content = JString::str_ireplace($match[0], $replaceString, $content);
 							}
-							else
-							{
-								$replaceString = '';
-							}
-
-							$content = JString::str_ireplace($match[0], $replaceString, $content);
 						}
 					}
-				}
 
-				if (preg_match_all('/{product_image_link[^}]*}/i', $content, $matches) > 0)
-				{
-					foreach ($matches as $match)
+					if (preg_match_all('/{product_image_link[^}]*}/i', $content, $matches) > 0)
 					{
-						if (count($match))
+						foreach ($matches as $match)
 						{
-							if (isset($product->instance->product_full_image) && $product->instance->product_full_image)
+							if (count($match))
 							{
-								$replaceString = JURI::base() . $product->folder . $product->instance->product_full_image;
-							}
-							else
-							{
-								$replaceString = '';
-							}
-
-							$content = JString::str_ireplace($match[0], $replaceString, $content);
-						}
-					}
-				}
-
-				if (preg_match_all('/{product_thumb_image[^}]*}/i', $content, $matches) > 0)
-				{
-					foreach ($matches as $match)
-					{
-						if (count($match))
-						{
-							if (isset($product->instance->product_thumb_image) && $product->instance->product_thumb_image)
-							{
-								$middleMan = strip_tags($match[0]);
-								$middleMan = JString::str_ireplace('{', '', $middleMan);
-								$middleMan = JString::str_ireplace('}', '', $middleMan);
-								$middleMan = explode('|', $middleMan);
-
-								$replaceString = '<img src="' . JURI::base() . $product->folder . $product->instance->product_thumb_image . '" ';
-
-								if (isset($middleMan[1]) && is_numeric($middleMan[1]))
+								if (isset($product->instance->product_full_image) && $product->instance->product_full_image)
 								{
-									$replaceString .= 'width="' . $middleMan[1] . '" ';
+									$replaceString = JURI::base() . $product->folder . $product->instance->product_full_image;
+								}
+								else
+								{
+									$replaceString = '';
 								}
 
-								if (isset($middleMan[2]) && is_numeric($middleMan[2]))
+								$content = JString::str_ireplace($match[0], $replaceString, $content);
+							}
+						}
+					}
+
+					if (preg_match_all('/{product_thumb_image[^}]*}/i', $content, $matches) > 0)
+					{
+						foreach ($matches as $match)
+						{
+							if (count($match))
+							{
+								if (isset($product->instance->product_thumb_image) && $product->instance->product_thumb_image)
 								{
-									$replaceString .= 'height="' . $middleMan[2] . '" ';
+									$middleMan = strip_tags($match[0]);
+									$middleMan = JString::str_ireplace('{', '', $middleMan);
+									$middleMan = JString::str_ireplace('}', '', $middleMan);
+									$middleMan = explode('|', $middleMan);
+
+									$replaceString = '<img src="' . JURI::base() . $product->folder . $product->instance->product_thumb_image . '" ';
+
+									if (isset($middleMan[1]) && is_numeric($middleMan[1]))
+									{
+										$replaceString .= 'width="' . $middleMan[1] . '" ';
+									}
+
+									if (isset($middleMan[2]) && is_numeric($middleMan[2]))
+									{
+										$replaceString .= 'height="' . $middleMan[2] . '" ';
+									}
+
+									$replaceString .= '/>';
+								}
+								else
+								{
+									$replaceString = '';
 								}
 
-								$replaceString .= '/>';
+								$content = JString::str_ireplace($match[0], $replaceString, $content);
 							}
-							else
-							{
-								$replaceString = '';
-							}
-
-							$content = JString::str_ireplace($match[0], $replaceString, $content);
 						}
 					}
-				}
 
-				if (preg_match_all('/{product_thumb_image_link[^}]*}/i', $content, $matches) > 0)
-				{
-					foreach ($matches as $match)
+					if (preg_match_all('/{product_thumb_image_link[^}]*}/i', $content, $matches) > 0)
 					{
-						if (count($match))
+						foreach ($matches as $match)
 						{
-							if (isset($product->instance->product_thumb_image) && $product->instance->product_thumb_image)
+							if (count($match))
 							{
-								$replaceString = JURI::base() . $product->folder . $product->instance->product_thumb_image;
-							}
-							else
-							{
-								$replaceString = '';
-							}
+								if (isset($product->instance->product_thumb_image) && $product->instance->product_thumb_image)
+								{
+									$replaceString = JURI::base() . $product->folder . $product->instance->product_thumb_image;
+								}
+								else
+								{
+									$replaceString = '';
+								}
 
-							$content = JString::str_ireplace($match[0], $replaceString, $content);
+								$content = JString::str_ireplace($match[0], $replaceString, $content);
+							}
 						}
 					}
-				}
 
-				if (preg_match_all('/{form_addtocart:[^}]*}/i', $content, $matches) > 0)
-				{
-					foreach ($matches as $match)
+					if (preg_match_all('/{form_addtocart:[^}]*}/i', $content, $matches) > 0)
 					{
-						if (count($match))
+						foreach ($matches as $match)
 						{
-							$template = strip_tags($match[0]);
-							$replaceString = $productHelper->replaceCartTemplate(
-													$product->id,
-													0,
-													0,
-													0,
-													$template,
-													$product->isChild,
-													$product->fields->data,
-													$product->totalAttributes,
-													$product->totalAccessories,
-													$product->totalFields
-												);
+							if (count($match))
+							{
+								$template = strip_tags($match[0]);
+								$replaceString = $productHelper->replaceCartTemplate(
+														$product->id,
+														0,
+														0,
+														0,
+														$template,
+														$product->isChild,
+														$product->fields->data,
+														$product->totalAttributes,
+														$product->totalAccessories,
+														$product->totalFields
+													);
 
-							$content = JString::str_ireplace($match[0], $replaceString, $content);
+								$content = JString::str_ireplace($match[0], $replaceString, $content);
+							}
 						}
 					}
-				}
 
-				if (preg_match_all('/{attribute_template:[^}]*}/i', $content, $matches) > 0)
-				{
-					foreach ($matches as $match)
+					if (preg_match_all('/{attribute_template:[^}]*}/i', $content, $matches) > 0)
 					{
-						if (count($match))
+						foreach ($matches as $match)
 						{
-							$template = strip_tags($match[0]);
-
-							// Checking for child products
-							$childproduct = $productHelper->getChildProduct($product->instance->product_id);
-
-							if (count($childproduct) > 0)
+							if (count($match))
 							{
-								if (PURCHASE_PARENT_WITH_CHILD == 1)
+								$template = strip_tags($match[0]);
+
+								// Checking for child products
+								$childproduct = $productHelper->getChildProduct($product->instance->product_id);
+
+								if (count($childproduct) > 0)
+								{
+									if (PURCHASE_PARENT_WITH_CHILD == 1)
+									{
+										$isChilds       = false;
+										$attributes_set = array();
+
+										if ($product->instance->attribute_set_id > 0)
+										{
+											$attributes_set = $productHelper->getProductAttribute(0, $product->instance->attribute_set_id, 0, 1);
+										}
+
+										$attributes = $productHelper->getProductAttribute($product->instance->product_id);
+										$attributes = array_merge($attributes, $attributes_set);
+									}
+									else
+									{
+										$isChilds   = true;
+										$attributes = array();
+									}
+								}
+								else
 								{
 									$isChilds       = false;
 									$attributes_set = array();
@@ -483,32 +507,14 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 									$attributes = $productHelper->getProductAttribute($product->instance->product_id);
 									$attributes = array_merge($attributes, $attributes_set);
 								}
-								else
-								{
-									$isChilds   = true;
-									$attributes = array();
-								}
+
+								$attribute_template = $productHelper->getAttributeTemplate($template);
+
+								$totalatt = count($attributes);
+								$template = $productHelper->replaceAttributeData($product->instance->product_id, 0, 0, $attributes, $template, $attribute_template, $isChilds);
+
+								$content = JString::str_ireplace($match[0], $template, $content);
 							}
-							else
-							{
-								$isChilds       = false;
-								$attributes_set = array();
-
-								if ($product->instance->attribute_set_id > 0)
-								{
-									$attributes_set = $productHelper->getProductAttribute(0, $product->instance->attribute_set_id, 0, 1);
-								}
-
-								$attributes = $productHelper->getProductAttribute($product->instance->product_id);
-								$attributes = array_merge($attributes, $attributes_set);
-							}
-
-							$attribute_template = $productHelper->getAttributeTemplate($template);
-
-							$totalatt = count($attributes);
-							$template = $productHelper->replaceAttributeData($product->instance->product_id, 0, 0, $attributes, $template, $attribute_template, $isChilds);
-
-							$content = JString::str_ireplace($match[0], $template, $content);
 						}
 					}
 				}

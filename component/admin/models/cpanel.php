@@ -50,7 +50,25 @@ class RedSliderModelCpanel extends RModelAdmin
 	 */
 	public function getStats()
 	{
-		$stats = (object) array();
+		$stats = new stdClass;
+
+		// Get count of slides
+		$slidesModel = RModel::getAdminInstance('Slides', array('ignore_request' => true), 'com_redslider');
+		$slidesModel->setState('list.select', 'count(*) as count');
+		$slides = $slidesModel->getItems();
+		$stats->slides = $slides[0]->count;
+
+		// Get count of galleries
+		$galleriesModel = RModel::getAdminInstance('Galleries', array('ignore_request' => true), 'com_redslider');
+		$galleriesModel->setState('list.select', 'count(*) as count');
+		$galleries = $galleriesModel->getItems();
+		$stats->galleries = $galleries[0]->count;
+
+		// Get count of templates
+		$templatesModel = RModel::getAdminInstance('Templates', array('ignore_request' => true), 'com_redslider');
+		$templatesModel->setState('list.select', 'count(*) as count');
+		$templates = $templatesModel->getItems();
+		$stats->templates = $templates[0]->count;
 
 		return $stats;
 	}
@@ -141,7 +159,7 @@ class RedSliderModelCpanel extends RModelAdmin
 		$slideTable->title = 'Sample Video';
 		$slideTable->section = 'SECTION_VIDEO';
 		$slideTable->published = 1;
-		$slideTable->params = '{"local_media":"","local_width":"500","local_height":"315","background_image":"images/stories/redslider/bg_redshop_slider.png","slide_class":"video_slide","vimeo_id":"","vimeo_width":"500","vimeo_height":"281","vimeo_portrait":"0","vimeo_title":"0","vimeo_byline":"0","vimeo_autoplay":"0","vimeo_loop":"0","vimeo_color":"#FFFFFF","youtube_id":"oofSnsGkops","youtube_width":"500","youtube_height":"315","youtube_suggested":"0","youtube_privacy_enhanced":"0","other_iframe":""}';
+		$slideTable->params = '{"local_media":"","local_width":"500","local_height":"315","background_image":"images/stories/redslider/bg_redshop_slider.png","slide_class":"video_slide","vimeo_id":"","vimeo_width":"500","vimeo_height":"281","vimeo_portrait":"0","vimeo_title":"0","vimeo_byline":"0","vimeo_autoplay":"0","vimeo_loop":"0","vimeo_color":"#FFFFFF","youtube_id":"Qjnc0H8utks","youtube_width":"500","youtube_height":"315","youtube_suggested":"0","youtube_privacy_enhanced":"0","other_iframe":""}';
 		$slideTable->store();
 
 		unset($gallery);

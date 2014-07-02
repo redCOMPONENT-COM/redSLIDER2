@@ -61,8 +61,8 @@ class RedsliderHelperHelper
 		$slidesModel = RModel::getAdminInstance('Slides', array('ignore_request' => true), 'com_redslider');
 		$slidesModel->setState('filter.published', 1);
 		$slidesModel->setState('filter.gallery_id', $galleryId);
-		$slidesModel->setState('list.ordering', 's.id');
-		$slidesModel->setState('list.direction', 'desc');
+		$slidesModel->setState('list.ordering', 's.ordering');
+		$slidesModel->setState('list.direction', 'asc');
 
 		$slides = $slidesModel->getItems();
 
@@ -126,5 +126,39 @@ class RedsliderHelperHelper
 		$content = JString::str_ireplace($match, $replaceString, $content);
 
 		return $content;
+	}
+
+	/**
+	 * Method for get extension
+	 *
+	 * @param   string  $element  Element name of extension (ex: com_reditem)
+	 * @param   string  $type     Type of extension (component, plugin, module)
+	 *
+	 * @return  boolean/object  Extension of object. False otherwise.
+	 */
+	public static function getExtension($element, $type = 'component')
+	{
+		if (empty($element))
+		{
+			return false;
+		}
+
+		$db = JFactory::getDbo();
+
+		$query = $db->getQuery(true)
+			->select($db->qn(array('e.extension_id', 'e.name', 'e.enabled')))
+			->from($db->qn('#__extensions', 'e'))
+			->where($db->qn('e.type') . ' = ' . $db->quote($type))
+			->where($db->qn('e.element') . ' = ' . $db->quote($element));
+		$db->setQuery($query);
+
+		$extension = $db->loadObject();
+
+		if (!$extension)
+		{
+			return false;
+		}
+
+		return $extension;
 	}
 }
