@@ -50,7 +50,25 @@ class RedSliderModelCpanel extends RModelAdmin
 	 */
 	public function getStats()
 	{
-		$stats = (object) array();
+		$stats = new stdClass;
+
+		// Get count of slides
+		$slidesModel = RModel::getAdminInstance('Slides', array('ignore_request' => true), 'com_redslider');
+		$slidesModel->setState('list.select', 'count(*) as count');
+		$slides = $slidesModel->getItems();
+		$stats->slides = $slides[0]->count;
+
+		// Get count of galleries
+		$galleriesModel = RModel::getAdminInstance('Galleries', array('ignore_request' => true), 'com_redslider');
+		$galleriesModel->setState('list.select', 'count(*) as count');
+		$galleries = $galleriesModel->getItems();
+		$stats->galleries = $galleries[0]->count;
+
+		// Get count of templates
+		$templatesModel = RModel::getAdminInstance('Templates', array('ignore_request' => true), 'com_redslider');
+		$templatesModel->setState('list.select', 'count(*) as count');
+		$templates = $templatesModel->getItems();
+		$stats->templates = $templates[0]->count;
 
 		return $stats;
 	}

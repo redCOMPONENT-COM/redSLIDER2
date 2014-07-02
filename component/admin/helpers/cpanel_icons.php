@@ -35,29 +35,21 @@ class RedsliderHelperCpanelIcons extends JObject
 	public static function getIconArray()
 	{
 		$icon_array = array(
-			"redslider" => array(
 				"galleries" => array(
-					"name"      => "galleries",
-					"icon"      => "icon-folder-open",
-					"oldIcon"   => "redslider_categories48.png",
-					"title"     => "GALLERIES",
-					'cpanelDisplay' => true,
+					"link"      => JRoute::_('index.php?option=com_redslider&view=galleries'),
+					"icon"   	=> "icon-sitemap",
+					"title"     => JText::_('COM_REDSLIDER_CPANEL_GALLERIES_LABEL'),
 				),
 				"slides" => array(
-					"name"      => "slides",
-					"icon"      => "icon-file",
-					"oldIcon"   => "redslider_items48.png",
-					"title"     => "SLIDES",
-					'cpanelDisplay' => true,
+					"link"      => JRoute::_('index.php?option=com_redslider&view=slides'),
+					"icon"      => "icon-file-text",
+					"title"     => JText::_('COM_REDSLIDER_CPANEL_SLIDES_LABEL'),
 				),
 				"templates" => array(
-					"name"      => "templates",
-					"icon"      => "icon-hdd",
-					"oldIcon"   => "redslider_templates48.png",
-					"title"     => "TEMPLATES",
-					'cpanelDisplay' => true,
+					"link"      => JRoute::_('index.php?option=com_redslider&view=templates'),
+					"icon"      => "icon-desktop",
+					"title"     => JText::_('COM_REDSLIDER_CPANEL_TEMPLATES_LABEL'),
 				)
-			)
 		);
 
 		return $icon_array;

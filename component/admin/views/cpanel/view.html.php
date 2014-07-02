@@ -44,6 +44,7 @@ class RedSliderViewCpanel extends RedsliderView
 		require_once JPATH_COMPONENT_ADMINISTRATOR . '/helpers/cpanel_icons.php';
 
 		// Get stats
+		$this->stats = $this->get('Stats');
 		$this->redsliderversion = $this->get('Version');
 		$this->iconArray = RedsliderHelperCpanelIcons::getIconArray();
 
