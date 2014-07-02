@@ -105,6 +105,8 @@
 }
 #redSLIDER2.rstyle1 .flex-direction-nav .flex-next
 {
+    /* @TODO: note for designer, this line is commented because the arrow is not shown properly in video slides.
+    If you are not using video slides uncomment it, next slide arrow will appear in the right place on top of the image */
     /*margin-right:31%;*/
 }
 #redSLIDER2.rstyle1 .flex-direction-nav .flex-next:before
@@ -118,7 +120,8 @@
 /*-------------------.rstyle2-----------------------------*/
 #redSLIDER2.rstyle2
 {
-    /*@TODO This line can be re-used in client project, so I leave it in comment */
+    /*@TODO note! this line is comment because we need same border for all 3 style (rstyle1,rstyle2,rstyle3).
+    so uncomment if you using new border on this style*/
     /*border:1px solid #FFFFFF;*/
 }
 #redSLIDER2.rstyle2 .flex-control-nav{
@@ -134,7 +137,8 @@
 }
 #redSLIDER2.rstyle2 .flex-direction-nav .flex-next
 {
-    /*@TODO This line can be re-used in client project, so I leave it in comment */
+    /* @TODO: note for designer, this line is commented because the arrow is not shown properly in video slides.
+    If you are not using video slides uncomment it, next slide arrow will appear in the right place on top of the image */
     /*margin-right:31%;*/
 }
 #redSLIDER2.rstyle2 .flex-direction-nav .flex-next:before
@@ -148,7 +152,8 @@
 /*-------------------.rstyle3-----------------------------*/
 #redSLIDER2.rstyle3
 {
-    /*@TODO This line can be re-used in client project, so I leave it in comment */
+    /*@TODO note! this line is comment because we need same border for all 3 style (rstyle1,rstyle2,rstyle3).
+    so uncomment if you using new border on this style*/
     /*border:1px solid #FFFFFF;*/
 }
 #redSLIDER2.rstyle3 .flex-control-nav{
