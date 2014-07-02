@@ -177,8 +177,9 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 
 			$article->id = (int) $params->get('article_id', '0');
 			$articleModel = RModel::getFrontInstance('Articles', array('ignore_request' => false), 'com_content');
-			$articleModel->setState('a.id', $article->id);
-			$article->instance = $articleModel->getItems($article->id);
+			$articleModel->setState('filter.article_id', $article->id);
+			$articleModel->setState('filter.article_id.include', true);
+			$article->instance = $articleModel->getItems();
 
 			if (count($article->instance))
 			{
