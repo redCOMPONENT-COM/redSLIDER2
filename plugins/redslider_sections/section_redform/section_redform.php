@@ -175,16 +175,19 @@ class PlgRedslider_SectionsSection_Redform extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
-		// Load stylesheet for each section
-		$css = 'redslider.' . JString::strtolower($this->sectionId) . '.css';
-		RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
-
 		if ($slide->section === $this->sectionId)
 		{
-			$params = new JRegistry($slide->params);
-			$form = new stdClass;
-			$formId = (int) $params->get('form_id', 0);
-			$content = '{redform}' . $formId . '{/redform}';
+			if (RedsliderHelperHelper::checkExtension($this->extensionName))
+			{
+				// Load stylesheet for each section
+				$css = 'redslider.' . JString::strtolower($this->sectionId) . '.css';
+				RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+
+				$params = new JRegistry($slide->params);
+				$form = new stdClass;
+				$formId = (int) $params->get('form_id', 0);
+				$content = '{redform}' . $formId . '{/redform}';
+			}
 
 			return $content;
 		}
