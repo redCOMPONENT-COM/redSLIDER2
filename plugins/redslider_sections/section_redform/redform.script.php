@@ -44,76 +44,88 @@ class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreIns
 	{
 		parent::installOrUpdate($parent);
 
-		$this->plugin_install();
-
 		return true;
 	}
 
 	/**
-	 * Plugin install
+	 * Method to run after an install/update/uninstall method
+	 *
+	 * @param   object  $type    type of change (install, update or discover_install)
+	 * @param   object  $parent  class calling this method
 	 *
 	 * @return  boolean
 	 */
-	public function plugin_install()
+	public function postflight($type, $parent)
 	{
-		$helperPath = JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
+		parent::postflight($type, $parent);
 
-		$db					= JFactory::getDbo();
-		$user				= JFactory::getUser();
-		$query 				= $db->getQuery();
-		$currentDate		= JFactory::getDate();
-
-		if (JFile::exists($helperPath))
+		// Migrating demo data
+		if ($type === 'install')
 		{
-			require_once $helperPath;
+			$db					= JFactory::getDbo();
+			$user				= JFactory::getUser();
+			$query 				= $db->getQuery();
+			$currentDate		= JFactory::getDate();
+			$helperPath = JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
 
-			$comExists = RedsliderHelperHelper::checkExtension('redform');
+			$db					= JFactory::getDbo();
+			$user				= JFactory::getUser();
+			$query 				= $db->getQuery();
+			$currentDate		= JFactory::getDate();
 
-			// Add Include path
-			JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
-			/*
-			 * Insert demo template for redFORM section
-			 */
-			$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
-			$templateTable->id = null;
-			$templateTable->title = 'Template redFORM';
-			$templateTable->section = 'SECTION_REDFORM';
-			$templateTable->published = $comExists? 1 : 0;
-			$templateTable->store();
-			$templateId = (int) $templateTable->id;
+			if (JFile::exists($helperPath))
+			{
+				require_once $helperPath;
 
-			// Prepare params for demo redFORM slide
-			$slideParams = array(
-				"form_id" => 1,
-				"background_image" => "images/joomla_black.gif",
-				"redform_slide_class" => "reform_slide"
-			);
+				$comExists = RedsliderHelperHelper::checkExtension('redform');
 
-			$slideParams = new JRegistry($slideParams);
+				// Add Include path
+				JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
+				/*
+				 * Insert demo template for redFORM section
+				 */
+				$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
+				$templateTable->id = null;
+				$templateTable->title = 'Template redFORM';
+				$templateTable->section = 'SECTION_REDFORM';
+				$templateTable->published = $comExists? 1 : 0;
+				$templateTable->store();
+				$templateId = (int) $templateTable->id;
 
-			/*
-			 * Insert demo slide for redFORM section
-			 */
-			$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
-			$slideTable->gallery_id = 1;
-			$slideTable->template_id = $templateId;
-			$slideTable->title = 'Sample redFORM';
-			$slideTable->section = 'SECTION_REDFORM';
-			$slideTable->published = $comExists? 1 : 0;
-			$slideTable->params = $slideParams->toString();
-			$slideTable->store();
+				// Prepare params for demo redFORM slide
+				$slideParams = array(
+					"form_id" => 1,
+					"background_image" => "images/joomla_black.gif",
+					"redform_slide_class" => "reform_slide"
+				);
 
-			unset($templateTable);
-			unset($slideTable);
+				$slideParams = new JRegistry($slideParams);
 
-			// Set this plugin published
-			$query = $db->getQuery(true);
+				/*
+				 * Insert demo slide for redFORM section
+				 */
+				$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
+				$slideTable->gallery_id = 1;
+				$slideTable->template_id = $templateId;
+				$slideTable->title = 'Sample redFORM';
+				$slideTable->section = 'SECTION_REDFORM';
 
-			$query->update($db->qn("#__extensions"))
-				->set($db->qn('enabled') . ' = 1')
-				->where($db->qn('element') . ' = ' . $db->q('section_redform') . ' AND ' . $db->qn('folder') . ' = ' . $db->q('redslider_sections'));
-			$db->setQuery($query);
-			$db->execute();
+				$slideTable->published = $comExists? 1 : 0;
+				$slideTable->params = $slideParams->toString();
+				$slideTable->store();
+
+				unset($templateTable);
+				unset($slideTable);
+
+				// Set this plugin published
+				$query = $db->getQuery(true);
+
+				$query->update($db->qn("#__extensions"))
+					->set($db->qn('enabled') . ' = 1')
+					->where($db->qn('element') . ' = ' . $db->q('section_redform') . ' AND ' . $db->qn('folder') . ' = ' . $db->q('redslider_sections'));
+				$db->setQuery($query);
+				$db->execute();
+			}
 		}
 
 		return true;
