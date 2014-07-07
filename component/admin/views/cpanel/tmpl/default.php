@@ -15,7 +15,7 @@ JHtml::_('rjquery.chosen', 'select');
 	};
 </script>
 <div id="rcCpanel-main-container" class="row-fluid">
-	<div class="span9 rcCpanelMainIcons">
+	<div class="span8 rcCpanelMainIcons">
 		<?php $iconsRow = array_chunk($this->iconArray, 6); ?>
 		<?php foreach ($iconsRow as $row) : ?>
 		<p></p>
@@ -39,7 +39,7 @@ JHtml::_('rjquery.chosen', 'select');
 		</div>
 		<?php endforeach; ?>
 	</div>
-	<div class="span3 rcCpanelSideIcons">
+	<div class="span4 rcCpanelSideIcons">
 		<div class="well">
 			<div class="pull-right">
 				<strong class="row-title">
