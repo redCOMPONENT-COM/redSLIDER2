@@ -49,6 +49,11 @@ class RedsliderHelperCpanelIcons extends JObject
 					"link"      => JRoute::_('index.php?option=com_redslider&view=templates'),
 					"icon"      => "icon-desktop",
 					"title"     => JText::_('COM_REDSLIDER_CPANEL_TEMPLATES_LABEL'),
+				),
+				"help" => array(
+					"link"      => 'http://wiki.redcomponent.com/index.php?title=RedSLIDER',
+					"icon"      => "icon-question-sign",
+					"title"     => JText::_('COM_REDSLIDER_CPANEL_HELP_LABEL'),
 				)
 		);
 
