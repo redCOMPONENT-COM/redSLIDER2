@@ -47,6 +47,7 @@
 			<folder>tables</folder>
 			<folder>views</folder>
 			<filename>config.xml</filename>
+			<filename>access.xml</filename>
 			<filename>controller.php</filename>
 			<filename>index.html</filename>
 			<filename>redslider.php</filename>

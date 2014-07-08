@@ -93,12 +93,28 @@ $userId = $user->id;
 		</thead>
 		<tbody>
 		<?php $n = count($this->items); ?>
-		<?php foreach ($this->items as $i => $row) : ?>
+		<?php foreach ($this->items as $i => $row) :
+			$canCreate		= $user->authorise('core.create',		'com_redslider');
+			$canEdit		= $user->authorise('core.edit',			'com_redslider');
+			$canCheckin		= $user->authorise('core.manage',		'com_checkin') || $row->checked_out == $userId || $row->checked_out == 0;
+			$canEditOwn		= $user->authorise('core.edit.own',		'com_redslider');
+			$canEditState	= $user->authorise('core.edit.state',		'com_redslider');
+			$canChange		= $canEditState && $canCheckin;
+			$editor 		= JFactory::getUser($row->checked_out);
+			?>
 			<tr>
 				<td><?php echo $this->pagination->getRowOffset($i); ?></td>
 				<td><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
 				<td>
-					<?php echo JHtml::_('rgrid.published', $row->published, $i, 'templates.', true, 'cb'); ?>
+					<?php if ($canEditState): ?>
+						<?php echo JHtml::_('rgrid.published', $row->published, $i, 'templates.', true, 'cb'); ?>
+					<?php else: ?>
+						<?php if ($row->published) : ?>
+							<a class="btn btn-small disabled"><i class="icon-ok-sign icon-green"></i></a>
+						<?php else : ?>
+							<a class="btn btn-small disabled"><i class="icon-remove-sign icon-red"></i></a>
+						<?php endif; ?>
+					<?php endif; ?>
 				</td>
 				<td>
 					<?php if ($row->checked_out) : ?>
@@ -110,10 +126,10 @@ $userId = $user->id;
 					<?php endif; ?>
 				</td>
 				<td>
-					<?php if ($row->checked_out) : ?>
-						<?php echo $row->title; ?>
+					<?php if ($canEdit) : ?>
+						<?php echo JHtml::_('link', 'index.php?option=com_redslider&task=gallery.edit&id=' . $row->id, $row->title); ?>
 					<?php else : ?>
-						<?php echo JHtml::_('link', 'index.php?option=com_redslider&task=template.edit&id=' . $row->id, $row->title); ?>
+						<?php echo $this->escape($row->title); ?>
 					<?php endif; ?>
 				</td>
 				<td>

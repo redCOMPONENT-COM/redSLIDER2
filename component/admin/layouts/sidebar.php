@@ -9,7 +9,7 @@
 
 defined('JPATH_REDCORE') or die;
 
-JLoader::import('helper', JPATH_COMPONENT . '/helpers');
+JLoader::import('helper', JPATH_ADMINISTRATOR . '/components/com_redslider/helpers');
 
 $active = null;
 $data = $displayData;
@@ -23,8 +23,18 @@ $sidebars = array(
 	array('view' => 'cpanel', 'icon' => 'icon-home', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_DASHBOARD')),
 	array('view' => 'galleries', 'icon' => 'icon-sitemap', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_GALLERIES')),
 	array('view' => 'slides', 'icon' => 'icon-file-text', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_SLIDES')),
-	array('view' => 'templates', 'icon' => 'icon-desktop', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_TEMPLATES'))
+	array('view' => 'templates', 'icon' => 'icon-desktop', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_TEMPLATES')),
+	array('view' => 'configuration', 'icon' => 'icon-cog', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_CONFIGURATION')),
+	array('view' => 'help', 'icon' => 'icon-question-sign', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_HELP'))
 );
+
+// Configuration link
+$uri = JUri::getInstance();
+$return = base64_encode('index.php' . $uri->toString(array('query')));
+$configurationLink = 'index.php?option=com_redcore&view=config&layout=edit&component=com_redslider&return=' . $return;
+
+// Help link
+$helpLink = "http://wiki.redcomponent.com/index.php?title=RedSLIDER";
 
 // Check redSLIDER Category Fields component
 $categoryFields = RedsliderHelperHelper::getExtension('com_redslidercategoryfields');
@@ -36,7 +46,13 @@ $categoryFields = RedsliderHelperHelper::getExtension('com_redslidercategoryfiel
 	<?php foreach ($sidebars as $sidebar) : ?>
 		<?php $class = ($active === $sidebar['view']) ? 'active' : ''; ?>
 		<li class="<?php echo $class; ?>">
-			<?php $link = JRoute::_('index.php?option=com_redslider&view=' . $sidebar['view']); ?>
+			<?php if ($sidebar['view'] == 'configuration'): ?>
+				<?php $link = $configurationLink; ?>
+			<?php elseif ($sidebar['view'] == 'help'): ?>
+				<?php $link = $helpLink; ?>
+			<?php else: ?>
+				<?php $link = JRoute::_('index.php?option=com_redslider&view=' . $sidebar['view']); ?>
+			<?php endif; ?>
 			<a href="<?php echo $link; ?>">
 				<i class="<?php echo $sidebar['icon']; ?>"></i>
 				<?php echo $sidebar['text']; ?>

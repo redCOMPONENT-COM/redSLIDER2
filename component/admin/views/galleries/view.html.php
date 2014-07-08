@@ -64,19 +64,25 @@ class RedsliderViewGalleries extends RedsliderView
 		$secondGroup = new RToolbarButtonGroup;
 		$thirdGroup = new RToolbarButtonGroup;
 
-		if ($user->authorise('core.admin'))
+		if ($user->authorise('core.create', 'com_redslider'))
 		{
-				$new = RToolbarBuilder::createNewButton('gallery.add');
-				$secondGroup->addButton($new);
+			$new = RToolbarBuilder::createNewButton('gallery.add');
+			$firstGroup->addButton($new);
+		}
 
-				$edit = RToolbarBuilder::createEditButton('gallery.edit');
-				$secondGroup->addButton($edit);
+		if ($user->authorise('core.edit', 'com_redslider'))
+		{
+			$edit = RToolbarBuilder::createEditButton('gallery.edit');
+			$secondGroup->addButton($edit);
 
-				$checkin = RToolbarBuilder::createCheckinButton('galleries.checkin');
-				$secondGroup->addButton($checkin);
+			$checkin = RToolbarBuilder::createCheckinButton('galleries.checkin');
+			$secondGroup->addButton($checkin);
+		}
 
-				$delete = RToolbarBuilder::createDeleteButton('galleries.delete');
-				$thirdGroup->addButton($delete);
+		if ($user->authorise('core.delete', 'com_redslider'))
+		{
+			$delete = RToolbarBuilder::createDeleteButton('galleries.delete');
+			$secondGroup->addButton($delete);
 		}
 
 		$toolbar = new RToolbar;
