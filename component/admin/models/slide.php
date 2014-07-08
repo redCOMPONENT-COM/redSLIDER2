@@ -34,4 +34,32 @@ class RedsliderModelSlide extends RModelAdmin
 
 		return $item;
 	}
+
+	/**
+	 * Method for getting the form from the model.
+	 *
+	 * @param   array    $data      Data for the form.
+	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 *
+	 * @return  mixed               A JForm object on success, false on failure
+	 */
+	public function getForm($data = array(), $loadData = true)
+	{
+		$form = parent::getForm($data, $loadData);
+		$user = JFactory::getUser();
+
+		if (!$user->authorise('core.admin', 'com_redslider'))
+		{
+			foreach ($form->getGroup('params') as $field)
+			{
+				$fieldName	= $field->getAttribute('name');
+				$fieldClass	= $field->class . ' disabled';
+
+				$form->setFieldAttribute($fieldName, 'readonly', true, 'params');
+				$form->setFieldAttribute($fieldName, 'class', $fieldClass, 'params');
+			}
+		}
+
+		return $form;
+	}
 }

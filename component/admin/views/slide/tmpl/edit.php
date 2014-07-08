@@ -23,6 +23,7 @@ if ($this->item->id)
 <form enctype="multipart/form-data"
 	action="index.php?option=com_redslider&task=slide.edit&id=<?php echo $this->item->id; ?>"
 	method="post" name="adminForm" class="form-validate form-horizontal" id="adminForm">
+
 	<div class="row-fluid">
 		<div class="control-group">
 			<div class="control-label">
@@ -94,8 +95,8 @@ if ($this->item->id)
 				<?php endif; ?>
 			<?php endif; ?>
 		<?php endif;?>
-
 	</div>
+
 	<?php echo $this->form->getInput('id'); ?>
 	<input type="hidden" name="task" value="" />
 	<?php echo JHtml::_('form.token'); ?>

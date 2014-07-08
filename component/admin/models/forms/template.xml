@@ -25,7 +25,7 @@
 				label="COM_REDSLIDER_TEMPLATE_ALIAS"
 				description="COM_REDSLIDER_TEMPLATE_ALIAS_DESC"
 				/>
-		
+
 		<field name="section"
 			type="rlsectionlist"
 			label="COM_REDSLIDER_TEMPLATE_SECTION"
