@@ -371,19 +371,26 @@ class Com_RedSliderInstallerScript extends Com_RedcoreInstallerScript
 	}
 
 	/**
-	 * method to run before an install/update/uninstall method
+	 * Method to run before an install/update/uninstall method
 	 *
 	 * @param   object  $type    type of change (install, update or discover_install)
 	 * @param   object  $parent  class calling this method
 	 *
-	 * @return void
+	 * @return  boolean
 	 */
 	public function preflight($type, $parent)
 	{
+		if (method_exists('Com_RedcoreInstallerScript', 'preflight') && !parent::preflight($type, $parent))
+		{
+			return false;
+		}
+
 		if ($type == "update")
 		{
 			$this->migrationData();
 		}
+
+		return true;
 	}
 
 	/**
