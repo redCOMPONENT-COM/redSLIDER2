@@ -78,19 +78,25 @@ class RedsliderViewSlides extends RedsliderView
 		$secondGroup = new RToolbarButtonGroup;
 		$thirdGroup = new RToolbarButtonGroup;
 
-		if ($user->authorise('core.admin'))
+		if ($user->authorise('core.create', 'com_redslider'))
 		{
-				$new = RToolbarBuilder::createNewButton('slide.add');
-				$secondGroup->addButton($new);
+			$new = RToolbarBuilder::createNewButton('slide.add');
+			$firstGroup->addButton($new);
+		}
 
-				$edit = RToolbarBuilder::createEditButton('slide.edit');
-				$secondGroup->addButton($edit);
+		if ($user->authorise('core.edit', 'com_redslider'))
+		{
+			$edit = RToolbarBuilder::createEditButton('slide.edit');
+			$secondGroup->addButton($edit);
 
-				$checkin = RToolbarBuilder::createCheckinButton('slides.checkin');
-				$secondGroup->addButton($checkin);
+			$checkin = RToolbarBuilder::createCheckinButton('slides.checkin');
+			$secondGroup->addButton($checkin);
+		}
 
-				$delete = RToolbarBuilder::createDeleteButton('slides.delete');
-				$thirdGroup->addButton($delete);
+		if ($user->authorise('core.delete', 'com_redslider'))
+		{
+			$delete = RToolbarBuilder::createDeleteButton('slides.delete');
+			$secondGroup->addButton($delete);
 		}
 
 		$toolbar = new RToolbar;

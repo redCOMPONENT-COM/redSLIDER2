@@ -113,30 +113,43 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 
 		<?php $n = count($this->items); ?>
 
-		<?php foreach ($this->items as $i => $row) : ?>
-
-		<?php $orderkey = array_search($row->id, $this->ordering[0]); ?>
+		<?php foreach ($this->items as $i => $row) :
+			$canCreate		= $user->authorise('core.create',		'com_redslider');
+			$canEdit		= $user->authorise('core.edit',			'com_redslider');
+			$canCheckin		= $user->authorise('core.manage',		'com_checkin') || $row->checked_out == $userId || $row->checked_out == 0;
+			$canEditOwn		= $user->authorise('core.edit.own',		'com_redslider');
+			$canEditState	= $user->authorise('core.edit.state',		'com_redslider');
+			$canChange		= $canEditState && $canCheckin;
+			$editor 		= JFactory::getUser($row->checked_out);
+			$orderkey = array_search($row->id, $this->ordering[0]);
+			?>
 
 			<tr>
 				<td><?php echo $this->pagination->getRowOffset($i); ?></td>
 				<td><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
 				<td>
-					<?php echo JHtml::_('rgrid.published', $row->published, $i, 'slides.', true, 'cb'); ?>
-				</td>
-				<td>
-					<?php if ($row->checked_out) : ?>
-						<?php
-						$editor = JFactory::getUser($row->checked_out);
-						$canCheckin = $row->checked_out == $userId || $row->checked_out == 0;
-						echo JHtml::_('rgrid.checkedout', $i, $editor->name, $row->checked_out_time, 'slides.', $canCheckin);
-						?>
+					<?php if ($canEditState): ?>
+						<?php echo JHtml::_('rgrid.published', $row->published, $i, 'templates.', true, 'cb'); ?>
+					<?php else: ?>
+						<?php if ($row->published) : ?>
+							<a class="btn btn-small disabled"><i class="icon-ok-sign icon-green"></i></a>
+						<?php else : ?>
+							<a class="btn btn-small disabled"><i class="icon-remove-sign icon-red"></i></a>
+						<?php endif; ?>
 					<?php endif; ?>
 				</td>
 				<td>
 					<?php if ($row->checked_out) : ?>
-						<?php echo $row->title; ?>
-					<?php else : ?>
+						<?php
+							echo JHtml::_('rgrid.checkedout', $i, $editor->name, $row->checked_out_time, 'slides.', $canCheckin);
+						?>
+					<?php endif; ?>
+				</td>
+				<td>
+					<?php if ($canEdit) : ?>
 						<?php echo JHtml::_('link', 'index.php?option=com_redslider&task=slide.edit&id=' . $row->id, $row->title); ?>
+					<?php else : ?>
+						<?php echo $this->escape($row->title); ?>
 					<?php endif; ?>
 				</td>
 				<td><?php echo $row->gallery_title; ?></td>

@@ -34,6 +34,10 @@ class RedsliderHelperCpanelIcons extends JObject
 	 */
 	public static function getIconArray()
 	{
+		$uri = JUri::getInstance();
+		$return = base64_encode('index.php' . $uri->toString(array('query')));
+		$configurationLink = 'index.php?option=com_redcore&view=config&layout=edit&component=com_redslider&return=' . $return;
+
 		$icon_array = array(
 				"galleries" => array(
 					"link"      => JRoute::_('index.php?option=com_redslider&view=galleries'),
@@ -49,6 +53,11 @@ class RedsliderHelperCpanelIcons extends JObject
 					"link"      => JRoute::_('index.php?option=com_redslider&view=templates'),
 					"icon"      => "icon-desktop",
 					"title"     => JText::_('COM_REDSLIDER_CPANEL_TEMPLATES_LABEL'),
+				),
+				"configuration" => array(
+					"link"      => JRoute::_($configurationLink),
+					"icon"      => "icon-cog",
+					"title"     => JText::_('COM_REDSLIDER_CPANEL_CONFIGURATION_LABEL')
 				),
 				"help" => array(
 					"link"      => 'http://wiki.redcomponent.com/index.php?title=RedSLIDER',
