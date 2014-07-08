@@ -48,16 +48,11 @@ class RedsliderModelSlide extends RModelAdmin
 		$form = parent::getForm($data, $loadData);
 		$user = JFactory::getUser();
 
-		if (!$user->authorise('core.admin', 'com_redslider'))
+		if (!$user->authorise('core.edit.state', 'com_redslider'))
 		{
-			foreach ($form->getGroup('params') as $field)
-			{
-				$fieldName	= $field->getAttribute('name');
-				$fieldClass	= $field->class . ' disabled';
-
-				$form->setFieldAttribute($fieldName, 'readonly', true, 'params');
-				$form->setFieldAttribute($fieldName, 'class', $fieldClass, 'params');
-			}
+			// Disable change publish state
+			$form->setFieldAttribute('published', 'readonly', true);
+			$form->setFieldAttribute('published', 'class', 'btn-group disabled');
 		}
 
 		return $form;

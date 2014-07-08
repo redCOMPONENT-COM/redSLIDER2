@@ -17,6 +17,18 @@ if ($this->item->id)
 	$isNew = false;
 }
 ?>
+<script type="text/javascript">
+	jQuery(document).ready(function()
+	{
+		// Disable click function on btn-group
+		jQuery(".btn-group").each(function(index){
+			if (jQuery(this).hasClass('disabled'))
+			{
+				jQuery(this).find("label").off('click');
+			}
+		});
+	});
+</script>
 <form enctype="multipart/form-data"
 	action="index.php?option=com_redslider&task=template.edit&id=<?php echo $this->item->id; ?>"
 	method="post" name="adminForm" class="form-validate form-horizontal" id="adminForm">
