@@ -206,7 +206,7 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 				require_once JPATH_LIBRARIES . '/redform/core/core.php';
 
 				// Load stylesheet for each section
-				$css = 'redslider.' . JString::strtolower($this->sectionId) . '.css';
+				$css = 'redslider.' . JString::strtolower($this->sectionId) . '.min.css';
 				RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
 
 				$params = new JRegistry($slide->params);
