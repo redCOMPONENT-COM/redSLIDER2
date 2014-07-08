@@ -2,7 +2,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 CREATE TABLE IF NOT EXISTS `#__redslider_galleries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `asset_id`              int(255)        UNSIGNED NOT NULL DEFAULT '0',
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `alias` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `access` tinyint(3) NOT NULL DEFAULT '0',
@@ -19,7 +18,6 @@ CREATE TABLE IF NOT EXISTS `#__redslider_galleries` (
 
 CREATE TABLE IF NOT EXISTS `#__redslider_templates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `asset_id`              int(255)        UNSIGNED NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL,
   `alias` varchar(255) NOT NULL,
   `section` varchar(255) NOT NULL,
@@ -33,7 +31,6 @@ CREATE TABLE IF NOT EXISTS `#__redslider_templates` (
 
 CREATE TABLE IF NOT EXISTS `#__redslider_slides` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `asset_id`              int(255)        UNSIGNED NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL,
   `alias` varchar(255) NOT NULL,
   `gallery_id` int(11) NOT NULL,
