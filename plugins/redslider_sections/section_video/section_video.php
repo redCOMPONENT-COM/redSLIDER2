@@ -195,7 +195,7 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 	public function onPrepareTemplateContent($content, $slide)
 	{
 		// Load stylesheet for each section
-		$css = 'redslider.' . JString::strtolower($this->sectionId) . '.css';
+		$css = 'redslider.' . JString::strtolower($this->sectionId) . '.min.css';
 		RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
 
 		if ($slide->section === $this->sectionId)

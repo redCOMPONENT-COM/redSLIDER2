@@ -180,7 +180,7 @@ class PlgRedslider_SectionsSection_Redform extends JPlugin
 			if (RedsliderHelperHelper::checkExtension($this->extensionName))
 			{
 				// Load stylesheet for each section
-				$css = 'redslider.' . JString::strtolower($this->sectionId) . '.css';
+				$css = 'redslider.' . JString::strtolower($this->sectionId) . '.min.css';
 				RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
 
 				$params = new JRegistry($slide->params);
