@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 
+require_once 'administrator/components/com_redslider/helpers/helper.php';
+
 /**
  * Module redSLIDER Related Items helper
  *
@@ -16,4 +18,15 @@ defined('_JEXEC') or die;
  */
 class ModredSLIDERHelper
 {
+	/**
+	 * Get slides of gallery
+	 *
+	 * @param   int  $galleryId  Gallery ID
+	 *
+	 * @return  array of object
+	 */
+	public static function getSlides($galleryId)
+	{
+		return RedsliderHelperHelper::getSlides($galleryId);
+	}
 }

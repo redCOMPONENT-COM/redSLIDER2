@@ -32,9 +32,6 @@
 	<!-- Target dir where packages will be created  -->
 	<property name="targetdir" value="${package.dir}/package-${extension}-v${version}" override="true"/>
 
-	<!-- Target dir where packages will be created  -->
-	<property name="targetdir" value="${package.dir}/com_${extension}-v${version}" override="true" />
-
 	<!-- ============================================  -->
 	<!-- Create packages folder                        -->
 	<!-- ============================================  -->
@@ -68,9 +65,16 @@
 	<target name="build" depends="prepare">
 
 		<echo msg="Copying INSTALLER files to build directory..."/>
+
 		<copy todir="${targetdir}">
 			<fileset dir="${extpath}/">
 				<include name="LICENSE.txt"/>
+				<include name="redslider.xml"/>
+				<include name="install.php"/>
+			</fileset>
+		</copy>
+		<copy todir="${targetdir}/component/admin">
+			<fileset dir="${extpath}/">
 				<include name="redslider.xml"/>
 				<include name="install.php"/>
 			</fileset>
@@ -79,6 +83,37 @@
 		<echo msg="Copying COMPONENT folder to build directory..."/>
 		<copy todir="${targetdir}/component">
 			<fileset dir="${extpath}/component">
+				<include name="**"/>
+				<exclude name=".*"/>
+			</fileset>
+		</copy>
+
+		<echo msg="Copying MODULES folder to build directory..."/>
+		<copy todir="${targetdir}/modules">
+			<fileset dir="${extpath}/modules">
+				<include name="**"/>
+				<exclude name=".*"/>
+			</fileset>
+		</copy>
+
+		<echo msg="Copying PLUGINS folder to build directory:"/>
+		<echo msg="- section_article"/>
+		<copy todir="${targetdir}/plugins/redslider_sections/section_article">
+			<fileset dir="${extpath}/plugins/redslider_sections/section_article">
+				<include name="**"/>
+				<exclude name=".*"/>
+			</fileset>
+		</copy>
+		<echo msg="- section_standard"/>
+		<copy todir="${targetdir}/plugins/redslider_sections/section_standard">
+			<fileset dir="${extpath}/plugins/redslider_sections/section_standard">
+				<include name="**"/>
+				<exclude name=".*"/>
+			</fileset>
+		</copy>
+		<echo msg="- section_video"/>
+		<copy todir="${targetdir}/plugins/redslider_sections/section_video">
+			<fileset dir="${extpath}/plugins/redslider_sections/section_video">
 				<include name="**"/>
 				<exclude name=".*"/>
 			</fileset>

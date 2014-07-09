@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="2.5" client="site" method="upgrade">
 	<name>MOD_REDSLIDER</name>
-	<version>2.0</version>
+	<version>2.0.2</version>
 	<creationDate>MAY 2014</creationDate>
 	<author>redCOMPONENT.com</author>
 	<authorEmail>email@redcomponent.com</authorEmail>
 	<copyright>redCOMPONENT.com</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<description>MOD_REDSLIDER_DESC</description>
-	<redcore version="1.0" />
+	<redcore version="1.1.5" />
 	<files>
 		<filename module="mod_redslider">helper.php</filename>
 		<filename module="mod_redslider">mod_redslider.php</filename>
@@ -21,11 +21,174 @@
 		<language tag="da-DK">language/da-DK/da-DK.mod_redslider.sys.ini</language>
 	</languages>
 	<config>
-		<fields name="params" addfieldpath="/libraries/redslider/form/fields">
-			<fieldset name="basic">
+		<fields name="params">
+			<fieldset name="basic" addfieldpath="/libraries/redslider/form/fields">
+				<field
+					name="gallery_id"
+					type="rlgallerylist"
+					label="MOD_REDSLIDER_GALLERY_ID"
+					description="MOD_REDSLIDER_GALLERY_ID_DESC">
+					<option>MOD_REDSLIDER_GALLERY_SELECT</option>
+				</field>
 			</fieldset>
-			<fieldset
-				name="advanced">
+			<fieldset name="STYLE" label="COM_MODULES_STYLE_FIELDSET_LABEL" addfieldpath="/libraries/redslider/form/fields">
+				<field
+					name="slider_class"
+					type="text"
+					label="MOD_REDSLIDER_STYLE_SLIDER_CLASS"
+					description="MOD_REDSLIDER_STYLE_SLIDER_CLASS_DESC"
+					default="flexslider">
+					<option value="slide">MOD_REDSLIDER_EFFECT_TYPE_SLIDE</option>
+				</field>
+				<field
+					name="layouts"
+					type="list"
+					label="MOD_REDSLIDER_LAYOUTS"
+					description="MOD_REDSLIDER_LAYOUTS_DESC"
+					default="rstyle1">
+					<option value="rstyle1">MOD_REDSLIDER_LAYOUTS_RSTYLE1</option>
+					<option value="rstyle2">MOD_REDSLIDER_LAYOUTS_RSTYLE2</option>
+					<option value="rstyle3">MOD_REDSLIDER_LAYOUTS_RSTYLE3</option>
+				</field>
+				<field
+					name="slide_width"
+					type="text"
+					label="MOD_REDSLIDER_STYLE_SLIDE_WIDTH"
+					description="MOD_REDSLIDER_STYLE_SLIDE_WIDTH_DESC"
+					default="756">
+				</field>
+				<field
+					name="slide_height"
+					type="text"
+					label="MOD_REDSLIDER_STYLE_SLIDE_HEIGHT"
+					description="MOD_REDSLIDER_STYLE_SLIDE_HEIGHT_DESC"
+					default="420">
+				</field>
+				<field
+					name="smooth_height"
+					type="radio"
+					label="MOD_REDSLIDER_STYLE_SMOOTH_HEIGHT"
+					description="MOD_REDSLIDER_STYLE_SMOOTH_HEIGHT_DESC"
+					default="0">
+					<option
+						value="0">JNO</option>
+					<option
+						value="1">JYES</option>
+				</field>
+				<field
+					name="slide_control"
+					type="radio"
+					label="MOD_REDSLIDER_STYLE_SLIDE_CONTROL"
+					description="MOD_REDSLIDER_STYLE_SLIDE_CONTROL_DESC"
+					default="1">
+					<option
+						value="0">JNO</option>
+					<option
+						value="1">JYES</option>
+				</field>
+				<field
+					name="pager"
+					type="radio"
+					label="MOD_REDSLIDER_STYLE_PAGER"
+					description="MOD_REDSLIDER_STYLE_PAGER_DESC"
+					default="1">
+					<option
+						value="0">JNO</option>
+					<option
+						value="1">JYES</option>
+				</field>
+				<field
+					name="slide_thumbnail"
+					type="radio"
+					label="MOD_REDSLIDER_STYLE_SLIDE_THUMBNAIL"
+					description="MOD_REDSLIDER_STYLE_SLIDE_THUMBNAIL_DESC"
+					default="0">
+					<option
+						value="0">JNO</option>
+					<option
+						value="1">JYES</option>
+				</field>
+				<field
+					name="thumb_width"
+					type="text"
+					label="MOD_REDSLIDER_STYLE_THUMB_WIDTH"
+					description="MOD_REDSLIDER_STYLE_THUMB_WIDTH_DESC"
+					default="150">
+				</field>
+				<field
+					name="thumb_height"
+					type="text"
+					label="MOD_REDSLIDER_STYLE_THUMB_HEIGHT"
+					description="MOD_REDSLIDER_STYLE_THUMB_HEIGHT_DESC"
+					default="100">
+				</field>
+				<field
+					name="thumb_control"
+					type="radio"
+					label="MOD_REDSLIDER_STYLE_THUMB_CONTROL"
+					description="MOD_REDSLIDER_STYLE_THUMB_CONTROL_DESC"
+					default="1">
+					<option
+						value="0">JNO</option>
+					<option
+						value="1">JYES</option>
+				</field>
+				<field
+					name="thumb_nums"
+					type="text"
+					label="MOD_REDSLIDER_STYLE_THUMB_NUMS"
+					description="MOD_REDSLIDER_STYLE_THUMB_NUMS_DESC"
+					default="3">
+				</field>
+			</fieldset>
+			<fieldset name="EFFECTS" label="COM_MODULES_EFFECTS_FIELDSET_LABEL" addfieldpath="/libraries/redslider/form/fields">
+				<field
+					name="effect_type"
+					type="list"
+					label="MOD_REDSLIDER_EFFECT_TYPE"
+					description="MOD_REDSLIDER_EFFECT_TYPE_DESC"
+					default="slide">
+					<option value="slide">MOD_REDSLIDER_EFFECT_TYPE_SLIDE</option>
+					<option value="fade">MOD_REDSLIDER_EFFECT_TYPE_FADE</option>
+				</field>
+				<field
+					name="auto_play"
+					type="radio"
+					label="MOD_REDSLIDER_EFFECT_AUTO_PLAY"
+					description="MOD_REDSLIDER_EFFECT_AUTO_PLAY_DESC"
+					default="1">
+					<option
+						value="0">JNO</option>
+					<option
+						value="1">JYES</option>
+				</field>
+				<field
+					name="pause_on_hover"
+					type="radio"
+					label="MOD_REDSLIDER_EFFECT_PAUSE_ON_HOVER"
+					description="MOD_REDSLIDER_EFFECT_PAUSE_ON_HOVER_DESC"
+					default="1">
+					<option
+						value="0">JNO</option>
+					<option
+						value="1">JYES</option>
+				</field>
+				<field
+					name="slideshow_speed"
+					type="text"
+					label="MOD_REDSLIDER_EFFECT_SLIDESHOW_SPEED"
+					description="MOD_REDSLIDER_EFFECT_SLIDESHOW_SPEED_DESC"
+					default="7000">
+				</field>
+				<field
+					name="animation_duration"
+					type="text"
+					label="MOD_REDSLIDER_EFFECT_ANIMATION_DURATION"
+					description="MOD_REDSLIDER_EFFECT_ANIMATION_DURATION_DESC"
+					default="600">
+				</field>
+			</fieldset>
+			<fieldset name="advanced">
 				<field
 					name="layout"
 					type="modulelayout"
@@ -39,9 +202,10 @@
 				<field
 					name="cache"
 					type="list"
-					default="0"
+					default="1"
 					label="COM_MODULES_FIELD_CACHING_LABEL"
 					description="COM_MODULES_FIELD_CACHING_DESC">
+					<option value="1">JGLOBAL_USE_GLOBAL</option>
 					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
 				</field>
 			</fieldset>

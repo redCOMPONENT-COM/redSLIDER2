@@ -8,3 +8,66 @@
  */
 
 defined('_JEXEC') or die;
+
+?>
+
+<div id="redSLIDER2" class="<?php echo $moduleclass_sfx . $class . $layout ?>" >
+
+<div class="slider" >
+
+<?php if (count($slides)): ?>
+
+	<ul class="slides">
+
+		<?php foreach ($slides as $slide): ?>
+
+			<?php $params = new JRegistry($slide->params); ?>
+
+			<?php $background = $params->get('background_image'); ?>
+
+			<?php $class = $params->get('slide_class'); ?>
+
+			<?php if (isset($slide->template_content)): ?>
+
+				<li class="<?php echo $class; ?>">
+					<div class="slide-content" ><?php echo $slide->template_content ?></div>
+					<div class="slide-img" >
+						<?php if (isset($background)): ?>
+							<img src="<?php echo JURI::base() . $background ?>" />
+						<?php endif; ?>
+					</div>
+				</li>
+
+			<?php endif ?>
+
+		<?php endforeach ?>
+
+	</ul>
+
+	<?php endif ?>
+
+</div>
+
+<?php if (count($slides) && $slideThumbnail): ?>
+
+<div class="carousel" >
+
+	<ul class="slides">
+
+		<?php foreach ($slides as $slide): ?>
+
+			<?php $params = new JRegistry($slide->params); ?>
+
+			<?php $thumbnail = $params->get('background_image'); ?>
+
+				<li><img src="<?php echo JURI::base() . $thumbnail ?>" /></li>
+
+		<?php endforeach ?>
+
+	</ul>
+
+</div>
+
+<?php endif ?>
+
+</div>

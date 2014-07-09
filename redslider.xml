@@ -7,10 +7,10 @@
 	<authorUrl>www.redweb.dk</authorUrl>
 	<copyright>(c) Redweb.dk</copyright>
 	<license>GNU/GPL</license>
-	<version>2.0.0</version>
+	<version>2.0.3</version>
 	<description>COM_REDSLIDER_DESCRIPTION</description>
 	<scriptfile>install.php</scriptfile>
-	<redcore version="1.0.21" />
+	<redcore version="1.2.0" />
 
 	<install folder="component/admin">
 		<sql>
@@ -47,6 +47,7 @@
 			<folder>tables</folder>
 			<folder>views</folder>
 			<filename>config.xml</filename>
+			<filename>access.xml</filename>
 			<filename>controller.php</filename>
 			<filename>index.html</filename>
 			<filename>redslider.php</filename>
@@ -61,4 +62,16 @@
 	<libraries>
 		<library name="redslider"/>
 	</libraries>
+
+    <!-- Modules to install with the component -->
+    <modules>
+        <module name="mod_redslider" client="site" />
+    </modules>
+
+    <!-- Plugins to install with the component -->
+   <plugins>
+        <plugin name="section_article" group="redslider_sections" />
+        <plugin name="section_standard" group="redslider_sections" />
+        <plugin name="section_video" group="redslider_sections" />
+    </plugins>
 </extension>

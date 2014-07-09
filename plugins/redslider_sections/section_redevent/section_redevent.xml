@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" client="site" type="plugin" group="redslider_sections" method="upgrade">
+	<name>PLG_SECTION_REDEVENT</name>
+	<version>1.0</version>
+	<creationDate>MAY 2014</creationDate>
+	<author>redCOMPONENT.com</author>
+	<copyright>redCOMPONENT.com</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<description>PLG_SECTION_REDEVENT_DESC</description>
+	<scriptfile>redevent.script.php</scriptfile>
+	<files>
+		<filename plugin="section_redevent">section_redevent.php</filename>
+		<folder plugin="section_redevent">forms</folder>
+		<folder plugin="section_redevent">tmpl</folder>
+	</files>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_redevent.ini</language>
+		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_redevent.sys.ini</language>
+	</languages>
+	<media destination="redslider_sections/section_redevent" folder="media/redslider_sections">
+        <folder>css</folder>
+    </media>
+	<config>
+		<fields name="params" addfieldpath="/libraries/redslider/form/fields">
+			<fieldset name="basic">
+			</fieldset>
+		</fields>
+	</config>
+</extension>

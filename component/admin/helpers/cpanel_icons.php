@@ -34,30 +34,36 @@ class RedsliderHelperCpanelIcons extends JObject
 	 */
 	public static function getIconArray()
 	{
+		$uri = JUri::getInstance();
+		$return = base64_encode('index.php' . $uri->toString(array('query')));
+		$configurationLink = 'index.php?option=com_redcore&view=config&layout=edit&component=com_redslider&return=' . $return;
+
 		$icon_array = array(
-			"redslider" => array(
 				"galleries" => array(
-					"name"      => "galleries",
-					"icon"      => "icon-folder-open",
-					"oldIcon"   => "redslider_categories48.png",
-					"title"     => "GALLERIES",
-					'cpanelDisplay' => true,
+					"link"      => JRoute::_('index.php?option=com_redslider&view=galleries'),
+					"icon"   	=> "icon-sitemap",
+					"title"     => JText::_('COM_REDSLIDER_CPANEL_GALLERIES_LABEL'),
 				),
-				"sliders" => array(
-					"name"      => "sliders",
-					"icon"      => "icon-file",
-					"oldIcon"   => "redslider_items48.png",
-					"title"     => "SLIDERS",
-					'cpanelDisplay' => true,
+				"slides" => array(
+					"link"      => JRoute::_('index.php?option=com_redslider&view=slides'),
+					"icon"      => "icon-file-text",
+					"title"     => JText::_('COM_REDSLIDER_CPANEL_SLIDES_LABEL'),
 				),
 				"templates" => array(
-					"name"      => "templates",
-					"icon"      => "icon-hdd",
-					"oldIcon"   => "redslider_templates48.png",
-					"title"     => "TEMPLATES",
-					'cpanelDisplay' => true,
+					"link"      => JRoute::_('index.php?option=com_redslider&view=templates'),
+					"icon"      => "icon-desktop",
+					"title"     => JText::_('COM_REDSLIDER_CPANEL_TEMPLATES_LABEL'),
+				),
+				"configuration" => array(
+					"link"      => JRoute::_($configurationLink),
+					"icon"      => "icon-cog",
+					"title"     => JText::_('COM_REDSLIDER_CPANEL_CONFIGURATION_LABEL')
+				),
+				"help" => array(
+					"link"      => 'http://wiki.redcomponent.com/index.php?title=RedSLIDER',
+					"icon"      => "icon-question-sign",
+					"title"     => JText::_('COM_REDSLIDER_CPANEL_HELP_LABEL'),
 				)
-			)
 		);
 
 		return $icon_array;
