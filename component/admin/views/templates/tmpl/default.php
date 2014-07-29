@@ -127,7 +127,7 @@ $userId = $user->id;
 				</td>
 				<td>
 					<?php if ($canEdit) : ?>
-						<?php echo JHtml::_('link', 'index.php?option=com_redslider&task=gallery.edit&id=' . $row->id, $row->title); ?>
+						<?php echo JHtml::_('link', 'index.php?option=com_redslider&task=template.edit&id=' . $row->id, $row->title); ?>
 					<?php else : ?>
 						<?php echo $this->escape($row->title); ?>
 					<?php endif; ?>

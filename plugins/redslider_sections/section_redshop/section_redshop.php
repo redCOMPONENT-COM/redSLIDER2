@@ -209,7 +209,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 				require_once JPATH_SITE . '/components/com_redshop/helpers/extra_field.php';
 
 				// Load stylesheet for each section
-				$css = 'redslider.' . JString::strtolower($this->sectionId) . '.css';
+				$css = 'redslider.' . JString::strtolower($this->sectionId) . '.min.css';
 				RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
 
 				$Redconfiguration = new Redconfiguration;

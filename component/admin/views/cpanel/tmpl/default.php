@@ -22,7 +22,11 @@ JHtml::_('rjquery.chosen', 'select');
 		<div class="row-fluid">
 			<?php foreach ($row as $icon) : ?>
 			<div class="span2">
-				<a class="rcCpanelIcons" href="<?php echo $icon['link']; ?>">
+                <?php $target = ''; ?>
+                <?php if (isset($icon['target']) && $icon['target']): ?>
+                    <?php $target = 'target="' . $icon['target'] . '"'; ?>
+                <?php endif; ?>
+				<a class="rcCpanelIcons" href="<?php echo $icon['link']; ?>" <?php echo $target; ?>>
 					<div class="row-fluid pagination-centered">
 						<span class="dashboard-icon-link-icon">
 							<i class="<?php echo $icon['icon']; ?> icon-5x"></i>
