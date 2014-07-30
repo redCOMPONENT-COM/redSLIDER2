@@ -35,10 +35,6 @@ $configurationLink = 'index.php?option=com_redcore&view=config&layout=edit&compo
 
 // Help link
 $helpLink = "http://wiki.redcomponent.com/index.php?title=RedSLIDER";
-
-// Check redSLIDER Category Fields component
-$categoryFields = RedsliderHelperHelper::getExtension('com_redslidercategoryfields');
-
 ?>
 
 <ul class="nav nav-pills nav-stacked redslider-sidebar">
