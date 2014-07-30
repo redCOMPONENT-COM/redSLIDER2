@@ -50,16 +50,6 @@
 			>
 			<option value="">COM_REDSLIDER_SELECT</option>
 		</field>
-
-		<field
-			name="ordering"
-			type="rlslideordering"
-			label="COM_REDSLIDER_SLIDE_ORDERING"
-			description="COM_REDSLIDER_SLIDE_ORDERING_DESC"
-			filter="int"
-			size="1">
-		</field>
-
 		<field name="published" type="radio"
 			   label="JPUBLISHED"
 			   class="btn-group"
