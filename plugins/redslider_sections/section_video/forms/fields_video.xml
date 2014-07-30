@@ -8,18 +8,6 @@
 			label="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_ID"
 			description="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_ID_DESC"
 		/>
-		<field name="vimeo_width"
-			type="text"
-			default="500"
-			label="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_WIDTH"
-			description="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_WIDTH_DESC"
-		/>
-		<field name="vimeo_height"
-			type="text"
-			default="281"
-			label="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_HEIGHT"
-			description="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_HEIGHT_DESC"
-		/>
 		<field name="vimeo_portrait"
 			type="radio"
 			class="btn-group"
@@ -78,18 +66,6 @@
 			default=""
 			label="COM_REDSLIDER_SECTION_VIDEO_FIELD_YOUTUBE_ID"
 			description="COM_REDSLIDER_SECTION_VIDEO_FIELD_YOUTUBE_ID_DESC"
-		/>
-		<field name="youtube_width"
-			type="text"
-			default="500"
-			label="COM_REDSLIDER_SECTION_VIDEO_FIELD_YOUTUBE_WIDTH"
-			description="COM_REDSLIDER_SECTION_VIDEO_FIELD_YOUTUBE_WIDTH_DESC"
-		/>
-		<field name="youtube_height"
-			type="text"
-			default="315"
-			label="COM_REDSLIDER_SECTION_VIDEO_FIELD_YOUTUBE_HEIGHT"
-			description="COM_REDSLIDER_SECTION_VIDEO_FIELD_YOUTUBE_HEIGHT_DESC"
 		/>
 		<field name="youtube_suggested"
 			type="radio"
