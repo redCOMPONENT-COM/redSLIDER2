@@ -262,26 +262,6 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 						$replaceString .= '&amp;portrait=0';
 					}
 
-					$replaceString .= '" ';
-
-					if (!is_numeric($vimeo->width))
-					{
-						$replaceString .= 'width="560" ';
-					}
-					else
-					{
-						$replaceString .= 'width="' . JString::trim($vimeo->width) . '" ';
-					}
-
-					if (!is_numeric($vimeo->height))
-					{
-						$replaceString .= 'height="315" ';
-					}
-					else
-					{
-						$replaceString .= 'height="' . JString::trim($vimeo->height) . '" ';
-					}
-
 					$replaceString .= 'frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
 				}
 
