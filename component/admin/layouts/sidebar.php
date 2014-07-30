@@ -35,7 +35,7 @@ $configurationLink = 'index.php?option=com_redcore&view=config&layout=edit&compo
 
 // Help link
 $helpLink = "http://wiki.redcomponent.com/index.php?title=RedSLIDER";
-
+$target = "";
 // Check redSLIDER Category Fields component
 $categoryFields = RedsliderHelperHelper::getExtension('com_redslidercategoryfields');
 
@@ -50,10 +50,11 @@ $categoryFields = RedsliderHelperHelper::getExtension('com_redslidercategoryfiel
 				<?php $link = $configurationLink; ?>
 			<?php elseif ($sidebar['view'] == 'help'): ?>
 				<?php $link = $helpLink; ?>
+				<?php $target = 'target="_blank"'; ?>
 			<?php else: ?>
 				<?php $link = JRoute::_('index.php?option=com_redslider&view=' . $sidebar['view']); ?>
 			<?php endif; ?>
-			<a href="<?php echo $link; ?>">
+			<a href="<?php echo $link; ?>" <?php echo $target; ?>>
 				<i class="<?php echo $sidebar['icon']; ?>"></i>
 				<?php echo $sidebar['text']; ?>
 			</a>
