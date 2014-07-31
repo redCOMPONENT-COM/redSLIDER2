@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" client="site" type="plugin" group="redslider_sections" method="upgrade">
 	<name>PLG_SECTION_ARTICLE</name>
-	<version>1.0</version>
+	<version>2.0</version>
 	<creationDate>MAY 2014</creationDate>
 	<author>redCOMPONENT.com</author>
 	<copyright>redCOMPONENT.com</copyright>
