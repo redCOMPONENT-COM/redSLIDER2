@@ -103,7 +103,7 @@ class RedSliderModelCpanel extends RModelAdmin
 		$templateTable->title = 'Template Article';
 		$templateTable->section = 'SECTION_ARTICLE';
 		$templateTable->published = 1;
-		$templateTable->content = '<div class="articleSlide"><div class="slideTitle"><h3><a href="{article_link}">{article_title}</a></h3></div><div class="slideText"><p>{article_introtext|250}</p></div></div>';
+		$templateTable->content = '<div class="articleSlide"><div class="slideTitle"><h3><a href="{article_link}">{article_title}</a></h3></div><div class="slideText">{article_introtext|250}</div></div>';
 		$templateTable->store();
 		$templateId = (int) $templateTable->id;
 		/*
@@ -125,7 +125,7 @@ class RedSliderModelCpanel extends RModelAdmin
 		$templateTable->title = 'Template Standard';
 		$templateTable->section = 'SECTION_STANDARD';
 		$templateTable->published = 1;
-		$templateTable->content = '<div class="eachSlide"><div class="slideTitle"><h3><a href="{standard_link}">{standard_linktext}</a></h3></div><div class="slideText"><p>{standard_description}</p></div></div>';
+		$templateTable->content = '<div class="eachSlide"><div class="slideTitle"><h3><a href="{standard_link}">{standard_linktext}</a></h3></div><div class="slideText">{standard_description}</div></div>';
 		$templateTable->store();
 		$templateId = (int) $templateTable->id;
 		/*
@@ -137,7 +137,7 @@ class RedSliderModelCpanel extends RModelAdmin
 		$slideTable->title = 'Sample Standard';
 		$slideTable->section = 'SECTION_STANDARD';
 		$slideTable->published = 1;
-		$slideTable->params = '{"background_image":"images/stories/redslider/standard_slider.jpg","caption":"Sample Standard","description":"<p>Sample Standard</p>","link":"#","linktext":"Sample Standard","slide_class":"standard_slide"}';
+		$slideTable->params = '{"background_image":"images/stories/redslider/standard_slider.jpg","caption":"Sample Standard","description":"Sample Standard","link":"#","linktext":"Sample Standard","slide_class":"standard_slide"}';
 		$slideTable->store();
 		/*
 		 * Insert demo template for Video section
