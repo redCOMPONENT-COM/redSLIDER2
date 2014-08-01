@@ -83,6 +83,8 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 					'{standard_description}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_DESCRIPTION_DESC"),
 					'{standard_link}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_LINK_DESC"),
 					'{standard_linktext}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_LINKTEXT_DESC"),
+					'{standard_title}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_TITLE_DESC"),
+					'{standard_caption}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_CAPTION_DESC"),
 				);
 
 			return $tags;
@@ -177,6 +179,8 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 			$standard->link = $params->get('link', '');
 			$standard->linktext = $params->get('linktext', '');
 			$standard->suffixClass = $params->get('suffix_class', 'standard_slide');
+			$standard->title = $slide->title;
+			$standard->caption = $params->get('caption', '');
 
 			$matches = array();
 
@@ -209,6 +213,29 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 					if (count($match))
 					{
 						$content = JString::str_ireplace($match[0], $standard->linktext, $content);
+					}
+				}
+			}
+
+
+			if (preg_match_all('/{standard_title[^}]*}/i', $content, $matches) > 0)
+			{
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $standard->title, $content);
+					}
+				}
+			}
+
+			if (preg_match_all('/{standard_caption[^}]*}/i', $content, $matches) > 0)
+			{
+				foreach ($matches as $match)
+				{
+					if (count($match))
+					{
+						$content = JString::str_ireplace($match[0], $standard->caption, $content);
 					}
 				}
 			}
