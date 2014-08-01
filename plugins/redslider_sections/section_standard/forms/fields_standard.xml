@@ -22,13 +22,6 @@
 			description="COM_REDSLIDER_SECTION_STANDARD_FIELD_DESCRIPTION_DESC"
 			message="COM_REDSLIDER_SECTION_STANDARD_FIELD_DESCRIPTION_DESC"
 		/>
-		<field name="caption"
-			type="caption"
-			default=""
-			label="COM_REDSLIDER_SECTION_STANDARD_FIELD_CAPTION"
-			description="COM_REDSLIDER_SECTION_STANDARD_FIELD_CAPTION_DESC"
-			message="COM_REDSLIDER_SECTION_STANDARD_FIELD_CAPTION_DESC"
-		/>
 		<field name="link"
 			type="text"
 			default=""
