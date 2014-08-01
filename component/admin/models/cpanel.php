@@ -125,7 +125,7 @@ class RedSliderModelCpanel extends RModelAdmin
 		$templateTable->title = 'Template Standard';
 		$templateTable->section = 'SECTION_STANDARD';
 		$templateTable->published = 1;
-		$templateTable->content = '<div class="eachSlide"><div class="slideTitle"><h3><a href="{standard_link}">{standard_linktext}</a></h3></div><div class="slideText">{standard_description}</p></div></div>';
+		$templateTable->content = '<div class="eachSlide"><div class="slideTitle"><h3><a href="{standard_link}">{standard_linktext}</a></h3></div><div class="slideText">{standard_description}</div></div>';
 		$templateTable->store();
 		$templateId = (int) $templateTable->id;
 		/*
