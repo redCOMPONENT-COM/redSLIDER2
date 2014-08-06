@@ -86,7 +86,23 @@ class PlgRedslider_SectionsSection_RedshopInstallerScript extends Com_RedcoreIns
 				$templateTable->title = 'Template redSHOP';
 				$templateTable->section = 'SECTION_REDSHOP';
 				$templateTable->published = $comExists ? 1 : 0;
-				$templateTable->content = '<div class="eachSlide"><div class="prod-show"><div class="slideImg">{product_image|300|200}</div><div class="slidePrice"><h3>{product_price}</h3></div></div><div class="prod-detail"><div class="slideTitle"><h3>{product_name}</h3></div><div class="slideText">{product_short_description}</div><div class="slideAttribute">{attribute_template:attributes}</div><div class="slideForm">{form_addtocart:add_to_cart2}</div></div></div>';
+				$templateTable->content = '<div class="eachSlide">
+											<div class="prod-show">
+												<div class="slideImg">{product_image}</div>
+												<div class="slidePrice">
+													<img src="media/com_redslider/images/prod_price.png" border="0" />
+													<h3>{product_price}</h3>
+												</div>
+										 	</div>
+											<div class="prod-detail">
+												<div class="slideTitle">
+												<h3>{product_name}</h3>
+											</div>
+											<div class="slideText">{product_short_description}</div>
+												<div class="slideAttribute">{attribute_template:attributes}</div>
+												<div class="slideForm">{form_addtocart:add_to_cart2}</div>
+											</div>
+										 </div>';
 				$templateTable->store();
 				$templateId = (int) $templateTable->id;
 
