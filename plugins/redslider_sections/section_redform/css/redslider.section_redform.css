@@ -1,0 +1,49 @@
+#redSLIDER2 ul.slides > .redform_slide >.slide-content{
+	left: 0px;
+	width: 100%;
+	max-width: 100%;
+	background: none;
+}
+#redSLIDER2 ul.slides > .redform_slide >.slide-content .bg-redform{
+	position: absolute;
+	top:0;
+	right:0;
+	padding-right:0;
+	height: 100%;
+	width: auto;
+}
+#redSLIDER2 ul.slides > .redform_slide >.slide-content .bg-redform img{
+	width: auto;
+	height: 100%;
+	z-index: 10;
+}
+#redSLIDER2 ul.slides > .redform_slide >.slide-content .cont-side{
+	width: 45%;
+	position: relative;
+	float: left;
+	z-index: 11;
+	height: 100%;
+	overflow: hidden;
+}
+#redSLIDER2 ul.slides > .redform_slide >.slide-content .cont-side .textin{
+	width: 95%;
+}
+#redSLIDER2 ul.slides > .redform_slide >.slide-content .cont-side .textfield{
+	width: 97%;
+	height: 100px;
+}
+#redSLIDER2 ul.slides > .redform_slide >.slide-content .cont-side .redform-form{
+	display: none;
+}
+#redSLIDER2 ul.slides > .redform_slide >.slide-content .cont-side .submitform input{
+	font-size: 20px;
+	font-weight: bold;
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	height: 45px;
+	padding: 0 20px;
+	background: url('../../../com_redslider/images/bg-button.png') repeat-x;
+	border-right: 1px solid #999;
+	border-left: 1px solid #999;
+}
