@@ -190,6 +190,9 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
+		// Load redSHOP language file
+		JFactory::getLanguage()->load('com_redshop');
+
 		if ($slide->section === $this->sectionId)
 		{
 			if (RedsliderHelperHelper::checkExtension($this->extensionName))
