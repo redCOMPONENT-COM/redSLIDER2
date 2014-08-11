@@ -118,7 +118,7 @@ class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreIns
 				$slideParams = array(
 					"form_id" => 1,
 					"background_image" => "images/stories/redslider/bg_redform.png",
-					"slide_class" => "reform_slide"
+					"slide_class" => "redform_slide"
 				);
 
 				$slideParams = new JRegistry($slideParams);
