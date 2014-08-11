@@ -194,9 +194,16 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
+		// Check if we need to load component's CSS or not
+		$useOwnCSS = JComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
+
 		// Load stylesheet for each section
 		$css = 'redslider.' . JString::strtolower($this->sectionId) . '.min.css';
-		RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+
+		if (!$useOwnCSS)
+		{
+			RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+		}
 
 		if ($slide->section === $this->sectionId)
 		{

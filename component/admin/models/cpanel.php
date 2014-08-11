@@ -115,7 +115,7 @@ class RedSliderModelCpanel extends RModelAdmin
 		$slideTable->title = 'Sample Article';
 		$slideTable->section = 'SECTION_ARTICLE';
 		$slideTable->published = 1;
-		$slideTable->params = '{"article_id":"1","background_image":"images/stories/redslider/standard_slider.jpg","slide_class":"article_slide"}';
+		$slideTable->params = '{"article_id":"1","background_image":"images/stories/redslider/article_slider.jpg","slide_class":"article_slide"}';
 		$slideTable->store();
 		/*
 		 * Insert demo template for Standard section
