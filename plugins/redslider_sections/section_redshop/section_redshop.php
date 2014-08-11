@@ -190,6 +190,9 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
+		// Load redSHOP language file
+		JFactory::getLanguage()->load('com_redshop');
+
 		// Check if we need to load component's CSS or not
 		$useOwnCSS = JComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
 
