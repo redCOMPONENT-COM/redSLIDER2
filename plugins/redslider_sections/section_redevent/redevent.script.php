@@ -68,7 +68,7 @@ class PlgRedslider_SectionsSection_RedeventInstallerScript extends Com_RedcoreIn
 			{
 				require_once $helperPath;
 
-				$comExists = RedsliderHelperHelper::checkExtension('com_redevent');
+				$comExists = RedsliderHelper::checkExtension('com_redevent');
 
 				$db					= JFactory::getDbo();
 				$user				= JFactory::getUser();

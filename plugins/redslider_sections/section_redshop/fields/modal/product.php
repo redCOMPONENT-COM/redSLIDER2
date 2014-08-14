@@ -30,7 +30,7 @@ class JFormFieldModal_Product extends JFormField
 	 * Method to get the field input markup.
 	 *
 	 * @return	string	The field input markup.
-	 * 
+	 *
 	 * @since	1.6
 	 */
 	protected function getInput()
@@ -38,7 +38,7 @@ class JFormFieldModal_Product extends JFormField
 		// Check if component redSHOP is not installed
 		$app = JFactory::getApplication();
 
-		if (!RedsliderHelperHelper::checkExtension('com_redshop'))
+		if (!RedsliderHelper::checkExtension('com_redshop'))
 		{
 			$app->enqueueMessage(JText::_('PLG_REDSLIDER_SECTION_REDSHOP_INSTALL_COM_REDSHOP_FIRST'), 'Warning');
 
