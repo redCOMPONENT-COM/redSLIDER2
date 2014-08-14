@@ -210,7 +210,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = RedsliderHelperHelper::replaceTagsHTML($match[0], $article->instance->introtext, $content);
+							$content = RedsliderHelper::replaceTagsHTML($match[0], $article->instance->introtext, $content);
 						}
 					}
 				}
@@ -221,7 +221,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = RedsliderHelperHelper::replaceTagsHTML($match[0], $article->instance->fulltext, $content);
+							$content = RedsliderHelper::replaceTagsHTML($match[0], $article->instance->fulltext, $content);
 						}
 					}
 				}

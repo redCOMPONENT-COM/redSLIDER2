@@ -86,7 +86,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 			$app = JFactory::getApplication();
 
 			// Check if component redSHOP is not installed
-			if (!RedsliderHelperHelper::checkExtension($this->extensionName))
+			if (!RedsliderHelper::checkExtension($this->extensionName))
 			{
 				$app->enqueueMessage(JText::_('PLG_REDSLIDER_SECTION_REDSHOP_INSTALL_COM_REDSHOP_FIRST'), $this->msgLevel);
 			}
@@ -126,7 +126,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 
 			if ($app->isAdmin())
 			{
-				if (RedsliderHelperHelper::checkExtension($this->extensionName))
+				if (RedsliderHelper::checkExtension($this->extensionName))
 				{
 					JForm::addFormPath(__DIR__ . '/forms/');
 					$return = $form->loadFile('fields_redshop', false);
@@ -198,7 +198,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 
 		if ($slide->section === $this->sectionId)
 		{
-			if (RedsliderHelperHelper::checkExtension($this->extensionName))
+			if (RedsliderHelper::checkExtension($this->extensionName))
 			{
 				// Load redSHOP's javascripts
 				JHTML::Script('fetchscript.js', 'components/com_redshop/assets/js/', false);

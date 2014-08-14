@@ -68,7 +68,7 @@ class PlgRedslider_SectionsSection_RedshopInstallerScript extends Com_RedcoreIns
 			{
 				require_once $helperPath;
 
-				$comExists = RedsliderHelperHelper::checkExtension('com_redshop');
+				$comExists = RedsliderHelper::checkExtension('com_redshop');
 
 				$db					= JFactory::getDbo();
 				$user				= JFactory::getUser();

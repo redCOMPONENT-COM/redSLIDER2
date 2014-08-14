@@ -129,7 +129,7 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 
 			if ($app->isAdmin())
 			{
-				if (RedsliderHelperHelper::checkExtension($this->extensionName))
+				if (RedsliderHelper::checkExtension($this->extensionName))
 				{
 					JForm::addFormPath(__DIR__ . '/forms/');
 					$return = $form->loadFile('fields_redevent', false);
@@ -199,7 +199,7 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 
 		if ($slide->section === $this->sectionId)
 		{
-			if (RedsliderHelperHelper::checkExtension($this->extensionName))
+			if (RedsliderHelper::checkExtension($this->extensionName))
 			{
 				require_once JPATH_LIBRARIES . '/redevent/tags/tags.php';
 				require_once JPATH_LIBRARIES . '/redevent/helper/helper.php';
