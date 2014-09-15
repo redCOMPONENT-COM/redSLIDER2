@@ -86,7 +86,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 			$app = JFactory::getApplication();
 
 			// Check if component redSHOP is not installed
-			if (!RedsliderHelperHelper::checkExtension($this->extensionName))
+			if (!RedsliderHelper::checkExtension($this->extensionName))
 			{
 				$app->enqueueMessage(JText::_('PLG_REDSLIDER_SECTION_REDSHOP_INSTALL_COM_REDSHOP_FIRST'), $this->msgLevel);
 			}
@@ -126,7 +126,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 
 			if ($app->isAdmin())
 			{
-				if (RedsliderHelperHelper::checkExtension($this->extensionName))
+				if (RedsliderHelper::checkExtension($this->extensionName))
 				{
 					JForm::addFormPath(__DIR__ . '/forms/');
 					$return = $form->loadFile('fields_redshop', false);
@@ -190,9 +190,15 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
+		// Load redSHOP language file
+		JFactory::getLanguage()->load('com_redshop');
+
+		// Check if we need to load component's CSS or not
+		$useOwnCSS = JComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
+
 		if ($slide->section === $this->sectionId)
 		{
-			if (RedsliderHelperHelper::checkExtension($this->extensionName))
+			if (RedsliderHelper::checkExtension($this->extensionName))
 			{
 				// Load redSHOP's javascripts
 				JHTML::Script('fetchscript.js', 'components/com_redshop/assets/js/', false);
@@ -210,7 +216,11 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 
 				// Load stylesheet for each section
 				$css = 'redslider.' . JString::strtolower($this->sectionId) . '.min.css';
-				RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+
+				if (!$useOwnCSS)
+				{
+					RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+				}
 
 				$Redconfiguration = new Redconfiguration;
 				$Redconfiguration->defineDynamicVars();

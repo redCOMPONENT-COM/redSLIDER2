@@ -15,4 +15,19 @@
 			component="com_redslider"
 			section="component" />
 	</fieldset>
+	<fieldset
+		name="general"
+		label="COM_REDSLIDER_CONFIGURATION_GENERAL"
+		description="COM_REDSLIDER_CONFIGURATION_GENERAL_DESC">
+		<field
+			name="use_own_css"
+			type="radio"
+			label="COM_REDSLIDER_CONFIGURATION_GENERAL_USE_OWN_CSS"
+			description="COM_REDSLIDER_CONFIGURATION_GENERAL_USE_OWN_CSS_DESC"
+			class="btn-group"
+			default="0">
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+	</fieldset>
 </config>

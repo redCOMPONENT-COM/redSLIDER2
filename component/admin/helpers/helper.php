@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
  * @since       2.0
  *
  */
-class RedsliderHelperHelper
+class RedsliderHelper
 {
 	/**
 	 * Function check is extension installed

@@ -129,7 +129,7 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 
 			if ($app->isAdmin())
 			{
-				if (RedsliderHelperHelper::checkExtension($this->extensionName))
+				if (RedsliderHelper::checkExtension($this->extensionName))
 				{
 					JForm::addFormPath(__DIR__ . '/forms/');
 					$return = $form->loadFile('fields_redevent', false);
@@ -194,9 +194,12 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
+		// Check if we need to load component's CSS or not
+		$useOwnCSS = JComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
+
 		if ($slide->section === $this->sectionId)
 		{
-			if (RedsliderHelperHelper::checkExtension($this->extensionName))
+			if (RedsliderHelper::checkExtension($this->extensionName))
 			{
 				require_once JPATH_LIBRARIES . '/redevent/tags/tags.php';
 				require_once JPATH_LIBRARIES . '/redevent/helper/helper.php';
@@ -207,10 +210,13 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 
 				// Load stylesheet for each section
 				$css = 'redslider.' . JString::strtolower($this->sectionId) . '.min.css';
-				RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+
+				if (!$useOwnCSS)
+				{
+					RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+				}
 
 				$params = new JRegistry($slide->params);
-
 				$eventId = (int) $params->get('event_id', 0);
 				$tags = new RedeventTags;
 				$tags->setEventId($eventId);
