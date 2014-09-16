@@ -77,7 +77,7 @@ class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreIns
 			{
 				require_once $helperPath;
 
-				$comExists = RedsliderHelperHelper::checkExtension('redform');
+				$comExists = RedsliderHelper::checkExtension('redform');
 
 				// Add Include path
 				JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
@@ -88,6 +88,28 @@ class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreIns
 				$templateTable->id = null;
 				$templateTable->title = 'Template redFORM';
 				$templateTable->section = 'SECTION_REDFORM';
+				$templateTable->content = '<div class="cont-side">
+												<table width="100%" cellspacing="5px" cellpadding="10px" align="center">
+													<tbody>
+														<tr>
+															<td colspan="2" align="left">
+																<h3>{redform_title}</h3>
+															</td>
+														</tr>
+														<tr>
+															<td><input class="textin" type="text" /></td>
+															<td><input class="textin" type="text" /></td>
+														</tr>
+														<tr>
+															<td colspan="2"><input class="textfield" type="text" /></td>
+														</tr>
+														<tr>
+															<td colspan="2" align="left">{redform}1{/redform}</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="bg-redform"><img src="images/stories/redslider/redform-backg.png" alt="" /></div>';
 				$templateTable->published = $comExists? 1 : 0;
 				$templateTable->store();
 				$templateId = (int) $templateTable->id;
@@ -95,8 +117,8 @@ class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreIns
 				// Prepare params for demo redFORM slide
 				$slideParams = array(
 					"form_id" => 1,
-					"background_image" => "images/joomla_black.gif",
-					"redform_slide_class" => "reform_slide"
+					"background_image" => "images/stories/redslider/bg_redform.png",
+					"slide_class" => "redform_slide"
 				);
 
 				$slideParams = new JRegistry($slideParams);

@@ -86,7 +86,10 @@ class PlgRedslider_SectionsSection_Redform extends JPlugin
 	{
 		if ($sectionId === $this->sectionId)
 		{
-			$tags = array();
+			$tags = array(
+					"{redform}<em>form_id</em>{/redform}" => JText::_("COM_REDSLIDER_TAG_REDFORM_REDFORM_DESC"),
+					"{redform_title}"                     => JText::_("COM_REDSLIDER_TAG_REDFORM_TITLE_DESC")
+				);
 
 			return $tags;
 		}
@@ -110,7 +113,7 @@ class PlgRedslider_SectionsSection_Redform extends JPlugin
 
 			if ($app->isAdmin())
 			{
-				if (RedsliderHelperHelper::checkExtension($this->extensionName))
+				if (RedsliderHelper::checkExtension($this->extensionName))
 				{
 					JForm::addFormPath(__DIR__ . '/forms/');
 					$return = $form->loadFile('fields_redform', false);
@@ -175,18 +178,33 @@ class PlgRedslider_SectionsSection_Redform extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
+		// Check if we need to load component's CSS or not
+		$useOwnCSS = JComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
+
 		if ($slide->section === $this->sectionId)
 		{
-			if (RedsliderHelperHelper::checkExtension($this->extensionName))
+			if (RedsliderHelper::checkExtension($this->extensionName))
 			{
 				// Load stylesheet for each section
 				$css = 'redslider.' . JString::strtolower($this->sectionId) . '.min.css';
-				RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
 
-				$params = new JRegistry($slide->params);
-				$form = new stdClass;
-				$formId = (int) $params->get('form_id', 0);
-				$content = '{redform}' . $formId . '{/redform}';
+				if (!$useOwnCSS)
+				{
+					RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+				}
+
+				$matches = array();
+
+				if (preg_match_all('/{redform_title[^}]*}/i', $content, $matches) > 0)
+				{
+					foreach ($matches as $match)
+					{
+						if (count($match))
+						{
+							$content = JString::str_ireplace($match[0], $slide->title, $content);
+						}
+					}
+				}
 			}
 
 			return $content;

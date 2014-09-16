@@ -53,7 +53,6 @@ if ($this->item->id)
 				<?php echo $this->form->getInput('gallery_id'); ?>
 			</div>
 		</div>
-		<?php if ($this->sectionId != 'SECTION_REDFORM' ): ?>
 		<div class="control-group">
 			<div class="control-label">
 				<?php echo $this->form->getLabel('template_id'); ?>
@@ -62,7 +61,6 @@ if ($this->item->id)
 				<?php echo $this->form->getInput('template_id'); ?>
 			</div>
 		</div>
-		<?php endif; ?>
 		<div class="control-group">
 			<div class="control-label">
 				<?php echo $this->form->getLabel('title'); ?>
@@ -77,14 +75,6 @@ if ($this->item->id)
 			</div>
 			<div class="controls">
 				<?php echo $this->form->getInput('alias'); ?>
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="control-label">
-				<?php echo $this->form->getLabel('ordering'); ?>
-			</div>
-			<div class="controls">
-				<?php echo $this->form->getInput('ordering'); ?>
 			</div>
 		</div>
 		<div class="control-group">

@@ -27,6 +27,6 @@ class ModredSLIDERHelper
 	 */
 	public static function getSlides($galleryId)
 	{
-		return RedsliderHelperHelper::getSlides($galleryId);
+		return RedsliderHelper::getSlides($galleryId);
 	}
 }

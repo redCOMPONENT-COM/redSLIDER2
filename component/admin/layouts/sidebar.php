@@ -25,7 +25,7 @@ $sidebars = array(
 	array('view' => 'slides', 'icon' => 'icon-file-text', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_SLIDES')),
 	array('view' => 'templates', 'icon' => 'icon-desktop', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_TEMPLATES')),
 	array('view' => 'configuration', 'icon' => 'icon-cog', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_CONFIGURATION')),
-	array('view' => 'help', 'icon' => 'icon-question-sign', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_HELP'))
+	array('view' => 'help', 'icon' => 'icon-question-sign', 'text' => JText::_('COM_REDSLIDER_SIDEBAR_HELP'), 'target' => '_blank')
 );
 
 // Configuration link
@@ -35,16 +35,16 @@ $configurationLink = 'index.php?option=com_redcore&view=config&layout=edit&compo
 
 // Help link
 $helpLink = "http://wiki.redcomponent.com/index.php?title=RedSLIDER";
-
-// Check redSLIDER Category Fields component
-$categoryFields = RedsliderHelperHelper::getExtension('com_redslidercategoryfields');
-
+$target = '';
 ?>
 
 <ul class="nav nav-pills nav-stacked redslider-sidebar">
 	<li class="nav-header"><?php echo JText::_('COM_REDSLIDER_SIDEBAR_CPANEL'); ?></li>
 	<?php foreach ($sidebars as $sidebar) : ?>
 		<?php $class = ($active === $sidebar['view']) ? 'active' : ''; ?>
+		<?php if(isset($sidebar['target'])) : ?>
+			<?php $target= 'target="' . $sidebar['target'] . '"'; ?>
+		<?php endif; ?>
 		<li class="<?php echo $class; ?>">
 			<?php if ($sidebar['view'] == 'configuration'): ?>
 				<?php $link = $configurationLink; ?>
@@ -53,7 +53,7 @@ $categoryFields = RedsliderHelperHelper::getExtension('com_redslidercategoryfiel
 			<?php else: ?>
 				<?php $link = JRoute::_('index.php?option=com_redslider&view=' . $sidebar['view']); ?>
 			<?php endif; ?>
-			<a href="<?php echo $link; ?>">
+			<a href="<?php echo $link; ?>" <?php echo $target; ?>>
 				<i class="<?php echo $sidebar['icon']; ?>"></i>
 				<?php echo $sidebar['text']; ?>
 			</a>

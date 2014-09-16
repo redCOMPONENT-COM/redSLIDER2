@@ -105,7 +105,7 @@ $userId = $user->id;
 				<td><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
 				<td>
 					<?php if ($canEditState): ?>
-						<?php echo JHtml::_('rgrid.published', $row->published, $i, 'templates.', true, 'cb'); ?>
+						<?php echo JHtml::_('rgrid.published', $row->published, $i, 'galleries.', true, 'cb'); ?>
 					<?php else: ?>
 						<?php if ($row->published) : ?>
 							<a class="btn btn-small disabled"><i class="icon-ok-sign icon-green"></i></a>

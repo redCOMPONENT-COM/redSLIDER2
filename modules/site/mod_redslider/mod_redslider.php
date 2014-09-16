@@ -20,7 +20,17 @@ if (!file_exists($redcoreLoader) || !JPluginHelper::isEnabled('system', 'redcore
 RBootstrap::bootstrap();
 
 require_once JPATH_SITE . '/modules/mod_redslider/helper.php';
-RHelperAsset::load('redslider.min.css', 'com_redslider');
+
+// Check if we need to load component's CSS or not
+$useOwnCSS = JComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
+
+RHelperAsset::load('redslider.min.js', 'com_redslider');
+
+if (!$useOwnCSS)
+{
+	RHelperAsset::load('redslider.min.css', 'com_redslider');
+}
+
 
 // Main slider settings
 $opt = array();

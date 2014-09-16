@@ -166,11 +166,18 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
+		// Check if we need to load component's CSS or not
+		$useOwnCSS = JComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
+
 		if ($slide->section === $this->sectionId)
 		{
 			// Load stylesheet for each section
 			$css = 'redslider.' . JString::strtolower($this->sectionId) . '.min.css';
-			RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+
+			if (!$useOwnCSS)
+			{
+				RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+			}
 
 			$params = new JRegistry($slide->params);
 			$article = new stdClass;
@@ -203,7 +210,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = RedsliderHelperHelper::replaceTagsHTML($match[0], $article->instance->introtext, $content);
+							$content = RedsliderHelper::replaceTagsHTML($match[0], $article->instance->introtext, $content);
 						}
 					}
 				}
@@ -214,7 +221,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = RedsliderHelperHelper::replaceTagsHTML($match[0], $article->instance->fulltext, $content);
+							$content = RedsliderHelper::replaceTagsHTML($match[0], $article->instance->fulltext, $content);
 						}
 					}
 				}

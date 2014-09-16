@@ -341,7 +341,7 @@ class Com_RedSliderInstallerScript extends Com_RedcoreInstallerScript
 	public function displayInstallMsg()
 	{
 		echo '<p><img src="' . JUri::root() . '/media/com_redslider/images/redslider_logo.jpg" alt="redSLIDER Logo" width="500"></p>';
-		echo '<br /><br /><p>Remember to check for updates at:<br />';
+		echo '<br /><br /><p>' . JText::_('COM_REDSLIDER_WELCOME_REMEMBER_CHECK_UPDATES') . '<br />';
 		echo '<a href="http://www.redcomponent.com/" target="_new">';
 		echo '<img src="' . JUri::root() . '/media/com_redslider/images/redcomponent_logo.jpg" alt="">';
 		echo '</a></p>';
