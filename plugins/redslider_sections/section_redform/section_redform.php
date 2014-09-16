@@ -113,7 +113,7 @@ class PlgRedslider_SectionsSection_Redform extends JPlugin
 
 			if ($app->isAdmin())
 			{
-				if (RedsliderHelperHelper::checkExtension($this->extensionName))
+				if (RedsliderHelper::checkExtension($this->extensionName))
 				{
 					JForm::addFormPath(__DIR__ . '/forms/');
 					$return = $form->loadFile('fields_redform', false);
@@ -183,7 +183,7 @@ class PlgRedslider_SectionsSection_Redform extends JPlugin
 
 		if ($slide->section === $this->sectionId)
 		{
-			if (RedsliderHelperHelper::checkExtension($this->extensionName))
+			if (RedsliderHelper::checkExtension($this->extensionName))
 			{
 				// Load stylesheet for each section
 				$css = 'redslider.' . JString::strtolower($this->sectionId) . '.min.css';
