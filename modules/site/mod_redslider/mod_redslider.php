@@ -74,8 +74,8 @@ if ($slideThumbnail && $thumbNums > 0)
 		'slideshow'    => false,
 		'maxItems'     => $thumbNums,
 		'controlNav'   => false,
-		'directionNav' => false,
-		'itemWidth' => $thumbWidth,
+		'directionNav' => $thumbControl,
+		'itemWidth'    => $thumbWidth,
 		'asNavFor'     => '.' . $class . '> .slider'
 	);
 }

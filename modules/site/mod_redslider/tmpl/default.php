@@ -32,7 +32,7 @@ defined('_JEXEC') or die;
 	<!-- End main slider -->
 
 	<!-- Thumbnails slider -->
-	<?php if (count($slides) && $slideThumbnail): ?>
+	<?php if ($thumbNums && $slideThumbnail): ?>
 		<div class="carousel" >
 			<ul class="slides">
 				<?php foreach ($slides as $slide): ?>
