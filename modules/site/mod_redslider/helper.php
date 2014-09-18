@@ -33,7 +33,8 @@ class ModredSLIDERHelper
 		{
 			$params = new JRegistry($slide->params);
 
-			$slide->background = $slide->class = '';
+			$slide->background = '';
+			$slide->class = '';
 
 			if ($background = $params->get('background_image'))
 			{
