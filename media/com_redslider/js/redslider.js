@@ -1,6 +1,6 @@
 // Fix youtube iframe overlay issue
 jQuery(document).ready(function($) {
-    $("#redSLIDER2 iframe").each(function(){
+    $("#redslider2 iframe").each(function(){
         var ifr_source = $(this).attr('src');
         var wmode = "wmode=transparent";
         if(ifr_source.indexOf('?') != -1) {

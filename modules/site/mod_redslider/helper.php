@@ -27,6 +27,26 @@ class ModredSLIDERHelper
 	 */
 	public static function getSlides($galleryId)
 	{
-		return RedsliderHelper::getSlides($galleryId);
+		$slides = RedsliderHelper::getSlides($galleryId);
+
+		foreach ($slides as $slide)
+		{
+			$params = new JRegistry($slide->params);
+
+			$slide->background = '';
+			$slide->class = '';
+
+			if ($background = $params->get('background_image'))
+			{
+				$slide->background = $background;
+			}
+
+			if ($class = $params->get('slide_class'))
+			{
+				$slide->class = $class;
+			}
+		}
+
+		return $slides;
 	}
 }
