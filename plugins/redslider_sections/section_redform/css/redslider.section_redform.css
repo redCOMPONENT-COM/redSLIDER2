@@ -1,10 +1,10 @@
-#redSLIDER2 ul.slides > .redform_slide >.slide-content{
+#redslider2 ul.slides > .redform_slide >.slide-content{
 	left: 0px;
 	width: 100%;
 	max-width: 100%;
 	background: none;
 }
-#redSLIDER2 ul.slides > .redform_slide >.slide-content .bg-redform{
+#redslider2 ul.slides > .redform_slide >.slide-content .bg-redform{
 	position: absolute;
 	top:0;
 	right:0;
@@ -12,12 +12,12 @@
 	height: 100%;
 	width: auto;
 }
-#redSLIDER2 ul.slides > .redform_slide >.slide-content .bg-redform img{
+#redslider2 ul.slides > .redform_slide >.slide-content .bg-redform img{
 	width: auto;
 	height: 100%;
 	z-index: 10;
 }
-#redSLIDER2 ul.slides > .redform_slide >.slide-content .cont-side{
+#redslider2 ul.slides > .redform_slide >.slide-content .cont-side{
 	width: 45%;
 	position: relative;
 	float: left;
@@ -25,17 +25,17 @@
 	height: 100%;
 	overflow: hidden;
 }
-#redSLIDER2 ul.slides > .redform_slide >.slide-content .cont-side .textin{
+#redslider2 ul.slides > .redform_slide >.slide-content .cont-side .textin{
 	width: 95%;
 }
-#redSLIDER2 ul.slides > .redform_slide >.slide-content .cont-side .textfield{
+#redslider2 ul.slides > .redform_slide >.slide-content .cont-side .textfield{
 	width: 97%;
 	height: 100px;
 }
-#redSLIDER2 ul.slides > .redform_slide >.slide-content .cont-side .redform-form{
+#redslider2 ul.slides > .redform_slide >.slide-content .cont-side .redform-form{
 	display: none;
 }
-#redSLIDER2 ul.slides > .redform_slide >.slide-content .cont-side .submitform input{
+#redslider2 ul.slides > .redform_slide >.slide-content .cont-side .submitform input{
 	font-size: 20px;
 	font-weight: bold;
 	color: #fff;
