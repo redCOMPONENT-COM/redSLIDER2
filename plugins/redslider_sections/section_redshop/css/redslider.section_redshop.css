@@ -1,45 +1,45 @@
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content {
+#redslider2 ul.slides > li.redshop_slide .slide-content {
 	width:100%;
 	max-width: none;
 	background:none;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-show{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-show{
 	width: 50%;
 	left: 0;
 	position: absolute;
 	height: 100%;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-show .slideImg{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-show .slideImg{
 	position: absolute;
 	height: 100%;
 	width: 100%;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-show .slideImg img{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-show .slideImg img{
 	width: auto;
 	margin: 0 auto;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-show .slidePrice{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-show .slidePrice{
 	position: relative;
 	top: 40%;
 	left: 60%;
 	width: 50%;
 	height: auto;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-show .slidePrice >h3{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-show .slidePrice >h3{
 	font-size: 36px;
 	color: #768b0f;
 	position: absolute;
 	top: 32%;
 	left: 20%;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-show .slidePrice img{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-show .slidePrice img{
 	position: relative;
 	top: 10%;
 	right: -5%;
 	height: auto;
 	width: 80%;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail{
 	right: 0;
 	position: absolute;
 	width: 40%;
@@ -47,16 +47,16 @@
 	max-height: 100%;
 	overflow: hidden;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail h3{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail h3{
 	color: #000;
 	font-size: 25px;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideText{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideText{
 	height: 70px;
 	overflow: hidden;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideForm .cart-link,
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideForm .product-cart-link{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideForm .cart-link,
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideForm .product-cart-link{
 	width: 145px;
 	background-color: #000;
 	color: #fff;
@@ -70,11 +70,11 @@
 	border-right: 1px solid #999;
 	border-left: 2px solid #999;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideForm .cart-quantity,
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideForm .product-cart-link{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideForm .cart-quantity,
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideForm .product-cart-link{
 	display: inline-block;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideForm .cart-quantity input{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideForm .cart-quantity input{
 	height: 40px;
 	text-align: center;
 	font-size: 18px;
@@ -83,21 +83,21 @@
 	border-radius: 6px;
 	border: 1px solid #999;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideAttribute{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideAttribute{
 	margin: 10px 0;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideAttribute lable,
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideAttribute .attribute_wrapper p{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideAttribute lable,
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideAttribute .attribute_wrapper p{
 	display: none;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideAttribute .attribute_wrapper{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideAttribute .attribute_wrapper{
 	width: 220px;
 	overflow: hidden;
 	border-right: 1px solid #999;
 	border-radius: 6px;
 	background-color: #fff;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideAttribute .attribute_wrapper select{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideAttribute .attribute_wrapper select{
 	width: 115%;
 	border: 1px solid #999;
 	height: 35px;
@@ -105,29 +105,29 @@
 	background: url('../../../com_redslider/images/icon-sel.png') left 85% center no-repeat;
 	color: #555;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideAttribute .attribute_wrapper select:focus{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideAttribute .attribute_wrapper select:focus{
 	border: none;
 }
-#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail p{
+#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail p{
 	color:  #3c3c3c;
 }
 /*--------------------------@media screen and (max-width: 769px)----------------------------------*/
 @media screen and (max-width: 769px){
-	#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-show .slidePrice >h3{
+	#redslider2 ul.slides > li.redshop_slide .slide-content .prod-show .slidePrice >h3{
 		top: 23%;
 		left: 21%;
 		font-size: 20px;
 	}
-	#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail h3{
+	#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail h3{
 		font-size: 15px;
 	}
-	#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideForm,
-	#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideAttribute{
+	#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideForm,
+	#redslider2 ul.slides > li.redshop_slide .slide-content .prod-detail .slideAttribute{
 		display: none;
 	}
 }
 @media screen and (max-width: 460px){
-	#redSLIDER2 ul.slides > li.redshop_slide .slide-content .prod-show .slidePrice >h3{
+	#redslider2 ul.slides > li.redshop_slide .slide-content .prod-show .slidePrice >h3{
 		top: -6%;
 		left: 16%;
 		font-size: 14px;
