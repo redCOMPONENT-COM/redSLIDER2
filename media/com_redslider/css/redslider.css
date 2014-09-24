@@ -44,6 +44,9 @@
     text-decoration: none;
     text-align: left;
 }
+#redslider2 .carousel,#redslider2 .slider{
+    position: relative;
+}
 #redslider2 .flex-direction-nav
 {
     list-style: none;
@@ -114,17 +117,19 @@
 }
 #redslider2.rstyle1 .flex-direction-nav .flex-next
 {
-    /* @TODO: note for designer, this line is commented because the arrow is not shown properly in video slides.
-    If you are not using video slides uncomment it, next slide arrow will appear in the right place on top of the image */
-    /*margin-right:31%;*/
+    background: url('../images/nav-next-style1.png') no-repeat top left;
+    text-indent: -10000000000000px;
+    width: 34px;
+    height: 32px;
+    text-align: left;
 }
-#redslider2.rstyle1 .flex-direction-nav .flex-next:before
+#redslider2.rstyle1 .flex-direction-nav .flex-prev
 {
-    content: url('../images/nav-next-style1.png');
-}
-#redslider2.rstyle1 .flex-direction-nav .flex-prev:before
-{
-    content: url('../images/nav-prev-style1.png');
+    background: url('../images/nav-prev-style1.png') no-repeat top left;
+    text-indent: -10000000000000px;
+    width: 34px;
+    height: 32px;
+    text-align: left;
 }
 /*-------------------.rstyle2-----------------------------*/
 #redslider2.rstyle2
@@ -146,17 +151,19 @@
 }
 #redslider2.rstyle2 .flex-direction-nav .flex-next
 {
-    /* @TODO: note for designer, this line is commented because the arrow is not shown properly in video slides.
-    If you are not using video slides uncomment it, next slide arrow will appear in the right place on top of the image */
-    /*margin-right:31%;*/
+    background: url('../images/nav-next-style2.png') no-repeat top left;
+    text-indent: -10000000000000px;
+    width: 34px;
+    height: 32px;
+    text-align: left;
 }
-#redslider2.rstyle2 .flex-direction-nav .flex-next:before
+#redslider2.rstyle2 .flex-direction-nav .flex-prev
 {
-    content: url('../images/nav-next-style2.png');
-}
-#redslider2.rstyle2 .flex-direction-nav .flex-prev:before
-{
-    content: url('../images/nav-prev-style2.png');
+    background: url('../images/nav-prev-style2.png') no-repeat top left;
+    text-indent: -10000000000000px;
+    width: 34px;
+    height: 32px;
+    text-align: left;
 }
 /*-------------------.rstyle3-----------------------------*/
 #redslider2.rstyle3
@@ -182,13 +189,21 @@
 #redslider2.rstyle3 .flex-direction-nav .flex-prev{
     left: -6px;
 }
-#redslider2.rstyle3 .flex-direction-nav .flex-next:before
+#redslider2.rstyle3 .flex-direction-nav .flex-next
 {
-    content: url('../images/nav-next-style3.png');
+    background: url('../images/nav-next-style3.png') no-repeat top left;
+    text-indent: -10000000000000px;
+    width: 20px;
+    height: 40px;
+    text-align: left;
 }
-#redslider2.rstyle3 .flex-direction-nav .flex-prev:before
+#redslider2.rstyle3 .flex-direction-nav .flex-prev
 {
-    content: url('../images/nav-prev-style3.png');
+    background: url('../images/nav-prev-style3.png') no-repeat top left;
+    text-indent: -10000000000000px;
+    width: 20px;
+    height: 40px;
+    text-align: left;
 }
 /*--------------------------@media screen and (max-width: 769px)----------------------------------*/
 @media screen and (max-width: 769px){
