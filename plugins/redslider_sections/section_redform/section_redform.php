@@ -41,7 +41,7 @@ class PlgRedslider_SectionsSection_Redform extends JPlugin
 		$this->loadLanguage();
 		$this->sectionId = "SECTION_REDFORM";
 		$this->sectionName = JText::_('PLG_SECTION_REDFORM_NAME');
-		$this->extensionName = "redform";
+		$this->extensionName = "com_redform";
 		$this->msgLevel = "Warning";
 		$this->noTemplate = true;
 	}
@@ -178,6 +178,9 @@ class PlgRedslider_SectionsSection_Redform extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
+		// Load redFORM language file
+		JFactory::getLanguage()->load('com_redform');
+
 		// Check if we need to load component's CSS or not
 		$useOwnCSS = JComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
 
