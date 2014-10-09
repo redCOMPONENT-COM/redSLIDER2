@@ -178,7 +178,7 @@ class PlgRedslider_SectionsSection_Redform extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
-		// Load redSHOP language file
+		// Load redFORM language file
 		JFactory::getLanguage()->load('com_redform');
 
 		// Check if we need to load component's CSS or not
