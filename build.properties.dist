@@ -4,7 +4,7 @@
 
 # Extension details:
 comp.name=redslider
-comp.version=2.0.11
+comp.version=2.0.14
 
 # Testing Joomla site localhost folder used by build.xml
 www.dir=/var/www/redslider2
