@@ -83,7 +83,11 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 					<?php echo '#'; ?>
 				</th>
 				<th width="10">
-					<input type="checkbox" name="toggle" value="" onclick="checkAll(<?php echo count($this->items); ?>);" />
+					<?php if (version_compare(JVERSION, '3.0', 'lt')) : ?>
+						<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
+					<?php else : ?>
+						<?php echo JHTML::_('grid.checkall'); ?>
+					<?php endif; ?>
 				</th>
 				<th width="30" nowrap="nowrap">
 					<?php echo JHTML::_('rsearchtools.sort', 'JSTATUS', 's.published', $listDirn, $listOrder); ?>
