@@ -207,10 +207,14 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 
 				// Load redSHOP's helpers
 				require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/redshop.cfg.php';
+
 				require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/configuration.php';
 				require_once JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
 				require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/template.php';
+				require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/stockroom.php';
 				require_once JPATH_SITE . '/components/com_redshop/helpers/product.php';
+				require_once JPATH_ROOT . '/components/com_redshop/helpers/user.php';
+				require_once JPATH_ROOT . '/components/com_redshop/helpers/helper.php';
 				require_once JPATH_ROOT . '/components/com_redshop/helpers/redshop.js.php';
 				require_once JPATH_SITE . '/components/com_redshop/helpers/extra_field.php';
 
