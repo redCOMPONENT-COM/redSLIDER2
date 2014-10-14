@@ -33,6 +33,8 @@ if (!class_exists('Com_RedcoreInstallerScript'))
  */
 class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreInstallerScript
 {
+	private $section = "SECTION_REDFORM";
+
 	/**
 	 * Method to install the component
 	 *
@@ -151,5 +153,36 @@ class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreIns
 		}
 
 		return true;
+	}
+
+	/**
+	 * method to uninstall the component
+	 *
+	 * @param   object  $parent  class calling this method
+	 *
+	 * @return  void
+	 *
+	 * @throws  RuntimeException
+	 */
+	public function uninstall($parent)
+	{
+		$db    = JFactory::getDbo();
+		$user  = JFactory::getUser();
+
+		// Remove all slides which belong to this section
+		$query = $db->getQuery(true)
+			->delete($db->qn('#__redslider_slides'))
+			->where($db->qn('section') . '=' . $db->q($this->section));
+		$db->setQuery($query);
+		$db->execute();
+
+		// Remove all templates which belong to this section
+		$query = $db->getQuery(true)
+			->delete($db->qn('#__redslider_templates'))
+			->where($db->qn('section') . '=' . $db->q($this->section));
+		$db->setQuery($query);
+		$db->execute();
+
+		parent::uninstall($parent);
 	}
 }

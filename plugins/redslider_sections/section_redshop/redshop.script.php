@@ -33,6 +33,8 @@ if (!class_exists('Com_RedcoreInstallerScript'))
  */
 class PlgRedslider_SectionsSection_RedshopInstallerScript extends Com_RedcoreInstallerScript
 {
+	private $section = "SECTION_REDSHOP";
+
 	/**
 	 * Method to install the component
 	 *
@@ -84,7 +86,7 @@ class PlgRedslider_SectionsSection_RedshopInstallerScript extends Com_RedcoreIns
 				$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
 				$templateTable->id = null;
 				$templateTable->title = 'Template redSHOP';
-				$templateTable->section = 'SECTION_REDSHOP';
+				$templateTable->section = $this->section;
 				$templateTable->published = $comExists ? 1 : 0;
 				$templateTable->content = '<div class="eachSlide">
 											<div class="prod-show">
@@ -142,5 +144,36 @@ class PlgRedslider_SectionsSection_RedshopInstallerScript extends Com_RedcoreIns
 		}
 
 		return true;
+	}
+
+	/**
+	 * method to uninstall the component
+	 *
+	 * @param   object  $parent  class calling this method
+	 *
+	 * @return  void
+	 *
+	 * @throws  RuntimeException
+	 */
+	public function uninstall($parent)
+	{
+		$db    = JFactory::getDbo();
+		$user  = JFactory::getUser();
+
+		// Remove all slides which belong to this section
+		$query = $db->getQuery(true)
+			->delete($db->qn('#__redslider_slides'))
+			->where($db->qn('section') . '=' . $db->q($this->section));
+		$db->setQuery($query);
+		$db->execute();
+
+		// Remove all templates which belong to this section
+		$query = $db->getQuery(true)
+			->delete($db->qn('#__redslider_templates'))
+			->where($db->qn('section') . '=' . $db->q($this->section));
+		$db->setQuery($query);
+		$db->execute();
+
+		parent::uninstall($parent);
 	}
 }
