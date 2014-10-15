@@ -7,6 +7,7 @@
 	<copyright>redCOMPONENT.com</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<description>PLG_SECTION_VIDEO_DESC</description>
+	<scriptfile>video.script.php</scriptfile>
 	<files>
 		<filename plugin="section_video">section_video.php</filename>
 		<folder plugin="section_video">forms</folder>
