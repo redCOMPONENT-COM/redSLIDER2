@@ -87,7 +87,7 @@ class PlgRedslider_SectionsSection_RedeventInstallerScript extends Com_RedcoreIn
 				$templateTable->title = 'Template redEVENT';
 				$templateTable->section = 'SECTION_REDEVENT';
 				$templateTable->published = $comExists? 1 : 0;
-				$templateTable->content = "<div>[event_title]<div><div>[event_description]<div>";
+				$templateTable->content = '<div class="eachSlide"><div class="slideTitle"><h3>[event_title]</h3></div><div class="slideText">[event_description]</div></div>';
 				$templateTable->store();
 				$templateId = (int) $templateTable->id;
 
@@ -95,7 +95,7 @@ class PlgRedslider_SectionsSection_RedeventInstallerScript extends Com_RedcoreIn
 
 				$slideParams = array(
 					"event_id" => 1,
-					"background_image" => "images/joomla_black.gif",
+					"background_image" => "images/stories/redslider/redevent_slider.jpg",
 					"redevent_slide_class" => "redevent_slide"
 				);
 
