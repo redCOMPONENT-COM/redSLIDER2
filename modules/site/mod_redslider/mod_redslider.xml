@@ -2,7 +2,7 @@
 <extension type="module" version="2.5" client="site" method="upgrade">
 	<name>MOD_REDSLIDER</name>
 	<version>2.0.2</version>
-	<creationDate>MAY 2014</creationDate>
+	<creationDate>October 2014</creationDate>
 	<author>redCOMPONENT.com</author>
 	<authorEmail>email@redcomponent.com</authorEmail>
 	<copyright>redCOMPONENT.com</copyright>
