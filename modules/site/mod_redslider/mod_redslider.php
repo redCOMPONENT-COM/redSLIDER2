@@ -60,13 +60,13 @@ $thumbWidth      = (int) $params->get('thumb_width', 150);
 if ($slideThumbnail && $thumbNums > 0)
 {
 	$opt = array(
-		'animation'         => $effect,
-		'slideshow'         => $autoPlay,
-		'pauseOnHover'      => $pauseOnHover,
-		'slideshowSpeed'    => $speed,
-		'animationDuration' => $duration,
-		'directionNav'      => $slideControl,
-		'controlNav'        => false,
+		'animation'      => $effect,
+		'slideshow'      => $autoPlay,
+		'pauseOnHover'   => $pauseOnHover,
+		'slideshowSpeed' => $speed,
+		'animationSpeed' => $duration,
+		'directionNav'   => $slideControl,
+		'controlNav'     => false,
 	);
 
 	$optThumb = array(
@@ -82,13 +82,13 @@ if ($slideThumbnail && $thumbNums > 0)
 else
 {
 	$opt = array(
-		'animation'         => $effect,
-		'slideshow'         => $autoPlay,
-		'pauseOnHover'      => $pauseOnHover,
-		'slideshowSpeed'    => $speed,
-		'animationDuration' => $duration,
-		'directionNav'      => $slideControl,
-		'controlNav'        => $pager,
+		'animation'      => $effect,
+		'slideshow'      => $autoPlay,
+		'pauseOnHover'   => $pauseOnHover,
+		'slideshowSpeed' => $speed,
+		'animationSpeed' => $duration,
+		'directionNav'   => $slideControl,
+		'controlNav'     => $pager,
 	);
 }
 
