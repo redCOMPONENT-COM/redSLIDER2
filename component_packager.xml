@@ -142,6 +142,72 @@
                 <exclude name="tests/**"/>
 				<exclude name="media/redcore/js/lib/jquery-ui/jquery-ui.js"/>
 				<exclude name="media/redcore/css/lib/bootstrap/css/bootstrap.css"/>
+
+                <!-- Excluding css non-minified files -->
+                <exclude name="media/**/component.css"/>
+                <exclude name="media/**/chosen.css"/>
+                <exclude name="media/**/sortablelist.css"/>
+                <exclude name="media/**/bootstrap/css/bootstrap.css"/>
+                <exclude name="media/**/bootstrap/css/bootstrap-responsive.css"/>
+                <exclude name="media/**/bootstrap-checkbox.css"/>
+                <exclude name="media/**/bootstrap-timepicker.css"/>
+                <exclude name="media/**/flexslider.css"/>
+                <exclude name="media/**/font-awesome.css"/>
+                <exclude name="media/**/font-awesome-ie7.css"/>
+                <exclude name="media/**/jquery-ui/jquery-ui.custom.css"/>
+                <exclude name="media/**/select2.css"/>
+                <exclude name="media/**/select2-bootstrap.css"/>
+
+                <!-- Excluding js-minified files -->
+                <exclude name="media/**/component.js"/>
+                <exclude name="media/**/jquery.searchtools.js"/>
+                <exclude name="media/**/redgrid.js"/>
+                <exclude name="media/**/jquery.childlist.js"/>
+                <exclude name="media/**/bootstrap.js"/>
+                <exclude name="media/**/bootstrap-checkbox.js"/>
+                <exclude name="media/**/bootstrap-timepicker.js"/>
+                <exclude name="media/**/chosen.jquery.js"/>
+                <exclude name="media/**/jquery.js"/>
+                <exclude name="media/**/jquery-migrate.js"/>
+                <exclude name="media/**/sortablelist.js"/>
+                <exclude name="media/**/jquery.flexslider.js"/>
+                <exclude name="media/**/jquery.lazyload.js"/>
+                <exclude name="media/**/jquery-ui.js"/>
+                <exclude name="media/**/select2.js"/>
+
+                <exclude name="media/**/jqplot.barRenderer.js"/>
+                <exclude name="media/**/jqplot.BezierCurveRenderer.js"/>
+                <exclude name="media/**/jqplot.blockRenderer.js"/>
+                <exclude name="media/**/jqplot.bubbleRenderer.js"/>
+                <exclude name="media/**/jqplot.canvasAxisLabelRenderer.js"/>
+                <exclude name="media/**/jqplot.canvasAxisTickRenderer.js"/>
+                <exclude name="media/**/jqplot.canvasOverlay.js"/>
+                <exclude name="media/**/jqplot.canvasTextRenderer.js"/>
+                <exclude name="media/**/jqplot.categoryAxisRenderer.js"/>
+                <exclude name="media/**/jqplot.ciParser.js"/>
+                <exclude name="media/**/jqplot.cursor.js"/>
+                <exclude name="media/**/jqplot.dateAxisRenderer.js"/>
+                <exclude name="media/**/jqplot.donutRenderer.js"/>
+                <exclude name="media/**/jqplot.dragable.js"/>
+                <exclude name="media/**/jqplot.enhancedLegendRenderer.js"/>
+                <exclude name="media/**/jqplot.funnelRenderer.js"/>
+                <exclude name="media/**/jqplot.highlighter.js"/>
+                <exclude name="media/**/jqplot.json2.js"/>
+                <exclude name="media/**/jqplot.logAxisRenderer.js"/>
+                <exclude name="media/**/jqplot.mekkoAxisRenderer.js"/>
+                <exclude name="media/**/jqplot.mekkoRenderer.js"/>
+                <exclude name="media/**/jqplot.meterGaugeRenderer.js"/>
+                <exclude name="media/**/jqplot.mobile.js"/>
+                <exclude name="media/**/jqplot.ohlcRenderer.js"/>
+                <exclude name="media/**/jqplot.pieRenderer.js"/>
+                <exclude name="media/**/jqplot.pointLabels.js"/>
+                <exclude name="media/**/jqplot.pyramidAxisRenderer.js"/>
+                <exclude name="media/**/jqplot.pyramidGridRenderer.js"/>
+                <exclude name="media/**/jqplot.pyramidRenderer.js"/>
+                <exclude name="media/**/jqplot.trendline.js"/>
+
+                <!-- Excluding map files -->
+                <exclude name="media/**/jquery-1.11.0.min.map"/>
 			</fileset>
 		</copy>
 
