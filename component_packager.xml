@@ -132,9 +132,14 @@
 			<fileset dir="${extpath}/redCORE">
 				<include name="**"/>
 				<exclude name=".*"/>
+				<!-- reduce redCORE package -->
 				<exclude name="build.*"/>
 				<exclude name="*.md"/>
-				<!-- reduce redCORE package -->
+                <exclude name="composer.json"/>
+                <exclude name="extension_packager.xml"/>
+                <exclude name="codeception.yml"/>
+                <exclude name=".travis/**"/>
+                <exclude name="tests/**"/>
 				<exclude name="media/redcore/js/lib/jquery-ui/jquery-ui.js"/>
 				<exclude name="media/redcore/css/lib/bootstrap/css/bootstrap.css"/>
 			</fileset>
