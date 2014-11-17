@@ -135,7 +135,7 @@
 	</target>
 
     <target name="copyredcore">
-        <phing phingfile="redCORE/add_to_extension.xml"
+        <phing phingfile="redCORE/redcore_copy_mandatory.xml"
                target="copyframework"
                haltonfailure="true">
             <property name="redcoretargetdir" value="${targetdir}/redCORE" />
