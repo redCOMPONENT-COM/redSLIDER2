@@ -17,11 +17,8 @@
 	<!-- Name of extension -->
 	<property name="extension" value="${comp.name}" override="true"/>
 
-	<!-- Folder where the redSLIDER repository is located  -->
-	<property name="extpath" value="${repo.dir}" override="true"/>
-
 	<!-- Load extension property in XML file -->
-    <xmlproperty file="${extpath}/${extension}.xml" prefix="extensionDetails" keepRoot="false" />
+    <xmlproperty file="${project.basedir}/${extension}.xml" prefix="extensionDetails" keepRoot="false" />
 
     <!-- Get extension version from XML -->
 	<property
@@ -32,7 +29,9 @@
 	<!-- Target dir where packages will be created  -->
 	<property name="targetdir" value="${package.dir}/package-${extension}-v${version}" override="true"/>
 
-	<!-- ============================================  -->
+    <!-- Import redCORE framework compiler script  -->
+
+    <!-- ============================================  -->
 	<!-- Create packages folder                        -->
 	<!-- ============================================  -->
 	<target name="prepare">
@@ -67,14 +66,14 @@
 		<echo msg="Copying INSTALLER files to build directory..."/>
 
 		<copy todir="${targetdir}">
-			<fileset dir="${extpath}/">
+			<fileset dir="${project.basedir}/">
 				<include name="LICENSE.txt"/>
 				<include name="redslider.xml"/>
 				<include name="install.php"/>
 			</fileset>
 		</copy>
 		<copy todir="${targetdir}/component/admin">
-			<fileset dir="${extpath}/">
+			<fileset dir="${project.basedir}/">
 				<include name="redslider.xml"/>
 				<include name="install.php"/>
 			</fileset>
@@ -82,7 +81,7 @@
 
 		<echo msg="Copying COMPONENT folder to build directory..."/>
 		<copy todir="${targetdir}/component">
-			<fileset dir="${extpath}/component">
+			<fileset dir="${project.basedir}/component">
 				<include name="**"/>
 				<exclude name=".*"/>
 			</fileset>
@@ -90,7 +89,7 @@
 
 		<echo msg="Copying MODULES folder to build directory..."/>
 		<copy todir="${targetdir}/modules">
-			<fileset dir="${extpath}/modules">
+			<fileset dir="${project.basedir}/modules">
 				<include name="**"/>
 				<exclude name=".*"/>
 			</fileset>
@@ -99,21 +98,21 @@
 		<echo msg="Copying PLUGINS folder to build directory:"/>
 		<echo msg="- section_article"/>
 		<copy todir="${targetdir}/plugins/redslider_sections/section_article">
-			<fileset dir="${extpath}/plugins/redslider_sections/section_article">
+			<fileset dir="${project.basedir}/plugins/redslider_sections/section_article">
 				<include name="**"/>
 				<exclude name=".*"/>
 			</fileset>
 		</copy>
 		<echo msg="- section_standard"/>
 		<copy todir="${targetdir}/plugins/redslider_sections/section_standard">
-			<fileset dir="${extpath}/plugins/redslider_sections/section_standard">
+			<fileset dir="${project.basedir}/plugins/redslider_sections/section_standard">
 				<include name="**"/>
 				<exclude name=".*"/>
 			</fileset>
 		</copy>
 		<echo msg="- section_video"/>
 		<copy todir="${targetdir}/plugins/redslider_sections/section_video">
-			<fileset dir="${extpath}/plugins/redslider_sections/section_video">
+			<fileset dir="${project.basedir}/plugins/redslider_sections/section_video">
 				<include name="**"/>
 				<exclude name=".*"/>
 			</fileset>
@@ -121,110 +120,34 @@
 
 		<echo msg="Copying MEDIA folder to build directory..."/>
 		<copy todir="${targetdir}/media/com_redslider">
-			<fileset dir="${extpath}/media/com_redslider">
+			<fileset dir="${project.basedir}/media/com_redslider">
 				<include name="**"/>
 				<exclude name=".*"/>
-			</fileset>
-		</copy>
-
-		<echo msg="Copying redCORE LIBRARIES folder to build directory..."/>
-		<copy todir="${targetdir}/redCORE">
-			<fileset dir="${extpath}/redCORE">
-				<include name="**"/>
-				<exclude name=".*"/>
-				<!-- reduce redCORE package -->
-				<exclude name="build.*"/>
-				<exclude name="*.md"/>
-                <exclude name="composer.json"/>
-                <exclude name="extension_packager.xml"/>
-                <exclude name="codeception.yml"/>
-                <exclude name=".travis/**"/>
-                <exclude name="tests/**"/>
-				<exclude name="media/redcore/js/lib/jquery-ui/jquery-ui.js"/>
-				<exclude name="media/redcore/css/lib/bootstrap/css/bootstrap.css"/>
-
-                <!-- Excluding less files -->
-                <exclude name="media/redcore/less/**"/>
-                <!-- Excluding css non-minified files -->
-                <exclude name="media/**/component.css"/>
-                <exclude name="media/**/chosen.css"/>
-                <exclude name="media/**/sortablelist.css"/>
-                <exclude name="media/**/bootstrap/css/bootstrap.css"/>
-                <exclude name="media/**/bootstrap/css/bootstrap-responsive.css"/>
-                <exclude name="media/**/bootstrap-checkbox.css"/>
-                <exclude name="media/**/bootstrap-timepicker.css"/>
-                <exclude name="media/**/flexslider.css"/>
-                <exclude name="media/**/font-awesome.css"/>
-                <exclude name="media/**/font-awesome-ie7.css"/>
-                <exclude name="media/**/jquery-ui/jquery-ui.custom.css"/>
-                <exclude name="media/**/select2.css"/>
-                <exclude name="media/**/select2-bootstrap.css"/>
-
-                <!-- Excluding js-minified files -->
-                <exclude name="media/**/component.js"/>
-                <exclude name="media/**/jquery.searchtools.js"/>
-                <exclude name="media/**/redgrid.js"/>
-                <exclude name="media/**/jquery.childlist.js"/>
-                <exclude name="media/**/bootstrap.js"/>
-                <exclude name="media/**/bootstrap-checkbox.js"/>
-                <exclude name="media/**/bootstrap-timepicker.js"/>
-                <exclude name="media/**/chosen.jquery.js"/>
-                <exclude name="media/**/jquery.js"/>
-                <exclude name="media/**/jquery-migrate.js"/>
-                <exclude name="media/**/sortablelist.js"/>
-                <exclude name="media/**/jquery.flexslider.js"/>
-                <exclude name="media/**/jquery.lazyload.js"/>
-                <exclude name="media/**/jquery-ui.js"/>
-                <exclude name="media/**/select2.js"/>
-
-                <exclude name="media/**/jqplot.barRenderer.js"/>
-                <exclude name="media/**/jqplot.BezierCurveRenderer.js"/>
-                <exclude name="media/**/jqplot.blockRenderer.js"/>
-                <exclude name="media/**/jqplot.bubbleRenderer.js"/>
-                <exclude name="media/**/jqplot.canvasAxisLabelRenderer.js"/>
-                <exclude name="media/**/jqplot.canvasAxisTickRenderer.js"/>
-                <exclude name="media/**/jqplot.canvasOverlay.js"/>
-                <exclude name="media/**/jqplot.canvasTextRenderer.js"/>
-                <exclude name="media/**/jqplot.categoryAxisRenderer.js"/>
-                <exclude name="media/**/jqplot.ciParser.js"/>
-                <exclude name="media/**/jqplot.cursor.js"/>
-                <exclude name="media/**/jqplot.dateAxisRenderer.js"/>
-                <exclude name="media/**/jqplot.donutRenderer.js"/>
-                <exclude name="media/**/jqplot.dragable.js"/>
-                <exclude name="media/**/jqplot.enhancedLegendRenderer.js"/>
-                <exclude name="media/**/jqplot.funnelRenderer.js"/>
-                <exclude name="media/**/jqplot.highlighter.js"/>
-                <exclude name="media/**/jqplot.json2.js"/>
-                <exclude name="media/**/jqplot.logAxisRenderer.js"/>
-                <exclude name="media/**/jqplot.mekkoAxisRenderer.js"/>
-                <exclude name="media/**/jqplot.mekkoRenderer.js"/>
-                <exclude name="media/**/jqplot.meterGaugeRenderer.js"/>
-                <exclude name="media/**/jqplot.mobile.js"/>
-                <exclude name="media/**/jqplot.ohlcRenderer.js"/>
-                <exclude name="media/**/jqplot.pieRenderer.js"/>
-                <exclude name="media/**/jqplot.pointLabels.js"/>
-                <exclude name="media/**/jqplot.pyramidAxisRenderer.js"/>
-                <exclude name="media/**/jqplot.pyramidGridRenderer.js"/>
-                <exclude name="media/**/jqplot.pyramidRenderer.js"/>
-                <exclude name="media/**/jqplot.trendline.js"/>
-
-                <!-- Excluding map files -->
-                <exclude name="media/**/jquery-1.11.0.min.map"/>
 			</fileset>
 		</copy>
 
 		<echo message="Copying libraries..."/>
 		<copy todir="${targetdir}/libraries" overwrite="true">
-			<fileset dir="${extpath}/libraries">
+			<fileset dir="${project.basedir}/libraries">
 				<include name="**"/>
 			</fileset>
 		</copy>
 	</target>
 
+    <target name="copyredcore">
+        <phing phingfile="redCORE/redcore_copy_mandatory.xml"
+               target="copyframework"
+               haltonfailure="true">
+            <property name="redcoretargetdir" value="${targetdir}/redCORE" />
+            <property name="redcorepath" value="${project.basedir}/redCORE" />
+        </phing>
+    </target>
+
 	<!-- ============================================  -->
 	<!-- (DEFAULT)  Target: dist                       -->
 	<!-- ============================================  -->
-	<target name="dist" depends="build">
+	<target name="dist" depends="build, copyredcore">
+
 		<echo msg="Creating ZIP archive..."/>
 
 		<zip destfile="${targetdir}/../${extension}-v${version}.zip">
