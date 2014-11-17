@@ -23,7 +23,7 @@
     <!-- Get extension version from XML -->
 	<property
 			name="version"
-			value="${comp.version}"
+			value="${extensionDetails.version}"
 			override="true"/>
 
 	<!-- Target dir where packages will be created  -->
