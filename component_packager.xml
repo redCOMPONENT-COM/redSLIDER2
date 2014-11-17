@@ -143,6 +143,8 @@
 				<exclude name="media/redcore/js/lib/jquery-ui/jquery-ui.js"/>
 				<exclude name="media/redcore/css/lib/bootstrap/css/bootstrap.css"/>
 
+                <!-- Excluding less files -->
+                <exclude name="media/redcore/less/**"/>
                 <!-- Excluding css non-minified files -->
                 <exclude name="media/**/component.css"/>
                 <exclude name="media/**/chosen.css"/>
