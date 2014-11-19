@@ -24,6 +24,7 @@ require_once JPATH_SITE . '/modules/mod_redslider/helper.php';
 // Check if we need to load component's CSS or not
 $useOwnCSS = JComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
 
+RHelperAsset::load('lib/jquery.js', 'redcore');
 RHelperAsset::load('redslider.min.js', 'com_redslider');
 
 if (!$useOwnCSS)
