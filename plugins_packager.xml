@@ -16,16 +16,22 @@
 	<!-- Do initialization stuff -->
 	<property file="build.properties" override="true"/>
 
-	<!-- Version of the redSLIDER 2.0 for witch the module is intended to  -->
-	<property
-			name="version"
-			value="${comp.version}"
-			override="true" />
+    <!-- Name of extension -->
+    <property name="extension" value="${comp.name}" override="true"/>
+
+    <!-- Load extension property in XML file -->
+    <xmlproperty file="${project.basedir}/${extension}.xml" prefix="extensionDetails" keepRoot="false" />
+
+    <!-- Get extension version from XML -->
+    <property
+            name="version"
+            value="${extensionDetails.version}"
+            override="true"/>
 
 	<!-- Folder where the redSLIDER 2.0 repository PLUGINS are located  -->
 	<property
 			name="extpath"
-			value="${repo.dir}/plugins"
+			value="${project.basedir}/plugins"
 			override="true" />
 
 	<!-- Target dir where module packages will be created  -->
@@ -48,7 +54,12 @@
 				<depth max="0" min="0" />
 			</fileset>
 		</foreach>
-	</target>
+
+        <!-- clean up plugins already added in the main extension package -->
+        <delete file="${targetdir}/redslider_sections/plg_redslider_sections_section_standard_${version}.zip" />
+        <delete file="${targetdir}/redslider_sections/plg_redslider_sections_section_article_${version}.zip" />
+        <delete file="${targetdir}/redslider_sections/plg_redslider_sections_section_video_${version}.zip" />
+    </target>
 
 	<target name="plugin_loop" description="Loops through plugins folders inside groups">
 
@@ -64,6 +75,7 @@
 
 	<target name="plugin_packager" description="Packages the extension for delivery">
 
+
 		<mkdir dir="${targetdir}/${group_name}/${plugin_name}" />
 		<zip destfile="${targetdir}/${group_name}/plg_${group_name}_${plugin_name}_${version}.zip"
 			basedir="${extpath}/${group_name}/${plugin_name}">
@@ -75,6 +87,6 @@
 
 		<!-- clean up temporary folder -->
 		<delete dir="${targetdir}/${group_name}/${plugin_name}" />
-	</target>
+    </target>
 
 </project>

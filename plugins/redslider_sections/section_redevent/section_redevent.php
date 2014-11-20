@@ -197,6 +197,10 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 		// Check if we need to load component's CSS or not
 		$useOwnCSS = JComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
 
+		// Load redEVENT & redFORM language file
+		JFactory::getLanguage()->load('com_redevent');
+		JFactory::getLanguage()->load('com_redform');
+
 		if ($slide->section === $this->sectionId)
 		{
 			if (RedsliderHelper::checkExtension($this->extensionName))
@@ -205,6 +209,7 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 				require_once JPATH_LIBRARIES . '/redevent/helper/helper.php';
 				require_once JPATH_LIBRARIES . '/redevent/helper/attachment.php';
 				require_once JPATH_LIBRARIES . '/redevent/helper/output.php';
+				require_once JPATH_LIBRARIES . '/redevent/user/acl.php';
 				require_once JPATH_LIBRARIES . '/redform/core/model/form.php';
 				require_once JPATH_LIBRARIES . '/redform/core/core.php';
 

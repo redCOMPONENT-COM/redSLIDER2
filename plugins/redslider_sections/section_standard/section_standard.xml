@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" client="site" type="plugin" group="redslider_sections" method="upgrade">
 	<name>PLG_SECTION_STANDARD</name>
-	<version>2.0</version>
-	<creationDate>MAY 2014</creationDate>
+	<version>2.0.19</version>
+	<creationDate>October 2014</creationDate>
 	<author>redCOMPONENT.com</author>
 	<copyright>redCOMPONENT.com</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<description>PLG_SECTION_STANDARD_DESC</description>
+	<scriptfile>standard.script.php</scriptfile>
 	<files>
 		<filename plugin="section_standard">section_standard.php</filename>
 		<folder plugin="section_standard">forms</folder>

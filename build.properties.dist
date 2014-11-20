@@ -4,14 +4,9 @@
 
 # Extension details:
 comp.name=redslider
-comp.version=2.0.19
 
 # Testing Joomla site localhost folder used by build.xml
 www.dir=/var/www/redslider2
-joomla.version=2.5
-
-# The current GIT repository location
-repo.dir=/home/albert/github/redSLIDER2
 
 # Folder to create the extension .zip build package used by component_packager.xml
 package.dir=/home/albert/git.package

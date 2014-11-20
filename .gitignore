@@ -35,6 +35,9 @@ tests/system/webdriver/tests/logs
 build.properties
 build.tpl.properties
 
+# Phing
+/phing-latest.phar
+
 # Never ignore
 !.gitignore
 !index.html
@@ -42,3 +45,4 @@ build.tpl.properties
 
 /redCORE/
 phpunit.xml
+

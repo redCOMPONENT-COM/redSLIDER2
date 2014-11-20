@@ -93,6 +93,15 @@ class RedsliderViewSlides extends RedsliderView
 			$secondGroup->addButton($checkin);
 		}
 
+		if ($user->authorise('core.edit.state', 'com_redslider'))
+		{
+			$publish = RToolbarBuilder::createPublishButton('slides.publish');
+			$thirdGroup->addButton($publish);
+
+			$unPublish = RToolbarBuilder::createUnpublishButton('slides.unpublish');
+			$thirdGroup->addButton($unPublish);
+		}
+
 		if ($user->authorise('core.delete', 'com_redslider'))
 		{
 			$delete = RToolbarBuilder::createDeleteButton('slides.delete');
