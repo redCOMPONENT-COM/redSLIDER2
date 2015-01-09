@@ -1,16 +1,17 @@
 language: php
-
 php:
-  - 5.3
-
+- 5.4
 before_script:
-  - pear install PHP_CodeSniffer
-  - pear channel-discover pear.phing.info
-  - pear install phing/phing
-  - pear install phpunit/phpcpd
-  - phpenv rehash
+- phpenv rehash
+- cd redCORE
+- composer update
+- cd ..
 
 script:
-  - find ./component -name '*.php' -exec php -l {} \;
-  - find ./modules -name '*.php' -exec php -l {} \;
-  - phing -f .travis.xml
+- php redCORE/.travis/misseddebugcodechecker.php component/ libraries/ modules/ plugins/
+- php redCORE/.travis/phppec.php component/ libraries/ modules/ plugins/
+- php redCORE/.travis/phpmd.php component/ libraries/ modules/ plugins/
+- php redCORE/.travis/phpcs.php
+notifications:
+  slack:
+    secure: QMZp50B4Y+1SMnwMr7kNhffF/u6fnX2riwyHglChvNvPTn9KE2BwLwBbPgewE5U8L+hJwRsKEv8c28L3WtjcGSBBrpxTOig21LBfd5lDhPHExhHTAjWtVPVt0pYWqvitgHJ5efXOqve19UqR1SuI9JCpwRsLwq9jPWmzCZ5Sdxw=
