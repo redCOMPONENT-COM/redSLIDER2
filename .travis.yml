@@ -3,8 +3,11 @@ php:
 - 5.4
 before_script:
 - phpenv rehash
+# prepare redCORE .travis scripts
 - cd redCORE
 - composer update
+- git submodule init
+- git submodule update
 - cd ..
 
 script:
