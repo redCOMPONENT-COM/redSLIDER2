@@ -6,7 +6,7 @@
 comp.name=redslider
 
 # Testing Joomla site localhost folder used by build.xml
-www.dir=/var/www/redslider2
+www.dir=
 
 # Folder to create the extension .zip build package used by component_packager.xml
-package.dir=/home/albert/git.package
+package.dir=
