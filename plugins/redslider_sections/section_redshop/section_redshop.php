@@ -103,6 +103,8 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 					"{product_image|<em>width</em>|<em>height</em>}"       => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_DESC"),
 					"{product_image_link}"                                 => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_LINK_DESC"),
 					"{product_price}"                                      => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_PRICE_DESC"),
+					"{redshop_caption}"                                    => JText::_("COM_REDSLIDER_TAG_REDSHOP_CAPTION_DESC"),
+					"{redshop_description}"                                => JText::_("COM_REDSLIDER_TAG_REDSHOP_DESCRIPTION_DESC"),
 				);
 
 			return $tags;
@@ -239,6 +241,8 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 
 				$product = new stdClass;
 				$product->id = (int) $params->get('product_id', '0');
+				$product->caption = $params->get('caption');
+				$product->description = $params->get('description');
 				$product->background = JString::trim($params->get('background_image', ''));
 				$product->slideClass = JString::trim($params->get('redshop_slide_class', 'redshop_slide'));
 				$product->folder = '/components/com_redshop/assets/images/product/';
@@ -287,6 +291,28 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 					$product->totalAccessories = count($product->accessories);
 
 					// Repalce tags
+
+					if (preg_match_all('/{redshop_description[^}]*}/i', $content, $matches) > 0)
+					{
+						foreach ($matches as $match)
+						{
+							if (count($match))
+							{
+								$content = JString::str_ireplace($match[0], $product->description, $content);
+							}
+						}
+					}
+
+					if (preg_match_all('/{redshop_caption[^}]*}/i', $content, $matches) > 0)
+					{
+						foreach ($matches as $match)
+						{
+							if (count($match))
+							{
+								$content = JString::str_ireplace($match[0], $product->caption, $content);
+							}
+						}
+					}
 
 					if (preg_match_all('/{product_name[^}]*}/i', $content, $matches) > 0)
 					{
