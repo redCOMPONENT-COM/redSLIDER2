@@ -92,16 +92,17 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 			}
 
 			$tags = array(
-					"{product_name}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_NAME_DESC"),
-					"{product_short_description}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_SHORT_DESCRIPTION_DESC"),
-					"{product_description}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_DESCRIPTION_DESC"),
-					"{attribute_template:<em>template</em>}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_ATTRIBUTE_DESC"),
-					"{form_addtocart:<em>template</em>}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_ADDTOCART_BUTTON_DESC"),
+					"{product_name}"                                       => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_NAME_DESC"),
+					"{product_link}"                                       => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_LINK_DESC"),
+					"{product_short_description}"                          => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_SHORT_DESCRIPTION_DESC"),
+					"{product_description}"                                => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_DESCRIPTION_DESC"),
+					"{attribute_template:<em>template</em>}"               => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_ATTRIBUTE_DESC"),
+					"{form_addtocart:<em>template</em>}"                   => JText::_("COM_REDSLIDER_TAG_REDSHOP_ADDTOCART_BUTTON_DESC"),
 					"{product_thumb_image|<em>width</em>|<em>height</em>}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_THUMB_IMAGE_DESC"),
-					"{product_thumb_image_link}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_THUMB_IMAGE_LINK_DESC"),
-					"{product_image|<em>width</em>|<em>height</em>}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_DESC"),
-					"{product_image_link}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_LINK_DESC"),
-					"{product_price}" => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_PRICE_DESC"),
+					"{product_thumb_image_link}"                           => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_THUMB_IMAGE_LINK_DESC"),
+					"{product_image|<em>width</em>|<em>height</em>}"       => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_DESC"),
+					"{product_image_link}"                                 => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_LINK_DESC"),
+					"{product_price}"                                      => JText::_("COM_REDSLIDER_TAG_REDSHOP_PRODUCT_PRICE_DESC"),
 				);
 
 			return $tags;
@@ -229,11 +230,12 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 				$Redconfiguration = new Redconfiguration;
 				$Redconfiguration->defineDynamicVars();
 
-				$user = JFactory::getUser();
-				$params = new JRegistry($slide->params);
-				$productHelper   = new producthelper;
-				$redTemplate = new Redtemplate;
-				$extraField = new extraField;
+				$user          = JFactory::getUser();
+				$params        = new JRegistry($slide->params);
+				$productHelper = new producthelper;
+				$rsHelper      = new redhelper;
+				$redTemplate   = new Redtemplate;
+				$extraField    = new extraField;
 
 				$product = new stdClass;
 				$product->id = (int) $params->get('product_id', '0');
@@ -293,6 +295,34 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 							if (count($match))
 							{
 								$content = JString::str_ireplace($match[0], $product->instance->product_name, $content);
+							}
+						}
+					}
+
+					if (preg_match_all('/{product_link[^}]*}/i', $content, $matches) > 0)
+					{
+						$ItemData = $productHelper->getMenuInformation(0, 0, '', 'product&pid=' . $product->instance->product_id);
+						$catid = $productHelper->getCategoryProduct($product->instance->product_id);
+
+						if (count($ItemData) > 0)
+						{
+							$pItemid = $ItemData->id;
+						}
+						else
+						{
+							$pItemid = $rsHelper->getItemid($product->product_id);
+						}
+
+						$link = JRoute::_(
+									'index.php?option=com_redshop&view=product&pid=' .
+									$product->instance->product_id . '&cid=' . $catid . '&Itemid=' . $pItemid
+								);
+
+						foreach ($matches as $match)
+						{
+							if (count($match))
+							{
+								$content = JString::str_ireplace($match[0], $link, $content);
 							}
 						}
 					}
