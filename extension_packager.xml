@@ -24,7 +24,6 @@
 			</then>
 		</if>
 
-
 		<xmlproperty file="${project.basedir}/${extension}.xml" prefix="extensionDetails" keepRoot="false" />
 
 		<property
@@ -205,6 +204,14 @@
 				name="extension"
 				value="redslider"
 				override="true"/>
+
+		<if>
+			<available file="${package.dir}" type="dir"/>
+			<then>
+				<echo msg="Removing old autopack folder"/>
+				<delete dir="${package.dir}"/>
+			</then>
+		</if>
 
 		<phingcall target="dist" />
 	</target>
