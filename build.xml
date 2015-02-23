@@ -121,35 +121,35 @@
 		</copy>
 
 		<echo message="Copying plugins language section_video to ${www.dir}/language" />
-		<copy todir="${www.dir}/language" overwrite="true">
+		<copy todir="${www.dir}/administrator/language" overwrite="true">
 			<fileset dir="${src}plugins/redslider_sections/section_video/language">
 				<include name="**" />
 			</fileset>
 		</copy>
 
 		<echo message="Copying plugins language section_article to ${www.dir}/language" />
-		<copy todir="${www.dir}/language" overwrite="true">
+		<copy todir="${www.dir}/administrator/language" overwrite="true">
 			<fileset dir="${src}plugins/redslider_sections/section_article/language">
 				<include name="**" />
 			</fileset>
 		</copy>
 
 		<echo message="Copying plugins language section_redshop to ${www.dir}/language" />
-		<copy todir="${www.dir}/language" overwrite="true">
+		<copy todir="${www.dir}/administrator/language" overwrite="true">
 			<fileset dir="${src}plugins/redslider_sections/section_redshop/language">
 				<include name="**" />
 			</fileset>
 		</copy>
 
 		<echo message="Copying plugins language section_redevent to ${www.dir}/language" />
-		<copy todir="${www.dir}/language" overwrite="true">
+		<copy todir="${www.dir}/administrator/language" overwrite="true">
 			<fileset dir="${src}plugins/redslider_sections/section_redevent/language">
 				<include name="**" />
 			</fileset>
 		</copy>
 
 		<echo message="Copying plugins language section_redform to ${www.dir}/language" />
-		<copy todir="${www.dir}/language" overwrite="true">
+		<copy todir="${www.dir}/administrator/language" overwrite="true">
 			<fileset dir="${src}plugins/redslider_sections/section_redform/language">
 				<include name="**" />
 			</fileset>
