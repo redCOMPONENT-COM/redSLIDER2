@@ -10,7 +10,7 @@
 defined('JPATH_BASE') or die;
 
 /**
- * Article field.
+ * Modal Product field.
  *
  * @package     RedSLIDER
  * @subpackage  Fields

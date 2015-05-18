@@ -1,6 +1,6 @@
 <?php
 /**
- * @package     RedITEM
+ * @package     RedSLIDER
  * @subpackage  Layouts
  *
  * @copyright   Copyright (C) 2008 - 2015 redCOMPONENT.com. All rights reserved.
