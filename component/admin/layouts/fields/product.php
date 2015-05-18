@@ -80,27 +80,42 @@ $products = $displayData['products'];
 			<?php echo JText::_('PLG_REDSLIDER_SECTION_PRODUCT_ADD_MORE_PRODUCT'); ?>
 		</a>
 	</p>
-	<?php foreach($products as $index => $product): ?>
-		<div class="media" id="<?php echo $id . $index; ?>" style="width:100%">
+	<?php if (empty($products)): ?>
+		<div class="media" id="<?php echo $id; ?>" style="width:100%">
 			<div class="pull-left">
-				<input type="text" class="input-small" id="<?php echo $id . $index; ?>_name" value="<?php echo $product->product_name?>" disabled="disabled"/>
+				<input type="text" class="input-small" id="<?php echo $id; ?>_name" value="" disabled="disabled"/>
 				<a class="btn modalRedshopProductAjax" title="<?php echo JText::_('PLG_REDSLIDER_SECTION_PRODUCT_SELECT_PRODUCT_BUTTON')?>"
-					onClick="javascript:setActiveModal('<?php echo $id . $index?>')"
+					onClick="javascript:setActiveModal('<?php echo $id?>')"
 					href="<?php echo $link ?>&amp;<?php echo JSession::getFormToken()?>=1"
 					rel="{handler: 'iframe', size: {x: 800, y: 450}}">
 					<?php echo JText::_('PLG_REDSLIDER_SECTION_PRODUCT_SELECT_PRODUCT_BUTTON') ?>
 				</a>
-				<input type="hidden" id="<?php echo $id . $index ?>_id" class="required modal-value" name="<?php echo $name?>[]" value="<?php echo $product->product_id; ?>" />
-			</div>
-			<div class="media-body">
-				<?php if ($index > 0): ?>
-				<a class="btn btn-danger" href="javascript:void(0)" onclick="javascript:removeProduct('<?php echo $id . $index; ?>')">
-					<i class="icon-remove"></i>
-					<?php echo JText::_('PLG_REDSLIDER_SECTION_PRODUCT_REMOVE_PRODUCT'); ?>
-				</a>
-				<?php endif;?>
+				<input type="hidden" id="<?php echo $id?>_id" class="required modal-value" name="<?php echo $name?>[]" value="" />
 			</div>
 		</div>
-	<?php endforeach;?>
+	<?php else: ?>
+		<?php foreach($products as $index => $product): ?>
+			<div class="media" id="<?php echo $id . $index; ?>" style="width:100%">
+				<div class="pull-left">
+					<input type="text" class="input-small" id="<?php echo $id . $index; ?>_name" value="<?php echo $product->product_name?>" disabled="disabled"/>
+					<a class="btn modalRedshopProductAjax" title="<?php echo JText::_('PLG_REDSLIDER_SECTION_PRODUCT_SELECT_PRODUCT_BUTTON')?>"
+						onClick="javascript:setActiveModal('<?php echo $id . $index?>')"
+						href="<?php echo $link ?>&amp;<?php echo JSession::getFormToken()?>=1"
+						rel="{handler: 'iframe', size: {x: 800, y: 450}}">
+						<?php echo JText::_('PLG_REDSLIDER_SECTION_PRODUCT_SELECT_PRODUCT_BUTTON') ?>
+					</a>
+					<input type="hidden" id="<?php echo $id . $index ?>_id" class="required modal-value" name="<?php echo $name?>[]" value="<?php echo $product->product_id; ?>" />
+				</div>
+				<div class="media-body">
+					<?php if ($index > 0): ?>
+					<a class="btn btn-danger" href="javascript:void(0)" onclick="javascript:removeProduct('<?php echo $id . $index; ?>')">
+						<i class="icon-remove"></i>
+						<?php echo JText::_('PLG_REDSLIDER_SECTION_PRODUCT_REMOVE_PRODUCT'); ?>
+					</a>
+					<?php endif;?>
+				</div>
+			</div>
+		<?php endforeach;?>
+	<?php endif;?>
 </div>
 <input type="hidden" id="<?php echo $id ?>_active_modal" value="" />

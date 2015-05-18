@@ -110,7 +110,7 @@ class PlgRedslider_SectionsSection_RedshopInstallerScript extends Com_RedcoreIns
 
 				// Prepare params for demo redSHOP slide
 				$slideParams = array(
-					"product_id" => 1,
+					"product_id" => array(1),
 					"background_image" => "images/stories/redslider/bg_redshop_slider.png",
 					"slide_class" => "redshop_slide"
 				);
