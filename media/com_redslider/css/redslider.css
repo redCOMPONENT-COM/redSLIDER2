@@ -259,15 +259,3 @@
         margin: 0px;
     }
 }
-/* redslider redshop*/
-#redslider2 ul.slides > li.redshop_slide{
-    overflow: auto;
-    background-size: cover;
-}
-#redslider2 ul.slides > li.redshop_slide .slide-content > div{
-    height: 100%;
-    position: relative;
-}
-#redslider2 ul.slides > li.redshop_slide .slide-content > .eachSlide + .eachSlide{
-    border-top: 1px solid #777;
-}

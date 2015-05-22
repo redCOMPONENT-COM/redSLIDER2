@@ -11,10 +11,4 @@ jQuery(document).ready(function($) {
         }
         else $(this).attr('src',ifr_source+'?'+wmode);
     });
-    $('#redslider2 ul.slides > li.redshop_slide').each(function(index, el) {
-        $(this).css('background-image', 'url('+$(this).find('.slide-img').find('img').attr('src')+')');
-    });
-    $('div.attribute_wrapper').find('select').each(function(index, el) {
-        $(this).wrapAll('<div class="select-wrapper"></div>');
-    });
 });
