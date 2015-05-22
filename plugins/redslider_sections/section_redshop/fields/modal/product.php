@@ -49,20 +49,10 @@ class JFormFieldModal_Product extends JFormField
 		require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/configuration.php';
 		JLoader::import('redshop.library');
 
-		// List redSHOP products
-		$products = array();
-
-		if ($this->value)
+		foreach ($this->value as $id)
 		{
-			foreach ($this->value as $id)
-			{
-				$product = RedshopHelperProduct::getProductById($id);
-
-				if ($product)
-				{
-					$products[] = $product;
-				}
-			}
+			$product = RedshopHelperProduct::getProductById($id);
+			$products[] = $product;
 		}
 
 		$layoutData = array(

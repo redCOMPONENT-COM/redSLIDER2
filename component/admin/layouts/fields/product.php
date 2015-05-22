@@ -27,7 +27,7 @@ $products = $displayData['products'];
 		var str = "<div class='media' id='" + id + "' style='width:100%'>";
 		str += "<div class='pull-left'>";
 		str += "<p>";
-		str += "<input type='text' class='input-small' id='" + id + "_name' value='' disabled='disabled'/>";
+		str += "<input type='text' class='input-small' id='" + id + "_name' value='<?php echo $title?>' disabled='disabled'/>"
 		str += "<a class='btn modalRedshopProductAjax' onclick='javascript:setActiveModal(\"" + id + "\")' title='<?php echo JText::_('PLG_REDSLIDER_SECTION_PRODUCT_SELECT_PRODUCT_BUTTON')?>'";
 		str += "href='<?php echo $link?>&amp;<?php echo JSession::getFormToken()?>=1' rel='{handler: \"iframe\", size: {x: 800, y: 450}}'>";
 		str += "<?php echo JText::_('PLG_REDSLIDER_SECTION_PRODUCT_SELECT_PRODUCT_BUTTON') ?>";
