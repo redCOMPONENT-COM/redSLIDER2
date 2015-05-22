@@ -36,15 +36,9 @@ class ModredSLIDERHelper
 			$slide->background = '';
 			$slide->class = '';
 
-			$background = $params->get('background_image');
-
-			if (JFile::exists($background))
+			if ($background = $params->get('background_image'))
 			{
 				$slide->background = $background;
-			}
-			else
-			{
-				$slide->background = 'media/com_redslider/images/slides/bg_general.png';
 			}
 
 			if ($class = $params->get('slide_class'))
