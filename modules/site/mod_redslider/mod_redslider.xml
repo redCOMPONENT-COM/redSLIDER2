@@ -8,7 +8,7 @@
 	<copyright>redCOMPONENT.com</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<description>MOD_REDSLIDER_DESC</description>
-	<redcore version="1.5.8" />
+	<redcore version="1.5.0" />
 	<files>
 		<filename module="mod_redslider">helper.php</filename>
 		<filename module="mod_redslider">mod_redslider.php</filename>
