@@ -204,9 +204,10 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 			if (RedsliderHelper::checkExtension($this->extensionName))
 			{
 				// Load redSHOP's javascripts
-				JHTML::Script('fetchscript.js', 'components/com_redshop/assets/js/', false);
-				JHTML::Script('attribute.js', 'components/com_redshop/assets/js/', false);
-				JHTML::Script('common.js', 'components/com_redshop/assets/js/', false);
+				JHtml::_('redshopjquery.framework');
+				JHtml::script('com_redshop/redbox.js', false, true);
+				JHtml::script('com_redshop/attribute.js', false, true);
+				JHtml::script('com_redshop/common.js', false, true);
 
 				// Load redSHOP's helpers
 				require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/redshop.cfg.php';
