@@ -11,82 +11,189 @@
 <!--    - execute this PHING build file                                  -->
 <!-- ==================================================================  -->
 
-<project name="modules packager" basedir="." default="main">
+<project name="plugins_packager" basedir="." default="pack">
+    <!-- ============================================  -->
+    <!-- Create packages folder                        -->
+    <!-- ============================================  -->
+    <target name="prepare">
+        <if>
+            <not>
+                <isset property="package.dir" />
+            </not>
+            <then>
+                <fail msg="package.dir not specified, specify package.dir in build.properties file" />
+            </then>
+        </if>
 
-	<!-- Do initialization stuff -->
-	<property file="build.properties" override="true"/>
+        <!-- Folder where the redSLIDER2 repository is located  -->
+        <property
+                name="extpath"
+                value="."
+                override="true"/>
 
-    <!-- Name of extension -->
-    <property name="extension" value="${comp.name}" override="true"/>
+        <xmlproperty file="${extpath}/${extension}.xml" prefix="extensionDetails" keepRoot="false" />
 
-    <!-- Load extension property in XML file -->
-    <xmlproperty file="${project.basedir}/${extension}.xml" prefix="extensionDetails" keepRoot="false" />
+        <property
+                name="version"
+                value="${extensionDetails.version}"
+                override="true"/>
 
-    <!-- Get extension version from XML -->
-    <property
-            name="version"
-            value="${extensionDetails.version}"
-            override="true"/>
+        <!-- Temp dir to create packages -->
+        <property
+                name="tmpdir"
+                value=".tmp"
+                override="true"/>
 
-	<!-- Folder where the redSLIDER 2.0 repository PLUGINS are located  -->
-	<property
-			name="extpath"
-			value="${project.basedir}/plugins"
-			override="true" />
+        <!-- Check if the temp folder exists. If not, create it -->
+        <if>
+            <available file="${tmpdir}" type="dir"/>
+            <then>
+                <echo msg="Removing old ${tmpdir}"/>
+                <delete dir="${tmpdir}"/>
+            </then>
+        </if>
+        <echo msg="Making directory to store the temporary packages at ${tmpdir}"/>
+        <mkdir dir="${tmpdir}"/>
+    </target>
 
-	<!-- Target dir where module packages will be created  -->
-	<property
-			name="targetdir"
-			value="${package.dir}/redSLIDER2-Plugins"
-			override="true" />
+    <!-- ============================================  -->
+    <!-- Target: build                                 -->
+    <!-- ============================================  -->
+    <!-- Loops through folders creating plugins packages -->
 
-	<!-- MAIN -->
-	<target name="main" description="Loops through folders of plugin groups">
-
-		<!-- Cleanup build area -->
-		<delete dir="${targetdir}" />
-		<mkdir dir="${targetdir}" />
-
+    <target name="build" depends="prepare">
 		<!-- Loop through plugins groups -->
 		<foreach param="group_name" target="plugin_loop">
-			<fileset dir="${extpath}">
+			<fileset dir="${extpath}/plugins">
 				<type type="dir" />
 				<depth max="0" min="0" />
 			</fileset>
 		</foreach>
 
-        <!-- clean up plugins already added in the main extension package -->
-        <delete file="${targetdir}/redslider_sections/plg_redslider_sections_section_standard_${version}.zip" />
-        <delete file="${targetdir}/redslider_sections/plg_redslider_sections_section_article_${version}.zip" />
-        <delete file="${targetdir}/redslider_sections/plg_redslider_sections_section_video_${version}.zip" />
-    </target>
+		<if>
+			<available file="${package.dir}/${extension}-${version}-plugins" type="dir" />
+			<then>
+		        <delete dir="${package.dir}/${extension}-${version}-plugins"/>
+			</then>
+		</if>
+
+        <copy todir="${package.dir}/${extension}-${version}-plugins">
+            <fileset dir="${tmpdir}">
+                <include name="**" />
+            </fileset>
+        </copy>
+	</target>
 
 	<target name="plugin_loop" description="Loops through plugins folders inside groups">
+		<mkdir dir="${tmpdir}/${group_name}" />
 
 		<!-- Loop through plugins -->
 		<foreach param="plugin_name" target="plugin_packager">
-			<fileset dir="${extpath}/${group_name}">
+			<fileset dir="${extpath}/plugins/${group_name}">
 				<type type="dir" />
 				<depth max="0" min="0" />
 			</fileset>
 		</foreach>
-
 	</target>
 
 	<target name="plugin_packager" description="Packages the extension for delivery">
+        <xmlproperty file="${extpath}/plugins/${group_name}/${plugin_name}/${plugin_name}.xml" prefix="pluginmanifest" keepRoot="false" />
+        <property
+                name="plugin_version"
+                value="${pluginmanifest.version}"
+                override="true"/>
 
+        <!-- do not add standard plugins already added in the extension package -->
+		<if>
+            <and>
+                <not>
+                    <contains string="${plugin_name}" substring="video" />
+                </not>
+                <not>
+                    <contains string="${plugin_name}" substring="article" />
+                </not>
+                <not>
+                    <contains string="${plugin_name}" substring="standard" />
+                </not>
+            </and>
+            <then>
+					<zip
+							destfile="${tmpdir}/${group_name}/${group_name}_${plugin_name}_${plugin_version}.zip"
+							basedir="${extpath}/plugins/${group_name}/${plugin_name}">
+						<fileset dir="${extpath}/plugins/${group_name}/${plugin_name}">
+							<include name="**" />
+							<exclude name=".*" />
+						</fileset>
+					</zip>
+            </then>
+		</if>
+	</target>
 
-		<mkdir dir="${targetdir}/${group_name}/${plugin_name}" />
-		<zip destfile="${targetdir}/${group_name}/plg_${group_name}_${plugin_name}_${version}.zip"
-			basedir="${extpath}/${group_name}/${plugin_name}">
-			<fileset dir="${extpath}/${group_name}/${plugin_name}">
-				<include name="**" />
-				<exclude name=".*" />
-			</fileset>
-		</zip>
-
-		<!-- clean up temporary folder -->
-		<delete dir="${targetdir}/${group_name}/${plugin_name}" />
+    <target name="clean-tmp">
+        <delete dir="${tmpdir}"/>
     </target>
 
+    <target name="compress-clean" depends="clean-tmp">
+        <!-- needed for external cleaning and compressing -->
+    </target>
+
+    <target name="dist" depends="build, compress-clean">
+        <echo msg="Modules build successful!"/>
+    </target>
+
+    <target name="pack">
+        <!-- Do initialization stuff -->
+        <if>
+            <not>
+                <available file="build.properties" type="file" />
+            </not>
+            <then>
+                <fail msg="File not found: build.properties" />
+            </then>
+        </if>
+
+        <property file="build.properties" override="true"/>
+
+        <property
+                name="extension"
+                value="${comp.name}"
+                override="true"/>
+
+        <phingcall target="dist" />
+    </target>
+
+    <target name="autopack">
+        <property
+                name="package.dir"
+                value=".dist"
+                override="true"/>
+
+        <property
+                name="extension"
+                value="redslider"
+                override="true"/>
+
+        <property
+                name="joomla.version"
+                value="j3_and_j25"
+                override="true"/>
+
+        <property
+                name="package.delete"
+                value="true"
+                override="false"/>
+
+        <if>
+            <and>
+                <available file="${package.dir}" type="dir"/>
+                <equals arg1="${package.delete}" arg2="1" />
+            </and>
+            <then>
+                <echo msg="Removing old autopack folder"/>
+                <delete dir="${package.dir}"/>
+            </then>
+        </if>
+
+        <phingcall target="dist" />
+    </target>
 </project>
