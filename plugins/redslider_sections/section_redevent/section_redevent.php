@@ -206,6 +206,7 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 			if (RedsliderHelper::checkExtension($this->extensionName))
 			{
 				require_once JPATH_LIBRARIES . '/redevent/tags/tags.php';
+				require_once JPATH_LIBRARIES . '/redevent/tags/parsed.php';
 				require_once JPATH_LIBRARIES . '/redevent/helper/helper.php';
 				require_once JPATH_LIBRARIES . '/redevent/helper/attachment.php';
 				require_once JPATH_LIBRARIES . '/redevent/helper/output.php';
