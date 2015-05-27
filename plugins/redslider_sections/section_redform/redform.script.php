@@ -79,7 +79,7 @@ class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreIns
 			{
 				require_once $helperPath;
 
-				$comExists = RedsliderHelper::checkExtension('redform');
+				$comExists = RedsliderHelper::checkExtension('com_redform');
 
 				// Add Include path
 				JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
