@@ -65,6 +65,10 @@ $duration       = (int) $params->get('animation_duration', 600);
 $thumbNums      = (int) $params->get('thumb_nums', 3);
 $thumbWidth      = (int) $params->get('thumb_width', 150);
 
+// Main slider and thumbnail divs
+$sliders = '.' . $class . ' > .slider';
+$thumbNails = '.' . $class . ' > .carousel';
+
 if ($slideThumbnail && $thumbNums > 0)
 {
 	$opt = array(
@@ -75,6 +79,7 @@ if ($slideThumbnail && $thumbNums > 0)
 		'animationSpeed' => $duration,
 		'directionNav'   => $slideControl,
 		'controlNav'     => false,
+		'sync'           => $thumbNails,
 	);
 
 	$optThumb = array(
@@ -84,7 +89,7 @@ if ($slideThumbnail && $thumbNums > 0)
 		'controlNav'   => false,
 		'directionNav' => $thumbControl,
 		'itemWidth'    => $thumbWidth,
-		'asNavFor'     => '.' . $class . '> .slider'
+		'asNavFor'     => $sliders,
 	);
 }
 else
@@ -100,11 +105,11 @@ else
 	);
 }
 
-// Initialize the slider with settings
-JHtml::_('rjquery.flexslider', '.' . $class . '> .slider', $opt);
-
 // Initialize the thumbnails control
-JHtml::_('rjquery.flexslider', '.' . $class . '> .carousel', $optThumb);
+JHtml::_('rjquery.flexslider', $thumbNails, $optThumb);
+
+// Initialize the slider with settings
+JHtml::_('rjquery.flexslider', $sliders, $opt);
 
 $moduleclass_sfx = htmlspecialchars($params->get('moduleclass_sfx'));
 $displayType     = $params->get('display', 0);
