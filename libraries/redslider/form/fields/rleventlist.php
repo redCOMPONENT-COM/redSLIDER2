@@ -36,11 +36,21 @@ class JFormFieldRLEventList extends JFormFieldList
 	 */
 	public function getInput()
 	{
+		// Check if component redEVENT is not installed
+		$app = JFactory::getApplication();
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 
+		if (!RedsliderHelper::checkExtension('com_redevent'))
+		{
+			$app->enqueueMessage(JText::_('PLG_REDSLIDER_SECTION_REDEVENT_INSTALL_COM_EVENT_FIRST'), 'warning');
+
+			return;
+		}
+
 		$eventsModel = RModel::getAdminInstance('Events', array(), 'com_redevent');
-		$items = $eventsModel->getData();
+		$eventsModel->setState('filter.published', 1);
+		$items = $eventsModel->getItems();
 
 		$options = array();
 
