@@ -15,6 +15,7 @@
 {
     list-style: none;
     position: relative;
+    z-index: 1;
 }
 
 #redslider2 ul.slides > li .slide-content

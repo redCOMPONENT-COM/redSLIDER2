@@ -180,12 +180,12 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 			}
 
 			$params = new JRegistry($slide->params);
-			$id = (int) $params->get('article_id', '0');
-			$articleModel = RModel::getFrontInstance('Article', array('ignore_request' => false), 'com_content');
-			$article = $articleModel->getItem($id);
+			$id = (int) $params->get('article_id', 0);
 
-			if (isset($article->id) && !empty($article->id))
+			if (!empty($id))
 			{
+				$articleModel = RModel::getFrontInstance('Article', array('ignore_request' => false), 'com_content');
+				$article = $articleModel->getItem($id);
 				$matches = array();
 
 				if (preg_match_all('/{article_title[^}]*}/i', $content, $matches) > 0)
@@ -238,7 +238,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = JString::str_ireplace($match[0], ContentHelperRoute::getArticleRoute($article->id), $content);
+							$content = JString::str_ireplace($match[0], JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid)), $content);
 						}
 					}
 				}
