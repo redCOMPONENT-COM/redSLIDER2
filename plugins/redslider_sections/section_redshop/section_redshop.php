@@ -209,22 +209,6 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 				JHtml::script('com_redshop/attribute.js', false, true);
 				JHtml::script('com_redshop/common.js', false, true);
 
-				// Load redSHOP's helpers
-				require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/redshop.cfg.php';
-				require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/configuration.php';
-				require_once JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
-				require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/template.php';
-				require_once JPATH_ADMINISTRATOR . '/components/com_redshop/helpers/stockroom.php';
-				require_once JPATH_ROOT . '/components/com_redshop/helpers/user.php';
-				require_once JPATH_ROOT . '/components/com_redshop/helpers/helper.php';
-				require_once JPATH_ROOT . '/components/com_redshop/helpers/redshop.js.php';
-				require_once JPATH_SITE . '/components/com_redshop/helpers/extra_field.php';
-
-				if (!class_exists('producthelper'))
-				{
-					require_once JPATH_SITE . '/components/com_redshop/helpers/product.php';
-				}
-
 				// Load stylesheet for each section
 				$css = 'redslider.' . JString::strtolower($this->sectionId) . '.min.css';
 
