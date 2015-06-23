@@ -41,6 +41,10 @@ build.tpl.properties
 # Phing
 /phing-latest.phar
 
+
+# Gulp
+
+
 # Never ignore
 !.gitignore
 !index.html
