@@ -15,9 +15,6 @@ Add extension_packager.xml as PHING build file and execute it.
 
 ## With Gulp
 
-Rename `gulp-config.dist.json` into `gulp-config.json` and modify if needed (rarely needed)
-
-
 Before you can run any Gulp command you need to:
 
 - download and install NodeJS. See https://nodejs.org/download/
