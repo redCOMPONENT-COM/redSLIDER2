@@ -1,0 +1,11 @@
+{
+	"name"         : "helloworld",
+	"releasesDir"  : "/var/www/releases",
+	"joomlaVersion": "j25-j3x",
+	"packageFiles" :[
+		"LICENSE",
+		"helloworld.xml",
+		"install.php",
+		"component/**"
+	]
+}

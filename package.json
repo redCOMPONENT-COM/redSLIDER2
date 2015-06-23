@@ -1,0 +1,28 @@
+{
+  "name": "redSLIDER",
+  "version": "1.5.0",
+  "description": "scripts for redSLIDER",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "joomla-gulp": "^1.0.1",
+    "joomla-gulp-release": "^1.0.8"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/redCOMPONENT-COM/redSHOP.git"
+  },
+  "keywords": [
+    "joomla",
+    "redslider"
+  ],
+  "author": "redCOMPONENT-COM",
+  "license": "GPLv2",
+  "bugs": {
+    "url": "https://redweb.atlassian.net/secure/RapidBoard.jspa?rapidView=42&projectKey=REDSHOP"
+  }
+}
