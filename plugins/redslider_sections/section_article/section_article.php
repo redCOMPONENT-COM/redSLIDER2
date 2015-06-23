@@ -180,17 +180,12 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 			}
 
 			$params = new JRegistry($slide->params);
-			$article = new stdClass;
+			$id = (int) $params->get('article_id', 0);
 
-			$article->id = (int) $params->get('article_id', '0');
-			$articleModel = RModel::getFrontInstance('Articles', array('ignore_request' => false), 'com_content');
-			$articleModel->setState('filter.article_id', $article->id);
-			$articleModel->setState('filter.article_id.include', true);
-			$article->instance = $articleModel->getItems();
-
-			if (count($article->instance))
+			if (!empty($id))
 			{
-				$article->instance = $article->instance[0];
+				$articleModel = RModel::getFrontInstance('Article', array('ignore_request' => false), 'com_content');
+				$article = $articleModel->getItem($id);
 				$matches = array();
 
 				if (preg_match_all('/{article_title[^}]*}/i', $content, $matches) > 0)
@@ -199,7 +194,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = JString::str_ireplace($match[0], $article->instance->title, $content);
+							$content = JString::str_ireplace($match[0], $article->title, $content);
 						}
 					}
 				}
@@ -210,7 +205,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = RedsliderHelper::replaceTagsHTML($match[0], $article->instance->introtext, $content);
+							$content = RedsliderHelper::replaceTagsHTML($match[0], $article->introtext, $content);
 						}
 					}
 				}
@@ -221,7 +216,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = RedsliderHelper::replaceTagsHTML($match[0], $article->instance->fulltext, $content);
+							$content = RedsliderHelper::replaceTagsHTML($match[0], $article->fulltext, $content);
 						}
 					}
 				}
@@ -232,7 +227,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = JString::str_ireplace($match[0], $article->instance->created, $content);
+							$content = JString::str_ireplace($match[0], $article->created, $content);
 						}
 					}
 				}
@@ -243,7 +238,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = JString::str_ireplace($match[0], ContentHelperRoute::getArticleRoute($article->id), $content);
+							$content = JString::str_ireplace($match[0], JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid)), $content);
 						}
 					}
 				}
