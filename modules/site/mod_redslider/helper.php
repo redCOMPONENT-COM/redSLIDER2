@@ -43,7 +43,7 @@ class ModredSLIDERHelper
 			}
 			else
 			{
-				$slide->background = 'media/com_redslider/images/slides/bg_general.png';
+				$slide->background = 'images/stories/redslider/bg_general.png';
 			}
 
 			if ($class = $params->get('slide_class'))
