@@ -17,5 +17,9 @@ Add extension_packager.xml as PHING build file and execute it.
 
 Before you can run any Gulp command you need to:
 
-- download and install NodeJS. See https://nodejs.org/download/
-- type `gulp` to see instructions to execute
+- copy `gulp-config.dist.json` to `gulp-config.json
+- download and install NodeJS: https://nodejs.org/download/
+- install npm: `sudo npm install`
+- install global Gulp: `npm install --global gulp`
+- install Gulp in the project devDependencies: `npm install --save-dev gulp`
+- install joomla-gulp-release: `sudo npm install --save-dev joomla-gulp-release`

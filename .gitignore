@@ -43,6 +43,10 @@ build.tpl.properties
 
 
 # Gulp
+gulp-config.json
+npm-debug.log
+node_modules/
+releases/*
 
 
 # Never ignore
