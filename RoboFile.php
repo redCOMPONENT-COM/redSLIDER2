@@ -14,8 +14,7 @@ class RoboFile extends \Robo\Tasks
 	{
 		$this->buildPackage('full_packager.xml');
 
-		//$repository = $this->askDefault("What is the git remote where you want to do the release?", 'origin');
-		$remote     = $this->askDefault("What is the remote?", 'javi');
+		$remote = $this->askDefault("What is the git remote where you want to do the release?", 'origin');
 
 		$version = $this->getExtensionVersion();
 
@@ -156,7 +155,6 @@ class RoboFile extends \Robo\Tasks
 	private function getGithub()
 	{
 		$githubToken = $this->getGithubToken();
-		//$githubRepository->owner = $this->askDefault("What is the reporitory user?", 'redCOMPONENT-COM');
 
 		$options = new Registry;
 		$options->set('api.url', 'https://api.github.com');
@@ -192,8 +190,7 @@ class RoboFile extends \Robo\Tasks
 	{
 		if (!isset($this->githubToken))
 		{
-			//$this->githubToken = $this->askHidden("What is your Github Auth token? get it at https://github.com/settings/tokens");
-			$this->githubToken = $this->askDefault("What is your Github Auth token? get it at https://github.com/settings/tokens", 'fe8a47e259e77673d3df06400c3dd8ca2a6a0264');
+			$this->githubToken = $this->askHidden("What is your Github Auth token? get it at https://github.com/settings/tokens");
 		}
 
 		return $this->githubToken;
