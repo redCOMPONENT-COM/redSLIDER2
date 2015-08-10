@@ -49,7 +49,7 @@ class RoboFile extends \Robo\Tasks
 			$githubRepository->name,
 			(string) $version,
 			'',
-			'develop',
+			"redSLIDER $version",
 			$changesInRelease,
 			false,
 			true
