@@ -12,11 +12,23 @@ class RoboFile extends \Robo\Tasks
 {
 	public function release()
 	{
+		$bump = $this->ask('Have you already bumped the extension version', false);
+		if (!$bump)
+		{
+			$this->yell('please bump the extension version before running this function');
+			exit(1);
+		}
+
 		$this->buildPackage('full_packager.xml');
 
 		$remote = $this->askDefault("What is the git remote where you want to do the release?", 'origin');
 
 		$version = $this->getExtensionVersion();
+		$this->updateChangelog();
+		$this->taskGitStack()
+			->add('CHANGELOG.md')
+			->commit("Prepare for release version $version")
+			->push($remote,'develop');
 
 		$this->say("Creating github tag: $version");
 		$githubRepository = $this->getGithubRepo();
@@ -54,18 +66,20 @@ class RoboFile extends \Robo\Tasks
 
 	private function getPullsInLatestRelease()
 	{
-		$version = $this->getExtensionVersion();
-
 		$github           = $this->getGithub();
-		$githubRepository = $this->getGithubRepo();
 
-		$latestRelease = $github->repositories->releases->get($githubRepository->owner, $githubRepository->name, 'latest');
+		$latestRelease = $github->repositories->releases->get(
+			$this->getGithubRepo()->owner,
+			$this->getGithubRepo()->name,
+			'latest'
+		);
 
 		$pulls = $this->getAllRepoPulls();
 
 
 		$changes = array();
-		foreach ($this->$pulls as $pull)
+
+		foreach ($pulls as $pull)
 		{
 			if (strtotime($pull->merged_at) > strtotime($latestRelease->published_at))
 			{
@@ -114,10 +128,10 @@ class RoboFile extends \Robo\Tasks
 
 		$changes = $this->getPullsInLatestRelease();
 
-		if ($changes)
+		if (!empty($changes))
 		{
 			$this->taskChangelog()
-			     ->changes()
+			     ->changes($changes)
 			     ->version($version)
 			     ->run();
 		}

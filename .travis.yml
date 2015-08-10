@@ -4,11 +4,11 @@ php:
 before_script:
 - phpenv rehash
 # prepare redCORE .travis scripts
+- git submodule update --init --recursive
 - cd redCORE
 - composer update
-- git submodule init
-- git submodule update
 - cd ..
+- composer install
 
 script:
 - php redCORE/.travis/misseddebugcodechecker.php component/ libraries/ modules/ plugins/
