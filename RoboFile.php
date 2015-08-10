@@ -12,7 +12,7 @@ class RoboFile extends \Robo\Tasks
 {
 	public function release()
 	{
-		$bump = $this->ask('Have you already bumped the extension version', false);
+		$bump = $this->confirm('Have you already bumped the extension version', false);
 		if (!$bump)
 		{
 			$this->yell('please bump the extension version before running this function');
