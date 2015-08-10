@@ -15,7 +15,7 @@ class RoboFile extends \Robo\Tasks
 		$bump = $this->confirm('Have you already bumped the extension version', false);
 		if (!$bump)
 		{
-			$this->yell('please bump the extension version before running this function');
+			$this->yell('please bump the extension version of the XML manifest before running this function');
 			exit(1);
 		}
 
