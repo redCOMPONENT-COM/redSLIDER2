@@ -1,10 +1,5 @@
 # Changelog
 
-#### 2.0.31
-
-* add pull since latests release for robo releaser task *2015-08-10*
-
-
 #### 2.0.21
 
 * RSLIDER-123 update to redCORE 1.4.13 *2015-08-10*
