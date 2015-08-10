@@ -57,3 +57,5 @@ releases/*
 /redCORE/
 phpunit.xml
 
+
+/vendor/
