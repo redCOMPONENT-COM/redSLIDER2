@@ -28,7 +28,8 @@ class RoboFile extends \Robo\Tasks
 		$this->taskGitStack()
 			->add('CHANGELOG.md')
 			->commit("Prepare for release version $version")
-			->push($remote,'develop');
+			->push($remote,'develop')
+			->run();
 
 		$this->say("Creating github tag: $version");
 		$githubRepository = $this->getGithubRepo();
