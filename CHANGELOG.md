@@ -1,5 +1,13 @@
 # Changelog
 
+#### 2.0.32
+
+* Allow releaser to push latest changes before tagging *2015-08-10*
+* Add automated releaser tool *2015-08-10*
+* Add Releaser and Changeloger tool *2015-08-10*
+* add pull since latests release for robo releaser task *2015-08-10*
+
+
 #### 2.0.31
 
 * Allow releaser to push latest changes before tagging *2015-08-10*
