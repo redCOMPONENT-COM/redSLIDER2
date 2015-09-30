@@ -35,7 +35,7 @@
 					type="radio"
 					label="MOD_REDSLIDER_LOAD_JQUERY"
 					description="MOD_REDSLIDER_LOAD_JQUERY_DESC"
-					default="1">
+					default="0">
 					<option
 						value="0">JNO</option>
 					<option

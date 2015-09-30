@@ -9,7 +9,7 @@
 
 defined('_JEXEC') or die;
 ?>
-<div id="redslider2" class="<?php echo $class; ?>" >
+<div id="redslider-<?php echo $module->id?>" class="redslider2 <?php echo $class; ?>" >
 	<!-- Main slider -->
 	<div class="slider" >
 	<?php if (count($slides)): ?>
