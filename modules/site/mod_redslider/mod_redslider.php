@@ -66,8 +66,8 @@ $thumbNums      = (int) $params->get('thumb_nums', 3);
 $thumbWidth      = (int) $params->get('thumb_width', 150);
 
 // Main slider and thumbnail divs
-$sliders = '.' . $class . ' > .slider';
-$thumbNails = '.' . $class . ' > .carousel';
+$sliders = '#redslider-' . $module->id . ' > .slider';
+$thumbNails = '#redslider-' . $module->id . ' > .carousel';
 
 if ($slideThumbnail && $thumbNums > 0)
 {
