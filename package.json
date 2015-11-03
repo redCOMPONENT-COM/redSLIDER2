@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/redCOMPONENT-COM/redSHOP.git"
+    "url": "https://github.com/redCOMPONENT-COM/redSLIDER2.git"
   },
   "keywords": [
     "joomla",
@@ -23,6 +23,6 @@
   "author": "redCOMPONENT-COM",
   "license": "GPLv2",
   "bugs": {
-    "url": "https://redweb.atlassian.net/secure/RapidBoard.jspa?rapidView=42&projectKey=REDSHOP"
+    "url": "https://redweb.atlassian.net/secure/RapidBoard.jspa?rapidView=91"
   }
 }
