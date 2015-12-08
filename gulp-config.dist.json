@@ -1,6 +1,6 @@
 {
   "name"         : "redslider",
-  "releasesDir"  : "./releases",
+  "releasesDir"  : "./packages",
   "joomlaVersion": "j25-j3x",
   "packageFiles" :[
     "redslider.xml",

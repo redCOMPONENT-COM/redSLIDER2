@@ -46,7 +46,7 @@ build.tpl.properties
 gulp-config.json
 npm-debug.log
 node_modules/
-releases/*
+packages/*
 
 
 # Never ignore
