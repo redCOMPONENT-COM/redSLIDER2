@@ -54,8 +54,5 @@ releases/*
 !index.html
 !index.php
 
-/redCORE/
-phpunit.xml
-
 
 /vendor/
