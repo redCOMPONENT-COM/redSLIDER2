@@ -11,10 +11,10 @@ before_script:
 - composer install
 
 script:
-- php redCORE/tests/checkers/misseddebugcodechecker.php component/ libraries/ modules/ plugins/
-- php redCORE/tests/checkers/phppec.php component/ libraries/ modules/ plugins/
-- php redCORE/tests/checkers/phpmd.php component/ libraries/ modules/ plugins/
-- php redCORE/tests/checkers/phpcs.php
+- php .travis/misseddebugcodechecker.php component libraries modules plugins
+- php .travis/phppec.php component libraries modules plugins
+- php .travis/phpmd.php
+- php .travis/phpcs.php
 notifications:
   slack:
     secure: QMZp50B4Y+1SMnwMr7kNhffF/u6fnX2riwyHglChvNvPTn9KE2BwLwBbPgewE5U8L+hJwRsKEv8c28L3WtjcGSBBrpxTOig21LBfd5lDhPHExhHTAjWtVPVt0pYWqvitgHJ5efXOqve19UqR1SuI9JCpwRsLwq9jPWmzCZ5Sdxw=
