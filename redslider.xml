@@ -10,7 +10,7 @@
 	<version>2.0.40</version>
 	<description>COM_REDSLIDER_DESCRIPTION</description>
 	<scriptfile>install.php</scriptfile>
-	<redcore version="1.6.14" />
+	<redcore version="1.7.0" />
 
 	<install folder="component/admin">
 		<sql>

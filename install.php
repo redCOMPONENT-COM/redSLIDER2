@@ -13,7 +13,7 @@ if (!class_exists('Com_RedcoreInstallerScript'))
 {
 	$searchPaths = array(
 		// Install
-		dirname(__FILE__) . '/redCORE',
+		dirname(__FILE__) . '/redCORE/extensions',
 		// Discover install
 		JPATH_ADMINISTRATOR . '/components/com_redcore'
 	);
