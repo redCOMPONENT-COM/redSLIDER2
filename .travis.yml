@@ -1,20 +1,17 @@
 language: php
 php:
-- 5.4
+- 5.5
 before_script:
 - phpenv rehash
 # prepare redCORE .travis scripts
 - git submodule update --init --recursive
-- cd redCORE
-- composer update
-- cd ..
 - composer install
 
 script:
-- php redCORE/.travis/misseddebugcodechecker.php component/ libraries/ modules/ plugins/
-- php redCORE/.travis/phppec.php component/ libraries/ modules/ plugins/
-- php redCORE/.travis/phpmd.php component/ libraries/ modules/ plugins/
-- php redCORE/.travis/phpcs.php
+- php .travis/misseddebugcodechecker.php component libraries modules plugins
+- php .travis/phppec.php component libraries modules plugins
+- php .travis/phpmd.php
+- php .travis/phpcs.php
 notifications:
   slack:
     secure: QMZp50B4Y+1SMnwMr7kNhffF/u6fnX2riwyHglChvNvPTn9KE2BwLwBbPgewE5U8L+hJwRsKEv8c28L3WtjcGSBBrpxTOig21LBfd5lDhPHExhHTAjWtVPVt0pYWqvitgHJ5efXOqve19UqR1SuI9JCpwRsLwq9jPWmzCZ5Sdxw=
