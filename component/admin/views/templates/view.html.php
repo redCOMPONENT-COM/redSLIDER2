@@ -32,17 +32,18 @@ class RedsliderViewTemplates extends RedsliderView
 		$app = JFactory::getApplication();
 		$app->setUserState('com_redslider.global.template.section', null);
 
-		$this->items			= $this->get('Items');
-		$this->state			= $this->get('State');
-		$this->pagination		= $this->get('Pagination');
-		$this->filterForm		= $this->get('Form');
-		$this->activeFilters	= $this->get('ActiveFilters');
+		$this->items         = $this->get('Items');
+		$this->state         = $this->get('State');
+		$this->pagination    = $this->get('Pagination');
+		$this->filterForm    = $this->get('Form');
+		$this->activeFilters = $this->get('ActiveFilters');
 
 		// Get the section name
 		foreach ($this->items as $key => $item)
 		{
 			JPluginHelper::importPlugin('redslider_sections');
 			$dispatcher = RFactory::getDispatcher();
+
 			$list = $dispatcher->trigger('getSectionNameById', array($item->section));
 			$item->sectionName = "";
 
