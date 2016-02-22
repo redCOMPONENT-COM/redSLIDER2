@@ -92,10 +92,18 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 				<th width="30" nowrap="nowrap">
 					<?php echo JHTML::_('rsearchtools.sort', 'JSTATUS', 's.published', $listDirn, $listOrder); ?>
 				</th>
+				<?php if ($search == ''): ?>
+				<th width="30">
+					<?php echo JHTML::_('rsearchtools.sort', '<i class=\'icon-sort\'></i>', 's.ordering', $listDirn, $listOrder); ?>
+				</th>
+				<?php endif; ?>
 				<th width="1" align="center">
 				</th>
 				<th class="title" width="auto">
 					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_SLIDE', 's.title', $listDirn, $listOrder); ?>
+				</th>
+				<th width="10">
+					<?php echo JText::_('COM_REDSLIDER_SLIDE_SECTION') ?>
 				</th>
 				<th class="title" width="auto">
 					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_GALLERY', 'gallery_title', $listDirn, $listOrder); ?>
@@ -103,11 +111,6 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 				<th class="title" width="auto">
 					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_TEMPLATE', 'template_title', $listDirn, $listOrder); ?>
 				</th>
-				<?php if ($search == ''): ?>
-				<th width="auto">
-					<?php echo JHtml::_('rgrid.sort', null, 's.ordering', $listDirn, $listOrder, null, 'asc', '', 'icon-sort'); ?>
-				</th>
-				<?php endif; ?>
 				<th width="10" nowrap="nowrap">
 					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_ID', 's.id', $listDirn, $listOrder); ?>
 				</th>
@@ -118,14 +121,14 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 		<?php $n = count($this->items); ?>
 
 		<?php foreach ($this->items as $i => $row) :
-			$canCreate		= $user->authorise('core.create',		'com_redslider');
-			$canEdit		= $user->authorise('core.edit',			'com_redslider');
-			$canCheckin		= $user->authorise('core.manage',		'com_checkin') || $row->checked_out == $userId || $row->checked_out == 0;
-			$canEditOwn		= $user->authorise('core.edit.own',		'com_redslider');
-			$canEditState	= $user->authorise('core.edit.state',		'com_redslider');
-			$canChange		= $canEditState && $canCheckin;
-			$editor 		= JFactory::getUser($row->checked_out);
-			$orderkey = array_search($row->id, $this->ordering[0]);
+			$canCreate    = $user->authorise('core.create', 'com_redslider');
+			$canEdit      = $user->authorise('core.edit', 'com_redslider');
+			$canCheckin   = $user->authorise('core.manage', 'com_checkin') || $row->checked_out == $userId || $row->checked_out == 0;
+			$canEditOwn   = $user->authorise('core.edit.own', 'com_redslider');
+			$canEditState = $user->authorise('core.edit.state', 'com_redslider');
+			$canChange    = $canEditState && $canCheckin;
+			$editor       = JFactory::getUser($row->checked_out);
+			$orderkey     = array_search($row->id, $this->ordering[0]);
 			?>
 
 			<tr>
@@ -142,6 +145,14 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 						<?php endif; ?>
 					<?php endif; ?>
 				</td>
+				<?php if ($search == ''): ?>
+				<td class="order nowrap center">
+					<span class="sortable-handler hasTooltip <?php echo ($saveOrder) ? '' : 'inactive'; ?>">
+					<i class="icon-move"></i>
+					</span>
+					<input type="text" style="display:none" name="order[]" value="<?php echo $orderkey + 1;?>" class="text-area-order" />
+				</td>
+				<?php endif; ?>
 				<td>
 					<?php if ($row->checked_out) : ?>
 						<?php
@@ -156,16 +167,9 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 						<?php echo $this->escape($row->title); ?>
 					<?php endif; ?>
 				</td>
+				<td><?php echo JText::_('PLG_' . $row->section . '_NAME') ?></td>
 				<td><?php echo $row->gallery_title; ?></td>
 				<td><?php echo $row->template_title; ?></td>
-				<?php if ($search == ''): ?>
-				<td class="order nowrap center">
-					<span class="sortable-handler hasTooltip <?php echo ($saveOrder) ? '' : 'inactive'; ?>">
-					<i class="icon-move"></i>
-					</span>
-					<input type="text" style="display:none" name="order[]" value="<?php echo $orderkey + 1;?>" class="text-area-order" />
-				</td>
-				<?php endif; ?>
 				<td>
 					<?php echo $row->id; ?>
 				</td>
@@ -177,7 +181,5 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 	<?php endif; ?>
 	<input type="hidden" name="task" value=""/>
 	<input type="hidden" name="boxchecked" value="0"/>
-	<input type="hidden" name="filter_order" value="<?php echo $listOrder; ?>"/>
-	<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>"/>
 	<?php echo JHtml::_('form.token'); ?>
 </form>

@@ -56,6 +56,8 @@ class RedsliderModelSlides extends RModelList
 				's.ordering', 'ordering',
 				's.published', 'published',
 				's.gallery_id', 'gallery_id',
+				'g.title', 'gallery_title',
+				't.title', 'template_title',
 				's.section', 'section',
 				's.id',
 			);
