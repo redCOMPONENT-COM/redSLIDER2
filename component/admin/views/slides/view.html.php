@@ -32,11 +32,15 @@ class RedsliderViewSlides extends RedsliderView
 		$app = JFactory::getApplication();
 		$app->setUserState('com_redslider.global.slide.section', null);
 
-		$this->items			= $this->get('Items');
-		$this->state			= $this->get('State');
-		$this->pagination		= $this->get('Pagination');
-		$this->filterForm		= $this->get('Form');
-		$this->activeFilters	= $this->get('ActiveFilters');
+		// Add form field from plugin section
+		JPluginHelper::importPlugin('redslider_sections');
+		$dispatcher = RFactory::getDispatcher();
+
+		$this->items         = $this->get('Items');
+		$this->state         = $this->get('State');
+		$this->pagination    = $this->get('Pagination');
+		$this->filterForm    = $this->get('Form');
+		$this->activeFilters = $this->get('ActiveFilters');
 
 		// Items ordering
 		$this->ordering = array();
@@ -74,9 +78,9 @@ class RedsliderViewSlides extends RedsliderView
 	{
 		$user = JFactory::getUser();
 
-		$firstGroup = new RToolbarButtonGroup;
+		$firstGroup  = new RToolbarButtonGroup;
 		$secondGroup = new RToolbarButtonGroup;
-		$thirdGroup = new RToolbarButtonGroup;
+		$thirdGroup  = new RToolbarButtonGroup;
 
 		if ($user->authorise('core.create', 'com_redslider'))
 		{
