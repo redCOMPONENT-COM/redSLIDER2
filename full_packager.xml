@@ -72,7 +72,8 @@
             </fileset>
         </zip>
         <delete dir="${tmpdir}/${extension}-${version}-plugins"  />
-        <delete file="${tmpdir}/${extension}-v${version}_${joomla.version}.zip"  />
+        <delete file="${tmpdir}/${extension}-v${version}.zip"  />
+        <delete dir="${tmpdir}" />
     </target>
 
     <target name="dist" depends="build">
@@ -109,11 +110,6 @@
         <property
                 name="extension"
                 value="redslider"
-                override="true"/>
-
-        <property
-                name="joomla.version"
-                value="j3_and_j25"
                 override="true"/>
 
         <if>

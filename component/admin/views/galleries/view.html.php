@@ -29,11 +29,11 @@ class RedsliderViewGalleries extends RedsliderView
 	 */
 	public function display($tpl = null)
 	{
-		$this->items			= $this->get('Items');
-		$this->state			= $this->get('State');
-		$this->pagination		= $this->get('Pagination');
-		$this->filterForm		= $this->get('Form');
-		$this->activeFilters	= $this->get('ActiveFilters');
+		$this->items         = $this->get('Items');
+		$this->state         = $this->get('State');
+		$this->pagination    = $this->get('Pagination');
+		$this->filterForm    = $this->get('Form');
+		$this->activeFilters = $this->get('ActiveFilters');
 
 		parent::display($tpl);
 	}
@@ -60,9 +60,9 @@ class RedsliderViewGalleries extends RedsliderView
 	{
 		$user = JFactory::getUser();
 
-		$firstGroup = new RToolbarButtonGroup;
+		$firstGroup  = new RToolbarButtonGroup;
 		$secondGroup = new RToolbarButtonGroup;
-		$thirdGroup = new RToolbarButtonGroup;
+		$thirdGroup  = new RToolbarButtonGroup;
 
 		if ($user->authorise('core.create', 'com_redslider'))
 		{

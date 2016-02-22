@@ -1,6 +1,6 @@
 {
   "name"         : "redslider",
-  "releasesDir"  : "./releases",
+  "releasesDir"  : "./packages",
   "joomlaVersion": "j25-j3x",
   "packageFiles" :[
     "redslider.xml",
@@ -11,6 +11,7 @@
     "modules/site/mod_redslider/**",
     "plugins/redslider_sections/section_article/**",
     "plugins/redslider_sections/section_standard/**",
-    "plugins/redslider_sections/section_video/**"
+    "plugins/redslider_sections/section_video/**",
+    "./redCORE/extensions/**/*"
   ]
 }
