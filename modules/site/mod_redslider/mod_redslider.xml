@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="2.5" client="site" method="upgrade">
 	<name>MOD_REDSLIDER</name>
-	<version>2.0.35</version>
-	<creationDate>October 2014</creationDate>
+	<version>2.0.42</version>
+	<creationDate>February 2016</creationDate>
 	<author>redCOMPONENT.com</author>
 	<authorEmail>email@redcomponent.com</authorEmail>
 	<copyright>redCOMPONENT.com</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<description>MOD_REDSLIDER_DESC</description>
-	<redcore version="1.6.9" />
+	<redcore version="1.8.0" />
 	<files>
 		<filename module="mod_redslider">helper.php</filename>
 		<filename module="mod_redslider">mod_redslider.php</filename>

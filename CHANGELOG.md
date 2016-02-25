@@ -1,5 +1,20 @@
 # Changelog
 
+#### 2.0.42
+
+* RSLIDER-149 #Comment Update redCORE 1.8.0 *2016-02-25*
+
+
+#### 2.0.41
+
+* RSLIDER-146 #Comment [Fix] Templates sort feature in backend *2016-02-22*
+* RSLIDER-145 #Comment [Fix] Slides manage page in admin *2016-02-22*
+* RSLIDER-144 #Comment [Fix] Sort feature does not work in Galleries manage page *2016-02-22*
+* [Fix] Gulp file error *2016-02-22*
+* RSLIDER-143 #Comment [Fix] redCORE not install when clean install *2016-02-22*
+* RSLIDER-143 #Comment Update Gulp/Phing script for work with redCORE 1.7.0 *2016-02-22*
+
+
 #### 2.0.32
 
 * Allow releaser to push latest changes before tagging *2015-08-10*
