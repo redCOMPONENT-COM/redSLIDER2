@@ -1,5 +1,10 @@
 # Changelog
 
+#### 2.0.42
+
+* RSLIDER-149 #Comment Update redCORE 1.8.0 *2016-02-25*
+
+
 #### 2.0.41
 
 * RSLIDER-146 #Comment [Fix] Templates sort feature in backend *2016-02-22*
