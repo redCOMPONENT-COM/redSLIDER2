@@ -1,7 +1,6 @@
 .template_tags
 {
 	clear: both;
-	margin: 40px 0px;
 }
 
 .template_tags ul
@@ -16,19 +15,15 @@
 	font-size: 12px;
 }
 
-.template_tags ul li span
-{
-	float: left;
-	display: block;
-	border-radius: 5px;
-	padding: 0px 5px;
-	color: #000;
-	font-size: 14px;
-}
-
-.template_tags ul li span em
+.template_tags ul li .btn-tag em
 {
 	color: #f00;
+	font-style: normal;
+}
+
+.template_tags a.accordion-toggle:hover
+{
+	text-decoration: none;
 }
 
 .category_gmap_field
