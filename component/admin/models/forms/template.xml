@@ -38,6 +38,7 @@
 
 		<field name="content"
 			type="editor"
+			editor="codemirror|tinymce"
 			default=""
 			label="COM_REDSLIDER_TEMPLATE_CONTENT"
 			description="COM_REDSLIDER_TEMPLATE_CONTENT_DESC"
