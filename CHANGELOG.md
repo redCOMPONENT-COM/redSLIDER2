@@ -1,5 +1,10 @@
 # Changelog
 
+#### 2.0.43
+
+* RSLIDER-147 #comment improve template edit backend *2016-03-30*
+
+
 #### 2.0.42
 
 * RSLIDER-149 #Comment Update redCORE 1.8.0 *2016-02-25*
