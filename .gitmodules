@@ -1,3 +1,6 @@
-[submodule ".travis/phpcs/Joomla"]
-	path = .travis/phpcs/Joomla
+[submodule "build/redCORE"]
+	path = build/redCORE
+	url = https://travisredweb:travisredweb2013github@github.com/redCOMPONENT-COM/redCORE
+[submodule "tests/.travis/phpcs/joomla"]
+	path = tests/.travis/phpcs/joomla
 	url = https://github.com/joomla/coding-standards

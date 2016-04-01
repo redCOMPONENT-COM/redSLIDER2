@@ -1,0 +1,18 @@
+{
+    "name": "redcomponent/redslider2",
+    "description": "carroussel extension for joomla that displays images, videos, articles, redshop products, events...",
+    "require-dev": {
+        "codegyre/robo": "^0.5.3",
+        "phing/phing": "^2.11",
+        "joomla/github": "^1.3",
+        "squizlabs/php_codesniffer": "1.*",
+        "phpmd/phpmd": "*"
+    },
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Ronni",
+            "email": "ronni@redweb.dk"
+        }
+    ]
+}

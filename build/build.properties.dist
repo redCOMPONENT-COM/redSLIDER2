@@ -1,0 +1,12 @@
+# Properties files are configuration files used by PHING scripts containing:
+# key=value
+# more info at: https://redweb.atlassian.net/wiki/display/RWEB/Using+PHING+for+packaging+and+testing+an+extension
+
+# Extension details:
+comp.name=redslider
+
+# Testing Joomla site localhost folder used by build.xml
+www.dir=
+
+# Folder to create the extension .zip build package used by component_packager.xml
+package.dir=

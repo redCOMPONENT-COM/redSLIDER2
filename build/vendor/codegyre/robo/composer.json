@@ -1,0 +1,32 @@
+{
+    "name": "codegyre/robo",
+    "description": "Modern task runner",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Davert",
+            "email": "davert.php@resend.cc"
+        }
+    ],
+    "autoload":{
+        "psr-4":{
+            "Robo\\":"src"
+        }
+    },
+    "bin":["robo"],
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/finder": "~2.5",
+        "symfony/console": "~2.5",
+        "symfony/process": "~2.5",
+        "symfony/filesystem": "~2.5",
+        "henrikbjorn/lurker": "1.0.*@dev"
+    },
+    "require-dev": {
+        "patchwork/jsqueeze": "~1.0",
+        "natxet/CssMin": "~3.0",
+        "codeception/base": "~2.1",
+        "codeception/verify": "0.2.*",
+        "codeception/aspect-mock": "0.5.*"
+    }
+}
