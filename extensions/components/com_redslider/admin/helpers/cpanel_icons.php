@@ -63,7 +63,7 @@ class RedsliderHelperCpanelIcons extends JObject
 					"link"      => 'http://wiki.redcomponent.com/index.php?title=RedSLIDER',
 					"icon"      => "icon-question-sign",
 					"title"     => JText::_('COM_REDSLIDER_CPANEL_HELP_LABEL'),
-                    'target'    => '_blank'
+					'target'    => '_blank'
 				)
 		);
 

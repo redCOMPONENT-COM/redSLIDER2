@@ -103,7 +103,15 @@ class RedSliderModelCpanel extends RModelAdmin
 		$templateTable->title = 'Template Article';
 		$templateTable->section = 'SECTION_ARTICLE';
 		$templateTable->published = 1;
-		$templateTable->content = '<div class="articleSlide"><div class="slideTitle"><h3><a href="{article_link}">{article_title}</a></h3></div><div class="slideText">{article_introtext|250}</div></div>';
+		$templateTable->content = '<div class="articleSlide">
+				<div class="slideTitle">
+					<h3>
+						<a href="{article_link}">{article_title}</a>
+					</h3>
+				</div>
+				<div class="slideText">
+					{article_introtext|250}
+				</div></div>';
 		$templateTable->store();
 		$templateId = (int) $templateTable->id;
 		/*
@@ -125,7 +133,17 @@ class RedSliderModelCpanel extends RModelAdmin
 		$templateTable->title = 'Template Standard';
 		$templateTable->section = 'SECTION_STANDARD';
 		$templateTable->published = 1;
-		$templateTable->content = '<div class="eachSlide"><div class="slideTitle"><h3><a href="{standard_link}">{standard_linktext}</a></h3></div><div class="slideText">{standard_description}</div></div>';
+		$templateTable->content = '<div class="eachSlide">
+			<div class="slideTitle">
+				<h3>
+					<a href="{standard_link}">
+						{standard_linktext}
+					</a>
+				</h3>
+			</div>
+			<div class="slideText">
+				{standard_description}
+			</div></div>';
 		$templateTable->store();
 		$templateId = (int) $templateTable->id;
 		/*
