@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="RedSLIDER2" default="site" basedir=".">
+    <includepath classpath="./phingtasks" />
+    <taskdef name="lessc" classname="rych.tasks.LessCompilerTask" />
+    <taskdef name="yuic" classname="rych.tasks.YuiCompressorTask" />
+
+    <target name="site" depends="init, redcore, component" description="Do a full build"/>
+
+    <!-- Do initialization stuff -->
+    <target name="init">
+        <property file="build.properties" override="true"/>
+        <property name="src" value="./.."/>
+
+        <if>
+            <not>
+                <isset property="comp.name" />
+            </not>
+            <then>
+                <fail message="Component not specified, specify comp.name in build.properties file"/>
+            </then>
+        </if>
+        <if>
+            <not>
+                <isset property="www.dir" />
+            </not>
+            <then>
+                <fail message="www folder not specified, specify www.dir in build.properties file"/>
+            </then>
+        </if>
+    </target>
+
+    <target name="redcore">
+        <phing inheritAll="false" phingfile="${src}/build/build.xml" target="site" dir="${src}/build/redCORE/build">
+            <property name="comp.name" value="redcore" />
+            <property name="www.dir" value="${www.dir}" />
+        </phing>
+    </target>
+
+    <target name="component" description="Copies files to a existing joomla site">
+        <echo message="---------------- || COMPONENT || ----------------"/>
+
+        <!-- Manifest & install script -->
+        <echo message="Copying manifest..."/>
+        <copy file="${src}/extensions/${comp.name}.xml"
+              tofile="${www.dir}/administrator/components/com_${comp.name}/${comp.name}.xml" overwrite="true">
+            <!-- Replace extension folders in the manifest for proper discovery -->
+            <filterchain>
+                <replaceregexp>
+                    <regexp pattern="folder=&quot;admin&quot;" replace="folder=&quot;administrator/components/com_${comp.name}&quot;"/>
+                </replaceregexp>
+                <replaceregexp>
+                    <regexp pattern="folder=&quot;site&quot;" replace="folder=&quot;components/com_${comp.name}&quot;"/>
+                </replaceregexp>
+            </filterchain>
+        </copy>
+        <copy file="${src}/extensions/install.php"
+              tofile="${www.dir}/administrator/components/com_${comp.name}/install.php" overwrite="true"/>
+
+        <!-- Backend component -->
+        <copy todir="${www.dir}/administrator/components/com_${comp.name}" overwrite="true">
+            <fileset dir="${src}/extensions/components/com_${comp.name}/admin">
+                <include name="**"/>
+            </fileset>
+        </copy>
+
+        <!-- Libraries -->
+        <copy todir="${www.dir}/libraries" overwrite="true">
+            <fileset dir="${src}/extensions/libraries">
+                <include name="**"/>
+            </fileset>
+        </copy>
+
+        <!-- redSLIDER2 - Library Manifest -->
+        <copy file="${src}/extensions/libraries/redslider/redslider.xml"
+              tofile="${www.dir}/administrator/manifests/libraries/redslider.xml" overwrite="true"/>
+
+        <!-- Media -->
+        <if>
+            <available file="${src}/build/media/components/com_${comp.name}/less" type="dir" />
+            <then>
+                <echo msg="redSLIDER2: Compile LESS to CSS" />
+                <mkdir dir="${www.dir}/media/com_${comp.name}/css/.tmp"/>
+                <lessc targetdir="${www.dir}/media/com_${comp.name}/css/.tmp">
+                    <fileset dir="${src}/build/media/components/com_${comp.name}/less">
+                        <include name="*.less" />
+                    </fileset>
+                </lessc>
+                <!-- Compress CSS files -->
+                <yuic targetdir="${www.dir}/media/com_${comp.name}/css/.tmp">
+                    <fileset dir="${www.dir}/media/com_${comp.name}/css/.tmp">
+                        <include name="*.css" />
+                    </fileset>
+                </yuic>
+                <foreach param="dirname" absparam="absname" target="yui-compress-css">
+                    <fileset dir="${www.dir}/media/com_${comp.name}/css/.tmp">
+                        <type type="dir" />
+                        <depth max="99" min="0" />
+                    </fileset>
+                </foreach>
+                <copy todir="${www.dir}/media/com_${comp.name}/css" overwrite="true">
+                    <fileset dir="${www.dir}/media/com_${comp.name}/css/.tmp">
+                        <include name="**" />
+                    </fileset>
+                </copy>
+                <delete dir="${www.dir}/media/com_${comp.name}/css/.tmp"/>
+            </then>
+        </if>
+        <copy todir="${www.dir}/media/com_${comp.name}" overwrite="true">
+            <fileset dir="${src}/build/media/components/com_${comp.name}">
+                <include name="**" />
+                <include name=".*" />
+                <exclude name="less" />
+                <exclude name="less/**" />
+            </fileset>
+        </copy>
+
+        <!-- Web services -->
+        <if>
+            <available file="${src}/extensions/webservices/com_${comp.name}" type="dir" />
+            <then>
+                <copy todir="${www.dir}/media/redcore/webservices" overwrite="true">
+                    <fileset dir="${src}/extensions/webservices/com_${comp.name}">
+                        <include name="**"/>
+                    </fileset>
+                </copy>
+            </then>
+        </if>
+
+        <!-- Modules - Site -->
+        <echo msg="Copying Site Modules..."/>
+        <foreach param="dirname" absparam="absname" target="module-process">
+            <fileset dir="${src}/extensions/modules/site">
+                <type type="dir" />
+                <depth max="0" min="0" />
+            </fileset>
+        </foreach>
+        <copy todir="${www.dir}/modules" overwrite="true">
+            <fileset dir="${src}/extensions/modules/site">
+                <include name="**"/>
+            </fileset>
+        </copy>
+
+        <!-- Plugins -->
+        <copy todir="${www.dir}/plugins" overwrite="true">
+            <fileset dir="${src}/extensions/plugins">
+                <include name="**"/>
+                <exclude name="*/less"/>
+                <exclude name="*/less/**"/>
+            </fileset>
+        </copy>
+
+        <!-- Loop through plugins groups -->
+        <foreach param="group_name" target="plugin_loop">
+            <fileset dir="${src}/extensions/plugins">
+                <type type="dir" />
+                <depth max="0" min="0" />
+            </fileset>
+        </foreach>
+
+        <!-- phpunit.xml -->
+        <if>
+            <available file="${src}/tests/phpunit.xml" type="file" />
+            <then>
+                <copy file="${src}/tests/phpunit.xml" tofile="${www.dir}/phpunit.xml" overwrite="true"/>
+            </then>
+        </if>
+
+        <!-- Admin template -->
+        <if>
+            <available file="${src}/extensions/templates" type="dir" />
+            <then>
+                <copy todir="${www.dir}/administrator/templates" overwrite="true">
+                    <fileset dir="${src}/extensions/templates">
+                        <include name="**"/>
+                    </fileset>
+                </copy>
+            </then>
+        </if>
+    </target>
+
+    <target name="plugin_loop" description="Loops through plugins folders inside groups">
+        <mkdir dir="${www.dir}/plugins/${group_name}" />
+
+        <!-- Loop through plugins -->
+        <foreach param="plugin_name" target="plugin-process">
+            <fileset dir="${src}/extensions/plugins/${group_name}">
+                <type type="dir" />
+                <depth max="0" min="0" />
+            </fileset>
+        </foreach>
+    </target>
+
+    <target name="yui-compress-css" description="Compress CSS files using YUI Compressor">
+        <property name="compress-source-dir" value="${compress-source-dir}/${dirname}" override="true" />
+        <property name="compress-target-dir" value="${compress-target-dir}/${dirname}" override="true" />
+        <trycatch>
+            <try>
+                <yuic targetdir="${compress-target-dir}">
+                    <fileset dir="${compress-source-dir}">
+                        <include name="*.css" />
+                        <exclude name="*.min.css" />
+                    </fileset>
+                </yuic>
+            </try>
+            <catch>
+            </catch>
+        </trycatch>
+    </target>
+    <target name="module-process" description="Modules - Compiler LESS to CSS, minified and copy others media file">
+        <echo msg="Working Module: ${dirname}" />
+        <!-- Working on LESS if available -->
+        <if>
+            <available file="${src}/build/media/modules/site/${dirname}/less" type="dir" />
+            <then>
+                <trycatch>
+                    <try>
+                        <!-- Compiler LESS to CSS -->
+                        <lessc targetdir="${www.dir}/media/${dirname}/css">
+                            <fileset dir="${src}/build/media/modules/site/${dirname}/less">
+                                <include name="*.less" />
+                            </fileset>
+                        </lessc>
+                        <!-- Create minified CSS for these file -->
+                        <yuic targetdir="${www.dir}/media/${dirname}/css">
+                            <fileset dir="${www.dir}/media/${dirname}/css">
+                                <include name="*.css" />
+                                <exclude name="*.min.css" />
+                            </fileset>
+                        </yuic>
+                    </try>
+                    <catch>
+                    </catch>
+                </trycatch>
+            </then>
+        </if>
+        <!-- Copy other media files -->
+        <if>
+            <available file="${src}/build/media/modules/site/${dirname}" type="dir" />
+            <then>
+                <copy todir="${www.dir}/media/${dirname}">
+                    <fileset dir="${src}/build/media/modules/site/${dirname}">
+                        <include name="**" />
+                        <exclude name=".*" />
+                        <exclude name="less" />
+                        <exclude name="less/**" />
+                    </fileset>
+                </copy>
+            </then>
+        </if>
+    </target>
+    <target name="plugin-process" description="Plugins - Compiler LESS to CSS, minified and copy others media file">
+        <echo msg="Working Plugin: ${group_name}_${plugin_name}" />
+        <!-- Working on LESS if available -->
+        <if>
+            <available file="${src}/build/media/plugins/${group_name}/${plugin_name}/less" type="dir" />
+            <then>
+                <trycatch>
+                    <try>
+                        <!-- Compiler LESS to CSS -->
+                        <lessc targetdir="${www.dir}/media/${group_name}/${plugin_name}/css">
+                            <fileset dir="${src}/build/media/plugins/${group_name}/${plugin_name}/less">
+                                <include name="*.less" />
+                            </fileset>
+                        </lessc>
+                        <!-- Create minified CSS for these file -->
+                        <yuic targetdir="${www.dir}/media/${group_name}/${plugin_name}/css">
+                            <fileset dir="${www.dir}/media/${group_name}/${plugin_name}/css">
+                                <include name="*.css" />
+                                <exclude name="*.min.css" />
+                            </fileset>
+                        </yuic>
+                    </try>
+                    <catch>
+                    </catch>
+                </trycatch>
+            </then>
+        </if>
+        <!-- Copy other media files -->
+        <if>
+            <available file="${src}/build/media/plugins/${group_name}/${plugin_name}" type="dir" />
+            <then>
+                <copy todir="${www.dir}/${group_name}/${plugin_name}">
+                    <fileset dir="${src}/build/media/plugins/${group_name}/${plugin_name}">
+                        <include name="**" />
+                        <exclude name=".*" />
+                        <exclude name="less" />
+                        <exclude name="less/**" />
+                    </fileset>
+                </copy>
+            </then>
+        </if>
+    </target>
+</project>

@@ -1,0 +1,15 @@
+{
+    "cli"           : ["redcore"],
+    "components"    : ["redcore", "redslider"],
+    "libraries"     : ["redcore", "redslider"],
+    "media"         : ["redcore", "redslider"],
+    "modules"       : {
+        "frontend"  : ["redcore_langswitcher", "redslider"],
+        "backend"   : []
+    },
+    "plugins" : {
+        "system"              : ["redcore", "mvcoverride"],
+        "redslider_sections"  : ["section_article", "section_redevent", "section_redform", "section_redshop", "section_standard", "section_video"]
+    },
+    "webservices"   : ["redcore"]
+}
