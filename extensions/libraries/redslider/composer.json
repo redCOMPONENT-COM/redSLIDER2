@@ -1,0 +1,8 @@
+{
+    "name": "lib_redslider",
+    "require": {
+        "monolog/monolog": "^1.17",
+        "imagine/imagine": "^0.6.3",
+        "ps/image-optimizer": "^1.0"
+    }
+}
