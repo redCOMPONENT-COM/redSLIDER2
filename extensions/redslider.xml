@@ -12,18 +12,18 @@
     <scriptfile>install.php</scriptfile>
     <redcore version="1.8.0" />
 
-    <install folder="component/admin">
+    <install folder="components/com_redslider/admin">
         <sql>
             <file driver="mysql" charset="utf8">sql/install/mysql/install.sql</file>
             <file driver="mysql" charset="utf8">sql/install/mysql/data.sql</file>
         </sql>
     </install>
-    <uninstall folder="component/admin">
+    <uninstall folder="components/com_redslider/admin">
         <sql>
             <file driver="mysql" charset="utf8">sql/install/mysql/uninstall.sql</file>
         </sql>
     </uninstall>
-    <update folder="component/admin">
+    <update folder="components/com_redslider/admin">
         <schemas>
             <schemapath type="mysql">sql/updates/mysql</schemapath>
         </schemas>
@@ -38,7 +38,7 @@
 
     <administration>
         <menu img="../media/com_redslider/images/redslider16.png">COM_REDSLIDER</menu>
-        <files folder="component/admin">
+        <files folder="components/com_redslider/admin">
             <folder>controllers</folder>
             <folder>helpers</folder>
             <folder>layouts</folder>
@@ -52,7 +52,7 @@
             <filename>index.html</filename>
             <filename>redslider.php</filename>
         </files>
-        <languages folder="component/admin/language">
+        <languages folder="components/com_redslider/admin/language">
             <language tag="en-GB">en-GB/en-GB.com_redslider.ini</language>
             <language tag="en-GB">en-GB/en-GB.com_redslider.sys.ini</language>
         </languages>

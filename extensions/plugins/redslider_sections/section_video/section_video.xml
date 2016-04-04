@@ -18,7 +18,7 @@
 		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_video.sys.ini</language>
 	</languages>
 	<media destination="redslider_sections/section_video" folder="media/redslider_sections">
-       <folder>css</folder>
+       <folder>media</folder>
     </media>
 	<config>
 		<fields name="params" addfieldpath="/libraries/redslider/form/fields">
