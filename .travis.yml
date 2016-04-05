@@ -1,17 +1,21 @@
 language: php
+env:
+  global:
+      - GITHUB_TOKEN=4d92f9e8be0eddc0e54445ff45bf1ca5a846b609
 php:
 - 5.5
 before_script:
 - phpenv rehash
 # prepare redCORE .travis scripts
 - git submodule update --init --recursive
-- composer install
 
 script:
-- php .travis/misseddebugcodechecker.php component libraries modules plugins
-- php .travis/phppec.php component libraries modules plugins
-- php .travis/phpmd.php
-- php .travis/phpcs.php
+- cd tests
+- composer config -g github-oauth.github.com $GITHUB_TOKEN
+- composer install --prefer-dist
+- vendor/bin/robo check:for-parse-errors
+- vendor/bin/robo check:for-missed-debug-code
+- vendor/bin/robo check:codestyle
 notifications:
   slack:
     secure: QMZp50B4Y+1SMnwMr7kNhffF/u6fnX2riwyHglChvNvPTn9KE2BwLwBbPgewE5U8L+hJwRsKEv8c28L3WtjcGSBBrpxTOig21LBfd5lDhPHExhHTAjWtVPVt0pYWqvitgHJ5efXOqve19UqR1SuI9JCpwRsLwq9jPWmzCZ5Sdxw=
