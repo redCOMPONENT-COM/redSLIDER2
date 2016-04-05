@@ -180,65 +180,131 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 			}
 
 			$params = new JRegistry($slide->params);
+
 			$id = (int) $params->get('article_id', 0);
 
 			if (!empty($id))
 			{
 				$articleModel = RModel::getFrontInstance('Article', array('ignore_request' => false), 'com_content');
-				$article = $articleModel->getItem($id);
-				$matches = array();
-
-				if (preg_match_all('/{article_title[^}]*}/i', $content, $matches) > 0)
+				$countArticle = $this->countArticle();
+				
+				if ($countArticle > 0)
 				{
-					foreach ($matches as $match)
+					$article = $articleModel->getItem($id);
+
+					$matches = array();
+
+					if (preg_match_all('/{article_title[^}]*}/i', $content, $matches) > 0)
 					{
-						if (count($match))
+						foreach ($matches as $match)
 						{
-							$content = JString::str_ireplace($match[0], $article->title, $content);
+							if (count($match))
+							{
+								$content = JString::str_ireplace($match[0], $article->title, $content);
+							}
+						}
+					}
+
+					if (preg_match_all('/{article_introtext[^}]*}/i', $content, $matches) > 0)
+					{
+						foreach ($matches as $match)
+						{
+							if (count($match))
+							{
+								$content = RedsliderHelper::replaceTagsHTML($match[0], $article->introtext, $content);
+							}
+						}
+					}
+
+					if (preg_match_all('/{article_fulltext[^}]*}/i', $content, $matches) > 0)
+					{
+						foreach ($matches as $match)
+						{
+							if (count($match))
+							{
+								$content = RedsliderHelper::replaceTagsHTML($match[0], $article->fulltext, $content);
+							}
+						}
+					}
+
+					if (preg_match_all('/{article_date[^}]*}/i', $content, $matches) > 0)
+					{
+						foreach ($matches as $match)
+						{
+							if (count($match))
+							{
+								$content = JString::str_ireplace($match[0], $article->created, $content);
+							}
+						}
+					}
+
+					if (preg_match_all('/{article_link[^}]*}/i', $content, $matches) > 0)
+					{
+						foreach ($matches as $match)
+						{
+							if (count($match))
+							{
+								$content = JString::str_ireplace($match[0], JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid)), $content);
+							}
 						}
 					}
 				}
-
-				if (preg_match_all('/{article_introtext[^}]*}/i', $content, $matches) > 0)
+				else
 				{
-					foreach ($matches as $match)
+					$matches = array();
+
+					if (preg_match_all('/{article_title[^}]*}/i', $content, $matches) > 0)
 					{
-						if (count($match))
+						foreach ($matches as $match)
 						{
-							$content = RedsliderHelper::replaceTagsHTML($match[0], $article->introtext, $content);
+							if (count($match))
+							{
+								$content = JString::str_ireplace($match[0], "", $content);
+							}
 						}
 					}
-				}
 
-				if (preg_match_all('/{article_fulltext[^}]*}/i', $content, $matches) > 0)
-				{
-					foreach ($matches as $match)
+					if (preg_match_all('/{article_introtext[^}]*}/i', $content, $matches) > 0)
 					{
-						if (count($match))
+						foreach ($matches as $match)
 						{
-							$content = RedsliderHelper::replaceTagsHTML($match[0], $article->fulltext, $content);
+							if (count($match))
+							{
+								$content = RedsliderHelper::replaceTagsHTML($match[0], "", $content);
+							}
 						}
 					}
-				}
 
-				if (preg_match_all('/{article_date[^}]*}/i', $content, $matches) > 0)
-				{
-					foreach ($matches as $match)
+					if (preg_match_all('/{article_fulltext[^}]*}/i', $content, $matches) > 0)
 					{
-						if (count($match))
+						foreach ($matches as $match)
 						{
-							$content = JString::str_ireplace($match[0], $article->created, $content);
+							if (count($match))
+							{
+								$content = RedsliderHelper::replaceTagsHTML($match[0], "", $content);
+							}
 						}
 					}
-				}
 
-				if (preg_match_all('/{article_link[^}]*}/i', $content, $matches) > 0)
-				{
-					foreach ($matches as $match)
+					if (preg_match_all('/{article_date[^}]*}/i', $content, $matches) > 0)
 					{
-						if (count($match))
+						foreach ($matches as $match)
 						{
-							$content = JString::str_ireplace($match[0], JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid)), $content);
+							if (count($match))
+							{
+								$content = JString::str_ireplace($match[0], "", $content);
+							}
+						}
+					}
+
+					if (preg_match_all('/{article_link[^}]*}/i', $content, $matches) > 0)
+					{
+						foreach ($matches as $match)
+						{
+							if (count($match))
+							{
+								$content = JString::str_ireplace($match[0], "", $content);
+							}
 						}
 					}
 				}
@@ -246,5 +312,21 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 
 			return $content;
 		}
+	}
+
+	/**
+	 * Count article
+	 *
+	 * @return  int
+	 */
+	public function countArticle()
+	{
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true)
+			->select('COUNT(*)')
+			->from($db->qn('#__content'))
+			->where($db->qn('state') . ' = 1');
+
+		return $db->setQuery($query)->loadResult();
 	}
 }
