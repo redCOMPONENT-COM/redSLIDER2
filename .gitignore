@@ -55,5 +55,5 @@ packages/*
 !index.php
 
 
-/vendor/
+tests/vendor/
 releases/

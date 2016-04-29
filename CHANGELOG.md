@@ -1,5 +1,10 @@
 # Changelog
 
+#### 2.0.44
+
+* RSLIDER-154 #comment fix css #168
+
+
 #### 2.0.43
 
 * RSLIDER-147 #comment improve template edit backend *2016-03-30*
