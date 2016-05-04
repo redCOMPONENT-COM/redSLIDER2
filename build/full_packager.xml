@@ -238,6 +238,11 @@
     <target name="compress">
         <echo msg="Creating ZIP archive..."/>
 
+        <!-- clean up plugins already added in the main extension package -->
+        <delete dir="${tmpdir}/redslider/plugins/redslider_sections/section_redevent" />
+        <delete dir="${tmpdir}/redslider/plugins/redslider_sections/section_redform" />
+        <delete dir="${tmpdir}/redslider/plugins/redslider_sections/section_redshop" />
+
         <!-- Extension ZIP packaging -->
         <if>
             <equals arg1="${add-version-in-package}" arg2="1" />
@@ -272,7 +277,7 @@
             </fileset>
         </zip>
 
-        <copy file="${tmpdir}/${redslider-package}.zip" tofile="${extpath}/${package.dir}/${redslider-package}.zip" />
+        <copy file="${tmpdir}/${redslider-package}.zip" tofile="${package.dir}/${redslider-package}.zip" />
 
         <echo msg="Files copied and compressed in build directory OK!"/>
     </target>
