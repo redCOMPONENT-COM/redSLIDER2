@@ -231,7 +231,7 @@
             </fileset>
         </zip>
 
-        <copy file="${tmpdir}/${redslider-package}.zip" tofile="${extpath}/${package.dir}/${redslider-package}.zip" />
+        <copy file="${tmpdir}/${redslider-package}.zip" tofile="${package.dir}/${redslider-package}.zip" />
 
         <echo msg="Files copied and compressed in build directory OK!"/>
     </target>
