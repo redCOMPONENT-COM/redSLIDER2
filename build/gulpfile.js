@@ -104,7 +104,7 @@ gulp.task('release:redslider:media:less', function() {
 		.pipe(less())
 		.pipe(gulp.dest('../extensions/media/com_redslider/css'))
 		.pipe(minifyCSS())
-		.pipe(rename(function (path) { path.extname = '.min.' + path.extname; }))
+		.pipe(rename(function (path) { path.extname = '.min' + path.extname; }))
 		.pipe(gulp.dest('../extensions/media/com_redslider/css'));
 });
 
@@ -130,7 +130,7 @@ gulp.task('release:redslider:modules:less', function() {
 			.pipe(less())
 			.pipe(gulp.dest('../extensions/modules/site/' + modules[i] + '/media/' + modules[i] + '/css'))
 			.pipe(minifyCSS())
-			.pipe(rename(function (path) { path.extname = '.min.' + path.extname; }))
+			.pipe(rename(function (path) { path.extname = '.min' + path.extname; }))
 			.pipe(gulp.dest('../extensions/modules/site/' + modules[i] + '/media/' + modules[i] + '/css'));
 	};
 });
@@ -165,7 +165,7 @@ gulp.task('release:redslider:plugins:less', function() {
 				.pipe(less())
 				.pipe(gulp.dest('../extensions/plugins/' + pluginGroups[i] + '/' + pluginName[j] + '/media/css'))
 				.pipe(minifyCSS())
-				.pipe(rename(function (path) { path.extname = '.min.' + path.extname; }))
+				.pipe(rename(function (path) { path.extname = '.min' + path.extname; }))
 				.pipe(gulp.dest('../extensions/plugins/' + pluginGroups[i] + '/' + pluginName[j] + '/media/css'));
 		}
 	};
@@ -245,7 +245,8 @@ function pluginRelease(group, name) {
 }
 
 // Task for release plugins
-gulp.task('release:plugin', function(cb) {
+gulp.task('release:plugins', ['release:redslider:plugins'],
+	function(cb) {
 	var basePath = '../extensions/plugins';
 	var plgGroup = argv.group ? argv.group : false;
 	var plgName  = argv.name ? argv.name : false;

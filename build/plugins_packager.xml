@@ -11,7 +11,7 @@
 <!--    - execute this PHING build file                                  -->
 <!-- ==================================================================  -->
 
-<project name="plugins_packager" basedir="." default="pack">
+<project name="plugins_packager" default="pack">
     <includepath classpath="./phingtasks" />
     <taskdef name="lessc" classname="rych.tasks.LessCompilerTask" />
     <taskdef name="yuic" classname="rych.tasks.YuiCompressorTask" />
@@ -160,7 +160,12 @@
             </fileset>
         </zip>
 
-        <copy file="${tmpdir}/${group_name}/${group_name}_${plugin_name}_${plugin_version}.zip" tofile="${extpath}/${package.dir}/${group_name}/${group_name}_${plugin_name}_${plugin_version}.zip" />
+        <copy file="${tmpdir}/${group_name}/${group_name}_${plugin_name}_${plugin_version}.zip" tofile="${package.dir}/${group_name}/${group_name}_${plugin_name}_${plugin_version}.zip" />
+
+        <!-- clean up plugins already added in the main extension package -->
+        <delete file="${package.dir}/${group_name}/redslider_sections_section_redevent_${plugin_version}.zip" />
+        <delete file="${package.dir}/${group_name}/redslider_sections_section_redform_${plugin_version}.zip" />
+        <delete file="${package.dir}/${group_name}/redslider_sections_section_redshop_${plugin_version}.zip" />
 
         <echo msg="Files copied and compressed in build directory OK!"/>
     </target>

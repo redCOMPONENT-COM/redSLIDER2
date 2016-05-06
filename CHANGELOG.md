@@ -2,7 +2,8 @@
 
 #### 2.0.44
 
-* RSLIDER-154 #comment fix css #168
+* RSLIDER-154 #comment fix css #168  *2016-04-29*
+* RSLIDER-155 #comment update gulp packager #169  *2016-05-04*
 
 
 #### 2.0.43
