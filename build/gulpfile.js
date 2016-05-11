@@ -171,6 +171,48 @@ gulp.task('release:redslider:plugins:less', function() {
 	};
 });
 
+gulp.task('release:redslider:core-plugins', ['clean:plugins', 'release:redslider:core-plugins:less'], function() {
+	var pluginGroups = getFolders('media/plugins');
+
+	for (var i = 0; i < pluginGroups.length; i++) {
+		var pluginName = getFolders('media/plugins/' + pluginGroups[i]);
+
+		for (var j = 0; j < pluginName.length; j++){
+			if (pluginName[j] == 'section_article' || pluginName[j] == 'section_standard' || pluginName[j] == 'section_video')
+			{
+				pluginRelease(pluginGroups[i], pluginName[j]);
+				gulp.src([
+					'media/plugins/' + pluginGroups[i] + '/' + pluginName[j] + '/**',
+					'media/plugins/' + pluginGroups[i] + '/' + pluginName[j] + '/.gitkeep',
+					'!media/plugins/' + pluginGroups[i] + '/' + pluginName[j] + '/less',
+					'!media/plugins/' + pluginGroups[i] + '/' + pluginName[j] + '/less/**'
+				])
+				.pipe(gulp.dest('../extensions/plugins/' + pluginGroups[i] + '/' + pluginName[j] + '/media'));
+			}
+		}
+	};
+});
+
+gulp.task('release:redslider:core-plugins:less', function() {
+	var pluginGroups = getFolders('media/plugins');
+
+	for (var i = 0; i < pluginGroups.length; i++) {
+		var pluginName = getFolders('media/plugins/' + pluginGroups[i]);
+
+		for (var j = 0; j < pluginName.length; j++){
+			if (pluginName[j] == 'section_article' || pluginName[j] == 'section_standard' || pluginName[j] == 'section_video')
+			{
+				gulp.src('media/plugins/' + pluginGroups[i] + '/' + pluginName[j]+ '/less/**/*.less')
+					.pipe(less())
+					.pipe(gulp.dest('../extensions/plugins/' + pluginGroups[i] + '/' + pluginName[j] + '/media/css'))
+					.pipe(minifyCSS())
+					.pipe(rename(function (path) { path.extname = '.min' + path.extname; }))
+					.pipe(gulp.dest('../extensions/plugins/' + pluginGroups[i] + '/' + pluginName[j] + '/media/css'));
+			}
+		}
+	};
+});
+
 gulp.task('release:redslider:package',
 	['composer:libraries.redslider', 'release:redslider:media', 'release:redslider:modules', 'release:redslider:redCORE', 'release:redslider:plugins'],
 	function (cb) {
@@ -180,7 +222,7 @@ gulp.task('release:redslider:package',
 			var fileName = argv.skipVersion ? extension.name + '.zip' : extension.name + '-v' + version + '.zip';
 
 			// We will output where release package is going so it is easier to find
-			console.log('Creating new redslider2B release file in: ' + path.join(config.release_dir, fileName));
+			console.log('Creating new redSLIDER release file in: ' + path.join(config.release_dir, fileName));
 
 			return gulp.src([
 					'../extensions/**/*',
@@ -210,8 +252,63 @@ gulp.task('release:redslider:package',
 	});
 });
 
+gulp.task('release:redslider:full_package',
+	['composer:libraries.redslider', 'release:redslider:media', 'release:redslider:modules', 'release:redslider:redCORE', 'release:redslider:core-plugins'],
+	function (cb) {
+	fs.readFile('../extensions/redslider.xml', function(err, data) {
+		parser.parseString(data, function (err, result) {
+			var version = result.extension.version[0];
+			var fileName = argv.skipVersion ? extension.name + '.zip' : extension.name + '-v' + version + '.zip';
+
+			// We will output where release package is going so it is easier to find
+			console.log('Creating new redSLIDER release file in: ' + path.join(config.release_dir, fileName));
+
+			return gulp.src([
+					'../extensions/**/*',
+					'!../extensions/**/.gitkeep',
+					'!../extensions/components/com_redslider/**/.gitkeep',
+					'!../extensions/libraries/**/.gitkeep',
+					'!../extensions/libraries/redslider/vendor/**/tests/**/*',
+					'!../extensions/libraries/redslider/vendor/**/tests',
+					'!../extensions/libraries/redslider/vendor/**/Tests/**/*',
+					'!../extensions/libraries/redslider/vendor/**/Tests',
+					'!../extensions/libraries/redslider/vendor/**/docs/**/*',
+					'!../extensions/libraries/redslider/vendor/**/docs',
+					'!../extensions/libraries/redslider/vendor/**/doc/**/*',
+					'!../extensions/libraries/redslider/vendor/**/doc',
+					'!../extensions/libraries/redslider/vendor/**/composer.*',
+					'!../extensions/libraries/redslider/vendor/**/phpunit*',
+					'!../extensions/libraries/redslider/vendor/**/Vagrantfile',
+					'!../extensions/modules/**/.gitkeep',
+					'!../extensions/plugins/**/.gitkeep',
+					'!../extensions/plugins/redslider_sections/section_redevent/**/*',
+					'!../extensions/plugins/redslider_sections/section_redform/**/*',
+					'!../extensions/plugins/redslider_sections/section_redshop/**/*',
+					'!../extensions/**/composer.lock',
+					'!../extensions/**/composer.json'
+				])
+				.pipe(zip(fileName))
+				.pipe(gulp.dest(config.release_dir))
+				.on('end', cb);
+		});
+	});
+});
+
 // Override of the release script
 gulp.task('release:redslider', ['release:redslider:package'], function() {
+	// Clean up temporary files
+	return del([
+		'../extensions/media',
+		'../extensions/modules/site/*/media',
+		'../extensions/plugins/*/*/media',
+		'../extensions/redCORE'
+		],
+		{ force: true }
+	);
+});
+
+// Override of the release script
+gulp.task('release:full_package', ['release:redslider:full_package'], function() {
 	// Clean up temporary files
 	return del([
 		'../extensions/media',
