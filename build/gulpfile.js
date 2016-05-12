@@ -281,9 +281,8 @@ gulp.task('release:redslider:full_package',
 					'!../extensions/libraries/redslider/vendor/**/Vagrantfile',
 					'!../extensions/modules/**/.gitkeep',
 					'!../extensions/plugins/**/.gitkeep',
-					'!../extensions/plugins/redslider_sections/section_redevent/**/*',
-					'!../extensions/plugins/redslider_sections/section_redform/**/*',
-					'!../extensions/plugins/redslider_sections/section_redshop/**/*',
+					'!../extensions/plugins/**/section_red*',
+					'!../extensions/plugins/**/section_red*/**/*',
 					'!../extensions/**/composer.lock',
 					'!../extensions/**/composer.json'
 				])
@@ -327,6 +326,7 @@ function pluginRelease(group, name) {
 		fs.readFile('../extensions/plugins/' + group + '/' + name + '/' + name + '.xml', function(err, data) {
 			parser.parseString(data, function (err, result) {
 				fileName += '-v' + result.extension.version[0] + '.zip';
+				del([config.release_dir + '/plugins']);
 
 				return gulp.src('../extensions/plugins/' + group + '/' + name + '/**')
 					.pipe(zip(fileName))
