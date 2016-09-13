@@ -20,6 +20,24 @@ defined('_JEXEC') or die;
 class RedsliderHelper
 {
 	/**
+	 * Cached galleries
+	 *
+	 * @var  array
+	 *
+	 * @since  2.0.44
+	 */
+	public static $galleries = array();
+
+	/**
+	 * Cached templates
+	 *
+	 * @var  array
+	 *
+	 * @since  2.0.44
+	 */
+	public static $templates = array();
+
+	/**
 	 * Function check is extension installed
 	 *
 	 * @param   string  $extension  extension's name, ex: com_sample
@@ -56,44 +74,61 @@ class RedsliderHelper
 	 */
 	public static function getSlides($galleryId = 0)
 	{
-		$result = array();
+		if (!$galleryId)
+		{
+			return array();
+		}
+
+		if (isset(static::$galleries[$galleryId]))
+		{
+			return static::$galleries[$galleryId];
+		}
 
 		$slidesModel = RModel::getAdminInstance('Slides', array('ignore_request' => true), 'com_redslider');
 		$slidesModel->setState('filter.published', 1);
 		$slidesModel->setState('filter.gallery_id', $galleryId);
 		$slidesModel->setState('list.ordering', 's.ordering');
 		$slidesModel->setState('list.direction', 'asc');
-
 		$slides = $slidesModel->getItems();
 
-		if (count($slides))
+		if (empty($slides))
 		{
-			$dispatcher = RFactory::getDispatcher();
-			JPluginHelper::importPlugin('redslider_sections');
+			static::$galleries[$galleryId] = array();
 
-			foreach ($slides as &$slide)
-			{
-				$templateModel = RModel::getAdminInstance('Templates', array('ignore_request' => true), 'com_redslider');
-				$templateModel->setState('filter.published', 1);
-				$templateModel->setState('t.id', $slide->template_id);
-
-				$template = $templateModel->getItems();
-
-				if (count($template))
-				{
-					$replacedContent = $dispatcher->trigger('onPrepareTemplateContent', array($template[0]->content, &$slide));
-
-					if (count($replacedContent))
-					{
-						$slide->template_content = JHtml::_('content.prepare', $replacedContent[0]);
-					}
-				}
-			}
-
-			$result = $slides;
+			return static::$galleries[$galleryId];
 		}
 
-		return $result;
+		$dispatcher = RFactory::getDispatcher();
+		JPluginHelper::importPlugin('redslider_sections');
+
+		foreach ($slides as &$slide)
+		{
+			$templateId = $slide->template_id;
+
+			if (!isset(static::$templates[$templateId]))
+			{
+				$templateModel = RModel::getAdminInstance('Template', array('ignore_request' => true), 'com_redslider');
+				static::$templates[$templateId] = $templateModel->getItem($templateId);
+			}
+
+			$template = static::$templates[$templateId];
+
+			if (is_null($template) || $template->published != '1')
+			{
+				continue;
+			}
+
+			$replacedContent = $dispatcher->trigger('onPrepareTemplateContent', array($template->content, &$slide));
+
+			if (count($replacedContent))
+			{
+				$slide->template_content = JHtml::_('content.prepare', $replacedContent[0]);
+			}
+		}
+
+		static::$galleries[$galleryId] = $slides;
+
+		return static::$galleries[$galleryId];
 	}
 
 	/**
