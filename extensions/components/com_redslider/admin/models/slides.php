@@ -59,6 +59,8 @@ class RedsliderModelSlides extends RModelList
 				'g.title', 'gallery_title',
 				't.title', 'template_title',
 				's.section', 'section',
+				's.language', 'language',
+				'language_title',
 				's.id',
 			);
 		}
@@ -86,6 +88,11 @@ class RedsliderModelSlides extends RModelList
 		$query->from('#__redslider_slides AS s')
 			->leftJoin($db->qn('#__redslider_galleries', 'g') . ' ON ' . $db->qn('s.gallery_id') . ' = ' . $db->qn('g.id'))
 			->leftJoin($db->qn('#__redslider_templates', 't') . ' ON ' . $db->qn('s.template_id') . ' = ' . $db->qn('t.id'));
+
+		// Join over the language
+		$query->select($db->qn('l.title', 'language_title'))
+			->select($db->qn('l.image', 'language_image'))
+			->leftJoin($db->qn('#__languages', 'l') . ' ON ' . $db->qn('l.lang_code') . ' = ' . $db->qn('s.language'));
 
 		// Filter: like / search
 		$search = $this->getState('filter.search', '');
@@ -116,6 +123,12 @@ class RedsliderModelSlides extends RModelList
 			$query->where('s.gallery_id = ' . (int) $galleryId);
 		}
 
+		// Filter on the language.
+		if ($language = $this->getState('filter.language'))
+		{
+			$query->where($db->qn('s.language') . ' = ' . $db->quote($language));
+		}
+
 		// Get the ordering modifiers
 		$orderCol	= $this->state->get('list.ordering', 's.ordering');
 		$orderDirn	= $this->state->get('list.direction', 'asc');
@@ -140,6 +153,7 @@ class RedsliderModelSlides extends RModelList
 		// Compile the store id.
 		$id	.= ':' . $this->getState('filter.search');
 		$id	.= ':' . $this->getState('filter.published');
+		$id .= ':' . $this->getState('filter.language');
 
 		return parent::getStoreId($id);
 	}
@@ -152,7 +166,7 @@ class RedsliderModelSlides extends RModelList
 	 *
 	 * @return  void
 	 */
-	protected function populateState($ordering = 's.ordering', $direction = 'ASC')
+	protected function populateState($ordering = null, $direction = null)
 	{
 		$app = JFactory::getApplication();
 
@@ -165,6 +179,9 @@ class RedsliderModelSlides extends RModelList
 		$gallery_id = $this->getUserStateFromRequest($this->context . '.filter.gallery_id', 'filter_gallery_id', '');
 		$this->setState('filter.gallery_id', $gallery_id);
 
+		$language = $this->getUserStateFromRequest($this->context . '.filter.language', 'filter_language', '');
+		$this->setState('filter.language', $language);
+
 		$value = $app->getUserStateFromRequest('global.list.limit', $this->paginationPrefix . 'limit', $app->getCfg('list_limit'), 'uint');
 		$limit = $value;
 		$this->setState('list.limit', $limit);
@@ -173,6 +190,6 @@ class RedsliderModelSlides extends RModelList
 		$limitstart = ($limit != 0 ? (floor($value / $limit) * $limit) : 0);
 		$this->setState('list.start', $limitstart);
 
-		parent::populateState($ordering, $direction);
+		parent::populateState('s.ordering', 'ASC');
 	}
 }

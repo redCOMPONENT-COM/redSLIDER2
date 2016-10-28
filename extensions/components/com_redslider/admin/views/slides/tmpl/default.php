@@ -102,7 +102,7 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 				<th class="title" width="auto">
 					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_SLIDE', 's.title', $listDirn, $listOrder); ?>
 				</th>
-				<th width="10">
+				<th width="20">
 					<?php echo JText::_('COM_REDSLIDER_SLIDE_SECTION') ?>
 				</th>
 				<th class="title" width="auto">
@@ -111,70 +111,77 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 				<th class="title" width="auto">
 					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_TEMPLATE', 'template_title', $listDirn, $listOrder); ?>
 				</th>
+				<th class="title" width="auto">
+					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_LANGUAGE', 'language_title', $listDirn, $listOrder); ?>
+				</th>
 				<th width="10" nowrap="nowrap">
 					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_ID', 's.id', $listDirn, $listOrder); ?>
 				</th>
 			</tr>
 		</thead>
 		<tbody>
+			<?php $n = count($this->items); ?>
+			<?php foreach ($this->items as $i => $row) :
+				$canCreate    = $user->authorise('core.create', 'com_redslider');
+				$canEdit      = $user->authorise('core.edit', 'com_redslider');
+				$canCheckin   = $user->authorise('core.manage', 'com_checkin') || $row->checked_out == $userId || $row->checked_out == 0;
+				$canEditOwn   = $user->authorise('core.edit.own', 'com_redslider');
+				$canEditState = $user->authorise('core.edit.state', 'com_redslider');
+				$canChange    = $canEditState && $canCheckin;
+				$editor       = JFactory::getUser($row->checked_out);
+				$orderkey     = array_search($row->id, $this->ordering[0]);
+				?>
 
-		<?php $n = count($this->items); ?>
-
-		<?php foreach ($this->items as $i => $row) :
-			$canCreate    = $user->authorise('core.create', 'com_redslider');
-			$canEdit      = $user->authorise('core.edit', 'com_redslider');
-			$canCheckin   = $user->authorise('core.manage', 'com_checkin') || $row->checked_out == $userId || $row->checked_out == 0;
-			$canEditOwn   = $user->authorise('core.edit.own', 'com_redslider');
-			$canEditState = $user->authorise('core.edit.state', 'com_redslider');
-			$canChange    = $canEditState && $canCheckin;
-			$editor       = JFactory::getUser($row->checked_out);
-			$orderkey     = array_search($row->id, $this->ordering[0]);
-			?>
-
-			<tr>
-				<td><?php echo $this->pagination->getRowOffset($i); ?></td>
-				<td><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
-				<td>
-					<?php if ($canEditState): ?>
-						<?php echo JHtml::_('rgrid.published', $row->published, $i, 'slides.', true, 'cb'); ?>
-					<?php else: ?>
-						<?php if ($row->published) : ?>
-							<a class="btn btn-small disabled"><i class="icon-ok-sign icon-green"></i></a>
-						<?php else : ?>
-							<a class="btn btn-small disabled"><i class="icon-remove-sign icon-red"></i></a>
+				<tr>
+					<td><?php echo $this->pagination->getRowOffset($i); ?></td>
+					<td><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
+					<td>
+						<?php if ($canEditState): ?>
+							<?php echo JHtml::_('rgrid.published', $row->published, $i, 'slides.', true, 'cb'); ?>
+						<?php else: ?>
+							<?php if ($row->published) : ?>
+								<a class="btn btn-small disabled"><i class="icon-ok-sign icon-green"></i></a>
+							<?php else : ?>
+								<a class="btn btn-small disabled"><i class="icon-remove-sign icon-red"></i></a>
+							<?php endif; ?>
 						<?php endif; ?>
+					</td>
+					<?php if ($search == ''): ?>
+					<td class="order nowrap center">
+						<span class="sortable-handler hasTooltip <?php echo ($saveOrder) ? '' : 'inactive'; ?>">
+						<i class="icon-move"></i>
+						</span>
+						<input type="text" style="display:none" name="order[]" value="<?php echo $orderkey + 1;?>" class="text-area-order" />
+					</td>
 					<?php endif; ?>
-				</td>
-				<?php if ($search == ''): ?>
-				<td class="order nowrap center">
-					<span class="sortable-handler hasTooltip <?php echo ($saveOrder) ? '' : 'inactive'; ?>">
-					<i class="icon-move"></i>
-					</span>
-					<input type="text" style="display:none" name="order[]" value="<?php echo $orderkey + 1;?>" class="text-area-order" />
-				</td>
-				<?php endif; ?>
-				<td>
-					<?php if ($row->checked_out) : ?>
-						<?php
-							echo JHtml::_('rgrid.checkedout', $i, $editor->name, $row->checked_out_time, 'slides.', $canCheckin);
-						?>
-					<?php endif; ?>
-				</td>
-				<td>
-					<?php if ($canEdit) : ?>
-						<?php echo JHtml::_('link', 'index.php?option=com_redslider&task=slide.edit&id=' . $row->id, $row->title); ?>
-					<?php else : ?>
-						<?php echo $this->escape($row->title); ?>
-					<?php endif; ?>
-				</td>
-				<td><?php echo JText::_('PLG_' . $row->section . '_NAME') ?></td>
-				<td><?php echo $row->gallery_title; ?></td>
-				<td><?php echo $row->template_title; ?></td>
-				<td>
-					<?php echo $row->id; ?>
-				</td>
-			</tr>
-		<?php endforeach; ?>
+					<td>
+						<?php if ($row->checked_out) : ?>
+							<?php echo JHtml::_('rgrid.checkedout', $i, $editor->name, $row->checked_out_time, 'slides.', $canCheckin) ?>
+						<?php endif; ?>
+					</td>
+					<td>
+						<?php if ($canEdit) : ?>
+							<?php echo JHtml::_('link', 'index.php?option=com_redslider&task=slide.edit&id=' . $row->id, $row->title) ?>
+						<?php else : ?>
+							<?php echo $this->escape($row->title); ?>
+						<?php endif; ?>
+					</td>
+					<td><?php echo JText::_('PLG_' . $row->section . '_NAME') ?></td>
+					<td><?php echo $row->gallery_title ?></td>
+					<td><?php echo $row->template_title ?></td>
+					<td>
+						<?php if ($row->language == '*'): ?>
+							<?php $language = JText::alt('JALL', 'language'); ?>
+						<?php else:?>
+							<?php $language = $row->language_title ? $this->escape($row->language_title) : JText::_('JUNDEFINED'); ?>
+						<?php endif;?>
+						<small><?php echo $language ?></small>
+					</td>
+					<td>
+						<?php echo $row->id; ?>
+					</td>
+				</tr>
+			<?php endforeach; ?>
 		</tbody>
 	</table>
 	<?php echo $this->pagination->getPaginationLinks(null, array('showLimitBox' => false)); ?>
