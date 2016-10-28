@@ -9,7 +9,7 @@
 
 defined('_JEXEC') or die;
 
-require_once 'administrator/components/com_redslider/helpers/helper.php';
+use Joomla\Registry\Registry;
 
 /**
  * Module redSLIDER Related Items helper
@@ -27,11 +27,39 @@ class ModredSLIDERHelper
 	 */
 	public static function getSlides($galleryId)
 	{
-		$slides = RedsliderHelper::getSlides($galleryId);
+		if (!$galleryId)
+		{
+			return false;
+		}
+
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true)
+			->select('s.*')
+			->select($db->qn('g.title', 'gallery_title'))
+			->select($db->qn('t.title', 'template_title'))
+			->select($db->qn('t.content', 'template_content'))
+			->from($db->qn('#__redslider_slides', 's'))
+			->leftJoin($db->qn('#__redslider_galleries', 'g') . ' ON ' . $db->qn('s.gallery_id') . ' = ' . $db->qn('g.id'))
+			->leftJoin($db->qn('#__redslider_templates', 't') . ' ON ' . $db->qn('s.template_id') . ' = ' . $db->qn('t.id'))
+			->where($db->qn('s.published') . ' = 1')
+			->where($db->qn('s.gallery_id') . ' = ' . $galleryId)
+			->order($db->qn('s.ordering') . ' ASC');
+
+		$slides = $db->setQuery($query)->loadObjectList();
+
+		if (!$slides)
+		{
+			return array();
+		}
+
+		$dispatcher = RFactory::getDispatcher();
+		JPluginHelper::importPlugin('redslider_sections');
 
 		foreach ($slides as $slide)
 		{
-			$params = new JRegistry($slide->params);
+			$replacedContent = $dispatcher->trigger('onPrepareTemplateContent', array($slide->template_content, &$slide));
+			$slide->template_content = JHtml::_('content.prepare', $replacedContent[0]);
+			$params = new Registry($slide->params);
 
 			$slide->background = '';
 			$slide->class = '';
