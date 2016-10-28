@@ -21,7 +21,7 @@ class RedsliderHelperCpanelIcons extends JObject
 	 *
 	 * @return array $icon_array
 	 */
-	protected function RedsliderHelperCpanelIcons()
+	public function __construct()
 	{
 		// Parent Helper Construction
 		parent::__construct();

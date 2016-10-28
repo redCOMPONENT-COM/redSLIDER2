@@ -45,6 +45,11 @@ class ModredSLIDERHelper
 			->where($db->qn('s.gallery_id') . ' = ' . $galleryId)
 			->order($db->qn('s.ordering') . ' ASC');
 
+		if (JLanguageMultilang::isEnabled())
+		{
+			$query->where($db->qn('s.language') . ' IN (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
+		}
+
 		$slides = $db->setQuery($query)->loadObjectList();
 
 		if (!$slides)

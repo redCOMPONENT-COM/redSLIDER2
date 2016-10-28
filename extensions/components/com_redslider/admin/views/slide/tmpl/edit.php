@@ -37,6 +37,7 @@ if ($this->item->id)
 	method="post" name="adminForm" class="form-validate form-horizontal" id="adminForm">
 
 	<div class="row-fluid">
+		<div class="span6">
 		<div class="control-group">
 			<div class="control-label">
 				<?php echo $this->form->getLabel('section'); ?>
@@ -77,26 +78,38 @@ if ($this->item->id)
 				<?php echo $this->form->getInput('alias'); ?>
 			</div>
 		</div>
-		<div class="control-group">
-			<div class="control-label">
-				<?php echo $this->form->getLabel('published'); ?>
-			</div>
-			<div class="controls">
-				<?php echo $this->form->getInput('published'); ?>
-			</div>
 		</div>
+		<div class="span6">
+			<div class="control-group">
+				<div class="control-label">
+					<?php echo $this->form->getLabel('published'); ?>
+				</div>
+				<div class="controls">
+					<?php echo $this->form->getInput('published'); ?>
+				</div>
+			</div>
 
-		<?php // Load template dynamically from plugin ?>
-		<?php if ($user->authorise('core.create', 'com_redslider') && $user->authorise('core.edit', 'com_redslider') && $user->authorise('core.edit.state', 'com_redslider')): ?>
-			<?php if ($this->sectionId): ?>
-				<?php $sectionTemplates = $dispatcher->trigger('onSlidePrepareTemplate', array($this, $this->sectionId)); ?>
-				<?php if (count($sectionTemplates)):?>
-					<?php foreach ($sectionTemplates as $template): ?>
-						<?php echo $template ?>
-					<?php endforeach; ?>
+			<div class="control-group">
+				<div class="control-label">
+					<?php echo $this->form->getLabel('language'); ?>
+				</div>
+				<div class="controls">
+					<?php echo $this->form->getInput('language'); ?>
+				</div>
+			</div>
+
+			<?php // Load template dynamically from plugin ?>
+			<?php if ($user->authorise('core.create', 'com_redslider') && $user->authorise('core.edit', 'com_redslider') && $user->authorise('core.edit.state', 'com_redslider')): ?>
+				<?php if ($this->sectionId): ?>
+					<?php $sectionTemplates = $dispatcher->trigger('onSlidePrepareTemplate', array($this, $this->sectionId)); ?>
+					<?php if (count($sectionTemplates)):?>
+						<?php foreach ($sectionTemplates as $template): ?>
+							<?php echo $template ?>
+						<?php endforeach; ?>
+					<?php endif; ?>
 				<?php endif; ?>
-			<?php endif; ?>
-		<?php endif;?>
+			<?php endif;?>
+		</div>
 	</div>
 
 	<?php echo $this->form->getInput('id'); ?>

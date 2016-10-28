@@ -63,7 +63,7 @@ $pauseOnHover   = (bool) $params->get('pause_on_hover', true);
 $speed          = (int) $params->get('slideshow_speed', 7000);
 $duration       = (int) $params->get('animation_duration', 600);
 $thumbNums      = (int) $params->get('thumb_nums', 3);
-$thumbWidth      = (int) $params->get('thumb_width', 150);
+$thumbWidth     = (int) $params->get('thumb_width', 150);
 
 // Main slider and thumbnail divs
 $sliders = '#redslider-' . $module->id . ' > .slider';
