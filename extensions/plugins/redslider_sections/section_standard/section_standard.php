@@ -9,6 +9,8 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\Registry\Registry;
+
 jimport('joomla.plugin.plugin');
 jimport('redcore.bootstrap');
 
@@ -166,6 +168,11 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
+		if ($slide->section !== $this->sectionId)
+		{
+			return '';
+		}
+
 		// Check if we need to load component's CSS or not
 		$useOwnCSS = JComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
 
@@ -177,76 +184,41 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 			RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
 		}
 
-		if ($slide->section === $this->sectionId)
+		$params   = new Registry($slide->params);
+		$standard = new stdClass;
+
+		$standard->description = $params->get('description', '');
+		$standard->link        = $params->get('link', '');
+		$standard->linktext    = $params->get('linktext', '');
+		$standard->suffixClass = $params->get('suffix_class', 'standard_slide');
+		$standard->title       = $slide->title;
+		$standard->caption     = $params->get('caption', '');
+
+		if (strpos($content, '{standard_description}') !== false)
 		{
-			$params = new JRegistry($slide->params);
-
-			$standard = new stdClass;
-			$standard->description = $params->get('description', '');
-			$standard->link = $params->get('link', '');
-			$standard->linktext = $params->get('linktext', '');
-			$standard->suffixClass = $params->get('suffix_class', 'standard_slide');
-			$standard->title = $slide->title;
-			$standard->caption = $params->get('caption', '');
-
-			$matches = array();
-
-			if (preg_match_all('/{standard_description[^}]*}/i', $content, $matches) > 0)
-			{
-				foreach ($matches as $match)
-				{
-					if (count($match))
-					{
-						$content = JString::str_ireplace($match[0], $standard->description, $content);
-					}
-				}
-			}
-
-			if (preg_match_all('/{standard_link[^}]*}/i', $content, $matches) > 0)
-			{
-				foreach ($matches as $match)
-				{
-					if (count($match))
-					{
-						$content = JString::str_ireplace($match[0], $standard->link, $content);
-					}
-				}
-			}
-
-			if (preg_match_all('/{standard_linktext[^}]*}/i', $content, $matches) > 0)
-			{
-				foreach ($matches as $match)
-				{
-					if (count($match))
-					{
-						$content = JString::str_ireplace($match[0], $standard->linktext, $content);
-					}
-				}
-			}
-
-			if (preg_match_all('/{standard_title[^}]*}/i', $content, $matches) > 0)
-			{
-				foreach ($matches as $match)
-				{
-					if (count($match))
-					{
-						$content = JString::str_ireplace($match[0], $standard->title, $content);
-					}
-				}
-			}
-
-			if (preg_match_all('/{standard_caption[^}]*}/i', $content, $matches) > 0)
-			{
-				foreach ($matches as $match)
-				{
-					if (count($match))
-					{
-						$content = JString::str_ireplace($match[0], $standard->caption, $content);
-					}
-				}
-			}
-
-			return $content;
+			$content = str_replace('{standard_description}', $standard->description, $content);
 		}
+
+		if (strpos($content, '{standard_link}') !== false)
+		{
+			$content = str_replace('{standard_link}', $standard->link, $content);
+		}
+
+		if (strpos($content, '{standard_linktext}') !== false)
+		{
+			$content = str_replace('{standard_linktext}', $standard->linktext, $content);
+		}
+
+		if (strpos($content, '{standard_title}') !== false)
+		{
+			$content = str_replace('{standard_title}', $standard->title, $content);
+		}
+
+		if (strpos($content, '{standard_caption}') !== false)
+		{
+			$content = str_replace('{standard_caption}', $standard->caption, $content);
+		}
+
+		return $content;
 	}
 }
