@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `#__redslider_slides` (
   `language` CHAR(7) NOT NULL DEFAULT '',
   `params` varchar(2048) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `#__rslider_idx_slide_lang` (`language` ASC),
+  INDEX `#__rslider_idx_slide_lang` (`language` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 SET FOREIGN_KEY_CHECKS = 1;
