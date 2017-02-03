@@ -166,7 +166,7 @@ class RedSliderModelCpanel extends RModelAdmin
 		$slideTable->title = 'Sample Standard 2';
 		$slideTable->section = 'SECTION_STANDARD';
 		$slideTable->published = 1;
-		$slideTable->params = '{"background_image":"images/stories/redslider/standard_slider2.jpg","caption":"Sample Standard","description":"redSLIDER is a Joomla extension for creating continuous horizontal scroller of images and videos in a module","link":"#","linktext":"Sample Standard","slide_class":"standard_slide2"}';
+		$slideTable->params = '{"background_image":"images/stories/redslider/standard_slider2.jpg","caption":"Sample Standard","description":"redSLIDER is a Joomla extension for creating continuous horizontal scroller of images and videos in a module","link":"#","linktext":"Sample Standard","slide_class":"standard_slide_bottom"}';
 		$slideTable->store();
 		/*
 		 * Insert demo template for Video section

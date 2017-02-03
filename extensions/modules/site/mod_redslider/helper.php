@@ -45,6 +45,14 @@ class ModredSLIDERHelper
 			->where($db->qn('s.gallery_id') . ' = ' . $galleryId)
 			->order($db->qn('s.ordering') . ' ASC');
 
+		// Filter by start and end dates.
+		$nullDate = $db->quote($db->getNullDate());
+		$date     = JFactory::getDate();
+		$nowDate  = $db->quote($date->toSql());
+
+		$query->where('(s.publish_up = ' . $nullDate . ' OR s.publish_up <= ' . $nowDate . ')')
+				->where('(s.publish_down = ' . $nullDate . ' OR s.publish_down >= ' . $nowDate . ')');
+
 		if (JLanguageMultilang::isEnabled())
 		{
 			$query->where($db->qn('s.language') . ' IN (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
