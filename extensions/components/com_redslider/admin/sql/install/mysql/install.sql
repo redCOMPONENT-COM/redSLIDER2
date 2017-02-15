@@ -42,6 +42,12 @@ CREATE TABLE IF NOT EXISTS `#__redslider_slides` (
   `checked_out_time` datetime DEFAULT NULL,
   `language` CHAR(7) NOT NULL DEFAULT '',
   `params` varchar(2048) DEFAULT NULL,
+  `created_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` INT(11) NULL DEFAULT NULL,
+  `modified_by` INT(11) NULL DEFAULT NULL,
+  `modified_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `publish_up` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `publish_down` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   INDEX `#__rslider_idx_slide_lang` (`language` ASC)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

@@ -37,11 +37,19 @@
 			message="COM_REDSLIDER_SECTION_STANDARD_FIELD_LINKTEXT_DESC"
 		/>
 		<field name="slide_class"
-			type="text"
-			default="standard_slide"
-			label="COM_REDSLIDER_SECTION_STANDARD_FIELD_SUFFIX_CLASS"
-			description="COM_REDSLIDER_SECTION_STANDARD_FIELD_SUFFIX_CLASS_DESC"
-			message="COM_REDSLIDER_SECTION_STANDARD_FIELD_SUFFIX_CLASS_DESC"
-		/>
+			class="select2"
+            type="list"
+            label="COM_REDSLIDER_SECTION_STANDARD_FIELD_SUFFIX_CLASS"
+            description="COM_REDSLIDER_SECTION_STANDARD_FIELD_SUFFIX_CLASS_DESC"
+            message="COM_REDSLIDER_SECTION_STANDARD_FIELD_SUFFIX_CLASS_DESC"
+            default="standard_slide"
+            >
+            <option value="">COM_REDSLIDER_SELECT</option>
+            <option value="standard_slide">COM_REDSLIDER_SECTION_STANDARD_SLIDE_RIGHT</option>
+            <option value="standard_slide_bottom">COM_REDSLIDER_SECTION_STANDARD_SLIDE_BOTTOM</option>
+            <option value="standard_slide_left">COM_REDSLIDER_SECTION_STANDARD_SLIDE_LEFT</option>
+            <option value="standard_slide_top">COM_REDSLIDER_SECTION_STANDARD_SLIDE_TOP</option>
+            <option value="standard_slide_custom">COM_REDSLIDER_SECTION_STANDARD_SLIDE_CUSTOM</option>
+        </field>
 	</fields>
 </form>

@@ -37,7 +37,7 @@ if ($this->item->id)
 	method="post" name="adminForm" class="form-validate form-horizontal" id="adminForm">
 
 	<div class="row-fluid">
-		<div class="span6">
+		<div class="span4">
 		<div class="control-group">
 			<div class="control-label">
 				<?php echo $this->form->getLabel('section'); ?>
@@ -79,7 +79,7 @@ if ($this->item->id)
 			</div>
 		</div>
 		</div>
-		<div class="span6">
+		<div class="span4">
 			<div class="control-group">
 				<div class="control-label">
 					<?php echo $this->form->getLabel('published'); ?>
@@ -109,6 +109,58 @@ if ($this->item->id)
 					<?php endif; ?>
 				<?php endif; ?>
 			<?php endif;?>
+		</div>
+		<div class="span4">
+			<div class="control-group">
+				<div class="control-label">
+					<?php echo $this->form->getLabel('created_date'); ?>
+				</div>
+				<div class="controls">
+					<?php echo $this->form->getInput('created_date'); ?>
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="control-label">
+					<?php echo $this->form->getLabel('created_by'); ?>
+				</div>
+				<div class="controls">
+					<?php echo $this->form->getInput('created_by'); ?>
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="control-label">
+					<?php echo $this->form->getLabel('modified_date'); ?>
+				</div>
+				<div class="controls">
+					<?php echo $this->form->getInput('modified_date'); ?>
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="control-label">
+					<?php echo $this->form->getLabel('modified_by'); ?>
+				</div>
+				<div class="controls">
+					<?php echo $this->form->getInput('modified_by'); ?>
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="control-label">
+					<?php echo $this->form->getLabel('publish_up'); ?>
+				</div>
+				<div class="controls">
+					<?php echo $this->form->getInput('publish_up'); ?>
+				</div>
+			</div>
+			<div class="control-group">
+				<div class="control-label">
+					<?php echo $this->form->getLabel('publish_down'); ?>
+				</div>
+				<div class="controls">
+					<?php echo $this->form->getInput('publish_down'); ?>
+				</div>
+			</div>
+			<?php echo $this->form->getInput('checked_out'); ?>
+			<?php echo $this->form->getInput('checked_out_time'); ?>
 		</div>
 	</div>
 

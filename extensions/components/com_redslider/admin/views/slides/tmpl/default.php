@@ -114,6 +114,12 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 				<th class="title" width="auto">
 					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_LANGUAGE', 'language_title', $listDirn, $listOrder); ?>
 				</th>
+				<th class="title" width="auto">
+					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_FIELD_PUBLISH_UP_LABEL', 'publish_up', $listDirn, $listOrder); ?>
+				</th>
+				<th class="title" width="auto">
+					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_FIELD_PUBLISH_DOWN_LABEL', 'publish_down', $listDirn, $listOrder); ?>
+				</th>
 				<th width="10" nowrap="nowrap">
 					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_ID', 's.id', $listDirn, $listOrder); ?>
 				</th>
@@ -177,6 +183,8 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 						<?php endif;?>
 						<small><?php echo $language ?></small>
 					</td>
+					<td><?php echo $row->publish_up; ?></td>
+					<td><?php echo $row->publish_down; ?></td>
 					<td>
 						<?php echo $row->id; ?>
 					</td>

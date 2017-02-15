@@ -64,6 +64,7 @@ $speed          = (int) $params->get('slideshow_speed', 7000);
 $duration       = (int) $params->get('animation_duration', 600);
 $thumbNums      = (int) $params->get('thumb_nums', 3);
 $thumbWidth     = (int) $params->get('thumb_width', 150);
+$imageWidth     = (int) $params->get('image_width', 0);
 
 // Main slider and thumbnail divs
 $sliders = '#redslider-' . $module->id . ' > .slider';
@@ -81,6 +82,11 @@ if ($slideThumbnail && $thumbNums > 0)
 		'controlNav'     => false,
 		'sync'           => $thumbNails,
 	);
+
+	if ($imageWidth > 0)
+	{
+		$opt['itemWidth'] = $imageWidth;
+	}
 
 	$optThumb = array(
 		'animation'    => $effect,
@@ -103,6 +109,11 @@ else
 		'directionNav'   => $slideControl,
 		'controlNav'     => $pager,
 	);
+
+	if ($imageWidth > 0)
+	{
+		$opt['itemWidth'] = $imageWidth;
+	}
 }
 
 // Initialize the thumbnails control
