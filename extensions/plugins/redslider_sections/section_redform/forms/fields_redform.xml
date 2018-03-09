@@ -6,6 +6,7 @@
 			type="rmedia"
 			label="COM_REDSLIDER_SECTION_REDFORM_FIELD_SLIDE_BACKGROUND_IMAGE"
 			description="COM_REDSLIDER_SECTION_REDFORM_FIELD_SLIDE_BACKGROUND_IMAGE_DESC"
+			preview="true"
 		/>
 		<field
 			name="slide_class"

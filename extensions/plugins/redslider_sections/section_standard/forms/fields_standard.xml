@@ -6,6 +6,7 @@
 			type="rmedia"
 			label="COM_REDSLIDER_STANDARD_IMAGE_FILE"
 			description="COM_REDSLIDER_STANDARD_IMAGE_FILE_DESC"
+			preview="true"
 		/>
 		<field name="caption"
 			type="text"
