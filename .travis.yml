@@ -24,8 +24,6 @@ env:
 before_script:
 - phpenv rehash
 # prepare redCORE .travis scripts
-- composer config -g github-oauth.github.com "${GITHUB_TOKEN}"
-- composer global require hirak/prestissimo
 - git submodule update --init --recursive
 
 script:
