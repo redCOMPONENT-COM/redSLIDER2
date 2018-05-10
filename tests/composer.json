@@ -2,10 +2,10 @@
     "name": "redcomponent/redslider2",
     "description": "carroussel extension for joomla that displays images, videos, articles, redshop products, events...",
     "require-dev": {
-        "codegyre/robo": "^0.5.3",
-        "phing/phing": "^2.11",
-        "joomla/github": "^1.3",
-        "squizlabs/php_codesniffer": "1.*",
+        "consolidation/robo": "~1",
+        "phing/phing": "2.16.1",
+        "joomla/github": "1.6.0",
+        "squizlabs/php_codesniffer": "2.*",
         "phpmd/phpmd": "*"
     },
     "license": "GPL",

@@ -38,26 +38,26 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 	/**
 	 * Constructor - note in Joomla 2.5 PHP4.x is no longer supported so we can use this.
 	 *
-	 * @param   object  &$subject  The object to observe
-	 * @param   array   $config    An array that holds the plugin configuration
+	 * @param   object $subject The object to observe
+	 * @param   array  $config  An array that holds the plugin configuration
 	 */
 	public function __construct(&$subject, $config)
 	{
 		parent::__construct($subject, $config);
 		$this->loadLanguage();
-		$this->sectionId = "SECTION_ARTICLE";
-		$this->sectionName = JText::_("PLG_SECTION_ARTICLE_NAME");
+		$this->sectionId   = 'SECTION_ARTICLE';
+		$this->sectionName = JText::_('PLG_SECTION_ARTICLE_NAME');
 	}
 
 	/**
 	 * Get section name
 	 *
-	 * @return  array
+	 * @return  object
 	 */
 	public function getSectionName()
 	{
-		$section = new stdClass;
-		$section->id = $this->sectionId;
+		$section       = new stdClass;
+		$section->id   = $this->sectionId;
 		$section->name = $this->sectionName;
 
 		return $section;
@@ -66,7 +66,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 	/**
 	 * Get section name by section Id
 	 *
-	 * @param   string  $sectionId  Section's ID
+	 * @param   string $sectionId Section's ID
 	 *
 	 * @return  string
 	 */
@@ -76,88 +76,80 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 		{
 			return $this->sectionName;
 		}
+
+		return '';
 	}
 
 	/**
 	 * Get section's tags name
 	 *
-	 * @param   string  $sectionId  Section's ID
+	 * @param   string $sectionId Section's ID
 	 *
-	 * @return  void/array
+	 * @return  array
 	 */
 	public function getTagNames($sectionId)
 	{
-		if ($sectionId === $this->sectionId)
+		if ($sectionId != $this->sectionId)
 		{
-			$tags = array(
-					"{article_title}" => JText::_("COM_REDSLIDER_TAG_ARTICLE_TITLE_DESC"),
-					"{article_introtext|<em>limit</em>}" => JText::_("COM_REDSLIDER_TAG_ARTICLE_INTROTEXT_DESC"),
-					"{article_fulltext|<em>limit</em>}" => JText::_("COM_REDSLIDER_TAG_ARTICLE_FULLTEXT_DESC"),
-					"{article_date}" => JText::_("COM_REDSLIDER_TAG_ARTICLE_DATE_DESC"),
-					"{article_link}" => JText::_("COM_REDSLIDER_TAG_ARTICLE_LINK_DESC"),
-				);
-
-			return $tags;
+			return array();
 		}
+
+		return array(
+			'{article_title}'                    => JText::_('COM_REDSLIDER_TAG_ARTICLE_TITLE_DESC'),
+			'{article_introtext|<em>limit</em>}' => JText::_('COM_REDSLIDER_TAG_ARTICLE_INTROTEXT_DESC'),
+			'{article_fulltext|<em>limit</em>}'  => JText::_('COM_REDSLIDER_TAG_ARTICLE_FULLTEXT_DESC'),
+			'{article_date}'                     => JText::_('COM_REDSLIDER_TAG_ARTICLE_DATE_DESC'),
+			'{article_link}'                     => JText::_('COM_REDSLIDER_TAG_ARTICLE_LINK_DESC'),
+		);
 	}
 
 	/**
 	 * Add forms fields of section to slide view
 	 *
-	 * @param   mixed   $form       joomla form object
-	 * @param   string  $sectionId  section's id
+	 * @param   mixed  $form      joomla form object
+	 * @param   string $sectionId section's id
 	 *
 	 * @return  boolean
+	 * @throws  Exception
 	 */
 	public function onSlidePrepareForm($form, $sectionId)
 	{
-		$return = false;
-
-		if ($sectionId === $this->sectionId)
+		if ($sectionId != $this->sectionId || !JFactory::getApplication()->isAdmin())
 		{
-			$app = JFactory::getApplication();
-
-			if ($app->isAdmin())
-			{
-				JForm::addFormPath(__DIR__ . '/forms/');
-				$return = $form->loadFile('fields_article', false);
-			}
+			return false;
 		}
 
-		return $return;
+		JForm::addFormPath(__DIR__ . '/forms/');
+
+		return $form->loadFile('fields_article', false);
 	}
 
 	/**
 	 * Add template of section to template slide
 	 *
-	 * @param   object  $view       JView object
-	 * @param   string  $sectionId  section's id
+	 * @param   object $view      JView object
+	 * @param   string $sectionId section's id
 	 *
-	 * @return boolean
+	 * @return  boolean
+	 * @throws  Exception
 	 */
 	public function onSlidePrepareTemplate($view, $sectionId)
 	{
-		$return = false;
-
-		if ($sectionId === $this->sectionId)
+		if ($sectionId != $this->sectionId || !JFactory::getApplication()->isAdmin())
 		{
-			$app = JFactory::getApplication();
-
-			if ($app->isAdmin())
-			{
-				$view->addTemplatePath(__DIR__ . '/tmpl/');
-				$return = $view->loadTemplate('article');
-			}
+			return false;
 		}
 
-		return $return;
+		$view->addTemplatePath(__DIR__ . '/tmpl/');
+
+		return $view->loadTemplate('article');
 	}
 
 	/**
 	 * Event on store a slide
 	 *
-	 * @param   object  $jtable  JTable object
-	 * @param   object  $jinput  JForm data
+	 * @param   object $jtable JTable object
+	 * @param   object $jinput JForm data
 	 *
 	 * @return boolean
 	 */
@@ -169,8 +161,8 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 	/**
 	 * Prepare content for slide show in module
 	 *
-	 * @param   string  $content  Template Content
-	 * @param   object  $slide    Slide result object
+	 * @param   string $content Template Content
+	 * @param   object $slide   Slide result object
 	 *
 	 * @return  string  $content  repaced content
 	 */
@@ -210,31 +202,31 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 
 			if (preg_match_all('/{article_title[^}]*}/i', $content, $matches) > 0)
 			{
-				$match = $matches[0];
+				$match   = $matches[0];
 				$content = JString::str_ireplace($match[0], $article->title, $content);
 			}
 
 			if (preg_match_all('/{article_introtext[^}]*}/i', $content, $matches) > 0)
 			{
-				$match = $matches[0];
+				$match   = $matches[0];
 				$content = RedsliderHelper::replaceTagsHTML($match[0], $article->introtext, $content);
 			}
 
 			if (preg_match_all('/{article_fulltext[^}]*}/i', $content, $matches) > 0)
 			{
-				$match = $matches[0];
+				$match   = $matches[0];
 				$content = RedsliderHelper::replaceTagsHTML($match[0], $article->fulltext, $content);
 			}
 
 			if (preg_match_all('/{article_date[^}]*}/i', $content, $matches) > 0)
 			{
-				$match = $matches[0];
+				$match   = $matches[0];
 				$content = RedsliderHelper::replaceTagsHTML($match[0], $article->created, $content);
 			}
 
 			if (preg_match_all('/{article_link[^}]*}/i', $content, $matches) > 0)
 			{
-				$match = $matches[0];
+				$match   = $matches[0];
 				$content = RedsliderHelper::replaceTagsHTML(
 					$match[0],
 					JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->language)),
@@ -252,7 +244,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 				{
 					if (count($match))
 					{
-						$content = JString::str_ireplace($match[0], "", $content);
+						$content = JString::str_ireplace($match[0], '', $content);
 					}
 				}
 			}
@@ -263,7 +255,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 				{
 					if (count($match))
 					{
-						$content = RedsliderHelper::replaceTagsHTML($match[0], "", $content);
+						$content = RedsliderHelper::replaceTagsHTML($match[0], '', $content);
 					}
 				}
 			}
@@ -274,7 +266,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 				{
 					if (count($match))
 					{
-						$content = RedsliderHelper::replaceTagsHTML($match[0], "", $content);
+						$content = RedsliderHelper::replaceTagsHTML($match[0], '', $content);
 					}
 				}
 			}
@@ -285,7 +277,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 				{
 					if (count($match))
 					{
-						$content = JString::str_ireplace($match[0], "", $content);
+						$content = JString::str_ireplace($match[0], '', $content);
 					}
 				}
 			}
@@ -296,7 +288,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 				{
 					if (count($match))
 					{
-						$content = JString::str_ireplace($match[0], "", $content);
+						$content = JString::str_ireplace($match[0], '', $content);
 					}
 				}
 			}
@@ -308,7 +300,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 	/**
 	 * Count article
 	 *
-	 * @param   int  $articleId  ID of article
+	 * @param   int $articleId ID of article
 	 *
 	 * @return  boolean
 	 */

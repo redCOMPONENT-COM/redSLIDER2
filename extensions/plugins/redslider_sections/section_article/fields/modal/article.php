@@ -21,17 +21,17 @@ class JFormFieldModal_Article extends JFormField
 	/**
 	 * The form field type.
 	 *
-	 * @var		string
-	 * @since	1.6
+	 * @var        string
+	 * @since    1.6
 	 */
 	protected $type = 'Modal_Article';
 
 	/**
 	 * Method to get the field input markup.
 	 *
-	 * @return	string	The field input markup.
-	 * 
-	 * @since	1.6
+	 * @return    string    The field input markup.
+	 *
+	 * @since    1.6
 	 */
 	protected function getInput()
 	{
@@ -39,7 +39,7 @@ class JFormFieldModal_Article extends JFormField
 		JHtml::_('behavior.modal', 'a.modalArticleAjax');
 
 		// Build the script.
-		$script = array();
+		$script   = array();
 		$script[] = '	function jSelectArticle_' . $this->id . '(id, title, catid, object) {';
 		$script[] = '		document.id("' . $this->id . '_id").value = id;';
 		$script[] = '		document.id("' . $this->id . '_name").value = title;';
@@ -50,17 +50,15 @@ class JFormFieldModal_Article extends JFormField
 		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
 
 		// Setup variables for display.
-		$html	= array();
-		$link	= 'index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component&amp;function=jSelectArticle_' . $this->id;
+		$link = 'index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component&amp;function=jSelectArticle_' . $this->id;
 
-		$db	= JFactory::getDBO();
+		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select($db->qn('title'))
 			->from($db->qn('#__content'))
 			->where($db->qn('id') . ' = ' . (int) $this->value);
 
-		$db->setQuery($query);
-		$title = $db->loadResult();
+		$title = $db->setQuery($query)->loadResult();
 		$error = $db->getErrorMsg();
 
 		if ($error)
@@ -77,7 +75,7 @@ class JFormFieldModal_Article extends JFormField
 
 		// The current user display field.
 
-		$html = array();
+		$html   = array();
 		$html[] = '<div class="input-prepend input-append">';
 		$html[] = '<input type="text" class="input-small" id="' . $this->id . '_name" value="' . $title . '" disabled="disabled"/>';
 		$html[] = '<a class="btn modalArticleAjax" title="' . JText::_('PLG_REDSLIDER_SECTION_ARTICLE_SELECT_ARTICLE_BUTTON') . '"
@@ -86,7 +84,7 @@ class JFormFieldModal_Article extends JFormField
 		$html[] = '</div>';
 
 		// The active article id field.
-		if (0 == (int) $this->value)
+		if (0 === (int) $this->value)
 		{
 			$value = '';
 		}

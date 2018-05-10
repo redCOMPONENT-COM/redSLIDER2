@@ -33,6 +33,9 @@ if (!class_exists('Com_RedcoreInstallerScript'))
  */
 class PlgRedslider_SectionsSection_VideoInstallerScript extends Com_RedcoreInstallerScript
 {
+	/**
+	 * @var string
+	 */
 	private $section = "SECTION_VIDEO";
 
 	/**
