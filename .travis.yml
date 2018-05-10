@@ -28,7 +28,6 @@ before_script:
 
 script:
 - composer config -g github-oauth.github.com "${GITHUB_TOKEN}"
-- composer global remove hirak/prestissimo
 - composer global require hirak/prestissimo
 - cd tests
 - composer install --prefer-dist
