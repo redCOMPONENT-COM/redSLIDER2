@@ -41,7 +41,7 @@ build.tpl.properties
 # Phing
 /phing-latest.phar
 
-
+composer.lock
 # Gulp
 gulp-config.json
 npm-debug.log
