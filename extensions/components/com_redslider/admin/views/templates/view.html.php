@@ -21,9 +21,10 @@ class RedsliderViewTemplates extends RedsliderView
 	/**
 	 * Display the templates list
 	 *
-	 * @param   string  $tpl  The template file to use
+	 * @param   string $tpl The template file to use
 	 *
-	 * @return   string
+	 * @return  void
+	 * @throws  Exception
 	 *
 	 * @since   2.0.0
 	 */
@@ -44,7 +45,7 @@ class RedsliderViewTemplates extends RedsliderView
 			JPluginHelper::importPlugin('redslider_sections');
 			$dispatcher = RFactory::getDispatcher();
 
-			$list = $dispatcher->trigger('getSectionNameById', array($item->section));
+			$list              = $dispatcher->trigger('getSectionNameById', array($item->section));
 			$item->sectionName = "";
 
 			if (count($list))
@@ -71,16 +72,16 @@ class RedsliderViewTemplates extends RedsliderView
 	/**
 	 * Get the tool-bar to render.
 	 *
-	 * @todo	The commented lines are going to be implemented once we have setup ACL requirements for redSLIDER
+	 * @todo    The commented lines are going to be implemented once we have setup ACL requirements for redSLIDER
 	 * @return  RToolbar
 	 */
 	public function getToolbar()
 	{
 		$user = JFactory::getUser();
 
-		$firstGroup = new RToolbarButtonGroup;
+		$firstGroup  = new RToolbarButtonGroup;
 		$secondGroup = new RToolbarButtonGroup;
-		$thirdGroup = new RToolbarButtonGroup;
+		$thirdGroup  = new RToolbarButtonGroup;
 
 		if ($user->authorise('core.create', 'com_redslider'))
 		{

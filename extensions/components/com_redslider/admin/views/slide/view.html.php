@@ -28,20 +28,20 @@ class RedsliderViewSlide extends RedsliderView
 	/**
 	 * Display the slide edit page
 	 *
-	 * @param   string  $tpl  The template file to use
+	 * @param   string $tpl The template file to use
 	 *
-	 * @return   string
+	 * @return  void
+	 * @throws  Exception
 	 *
 	 * @since   2.0.0
 	 */
 	public function display($tpl = null)
 	{
 		$app = JFactory::getApplication();
-		$document = JFactory::getDocument();
 
-		$this->form	= $this->get('Form');
-		$this->item	= $this->get('Item');
-		$this->tags = $this->get('Tags');
+		$this->form      = $this->get('Form');
+		$this->item      = $this->get('Item');
+		$this->tags      = $this->get('Tags');
 		$this->sectionId = $app->getUserState('com_redslider.global.slide.section', '');
 
 		if ($this->sectionId)
@@ -89,7 +89,7 @@ class RedsliderViewSlide extends RedsliderView
 	/**
 	 * Get the toolbar to render.
 	 *
-	 * @todo	We have setup ACL requirements for redSLIDER
+	 * @todo    We have setup ACL requirements for redSLIDER
 	 *
 	 * @return  RToolbar
 	 */
@@ -97,10 +97,10 @@ class RedsliderViewSlide extends RedsliderView
 	{
 		$group = new RToolbarButtonGroup;
 
-		$save = RToolbarBuilder::createSaveButton('slide.apply');
+		$save         = RToolbarBuilder::createSaveButton('slide.apply');
 		$saveAndClose = RToolbarBuilder::createSaveAndCloseButton('slide.save');
-		$saveAndNew = RToolbarBuilder::createSaveAndNewButton('slide.save2new');
-		$save2Copy = RToolbarBuilder::createSaveAsCopyButton('slide.save2copy');
+		$saveAndNew   = RToolbarBuilder::createSaveAndNewButton('slide.save2new');
+		$save2Copy    = RToolbarBuilder::createSaveAsCopyButton('slide.save2copy');
 
 		$group->addButton($save)
 			->addButton($saveAndClose)

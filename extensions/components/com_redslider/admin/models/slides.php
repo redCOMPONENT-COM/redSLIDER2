@@ -43,7 +43,7 @@ class RedsliderModelSlides extends RModelList
 	/**
 	 * Constructor.
 	 *
-	 * @param   array  $config  [description]
+	 * @param   array $config [description]
 	 *
 	 * @see     JController
 	 */
@@ -77,7 +77,7 @@ class RedsliderModelSlides extends RModelList
 	 */
 	public function getListQuery()
 	{
-		$db = JFactory::getDbo();
+		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select(
 			$this->getState(
@@ -97,7 +97,7 @@ class RedsliderModelSlides extends RModelList
 		// Filter: like / search
 		$search = $this->getState('filter.search', '');
 
-		if ($search != '')
+		if (!empty($search))
 		{
 			$like = $db->quote('%' . $search . '%');
 			$query->where('s.title LIKE ' . $like);
@@ -124,14 +124,16 @@ class RedsliderModelSlides extends RModelList
 		}
 
 		// Filter on the language.
-		if ($language = $this->getState('filter.language'))
+		$language = $this->getState('filter.language');
+
+		if (!empty($language))
 		{
 			$query->where($db->qn('s.language') . ' = ' . $db->quote($language));
 		}
 
 		// Get the ordering modifiers
-		$orderCol	= $this->state->get('list.ordering', 's.ordering');
-		$orderDirn	= $this->state->get('list.direction', 'asc');
+		$orderCol  = $this->state->get('list.ordering', 's.ordering');
+		$orderDirn = $this->state->get('list.direction', 'asc');
 		$query->order($db->escape($orderCol) . ' ' . $db->escape($orderDirn));
 
 		return $query;
@@ -144,15 +146,15 @@ class RedsliderModelSlides extends RModelList
 	 * different modules that might need different sets of data or different
 	 * ordering requirements.
 	 *
-	 * @param   string  $id  A prefix for the store id.
+	 * @param   string $id A prefix for the store id.
 	 *
-	 * @return	string  A store id.
+	 * @return    string  A store id.
 	 */
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
-		$id	.= ':' . $this->getState('filter.search');
-		$id	.= ':' . $this->getState('filter.published');
+		$id .= ':' . $this->getState('filter.search');
+		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.language');
 
 		return parent::getStoreId($id);
@@ -161,10 +163,11 @@ class RedsliderModelSlides extends RModelList
 	/**
 	 * Method to auto-populate the model state.
 	 *
-	 * @param   string  $ordering   [description]
-	 * @param   string  $direction  [description]
+	 * @param   string $ordering  [description]
+	 * @param   string $direction [description]
 	 *
 	 * @return  void
+	 * @throws  Exception
 	 */
 	protected function populateState($ordering = null, $direction = null)
 	{
@@ -176,8 +179,8 @@ class RedsliderModelSlides extends RModelList
 		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
 		$this->setState('filter.published', $published);
 
-		$gallery_id = $this->getUserStateFromRequest($this->context . '.filter.gallery_id', 'filter_gallery_id', '');
-		$this->setState('filter.gallery_id', $gallery_id);
+		$galleryId = $this->getUserStateFromRequest($this->context . '.filter.gallery_id', 'filter_gallery_id', '');
+		$this->setState('filter.gallery_id', $galleryId);
 
 		$language = $this->getUserStateFromRequest($this->context . '.filter.language', 'filter_language', '');
 		$this->setState('filter.language', $language);
@@ -186,7 +189,7 @@ class RedsliderModelSlides extends RModelList
 		$limit = $value;
 		$this->setState('list.limit', $limit);
 
-		$value = $app->getUserStateFromRequest($this->context . '.limitstart', $this->paginationPrefix . 'limitstart', 0);
+		$value      = $app->getUserStateFromRequest($this->context . '.limitstart', $this->paginationPrefix . 'limitstart', 0);
 		$limitstart = ($limit != 0 ? (floor($value / $limit) * $limit) : 0);
 		$this->setState('list.start', $limitstart);
 

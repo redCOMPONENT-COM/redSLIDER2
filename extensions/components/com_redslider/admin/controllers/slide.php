@@ -21,14 +21,15 @@ class RedsliderControllerSlide extends RControllerForm
 	/**
 	 * For edit an slide
 	 *
-	 * @param   int     $key     [description]
-	 * @param   string  $urlVar  [description]
+	 * @param   int    $key    [description]
+	 * @param   string $urlVar [description]
 	 *
-	 * @return void
+	 * @return  boolean
+	 * @throws  Exception
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
-		$app = JFactory::getApplication();
+		$app       = JFactory::getApplication();
 		$itemmodel = RModel::getAdminInstance('Slide');
 
 		$item = $itemmodel->getItem();
@@ -41,15 +42,16 @@ class RedsliderControllerSlide extends RControllerForm
 	}
 
 	/**
-	 * Function set Section 
+	 * Function set Section
 	 *
-	 * @return void
+	 * @return  void
+	 * @throws  Exception
 	 */
 	public function setSection()
 	{
-		$app = JFactory::getApplication();
+		$app      = JFactory::getApplication();
 		$recordId = $app->input->get('id', 0, 'int');
-		$data = $app->input->get('jform', array(), 'array');
+		$data     = $app->input->get('jform', array(), 'array');
 
 		$app->setUserState('com_redslider.edit.slide.data', $data);
 		$app->setUserState('com_redslider.global.slide.section', $data['section']);

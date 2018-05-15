@@ -18,7 +18,9 @@ if (!class_exists('Com_RedcoreInstallerScript'))
 		JPATH_ADMINISTRATOR . '/components/com_redcore'
 	);
 
-	if ($redcoreInstaller = JPath::find($searchPaths, 'install.php'))
+	$redcoreInstaller = JPath::find($searchPaths, 'install.php');
+
+	if ($redcoreInstaller)
 	{
 		require_once $redcoreInstaller;
 	}
@@ -33,12 +35,15 @@ if (!class_exists('Com_RedcoreInstallerScript'))
  */
 class PlgRedslider_SectionsSection_StandardInstallerScript extends Com_RedcoreInstallerScript
 {
-	private $section = "SECTION_STANDARD";
+	/**
+	 * @var string
+	 */
+	private $section = 'SECTION_STANDARD';
 
 	/**
 	 * method to uninstall the component
 	 *
-	 * @param   object  $parent  class calling this method
+	 * @param   JInstallerAdapter  $parent  Class calling this method
 	 *
 	 * @return  void
 	 *
@@ -46,8 +51,7 @@ class PlgRedslider_SectionsSection_StandardInstallerScript extends Com_RedcoreIn
 	 */
 	public function uninstall($parent)
 	{
-		$db    = JFactory::getDbo();
-		$user  = JFactory::getUser();
+		$db = JFactory::getDbo();
 
 		// Remove all slides which belong to this section
 		$query = $db->getQuery(true)
@@ -57,7 +61,7 @@ class PlgRedslider_SectionsSection_StandardInstallerScript extends Com_RedcoreIn
 		$db->execute();
 
 		// Remove all templates which belong to this section
-		$query = $db->getQuery(true)
+		$query->clear()
 			->delete($db->qn('#__redslider_templates'))
 			->where($db->qn('section') . '=' . $db->q($this->section));
 		$db->setQuery($query);

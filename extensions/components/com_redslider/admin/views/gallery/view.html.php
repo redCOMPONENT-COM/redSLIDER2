@@ -28,7 +28,7 @@ class RedsliderViewGallery extends RedsliderView
 	/**
 	 * Display the gallery edit page
 	 *
-	 * @param   string  $tpl  The template file to use
+	 * @param   string $tpl The template file to use
 	 *
 	 * @return   string
 	 *
@@ -36,10 +36,8 @@ class RedsliderViewGallery extends RedsliderView
 	 */
 	public function display($tpl = null)
 	{
-		$document = JFactory::getDocument();
-
-		$this->form	= $this->get('Form');
-		$this->item	= $this->get('Item');
+		$this->form = $this->get('Form');
+		$this->item = $this->get('Item');
 		$this->tags = $this->get('Tags');
 
 		// Display the template
@@ -59,7 +57,7 @@ class RedsliderViewGallery extends RedsliderView
 	/**
 	 * Get the toolbar to render.
 	 *
-	 * @todo	We have setup ACL requirements for redSLIDER
+	 * @todo    We have setup ACL requirements for redSLIDER
 	 *
 	 * @return  RToolbar
 	 */
@@ -67,10 +65,10 @@ class RedsliderViewGallery extends RedsliderView
 	{
 		$group = new RToolbarButtonGroup;
 
-		$save = RToolbarBuilder::createSaveButton('gallery.apply');
+		$save         = RToolbarBuilder::createSaveButton('gallery.apply');
 		$saveAndClose = RToolbarBuilder::createSaveAndCloseButton('gallery.save');
-		$saveAndNew = RToolbarBuilder::createSaveAndNewButton('gallery.save2new');
-		$save2Copy = RToolbarBuilder::createSaveAsCopyButton('gallery.save2copy');
+		$saveAndNew   = RToolbarBuilder::createSaveAndNewButton('gallery.save2new');
+		$save2Copy    = RToolbarBuilder::createSaveAsCopyButton('gallery.save2copy');
 
 		$group->addButton($save)
 			->addButton($saveAndClose)

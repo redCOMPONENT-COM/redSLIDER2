@@ -6,6 +6,8 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+use Joomla\Registry\Registry;
+
 defined('_JEXEC') or die;
 
 // Find redCORE installer to use it as base system
@@ -18,7 +20,9 @@ if (!class_exists('Com_RedcoreInstallerScript'))
 		JPATH_ADMINISTRATOR . '/components/com_redcore'
 	);
 
-	if ($redcoreInstaller = JPath::find($searchPaths, 'install.php'))
+	$redcoreInstaller = JPath::find($searchPaths, 'install.php');
+
+	if ($redcoreInstaller)
 	{
 		require_once $redcoreInstaller;
 	}
@@ -33,12 +37,15 @@ if (!class_exists('Com_RedcoreInstallerScript'))
  */
 class PlgRedslider_SectionsSection_RedeventInstallerScript extends Com_RedcoreInstallerScript
 {
-	private $section = "SECTION_REDEVENT";
+	/**
+	 * @var string
+	 */
+	private $section = 'SECTION_REDEVENT';
 
 	/**
 	 * Method to install the component
 	 *
-	 * @param   object  $parent  Class calling this method
+	 * @param   object $parent Class calling this method
 	 *
 	 * @return  boolean          True on success
 	 */
@@ -52,8 +59,8 @@ class PlgRedslider_SectionsSection_RedeventInstallerScript extends Com_RedcoreIn
 	/**
 	 * Method to run after an install/update/uninstall method
 	 *
-	 * @param   object  $type    type of change (install, update or discover_install)
-	 * @param   object  $parent  class calling this method
+	 * @param   object $type   type of change (install, update or discover_install)
+	 * @param   object $parent class calling this method
 	 *
 	 * @return  boolean
 	 */
@@ -71,59 +78,59 @@ class PlgRedslider_SectionsSection_RedeventInstallerScript extends Com_RedcoreIn
 				require_once $helperPath;
 
 				$comExists = RedsliderHelper::checkExtension('com_redevent');
-
-				$db					= JFactory::getDbo();
-				$user				= JFactory::getUser();
-				$query 				= $db->getQuery();
-				$currentDate		= JFactory::getDate();
+				$db        = JFactory::getDbo();
 
 				// Add Include path
 				JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
-				/*
-				 * Insert demo template for redEVENT section
-				 */
-				$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
-				$templateTable->id = null;
-				$templateTable->title = 'Template redEVENT';
-				$templateTable->section = 'SECTION_REDEVENT';
-				$templateTable->published = $comExists? 1 : 0;
-				$templateTable->content = '<div class="eachSlide"><div class="slideTitle"><h3>[event_title]</h3></div><div class="slideText">[event_description]</div></div>';
+
+				// Insert demo template for redEVENT section
+				/** @var RedsliderTableTemplate $templateTable */
+				$templateTable            = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
+				$templateTable->id        = null;
+				$templateTable->title     = 'Template redEVENT';
+				$templateTable->section   = 'SECTION_REDEVENT';
+				$templateTable->published = $comExists ? 1 : 0;
+				$templateTable->content   = '<div class="eachSlide">
+					<div class="slideTitle"><h3>[event_title]</h3></div>
+					<div class="slideText">[event_description]</div></div>';
 				$templateTable->store();
 				$templateId = (int) $templateTable->id;
 
 				// Prepare params for redEVENT slide
 
 				$slideParams = array(
-					"event_id" => 1,
-					"background_image" => "images/stories/redslider/redevent_slider.jpg",
-					"redevent_slide_class" => "redevent_slide"
+					'event_id'             => 1,
+					'background_image'     => 'images/stories/redslider/redevent_slider.jpg',
+					'redevent_slide_class' => 'redevent_slide'
 				);
 
-				$slideParams = new JRegistry($slideParams);
+				$slideParams = new Registry($slideParams);
 
 				/*
 				 * Insert demo slide for redEVENT section
 				 */
-				$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
-				$slideTable->gallery_id = 1;
+				/** @var RedsliderTableSlide $templateTable */
+				$slideTable              = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
+				$slideTable->gallery_id  = 1;
 				$slideTable->template_id = $templateId;
-				$slideTable->title = 'Sample redEVENT';
-				$slideTable->section = 'SECTION_REDEVENT';
-				$slideTable->published = $comExists? 1 : 0;
-				$slideTable->params = $slideParams->toString();
+				$slideTable->title       = 'Sample redEVENT';
+				$slideTable->section     = 'SECTION_REDEVENT';
+				$slideTable->published   = $comExists ? 1 : 0;
+				$slideTable->params      = $slideParams->toString();
 				$slideTable->store();
 
-				unset($templateTable);
-				unset($slideTable);
+				unset($templateTable, $slideTable);
 
 				// Set this plugin published
 				$query = $db->getQuery(true);
 
-				$query->update($db->qn("#__extensions"))
+				$query->update($db->qn('#__extensions'))
 					->set($db->qn('enabled') . ' = 1')
-					->where($db->qn('element') . ' = ' . $db->q('section_redevent') . ' AND ' . $db->qn('folder') . ' = ' . $db->q('redslider_sections'));
-				$db->setQuery($query);
-				$db->execute();
+					->where(
+						$db->qn('element') . ' = ' . $db->q('section_redevent')
+						. ' AND ' . $db->qn('folder') . ' = ' . $db->q('redslider_sections')
+					);
+				$db->setQuery($query)->execute();
 			}
 		}
 
@@ -133,7 +140,7 @@ class PlgRedslider_SectionsSection_RedeventInstallerScript extends Com_RedcoreIn
 	/**
 	 * method to uninstall the component
 	 *
-	 * @param   object  $parent  class calling this method
+	 * @param   JInstallerAdapter  $parent  Class calling this method
 	 *
 	 * @return  void
 	 *
@@ -141,22 +148,19 @@ class PlgRedslider_SectionsSection_RedeventInstallerScript extends Com_RedcoreIn
 	 */
 	public function uninstall($parent)
 	{
-		$db    = JFactory::getDbo();
-		$user  = JFactory::getUser();
+		$db = JFactory::getDbo();
 
 		// Remove all slides which belong to this section
 		$query = $db->getQuery(true)
 			->delete($db->qn('#__redslider_slides'))
 			->where($db->qn('section') . '=' . $db->q($this->section));
-		$db->setQuery($query);
-		$db->execute();
+		$db->setQuery($query)->execute();
 
 		// Remove all templates which belong to this section
-		$query = $db->getQuery(true)
+		$query->clear()
 			->delete($db->qn('#__redslider_templates'))
 			->where($db->qn('section') . '=' . $db->q($this->section));
-		$db->setQuery($query);
-		$db->execute();
+		$db->setQuery($query)->execute();
 
 		parent::uninstall($parent);
 	}

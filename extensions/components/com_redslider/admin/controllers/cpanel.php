@@ -20,7 +20,7 @@ class RedsliderControllerCpanel extends RControllerAdmin
 {
 	/**
 	 * function install sample content
-	 * 
+	 *
 	 * @return void
 	 */
 	public function demoContentInsert()

@@ -23,33 +23,38 @@ require_once JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php
  */
 class PlgRedslider_SectionsSection_Standard extends JPlugin
 {
-	private $sectionId;
+	/**
+	 * @var string
+	 */
+	private $sectionId = 'SECTION_STANDARD';
 
+	/**
+	 * @var string
+	 */
 	private $sectionName;
 
 	/**
 	 * Constructor - note in Joomla 2.5 PHP4.x is no longer supported so we can use this.
 	 *
-	 * @param   object  &$subject  The object to observe
-	 * @param   array   $config    An array that holds the plugin configuration
+	 * @param   object $subject  The object to observe
+	 * @param   array  $config   An array that holds the plugin configuration
 	 */
 	public function __construct(&$subject, $config)
 	{
 		parent::__construct($subject, $config);
 		$this->loadLanguage();
-		$this->sectionId = "SECTION_STANDARD";
 		$this->sectionName = JText::_("PLG_SECTION_STANDARD_NAME");
 	}
 
 	/**
 	 * Get section name
 	 *
-	 * @return  array
+	 * @return  object
 	 */
 	public function getSectionName()
 	{
-		$section = new stdClass;
-		$section->id = $this->sectionId;
+		$section       = new stdClass;
+		$section->id   = $this->sectionId;
 		$section->name = $this->sectionName;
 
 		return $section;
@@ -58,7 +63,7 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	/**
 	 * Get section name by section Id
 	 *
-	 * @param   string  $sectionId  Section's ID
+	 * @param   string $sectionId Section's ID
 	 *
 	 * @return  string
 	 */
@@ -73,31 +78,33 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	/**
 	 * Get section's tags name
 	 *
-	 * @param   string  $sectionId  Section's ID
+	 * @param   string $sectionId Section's ID
 	 *
-	 * @return  void/array
+	 * @return  array
 	 */
 	public function getTagNames($sectionId)
 	{
 		if ($sectionId === $this->sectionId)
 		{
 			$tags = array(
-					'{standard_description}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_DESCRIPTION_DESC"),
-					'{standard_link}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_LINK_DESC"),
-					'{standard_linktext}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_LINKTEXT_DESC"),
-					'{standard_title}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_TITLE_DESC"),
-					'{standard_caption}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_CAPTION_DESC"),
-				);
+				'{standard_description}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_DESCRIPTION_DESC"),
+				'{standard_link}'        => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_LINK_DESC"),
+				'{standard_linktext}'    => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_LINKTEXT_DESC"),
+				'{standard_title}'       => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_TITLE_DESC"),
+				'{standard_caption}'     => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_CAPTION_DESC"),
+			);
 
 			return $tags;
 		}
+
+		return array();
 	}
 
 	/**
 	 * Add forms fields of section to slide view
 	 *
-	 * @param   mixed   $form       joomla form object
-	 * @param   string  $sectionId  section's id
+	 * @param   mixed  $form      joomla form object
+	 * @param   string $sectionId section's id
 	 *
 	 * @return  boolean
 	 */
@@ -122,8 +129,8 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	/**
 	 * Add template of section to template slide
 	 *
-	 * @param   object  $view       JView object
-	 * @param   string  $sectionId  section's id
+	 * @param   object $view      JView object
+	 * @param   string $sectionId section's id
 	 *
 	 * @return boolean
 	 */
@@ -148,8 +155,8 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	/**
 	 * Event on store a slide
 	 *
-	 * @param   object  $jtable  JTable object
-	 * @param   object  $jinput  JForm data
+	 * @param   object $jtable JTable object
+	 * @param   object $jinput JForm data
 	 *
 	 * @return boolean
 	 */
@@ -161,8 +168,8 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	/**
 	 * Prepare content for slide show in module
 	 *
-	 * @param   string  $content  Template Content
-	 * @param   object  $slide    Slide result object
+	 * @param   string $content Template Content
+	 * @param   object $slide   Slide result object
 	 *
 	 * @return  string  $content  repaced content
 	 */

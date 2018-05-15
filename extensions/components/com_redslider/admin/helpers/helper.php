@@ -40,13 +40,13 @@ class RedsliderHelper
 	/**
 	 * Function check is extension installed
 	 *
-	 * @param   string  $extension  extension's name, ex: com_sample
+	 * @param   string $extension extension's name, ex: com_sample
 	 *
 	 * @return boolean
 	 */
 	public static function checkExtension($extension)
 	{
-		$db = JFactory::getDbo();
+		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
 
 		$query->select($db->qn('enabled'))
@@ -57,18 +57,13 @@ class RedsliderHelper
 
 		$result = $db->loadObject();
 
-		if (isset($result) && $result->enabled)
-		{
-			return true;
-		}
-
-		return false;
+		return $result && $result->enabled;
 	}
 
 	/**
 	 * Get slides of gallery
 	 *
-	 * @param   int  $galleryId  Gallery ID
+	 * @param   int $galleryId Gallery ID
 	 *
 	 * @return  array of object
 	 */
@@ -107,7 +102,7 @@ class RedsliderHelper
 
 			if (!isset(static::$templates[$templateId]))
 			{
-				$templateModel = RModel::getAdminInstance('Template', array('ignore_request' => true), 'com_redslider');
+				$templateModel                  = RModel::getAdminInstance('Template', array('ignore_request' => true), 'com_redslider');
 				static::$templates[$templateId] = $templateModel->getItem($templateId);
 			}
 
@@ -134,9 +129,9 @@ class RedsliderHelper
 	/**
 	 * Replace tags for HTML content
 	 *
-	 * @param   string  $match          tag search string (maybe include HTML tags)
-	 * @param   string  $replaceString  replaceString
-	 * @param   string  $content        content string
+	 * @param   string $match         tag search string (maybe include HTML tags)
+	 * @param   string $replaceString replaceString
+	 * @param   string $content       content string
 	 *
 	 * @return  string  $content
 	 */
@@ -166,8 +161,8 @@ class RedsliderHelper
 	/**
 	 * Method for get extension
 	 *
-	 * @param   string  $element  Element name of extension (ex: com_reditem)
-	 * @param   string  $type     Type of extension (component, plugin, module)
+	 * @param   string $element Element name of extension (ex: com_reditem)
+	 * @param   string $type    Type of extension (component, plugin, module)
 	 *
 	 * @return  boolean/object  Extension of object. False otherwise.
 	 */

@@ -28,16 +28,16 @@ class RedsliderViewWelcome extends RedsliderView
 	/**
 	 * Display the welcome page
 	 *
-	 * @param   string  $tpl  The template file to use
+	 * @param   string $tpl The template file to use
 	 *
-	 * @return   string
+	 * @return  void
+	 * @throws  Exception
 	 *
 	 * @since   2.0
 	 */
 	public function display($tpl = null)
 	{
 		$this->redsliderversion = $this->get('Version');
-
 		$this->installationType = JFactory::getApplication()->input->getString('type', '');
 
 		parent::display($tpl);
