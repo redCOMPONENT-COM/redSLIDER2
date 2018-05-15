@@ -42,6 +42,31 @@ class RedsliderTableTemplate extends RTable
 	protected $_tableFieldState = 'published';
 
 	/**
+	 * @var integer
+	 */
+	public $id;
+
+	/**
+	 * @var string
+	 */
+	public $title;
+
+	/**
+	 * @var string
+	 */
+	public $section;
+
+	/**
+	 * @var integer
+	 */
+	public $published;
+
+	/**
+	 * @var string
+	 */
+	public $content;
+
+	/**
 	 * Deletes this row in database (or if provided, the row of key $pk)
 	 *
 	 * @param   mixed  $pk  An optional primary key value to delete.  If not set the instance property value is used.

@@ -6,6 +6,8 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+use Joomla\Registry\Registry;
+
 defined('_JEXEC') or die;
 
 // Find redCORE installer to use it as base system
@@ -18,7 +20,9 @@ if (!class_exists('Com_RedcoreInstallerScript'))
 		JPATH_ADMINISTRATOR . '/components/com_redcore'
 	);
 
-	if ($redcoreInstaller = JPath::find($searchPaths, 'install.php'))
+	$redcoreInstaller = JPath::find($searchPaths, 'install.php');
+
+	if ($redcoreInstaller)
 	{
 		require_once $redcoreInstaller;
 	}
@@ -33,12 +37,15 @@ if (!class_exists('Com_RedcoreInstallerScript'))
  */
 class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreInstallerScript
 {
-	private $section = "SECTION_REDFORM";
+	/**
+	 * @var string
+	 */
+	private $section = 'SECTION_REDFORM';
 
 	/**
 	 * Method to install the component
 	 *
-	 * @param   object  $parent  Class calling this method
+	 * @param   object $parent Class calling this method
 	 *
 	 * @return  boolean          True on success
 	 */
@@ -52,8 +59,8 @@ class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreIns
 	/**
 	 * Method to run after an install/update/uninstall method
 	 *
-	 * @param   object  $type    type of change (install, update or discover_install)
-	 * @param   object  $parent  class calling this method
+	 * @param   object $type   type of change (install, update or discover_install)
+	 * @param   object $parent class calling this method
 	 *
 	 * @return  boolean
 	 */
@@ -64,16 +71,8 @@ class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreIns
 		// Migrating demo data
 		if ($type === 'install')
 		{
-			$db					= JFactory::getDbo();
-			$user				= JFactory::getUser();
-			$query 				= $db->getQuery();
-			$currentDate		= JFactory::getDate();
+			$db         = JFactory::getDbo();
 			$helperPath = JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
-
-			$db					= JFactory::getDbo();
-			$user				= JFactory::getUser();
-			$query 				= $db->getQuery();
-			$currentDate		= JFactory::getDate();
 
 			if (JFile::exists($helperPath))
 			{
@@ -81,16 +80,16 @@ class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreIns
 
 				$comExists = RedsliderHelper::checkExtension('com_redform');
 
-				// Add Include path
-				JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
 				/*
 				 * Insert demo template for redFORM section
+				 * Add Include path
 				 */
-				$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
-				$templateTable->id = null;
-				$templateTable->title = 'Template redFORM';
-				$templateTable->section = 'SECTION_REDFORM';
-				$templateTable->content = '<div class="cont-side">
+				JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
+				$templateTable            = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
+				$templateTable->id        = null;
+				$templateTable->title     = 'Template redFORM';
+				$templateTable->section   = 'SECTION_REDFORM';
+				$templateTable->content   = '<div class="cont-side">
 												<table width="100%" cellspacing="5px" cellpadding="10px" align="center">
 													<tbody>
 														<tr>
@@ -112,41 +111,43 @@ class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreIns
 												</table>
 											</div>
 											<div class="bg-redform"><img src="images/stories/redslider/redform-backg.png" alt="" /></div>';
-				$templateTable->published = $comExists? 1 : 0;
+				$templateTable->published = $comExists ? 1 : 0;
 				$templateTable->store();
 				$templateId = (int) $templateTable->id;
 
 				// Prepare params for demo redFORM slide
 				$slideParams = array(
-					"form_id" => 1,
+					"form_id"          => 1,
 					"background_image" => "images/stories/redslider/bg_redform.png",
-					"slide_class" => "redform_slide"
+					"slide_class"      => "redform_slide"
 				);
 
-				$slideParams = new JRegistry($slideParams);
+				$slideParams = new Registry($slideParams);
 
 				/*
 				 * Insert demo slide for redFORM section
 				 */
-				$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
-				$slideTable->gallery_id = 1;
+				$slideTable              = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
+				$slideTable->gallery_id  = 1;
 				$slideTable->template_id = $templateId;
-				$slideTable->title = 'Sample redFORM';
-				$slideTable->section = 'SECTION_REDFORM';
+				$slideTable->title       = 'Sample redFORM';
+				$slideTable->section     = 'SECTION_REDFORM';
 
-				$slideTable->published = $comExists? 1 : 0;
-				$slideTable->params = $slideParams->toString();
+				$slideTable->published = $comExists ? 1 : 0;
+				$slideTable->params    = $slideParams->toString();
 				$slideTable->store();
 
-				unset($templateTable);
-				unset($slideTable);
+				unset($templateTable, $slideTable);
 
 				// Set this plugin published
 				$query = $db->getQuery(true);
 
 				$query->update($db->qn("#__extensions"))
 					->set($db->qn('enabled') . ' = 1')
-					->where($db->qn('element') . ' = ' . $db->q('section_redform') . ' AND ' . $db->qn('folder') . ' = ' . $db->q('redslider_sections'));
+					->where(
+						$db->qn('element') . ' = ' . $db->q('section_redform')
+						. ' AND ' . $db->qn('folder') . ' = ' . $db->q('redslider_sections')
+					);
 				$db->setQuery($query);
 				$db->execute();
 			}
@@ -158,7 +159,7 @@ class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreIns
 	/**
 	 * method to uninstall the component
 	 *
-	 * @param   object  $parent  class calling this method
+	 * @param   JInstallerAdapter $parent class calling this method
 	 *
 	 * @return  void
 	 *
@@ -166,8 +167,7 @@ class PlgRedslider_SectionsSection_RedformInstallerScript extends Com_RedcoreIns
 	 */
 	public function uninstall($parent)
 	{
-		$db    = JFactory::getDbo();
-		$user  = JFactory::getUser();
+		$db = JFactory::getDbo();
 
 		// Remove all slides which belong to this section
 		$query = $db->getQuery(true)

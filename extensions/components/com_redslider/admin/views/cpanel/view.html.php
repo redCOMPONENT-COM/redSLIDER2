@@ -30,25 +30,26 @@ class RedSliderViewCpanel extends RedsliderView
 	 *
 	 * @param   string  $tpl  The template file to use
 	 *
-	 * @return   string
+	 * @return  void
+	 * @throws  Exception
 	 *
 	 * @since   2.0
 	 */
 	public function display($tpl = null)
 	{
-		$this->user = JFactory::getUser();
-		$userType = array_keys($this->user->groups);
+		$this->user           = JFactory::getUser();
+		$userType             = array_keys($this->user->groups);
 		$this->user->usertype = $userType[0];
-		$this->user->gid = $this->user->groups[$this->user->usertype];
+		$this->user->gid      = $this->user->groups[$this->user->usertype];
 
 		require_once JPATH_COMPONENT_ADMINISTRATOR . '/helpers/cpanel_icons.php';
 
 		// Get stats
-		$this->stats = $this->get('Stats');
+		$this->stats            = $this->get('Stats');
 		$this->redsliderversion = $this->get('Version');
-		$this->iconArray = RedsliderHelperCpanelIcons::getIconArray();
+		$this->iconArray        = RedsliderHelperCpanelIcons::getIconArray();
 
-		$layout = JFactory::getApplication()->input->getCmd('layout');
+		$layout       = JFactory::getApplication()->input->getCmd('layout');
 		$this->layout = $layout;
 
 		parent::display($tpl);
@@ -57,8 +58,8 @@ class RedSliderViewCpanel extends RedsliderView
 	/**
 	 * Render CPanel icons
 	 *
-	 * @param   array   $iconArray       Icon arrays
-	 * @param   string  $quickLinkIcons  [description]
+	 * @param   array  $iconArray      Icon arrays
+	 * @param   string $quickLinkIcons [description]
 	 *
 	 * @return  void
 	 */
@@ -69,7 +70,7 @@ class RedSliderViewCpanel extends RedsliderView
 		foreach ($iconArray as $icon)
 		{
 			// Disable only for quicklinks?
-			if (($icon['name'] == "container") && ($this->config->get('use_container') == 0) && (isset($quickLinkIcons)))
+			if (($icon['name'] === 'container') && $this->config->get('use_container') == 0 && isset($quickLinkIcons))
 			{
 				continue;
 			}
@@ -81,26 +82,26 @@ class RedSliderViewCpanel extends RedsliderView
 
 			$link = 'index.php?option=com_redslider&amp;view=' . $icon['name'];
 
-			$this->quickiconButton($link, $icon['icon'], JText::_("COM_REDSLIDER_CPANEL_" . $icon['title'] . '_LABEL'));
+			$this->quickiconButton($link, $icon['icon'], JText::_('COM_REDSLIDER_CPANEL_' . $icon['title'] . '_LABEL'));
 
 			$iconCount++;
 		}
 
-		if (($iconCount == 0) && (!isset($quickLinkIcons)))
+		if ($iconCount == 0 && !isset($quickLinkIcons))
 		{
-			echo JText::_("COM_REDSLIDER_CPANEL_NO_ACCESS_DESC");
+			echo JText::_('COM_REDSLIDER_CPANEL_NO_ACCESS_DESC');
 		}
 	}
 
 	/**
 	 * Display the quick icons
 	 *
-	 * @param   string    $link   The link to the view
-	 * @param   string    $image  The name of the image to show
-	 * @param   string    $text   The text to show on the button
-	 * @param   bool|int  $modal  Set whether this is shown in a modal
+	 * @param   string   $link  The link to the view
+	 * @param   string   $image The name of the image to show
+	 * @param   string   $text  The text to show on the button
+	 * @param   bool|int $modal Set whether this is shown in a modal
 	 *
-	 * @return   string
+	 * @return  void
 	 *
 	 * @since   2.0
 	 */
@@ -108,10 +109,10 @@ class RedSliderViewCpanel extends RedsliderView
 	{
 		echo RLayoutHelper::render('cpanel_icon',
 			array(
-				'view' => $this,
-				'link' => $link,
+				'view'  => $this,
+				'link'  => $link,
 				'image' => $image,
-				'text' => $text,
+				'text'  => $text,
 				'modal' => $modal,
 			)
 		);

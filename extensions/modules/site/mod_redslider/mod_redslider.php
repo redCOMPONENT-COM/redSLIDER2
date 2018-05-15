@@ -47,8 +47,8 @@ $opt = array();
 $optThumb = array();
 
 // Get slides
-$galleryId      = (int) $params->get('gallery_id', 0);
-$slides         = ModredSLIDERHelper::getSlides($galleryId);
+$galleryId = (int) $params->get('gallery_id', 0);
+$slides    = ModredSLIDERHelper::getSlides($galleryId);
 
 // Get params
 $class          = $params->get('slider_class', 'flexslider');
@@ -67,7 +67,7 @@ $thumbWidth     = (int) $params->get('thumb_width', 150);
 $imageWidth     = (int) $params->get('image_width', 0);
 
 // Main slider and thumbnail divs
-$sliders = '#redslider-' . $module->id . ' > .slider';
+$sliders    = '#redslider-' . $module->id . ' > .slider';
 $thumbNails = '#redslider-' . $module->id . ' > .carousel';
 
 if ($slideThumbnail && $thumbNums > 0)

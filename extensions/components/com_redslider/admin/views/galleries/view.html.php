@@ -21,9 +21,9 @@ class RedsliderViewGalleries extends RedsliderView
 	/**
 	 * Display the galleries list
 	 *
-	 * @param   string  $tpl  The template file to use
+	 * @param   string $tpl The template file to use
 	 *
-	 * @return   string
+	 * @return  void
 	 *
 	 * @since   2.0.0
 	 */
@@ -53,7 +53,7 @@ class RedsliderViewGalleries extends RedsliderView
 	/**
 	 * Get the tool-bar to render.
 	 *
-	 * @todo	The commented lines are going to be implemented once we have setup ACL requirements for redSLIDER
+	 * @todo    The commented lines are going to be implemented once we have setup ACL requirements for redSLIDER
 	 * @return  RToolbar
 	 */
 	public function getToolbar()

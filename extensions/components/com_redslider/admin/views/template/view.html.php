@@ -28,22 +28,22 @@ class RedsliderViewTemplate extends RedsliderView
 	/**
 	 * Display the template edit page
 	 *
-	 * @param   string  $tpl  The template file to use
+	 * @param   string $tpl The template file to use
 	 *
-	 * @return   string
+	 * @return  void
+	 * @throws  Exception
 	 *
 	 * @since   2.0.0
 	 */
 	public function display($tpl = null)
 	{
 		$app = JFactory::getApplication();
-		$document = JFactory::getDocument();
 
-		$this->form	= $this->get('Form');
-		$this->item	= $this->get('Item');
-		$this->tags = $this->get('Tags');
+		$this->form         = $this->get('Form');
+		$this->item         = $this->get('Item');
+		$this->tags         = $this->get('Tags');
 		$this->templateTags = array();
-		$this->sectionId = $app->getUserState('com_redslider.global.template.section', '');
+		$this->sectionId    = $app->getUserState('com_redslider.global.template.section', '');
 
 		// Get template's tags
 		if ($this->sectionId)
@@ -51,7 +51,7 @@ class RedsliderViewTemplate extends RedsliderView
 			// Get list of sections' name
 			JPluginHelper::importPlugin('redslider_sections');
 			$dispatcher = RFactory::getDispatcher();
-			$tagsTmp = $dispatcher->trigger('getTagNames', array($this->sectionId));
+			$tagsTmp    = $dispatcher->trigger('getTagNames', array($this->sectionId));
 
 			if (count($tagsTmp))
 			{
@@ -76,7 +76,7 @@ class RedsliderViewTemplate extends RedsliderView
 	/**
 	 * Get the toolbar to render.
 	 *
-	 * @todo	We have setup ACL requirements for redSLIDER
+	 * @todo    We have setup ACL requirements for redSLIDER
 	 *
 	 * @return  RToolbar
 	 */
@@ -84,10 +84,10 @@ class RedsliderViewTemplate extends RedsliderView
 	{
 		$group = new RToolbarButtonGroup;
 
-		$save = RToolbarBuilder::createSaveButton('template.apply');
+		$save         = RToolbarBuilder::createSaveButton('template.apply');
 		$saveAndClose = RToolbarBuilder::createSaveAndCloseButton('template.save');
-		$saveAndNew = RToolbarBuilder::createSaveAndNewButton('template.save2new');
-		$save2Copy = RToolbarBuilder::createSaveAsCopyButton('template.save2copy');
+		$saveAndNew   = RToolbarBuilder::createSaveAndNewButton('template.save2new');
+		$save2Copy    = RToolbarBuilder::createSaveAsCopyButton('template.save2copy');
 
 		$group->addButton($save)
 			->addButton($saveAndClose)

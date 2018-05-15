@@ -21,17 +21,18 @@ class RedsliderControllerTemplate extends RControllerForm
 	/**
 	 * For edit an template
 	 *
-	 * @param   int     $key     [description]
-	 * @param   string  $urlVar  [description]
+	 * @param   int    $key    [description]
+	 * @param   string $urlVar [description]
 	 *
-	 * @return void
+	 * @return  boolean
+	 * @throws  Exception
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
-		$app = JFactory::getApplication();
-		$itemmodel = RModel::getAdminInstance('Template');
+		$app       = JFactory::getApplication();
+		$itemModel = RModel::getAdminInstance('Template');
 
-		$item = $itemmodel->getItem();
+		$item = $itemModel->getItem();
 		$app->setUserState('com_redslider.global.template.section', $item->section);
 
 		$app = JFactory::getApplication();
@@ -41,15 +42,16 @@ class RedsliderControllerTemplate extends RControllerForm
 	}
 
 	/**
-	 * Function set Section 
+	 * Function set Section
 	 *
-	 * @return void
+	 * @return  void
+	 * @throws  Exception
 	 */
 	public function setSection()
 	{
-		$app = JFactory::getApplication();
+		$app      = JFactory::getApplication();
 		$recordId = $app->input->get('id', 0, 'int');
-		$data = $app->input->get('jform', array(), 'array');
+		$data     = $app->input->get('jform', array(), 'array');
 
 		$app->setUserState('com_redslider.edit.template.data', $data);
 		$app->setUserState('com_redslider.global.template.section', $data['section']);

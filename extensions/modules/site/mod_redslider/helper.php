@@ -21,7 +21,7 @@ class ModredSLIDERHelper
 	/**
 	 * Get slides of gallery
 	 *
-	 * @param   int  $galleryId  Gallery ID
+	 * @param   int $galleryId Gallery ID
 	 *
 	 * @return  array of object
 	 */
@@ -29,10 +29,10 @@ class ModredSLIDERHelper
 	{
 		if (!$galleryId)
 		{
-			return false;
+			return array();
 		}
 
-		$db = JFactory::getDbo();
+		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true)
 			->select('s.*')
 			->select($db->qn('g.title', 'gallery_title'))
@@ -51,7 +51,7 @@ class ModredSLIDERHelper
 		$nowDate  = $db->quote($date->toSql());
 
 		$query->where('(s.publish_up = ' . $nullDate . ' OR s.publish_up <= ' . $nowDate . ')')
-				->where('(s.publish_down = ' . $nullDate . ' OR s.publish_down >= ' . $nowDate . ')');
+			->where('(s.publish_down = ' . $nullDate . ' OR s.publish_down >= ' . $nowDate . ')');
 
 		if (JLanguageMultilang::isEnabled())
 		{
@@ -70,8 +70,8 @@ class ModredSLIDERHelper
 
 		foreach ($slides as $slide)
 		{
-			$results = $dispatcher->trigger('onPrepareTemplateContent', array($slide->template_content, &$slide));
-			$results = array_values(array_filter($results));
+			$results         = $dispatcher->trigger('onPrepareTemplateContent', array($slide->template_content, &$slide));
+			$results         = array_values(array_filter($results));
 			$templateContent = '';
 
 			if (!empty($results))
@@ -84,8 +84,8 @@ class ModredSLIDERHelper
 			$params = new Registry($slide->params);
 
 			$slide->background = '';
-			$slide->class = '';
-			$background = $params->get('background_image');
+			$slide->class      = '';
+			$background        = $params->get('background_image');
 
 			if (JFile::exists($background))
 			{
@@ -96,7 +96,9 @@ class ModredSLIDERHelper
 				$slide->background = 'images/stories/redslider/bg_general.png';
 			}
 
-			if ($class = $params->get('slide_class'))
+			$class = $params->get('slide_class');
+
+			if (!empty($class))
 			{
 				$slide->class = $class;
 			}

@@ -17,8 +17,8 @@
 class RedsliderController extends JControllerLegacy
 {
 	/**
-	 * @var		string	The default view.
-	 * @since	2.5
+	 * @var        string    The default view.
+	 * @since    2.5
 	 */
 	protected $default_view = 'cpanel';
 }

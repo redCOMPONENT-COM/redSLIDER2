@@ -29,12 +29,12 @@ class RedSliderModelCpanel extends RModelAdmin
 	 */
 	public function getVersion()
 	{
-		$xmlfile = JPATH_SITE . '/administrator/components/com_redslider/redslider.xml';
+		$xmlFile = JPATH_SITE . '/administrator/components/com_redslider/redslider.xml';
 		$version = JText::_('COM_REDSLIDER_FILE_NOT_FOUND');
 
-		if (file_exists($xmlfile))
+		if (file_exists($xmlFile))
 		{
-			$data = JApplicationHelper::parseXMLInstallFile($xmlfile);
+			$data    = JApplicationHelper::parseXMLInstallFile($xmlFile);
 			$version = $data['version'];
 		}
 
@@ -55,19 +55,19 @@ class RedSliderModelCpanel extends RModelAdmin
 		// Get count of slides
 		$slidesModel = RModel::getAdminInstance('Slides', array('ignore_request' => true), 'com_redslider');
 		$slidesModel->setState('list.select', 'count(*) as count');
-		$slides = $slidesModel->getItems();
+		$slides        = $slidesModel->getItems();
 		$stats->slides = $slides[0]->count;
 
 		// Get count of galleries
 		$galleriesModel = RModel::getAdminInstance('Galleries', array('ignore_request' => true), 'com_redslider');
 		$galleriesModel->setState('list.select', 'count(*) as count');
-		$galleries = $galleriesModel->getItems();
+		$galleries        = $galleriesModel->getItems();
 		$stats->galleries = $galleries[0]->count;
 
 		// Get count of templates
 		$templatesModel = RModel::getAdminInstance('Templates', array('ignore_request' => true), 'com_redslider');
 		$templatesModel->setState('list.select', 'count(*) as count');
-		$templates = $templatesModel->getItems();
+		$templates        = $templatesModel->getItems();
 		$stats->templates = $templates[0]->count;
 
 		return $stats;
@@ -78,19 +78,20 @@ class RedSliderModelCpanel extends RModelAdmin
 	 *
 	 * @return   boolean  Always returns true
 	 *
-	 * @since	2.0
+	 * @since    2.0
 	 */
 	public function demoContentInsert()
 	{
 		// Add Include path
 		JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_redslider/tables');
+
 		/*
 		 * Insert demo template for Gallery
 		 */
-		$gallery = JTable::getInstance('Gallery', 'RedsliderTable', array('ignore_request' => true));
-		$gallery->id = null;
-		$gallery->title = 'Sample Gallery';
-		$gallery->access = 1;
+		$gallery            = JTable::getInstance('Gallery', 'RedsliderTable', array('ignore_request' => true));
+		$gallery->id        = null;
+		$gallery->title     = 'Sample Gallery';
+		$gallery->access    = 1;
 		$gallery->published = 1;
 		$gallery->store();
 		$galleryId = $gallery->id;
@@ -98,12 +99,12 @@ class RedSliderModelCpanel extends RModelAdmin
 		/*
 		 * Insert demo template for Article section
 		 */
-		$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
-		$templateTable->id = null;
-		$templateTable->title = 'Template Article';
-		$templateTable->section = 'SECTION_ARTICLE';
+		$templateTable            = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
+		$templateTable->id        = null;
+		$templateTable->title     = 'Template Article';
+		$templateTable->section   = 'SECTION_ARTICLE';
 		$templateTable->published = 1;
-		$templateTable->content = '<div class="articleSlide">
+		$templateTable->content   = '<div class="articleSlide">
 				<div class="slideTitle">
 					<h3>
 						<a href="{article_link}">{article_title}</a>
@@ -114,26 +115,28 @@ class RedSliderModelCpanel extends RModelAdmin
 				</div></div>';
 		$templateTable->store();
 		$templateId = (int) $templateTable->id;
+
 		/*
 		 * Insert demo slide for Article section
 		 */
-		$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
-		$slideTable->gallery_id = $galleryId;
+		$slideTable              = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
+		$slideTable->gallery_id  = $galleryId;
 		$slideTable->template_id = $templateId;
-		$slideTable->title = 'Sample Article';
-		$slideTable->section = 'SECTION_ARTICLE';
-		$slideTable->published = 1;
-		$slideTable->params = '{"article_id":"1","background_image":"images/stories/redslider/article_slider.jpg","slide_class":"article_slide"}';
+		$slideTable->title       = 'Sample Article';
+		$slideTable->section     = 'SECTION_ARTICLE';
+		$slideTable->published   = 1;
+		$slideTable->params      = '{"article_id":"1","background_image":"images/stories/redslider/article_slider.jpg","slide_class":"article_slide"}';
 		$slideTable->store();
+
 		/*
 		 * Insert demo template for Standard section
 		 */
-		$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
-		$templateTable->id = null;
-		$templateTable->title = 'Template Standard';
-		$templateTable->section = 'SECTION_STANDARD';
+		$templateTable            = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
+		$templateTable->id        = null;
+		$templateTable->title     = 'Template Standard';
+		$templateTable->section   = 'SECTION_STANDARD';
 		$templateTable->published = 1;
-		$templateTable->content = '<div class="eachSlide">
+		$templateTable->content   = '<div class="eachSlide">
 			<div class="slideTitle">
 				<h3>
 					<a href="{standard_link}">
@@ -146,54 +149,56 @@ class RedSliderModelCpanel extends RModelAdmin
 			</div></div>';
 		$templateTable->store();
 		$templateId = (int) $templateTable->id;
+
 		/*
 		 * Insert demo slide for Standard section
 		 */
-		$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
-		$slideTable->gallery_id = $galleryId;
+		$slideTable              = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
+		$slideTable->gallery_id  = $galleryId;
 		$slideTable->template_id = $templateId;
-		$slideTable->title = 'Sample Standard';
-		$slideTable->section = 'SECTION_STANDARD';
-		$slideTable->published = 1;
-		$slideTable->params = '{"background_image":"images/stories/redslider/standard_slider.jpg","caption":"Sample Standard","description":"redSLIDER is a Joomla extension for creating continuous horizontal scroller of images and videos in a module","link":"#","linktext":"Sample Standard","slide_class":"standard_slide"}';
+		$slideTable->title       = 'Sample Standard';
+		$slideTable->section     = 'SECTION_STANDARD';
+		$slideTable->published   = 1;
+		$slideTable->params      = '{"background_image":"images/stories/redslider/standard_slider.jpg","caption":"Sample Standard","description":"redSLIDER is a Joomla extension for creating continuous horizontal scroller of images and videos in a module","link":"#","linktext":"Sample Standard","slide_class":"standard_slide"}';
 		$slideTable->store();
+
 		/*
 		 * Insert demo slide 2 for Standard section
 		 */
-		$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
-		$slideTable->gallery_id = $galleryId;
+		$slideTable              = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
+		$slideTable->gallery_id  = $galleryId;
 		$slideTable->template_id = $templateId;
-		$slideTable->title = 'Sample Standard 2';
-		$slideTable->section = 'SECTION_STANDARD';
-		$slideTable->published = 1;
-		$slideTable->params = '{"background_image":"images/stories/redslider/standard_slider2.jpg","caption":"Sample Standard","description":"redSLIDER is a Joomla extension for creating continuous horizontal scroller of images and videos in a module","link":"#","linktext":"Sample Standard","slide_class":"standard_slide_bottom"}';
+		$slideTable->title       = 'Sample Standard 2';
+		$slideTable->section     = 'SECTION_STANDARD';
+		$slideTable->published   = 1;
+		$slideTable->params      = '{"background_image":"images/stories/redslider/standard_slider2.jpg","caption":"Sample Standard","description":"redSLIDER is a Joomla extension for creating continuous horizontal scroller of images and videos in a module","link":"#","linktext":"Sample Standard","slide_class":"standard_slide_bottom"}';
 		$slideTable->store();
+
 		/*
 		 * Insert demo template for Video section
 		 */
-		$templateTable = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
-		$templateTable->id = null;
-		$templateTable->title = 'Template Video';
-		$templateTable->section = 'SECTION_VIDEO';
+		$templateTable            = JTable::getInstance('Template', 'RedsliderTable', array('ignore_request' => true));
+		$templateTable->id        = null;
+		$templateTable->title     = 'Template Video';
+		$templateTable->section   = 'SECTION_VIDEO';
 		$templateTable->published = 1;
-		$templateTable->content = '<div class="video_Slide"><div class="videoSlide">{youtube}<div class="slideTitle"><h3>{caption}</h3></div></div></div>';
+		$templateTable->content   = '<div class="video_Slide"><div class="videoSlide">{youtube}<div class="slideTitle"><h3>{caption}</h3></div></div></div>';
 		$templateTable->store();
 		$templateId = (int) $templateTable->id;
+
 		/*
 		 * Insert demo slide for Video section
 		 */
-		$slideTable = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
-		$slideTable->gallery_id = $galleryId;
+		$slideTable              = JTable::getInstance('Slide', 'RedsliderTable', array('ignore_request' => true));
+		$slideTable->gallery_id  = $galleryId;
 		$slideTable->template_id = $templateId;
-		$slideTable->title = 'Sample Video';
-		$slideTable->section = 'SECTION_VIDEO';
-		$slideTable->published = 1;
-		$slideTable->params = '{"local_media":"","local_width":"500","local_height":"315","background_image":"images/stories/redslider/bg_redshop_slider.png","slide_class":"video_slide","vimeo_id":"","vimeo_width":"500","vimeo_height":"281","vimeo_portrait":"0","vimeo_title":"0","vimeo_byline":"0","vimeo_autoplay":"0","vimeo_loop":"0","vimeo_color":"#FFFFFF","youtube_id":"Qjnc0H8utks","youtube_width":"500","youtube_height":"315","youtube_suggested":"0","youtube_privacy_enhanced":"0","other_iframe":""}';
+		$slideTable->title       = 'Sample Video';
+		$slideTable->section     = 'SECTION_VIDEO';
+		$slideTable->published   = 1;
+		$slideTable->params      = '{"local_media":"","local_width":"500","local_height":"315","background_image":"images/stories/redslider/bg_redshop_slider.png","slide_class":"video_slide","vimeo_id":"","vimeo_width":"500","vimeo_height":"281","vimeo_portrait":"0","vimeo_title":"0","vimeo_byline":"0","vimeo_autoplay":"0","vimeo_loop":"0","vimeo_color":"#FFFFFF","youtube_id":"Qjnc0H8utks","youtube_width":"500","youtube_height":"315","youtube_suggested":"0","youtube_privacy_enhanced":"0","other_iframe":""}';
 		$slideTable->store();
 
-		unset($gallery);
-		unset($templateTable);
-		unset($slideTable);
+		unset($gallery, $templateTable, $slideTable);
 
 		return true;
 	}

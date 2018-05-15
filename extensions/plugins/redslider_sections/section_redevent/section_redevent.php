@@ -7,6 +7,8 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+use Joomla\Registry\Registry;
+
 defined('_JEXEC') or die;
 
 jimport('joomla.plugin.plugin');
@@ -19,39 +21,49 @@ jimport('redcore.bootstrap');
  */
 class PlgRedslider_SectionsSection_Redevent extends JPlugin
 {
-	private $sectionId;
+	/**
+	 * @var string
+	 */
+	private $sectionId = 'SECTION_REDEVENT';
 
+	/**
+	 * @var string
+	 */
 	private $sectionName;
 
-	private $extensionName;
+	/**
+	 * @var string
+	 */
+	private $extensionName = 'com_redevent';
 
-	private $msgLevel;
+	/**
+	 * @var string
+	 */
+	private $msgLevel = 'Warning';
 
 	/**
 	 * Constructor - note in Joomla 2.5 PHP4.x is no longer supported so we can use this.
 	 *
-	 * @param   object  &$subject  The object to observe
-	 * @param   array   $config    An array that holds the plugin configuration
+	 * @param   object $subject The object to observe
+	 * @param   array  $config  An array that holds the plugin configuration
 	 */
 	public function __construct(&$subject, $config)
 	{
 		parent::__construct($subject, $config);
 		$this->loadLanguage();
-		$this->sectionId = "SECTION_REDEVENT";
+
 		$this->sectionName = JText::_('PLG_SECTION_REDEVENT_NAME');
-		$this->extensionName = "com_redevent";
-		$this->msgLevel = "Warning";
 	}
 
 	/**
 	 * Get section name
 	 *
-	 * @return  array
+	 * @return  object
 	 */
 	public function getSectionName()
 	{
-		$section = new stdClass;
-		$section->id = $this->sectionId;
+		$section       = new stdClass;
+		$section->id   = $this->sectionId;
 		$section->name = $this->sectionName;
 
 		return $section;
@@ -60,7 +72,7 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 	/**
 	 * Get section name by section Id
 	 *
-	 * @param   string  $sectionId  Section's ID
+	 * @param   string $sectionId Section's ID
 	 *
 	 * @return  string
 	 */
@@ -75,82 +87,87 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 	/**
 	 * Get section's tags name
 	 *
-	 * @param   string  $sectionId  Section's ID
+	 * @param   string $sectionId Section's ID
 	 *
-	 * @return  void/array
+	 * @return  array
 	 */
 	public function getTagNames($sectionId)
 	{
 		if ($sectionId === $this->sectionId)
 		{
 			$tags = array(
-						'[event_description]' => '<br>',
-						'[event_title]' => '<br>',
-						'[price]' => '<br>',
-						'[credits]' => '<br>',
-						'[code]' => '<br>',
-						'[redform]' => '<br>',
-						'[inputname]' => '<br>',
-						'[inputemail]' => '<br>',
-						'[submit]' => '<br>',
-						'[event_info_text]' => '<br>',
-						'[time]' => '<br>',
-						'[date]' => '<br>',
-						'[duration]' => '<br>',
-						'[venue]' => '<br>',
-						'[city]' => '<br>',
-						'[eventplaces]' => '<br>',
-						'[waitinglistplaces]' => '<br>',
-						'[eventplacesleft]' => '<br>',
-						'[waitinglistplacesleft]' => '<br>',
-						'[paymentrequest]' => '<br>',
-						'[paymentrequestlink]' => ''
-						);
+				'[event_description]'     => '<br>',
+				'[event_title]'           => '<br>',
+				'[price]'                 => '<br>',
+				'[credits]'               => '<br>',
+				'[code]'                  => '<br>',
+				'[redform]'               => '<br>',
+				'[inputname]'             => '<br>',
+				'[inputemail]'            => '<br>',
+				'[submit]'                => '<br>',
+				'[event_info_text]'       => '<br>',
+				'[time]'                  => '<br>',
+				'[date]'                  => '<br>',
+				'[duration]'              => '<br>',
+				'[venue]'                 => '<br>',
+				'[city]'                  => '<br>',
+				'[eventplaces]'           => '<br>',
+				'[waitinglistplaces]'     => '<br>',
+				'[eventplacesleft]'       => '<br>',
+				'[waitinglistplacesleft]' => '<br>',
+				'[paymentrequest]'        => '<br>',
+				'[paymentrequestlink]'    => ''
+			);
 
 			return $tags;
 		}
+
+		return array();
 	}
 
 	/**
 	 * Add forms fields of section to slide view
 	 *
-	 * @param   mixed   $form       joomla form object
-	 * @param   string  $sectionId  section's id
+	 * @param   mixed  $form      joomla form object
+	 * @param   string $sectionId section's id
 	 *
 	 * @return  boolean
+	 * @throws  Exception
 	 */
 	public function onSlidePrepareForm($form, $sectionId)
 	{
-		if ($sectionId === $this->sectionId)
+		if ($sectionId !== $this->sectionId)
 		{
-			$return = false;
-
-			$app = JFactory::getApplication();
-
-			if ($app->isAdmin())
-			{
-				if (RedsliderHelper::checkExtension($this->extensionName))
-				{
-					JForm::addFormPath(__DIR__ . '/forms/');
-					$return = $form->loadFile('fields_redevent', false);
-				}
-				else
-				{
-					$app->enqueueMessage(JText::_('PLG_REDSLIDER_SECTION_EVENT_INSTALL_COM_REDSHOP_FIRST'), $this->msgLevel);
-				}
-			}
-
-			return $return;
+			return false;
 		}
+
+		$app    = JFactory::getApplication();
+		$return = false;
+
+		if ($app->isAdmin())
+		{
+			if (RedsliderHelper::checkExtension($this->extensionName))
+			{
+				JForm::addFormPath(__DIR__ . '/forms/');
+				$return = $form->loadFile('fields_redevent', false);
+			}
+			else
+			{
+				$app->enqueueMessage(JText::_('PLG_REDSLIDER_SECTION_EVENT_INSTALL_COM_REDSHOP_FIRST'), $this->msgLevel);
+			}
+		}
+
+		return $return;
 	}
 
 	/**
 	 * Add template of section to template slide
 	 *
 	 * @param   object  $view       JView object
-	 * @param   string  $sectionId  section's id
+	 * @param   string  $sectionId  Section's id
 	 *
-	 * @return boolean
+	 * @return  boolean
+	 * @throws  Exception
 	 */
 	public function onSlidePrepareTemplate($view, $sectionId)
 	{
@@ -174,8 +191,8 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 	/**
 	 * Event on store a slide
 	 *
-	 * @param   object  $jtable  JTable object
-	 * @param   object  $jinput  JForm data
+	 * @param   object $jtable JTable object
+	 * @param   object $jinput JForm data
 	 *
 	 * @return boolean
 	 */
@@ -187,8 +204,8 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 	/**
 	 * Prepare content for slide show in module
 	 *
-	 * @param   string  $content  Template Content
-	 * @param   object  $slide    Slide result object
+	 * @param   string $content Template Content
+	 * @param   object $slide   Slide result object
 	 *
 	 * @return  string  $content  repaced content
 	 */
@@ -222,9 +239,9 @@ class PlgRedslider_SectionsSection_Redevent extends JPlugin
 					RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
 				}
 
-				$params = new JRegistry($slide->params);
+				$params  = new Registry($slide->params);
 				$eventId = (int) $params->get('event_id', 0);
-				$tags = new RedeventTags;
+				$tags    = new RedeventTags;
 				$tags->setEventId($eventId);
 				$content = $tags->ReplaceTags($content);
 			}

@@ -21,16 +21,16 @@ class RedsliderControllerGallery extends RControllerForm
 	/**
 	 * For edit an gallery
 	 *
-	 * @param   int     $key     Gallery key to edit
-	 * @param   string  $urlVar  Url variables
+	 * @param   int    $key    Gallery key to edit
+	 * @param   string $urlVar Url variables
 	 *
-	 * @return void
+	 * @return  boolean
+	 * @throws  Exception
 	 */
 	public function edit($key = null, $urlVar = null)
 	{
-		$itemmodel = RModel::getAdminInstance('Gallery');
-
-		$item = $itemmodel->getItem();
+		$itemModel = RModel::getAdminInstance('Gallery');
+		$item      = $itemModel->getItem();
 
 		$app = JFactory::getApplication();
 		$app->setUserState('com_redslider.global.gid', array($item->id));
