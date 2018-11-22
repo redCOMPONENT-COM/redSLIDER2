@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `#__redslider_slides` (
   `checked_out` int(11) DEFAULT NULL,
   `checked_out_time` datetime DEFAULT NULL,
   `language` CHAR(7) NOT NULL DEFAULT '',
-  `params` varchar(2048) DEFAULT NULL,
+  `params` longtext DEFAULT NULL,
   `created_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` INT(11) NULL DEFAULT NULL,
   `modified_by` INT(11) NULL DEFAULT NULL,
