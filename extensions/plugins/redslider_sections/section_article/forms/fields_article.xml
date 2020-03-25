@@ -11,6 +11,7 @@
         <field
                 name="background_image"
                 type="rmedia"
+                class="form-control"
                 label="COM_REDSLIDER_SECTION_ARTICLE_FIELD_ARTICLE_IMAGE"
                 description="COM_REDSLIDER_SECTION_ARTICLE_FIELD_ARTICLE_IMAGE_DESC"
         />
@@ -18,6 +19,7 @@
                 name="slide_class"
                 type="text"
                 default="article_slide"
+                class="form-control"
                 label="COM_REDSLIDER_SECTION_ARTICLE_FIELD_ARTICLE_SLIDE_CLASS"
                 description="COM_REDSLIDER_SECTION_ARTICLE_FIELD_ARTICLE_SLIDE_CLASS_DESC"
         />

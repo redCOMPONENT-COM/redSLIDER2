@@ -19,23 +19,6 @@ defined('_JEXEC') or die;
 class RedsliderModelTemplate extends RModelAdmin
 {
 	/**
-	 * Method to get the row form.
-	 *
-	 * @param   int  $pk  Primary key
-	 *
-	 * @return	mixed	A JForm object on success, false on failure
-	 *
-	 * @since	1.6
-	 */
-	public function getItem($pk = null)
-	{
-		$app = JFactory::getApplication();
-		$item = parent::getItem($pk);
-
-		return $item;
-	}
-
-	/**
 	 * Method for getting the form from the model.
 	 *
 	 * @param   array    $data      Data for the form.

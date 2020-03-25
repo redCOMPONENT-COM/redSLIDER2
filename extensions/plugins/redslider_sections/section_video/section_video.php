@@ -7,29 +7,38 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
+use Joomla\String\StringHelper;
+use Redslider\Plugin\AbstractRedsliderSection;
 
 defined('_JEXEC') or die;
 
-jimport('joomla.plugin.plugin');
-jimport('redcore.bootstrap');
+JLoader::import('redslider.library');
 
 /**
  * Plugins RedSLIDER section video
  *
  * @since  1.0
  */
-class PlgRedslider_SectionsSection_Video extends JPlugin
+class PlgRedslider_SectionsSection_Video extends AbstractRedsliderSection
 {
 	/**
 	 * @var string
 	 */
-	private $sectionId;
+	protected $sectionId = 'SECTION_VIDEO';
 
 	/**
 	 * @var string
 	 */
-	private $sectionName;
+	protected $formName = 'fields_video';
+
+	/**
+	 * @var string
+	 */
+	protected $templateName = 'video';
 
 	/**
 	 * Constructor - note in Joomla 2.5 PHP4.x is no longer supported so we can use this.
@@ -40,40 +49,7 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 	public function __construct(&$subject, $config)
 	{
 		parent::__construct($subject, $config);
-		$this->loadLanguage();
-		$this->sectionId   = 'SECTION_VIDEO';
-		$this->sectionName = JText::_('PLG_SECTION_VIDEO_NAME');
-	}
-
-	/**
-	 * Get section name
-	 *
-	 * @return  object
-	 */
-	public function getSectionName()
-	{
-		$section       = new stdClass;
-		$section->id   = $this->sectionId;
-		$section->name = $this->sectionName;
-
-		return $section;
-	}
-
-	/**
-	 * Get section name by section Id
-	 *
-	 * @param   string  $sectionId  Section's ID
-	 *
-	 * @return  string
-	 */
-	public function getSectionNameById($sectionId)
-	{
-		if ($sectionId === $this->sectionId)
-		{
-			return $this->sectionName;
-		}
-
-		return '';
+		$this->sectionName = Text::_('PLG_SECTION_VIDEO_NAME');
 	}
 
 	/**
@@ -89,41 +65,14 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 		if ($sectionId === $this->sectionId)
 		{
 			$tags = array(
-				'{youtube}' => JText::_('COM_REDSLIDER_TAG_VIDEO_YOUTUBE_DESC'),
-				'{vimeo}'   => JText::_('COM_REDSLIDER_TAG_VIDEO_VIMEO_DESC'),
-				'{other}'   => JText::_('COM_REDSLIDER_TAG_VIDEO_OTHER_DESC'),
-				'{caption}' => JText::_('COM_REDSLIDER_TAG_VIDEO_CAPTION_DESC')
+				'{youtube}' => Text::_('COM_REDSLIDER_TAG_VIDEO_YOUTUBE_DESC'),
+				'{vimeo}'   => Text::_('COM_REDSLIDER_TAG_VIDEO_VIMEO_DESC'),
+				'{other}'   => Text::_('COM_REDSLIDER_TAG_VIDEO_OTHER_DESC'),
+				'{caption}' => Text::_('COM_REDSLIDER_TAG_VIDEO_CAPTION_DESC')
 			);
 
 			return $tags;
 		}
-	}
-
-	/**
-	 * Add forms fields of section to slide view
-	 *
-	 * @param   mixed   $form       Joomla form object
-	 * @param   string  $sectionId  Section's id
-	 *
-	 * @return  boolean
-	 * @throws  Exception
-	 */
-	public function onSlidePrepareForm($form, $sectionId)
-	{
-		$return = false;
-
-		if ($sectionId === $this->sectionId)
-		{
-			$app = JFactory::getApplication();
-
-			if ($app->isAdmin())
-			{
-				JForm::addFormPath(__DIR__ . '/forms/');
-				$return = $form->loadFile('fields_video', false);
-			}
-		}
-
-		return $return;
 	}
 
 	/**
@@ -137,63 +86,43 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 	 */
 	public function onSlidePrepareTemplate($view, $sectionId)
 	{
-		// TODO: Local video - waiting for opinion
-		$return = false;
-
-		if ($sectionId === $this->sectionId)
+		if ($sectionId !== $this->sectionId
+			|| !Factory::getApplication()->isClient('administrator'))
 		{
-			$app = JFactory::getApplication();
+			return false;
+		}
 
-			if ($app->isAdmin())
+		// TODO: Local video - waiting for opinion
+		$fields = $view->form->getGroup('params');
+
+		if (!empty($fields))
+		{
+			foreach ($fields as $field)
 			{
-				$fields = $view->form->getGroup('params');
-
-				if (count($fields))
+				if (StringHelper::strpos($field->id, 'jform_params_vimeo') !== false)
 				{
-					foreach ($fields as $field)
-					{
-						if (JString::strpos($field->id, 'jform_params_vimeo') !== false)
-						{
-							$view->outputFields['COM_REDSLIDER_SECTION_VIDEO_PANE_VIMEO'][] = $field;
-						}
-						elseif (JString::strpos($field->id, 'jform_params_youtube') !== false)
-						{
-							$view->outputFields['COM_REDSLIDER_SECTION_VIDEO_PANE_YOUTUBE'][] = $field;
-						}
-						elseif (JString::strpos($field->id, 'jform_params_other') !== false)
-						{
-							$view->outputFields['COM_REDSLIDER_SECTION_VIDEO_PANE_OTHER'][] = $field;
-						}
-						elseif (JString::strpos($field->id, 'jform_params_local') !== false)
-						{
-							$view->outsizeFields['COM_REDSLIDER_SECTION_VIDEO_PANE_LOCAL'][] = $field;
-						}
-						else
-						{
-							$view->basicFields[] = $field;
-						}
-					}
+					$view->outputFields['COM_REDSLIDER_SECTION_VIDEO_PANE_VIMEO'][] = $field;
 				}
-
-				$view->addTemplatePath(__DIR__ . '/tmpl/');
-				$return = $view->loadTemplate('video');
+				elseif (StringHelper::strpos($field->id, 'jform_params_youtube') !== false)
+				{
+					$view->outputFields['COM_REDSLIDER_SECTION_VIDEO_PANE_YOUTUBE'][] = $field;
+				}
+				elseif (StringHelper::strpos($field->id, 'jform_params_other') !== false)
+				{
+					$view->outputFields['COM_REDSLIDER_SECTION_VIDEO_PANE_OTHER'][] = $field;
+				}
+				elseif (StringHelper::strpos($field->id, 'jform_params_local') !== false)
+				{
+					$view->outsizeFields['COM_REDSLIDER_SECTION_VIDEO_PANE_LOCAL'][] = $field;
+				}
+				else
+				{
+					$view->basicFields[] = $field;
+				}
 			}
 		}
 
-		return $return;
-	}
-
-	/**
-	 * Event on store a slide
-	 *
-	 * @param   object  $jtable  JTable object
-	 * @param   object  $jinput  JForm data
-	 *
-	 * @return  boolean
-	 */
-	public function onSlideStore($jtable, $jinput)
-	{
-		return true;
+		return parent::onSlidePrepareTemplate($view, $sectionId);
 	}
 
 	/**
@@ -212,14 +141,14 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 		}
 
 		// Check if we need to load component's CSS or not
-		$useOwnCSS = JComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
+		$useOwnCSS = ComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
 
 		// Load stylesheet for each section
-		$css = 'redslider.' . JString::strtolower($this->sectionId) . '.min.css';
+		$css = 'redslider.' . StringHelper::strtolower($this->sectionId) . '.min.css';
 
 		if (!$useOwnCSS)
 		{
-			RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+			RHelperAsset::load($css, 'redslider_sections/' . StringHelper::strtolower($this->sectionId));
 		}
 
 		$params  = new Registry($slide->params);
@@ -232,7 +161,7 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 			{
 				if (count($match))
 				{
-					$content = JString::str_ireplace($match[0], $slide->title, $content);
+					$content = StringHelper::str_ireplace($match[0], $slide->title, $content);
 				}
 			}
 		}
@@ -250,14 +179,14 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 			$vimeo->autoplay = $params->get('vimeo_autoplay');
 			$vimeo->loop     = $params->get('vimeo_loop');
 			$vimeo->color    = $params->get('vimeo_color');
-			$vimeo->color    = JString::str_ireplace('#', '', $vimeo->color);
+			$vimeo->color    = StringHelper::str_ireplace('#', '', $vimeo->color);
 
 			$replaceString = '';
 
-			if (isset($vimeo->id) && JString::trim($vimeo->id))
+			if (isset($vimeo->id) && StringHelper::trim($vimeo->id))
 			{
 				$replaceString .= '<iframe ';
-				$replaceString .= 'src="//player.vimeo.com/video/' . JString::trim($vimeo->id) . '?color=' . JString::trim($vimeo->color);
+				$replaceString .= 'src="//player.vimeo.com/video/' . StringHelper::trim($vimeo->id) . '?color=' . StringHelper::trim($vimeo->color);
 
 				if ($vimeo->loop)
 				{
@@ -291,7 +220,7 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 			{
 				if (count($match))
 				{
-					$content = JString::str_ireplace($match[0], $replaceString, $content);
+					$content = StringHelper::str_ireplace($match[0], $replaceString, $content);
 				}
 			}
 		}
@@ -308,7 +237,7 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 
 			$replaceString = '';
 
-			if (isset($youtube->id) && JString::trim($youtube->id))
+			if (isset($youtube->id) && StringHelper::trim($youtube->id))
 			{
 				$replaceString .= '<iframe ';
 
@@ -318,7 +247,7 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 				}
 				else
 				{
-					$replaceString .= 'width="' . JString::trim($youtube->width) . '" ';
+					$replaceString .= 'width="' . StringHelper::trim($youtube->width) . '" ';
 				}
 
 				if (!is_numeric($youtube->height))
@@ -327,16 +256,16 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 				}
 				else
 				{
-					$replaceString .= 'height="' . JString::trim($youtube->height) . '" ';
+					$replaceString .= 'height="' . StringHelper::trim($youtube->height) . '" ';
 				}
 
 				if ($youtube->privacy_enhance)
 				{
-					$replaceString .= 'src="//www.youtube-nocookie.com/embed/' . JString::trim($youtube->id) . ' ';
+					$replaceString .= 'src="//www.youtube-nocookie.com/embed/' . StringHelper::trim($youtube->id) . ' ';
 				}
 				else
 				{
-					$replaceString .= 'src="//www.youtube.com/embed/' . JString::trim($youtube->id);
+					$replaceString .= 'src="//www.youtube.com/embed/' . StringHelper::trim($youtube->id);
 				}
 
 				if (!$youtube->suggested)
@@ -355,7 +284,7 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 			{
 				if (count($match))
 				{
-					$content = JString::str_ireplace($match[0], $replaceString, $content);
+					$content = StringHelper::str_ireplace($match[0], $replaceString, $content);
 				}
 			}
 		}
@@ -381,7 +310,7 @@ class PlgRedslider_SectionsSection_Video extends JPlugin
 			{
 				if (count($match))
 				{
-					$content = JString::str_ireplace($match[0], $other->iframe, $content);
+					$content = StringHelper::str_ireplace($match[0], $other->iframe, $content);
 				}
 			}
 		}

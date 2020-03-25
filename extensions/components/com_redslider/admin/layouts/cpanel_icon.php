@@ -8,6 +8,9 @@
  */
 
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 defined('JPATH_REDCORE') or die;
 
 $modal      = isset($displayData['modal']) ? $displayData['modal'] : 0;
@@ -16,9 +19,9 @@ $image      = isset($displayData['image']) ? $displayData['image'] : '';
 $text      = isset($displayData['text']) ? $displayData['text'] : '';
 
 ?>
-<div class="rbtn-group btn-group <?php echo(JFactory::getLanguage()->isRTL() ? 'pull-right' : 'pull-left'); ?>">
+<div class="rbtn-group btn-group <?php echo(Factory::getLanguage()->isRTL() ? 'pull-right' : 'pull-left'); ?>">
 	<?php if ($modal == 1) : ?>
-		<?php JHTML::_('behavior.modal'); ?>
+		<?php HTMLHelper::_('behavior.modal'); ?>
 		<a class="btn btn-default btn-lg cpanelicon"
 		   href="<?php echo $link; ?>&amp;tmpl=component"
 		   style="cursor:pointer"

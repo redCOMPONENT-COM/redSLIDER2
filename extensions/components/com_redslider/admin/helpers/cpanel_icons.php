@@ -7,24 +7,17 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+use Joomla\CMS\Language\Text;
+
 defined('_JEXEC') or die;
 
 /**
- * Class RedsliderHelperCpanelIcons
+ * Class RedsliderHelpersCpanel_Icons
  *
  * @since  2.0
  */
-class RedsliderHelperCpanelIcons extends JObject
+class RedsliderHelpersCpanel_Icons extends JObject
 {
-	/**
-	 * Protected! Use the getInstance
-	 */
-	public function __construct()
-	{
-		// Parent Helper Construction
-		parent::__construct();
-	}
-
 	/**
 	 * Some function which was in obscure reddesignhelper class.
 	 *
@@ -37,32 +30,30 @@ class RedsliderHelperCpanelIcons extends JObject
 		$configurationLink = 'index.php?option=com_redcore&view=config&layout=edit&component=com_redslider&return=' . $return;
 
 		return array(
-			'galleries'     => array(
-				'link'  => JRoute::_('index.php?option=com_redslider&view=galleries'),
+			[
+				'view' => 'galleries',
+				'link'  => 'index.php?option=com_redslider&view=galleries',
 				'icon'  => 'icon-sitemap',
-				'title' => JText::_('COM_REDSLIDER_CPANEL_GALLERIES_LABEL'),
-			),
-			'slides'        => array(
-				'link'  => JRoute::_('index.php?option=com_redslider&view=slides'),
+				'text' => Text::_('COM_REDSLIDER_CPANEL_GALLERIES_LABEL')
+			],
+			[
+				'view' => 'slides',
+				'link'  => 'index.php?option=com_redslider&view=slides',
 				'icon'  => 'icon-file-text',
-				'title' => JText::_('COM_REDSLIDER_CPANEL_SLIDES_LABEL'),
-			),
-			'templates'     => array(
-				'link'  => JRoute::_('index.php?option=com_redslider&view=templates'),
+				'text' => Text::_('COM_REDSLIDER_CPANEL_SLIDES_LABEL')
+			],
+			[
+				'view' => 'templates',
+				'link'  => 'index.php?option=com_redslider&view=templates',
 				'icon'  => 'icon-desktop',
-				'title' => JText::_('COM_REDSLIDER_CPANEL_TEMPLATES_LABEL'),
-			),
-			'configuration' => array(
-				'link'  => JRoute::_($configurationLink),
+				'text' => Text::_('COM_REDSLIDER_CPANEL_TEMPLATES_LABEL')
+			],
+			[
+				'view' => 'configuration',
+				'link'  => $configurationLink,
 				'icon'  => 'icon-cog',
-				'title' => JText::_('COM_REDSLIDER_CPANEL_CONFIGURATION_LABEL')
-			),
-			'help'          => array(
-				'link'   => 'http://wiki.redcomponent.com/index.php?title=RedSLIDER',
-				'icon'   => 'icon-question-sign',
-				'title'  => JText::_('COM_REDSLIDER_CPANEL_HELP_LABEL'),
-				'target' => '_blank'
-			)
+				'text' => Text::_('COM_REDSLIDER_CPANEL_CONFIGURATION_LABEL')
+			]
 		);
 	}
 }

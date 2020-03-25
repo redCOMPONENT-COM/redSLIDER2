@@ -6,35 +6,34 @@
  * @copyright   Copyright (C) 2008 - 2016 redCOMPONENT.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
+
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+
 defined('_JEXEC') or die;
-JHtml::_('rjquery.chosen', 'select');
+
 ?>
-<script type="text/javascript">
-	Joomla.submitbutton = function (pressbutton) {
-		submitbutton(pressbutton);
-	};
-</script>
-<div id="rcCpanel-main-container" class="row-fluid">
-	<div class="span8 rcCpanelMainIcons">
+<div id="rcCpanel-main-container" class="row">
+	<div class="col-md-8 rcCpanelMainIcons">
 		<?php $iconsRow = array_chunk($this->iconArray, 6); ?>
 		<?php foreach ($iconsRow as $row) : ?>
 		<p></p>
-		<div class="row-fluid">
+		<div class="row">
 			<?php foreach ($row as $icon) : ?>
-			<div class="span2">
+			<div class="col-md-2 col-sm-3 col-xs-6">
                 <?php $target = ''; ?>
                 <?php if (isset($icon['target']) && $icon['target']): ?>
                     <?php $target = 'target="' . $icon['target'] . '"'; ?>
                 <?php endif; ?>
-				<a class="rcCpanelIcons" href="<?php echo $icon['link']; ?>" <?php echo $target; ?>>
-					<div class="row-fluid pagination-centered">
+				<a class="rcCpanelIcons" href="<?php echo Route::_($icon['link']); ?>" <?php echo $target; ?>>
+					<div class="text-center">
 						<span class="dashboard-icon-link-icon">
 							<i class="<?php echo $icon['icon']; ?> icon-5x"></i>
 						</span>
 					</div>
-					<div class="row-fluid pagination-centered">
+					<div class="text-center">
 						<p class="dashboard-icon-link-text">
-							<strong><?php echo $icon['title']; ?></strong>
+							<strong><?php echo $icon['text']; ?></strong>
 						</p>
 					</div>
 				</a>
@@ -43,11 +42,11 @@ JHtml::_('rjquery.chosen', 'select');
 		</div>
 		<?php endforeach; ?>
 	</div>
-	<div class="span4 rcCpanelSideIcons">
+	<div class="col-md-4 rcCpanelSideIcons">
 		<div class="well">
 			<div class="pull-right">
 				<strong class="row-title">
-					<?php echo JText::_('COM_REDSLIDER_VERSION'); ?>
+					<?php echo Text::_('COM_REDSLIDER_VERSION'); ?>
 				</strong>
 				<span class="badge badge-success" title="<?php echo JText::_('COM_REDSLIDER_VERSION'); ?>">
 					<?php echo $this->redsliderversion; ?>
@@ -57,7 +56,7 @@ JHtml::_('rjquery.chosen', 'select');
 			<table class="table table-striped adminlist">
 			<tr>
 				<td>
-					<strong><?php echo JText::_('COM_REDSLIDER_GALLERIES'); ?></strong>
+					<strong><?php echo Text::_('COM_REDSLIDER_GALLERIES'); ?></strong>
 				</td>
 				<td>
 					<span class="badge"><?php echo $this->stats->galleries; ?></span>
@@ -65,7 +64,7 @@ JHtml::_('rjquery.chosen', 'select');
 			</tr>
 			<tr>
 				<td>
-					<strong><?php echo JText::_('COM_REDSLIDER_SLIDES'); ?></strong>
+					<strong><?php echo Text::_('COM_REDSLIDER_SLIDES'); ?></strong>
 				</td>
 				<td>
 					<span class="badge"><?php echo $this->stats->slides; ?></span>
@@ -73,7 +72,7 @@ JHtml::_('rjquery.chosen', 'select');
 			</tr>
 			<tr>
 				<td>
-					<strong><?php echo JText::_('COM_REDSLIDER_TEMPLATES'); ?></strong>
+					<strong><?php echo Text::_('COM_REDSLIDER_TEMPLATES'); ?></strong>
 				</td>
 				<td>
 					<span class="badge"><?php echo $this->stats->templates; ?></span>

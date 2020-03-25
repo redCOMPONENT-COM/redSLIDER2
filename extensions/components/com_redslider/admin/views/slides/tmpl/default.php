@@ -6,12 +6,16 @@
  * @copyright   Copyright (C) 2008 - 2016 redCOMPONENT.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+
 defined('_JEXEC') or die;
 
-JHtml::_('behavior.keepalive');
-JHtml::_('rdropdown.init');
-JHtml::_('rbootstrap.tooltip');
-JHtml::_('rjquery.chosen', 'select');
+HTMLHelper::_('behavior.keepalive');
+HTMLHelper::_('rdropdown.init');
+HTMLHelper::_('rbootstrap.tooltip');
 
 $saveOrderLink = 'index.php?option=com_redslider&task=slides.saveOrderAjax&tmpl=component';
 $listOrder = $this->state->get('list.ordering');
@@ -20,12 +24,12 @@ $ordering = ($listOrder == 's.ordering');
 $saveOrder = ($listOrder == 's.ordering' && strtolower($listDirn) == 'asc');
 $search = $this->state->get('filter.search');
 
-$user = JFactory::getUser();
+$user   = Factory::getUser();
 $userId = $user->id;
 
 if ($saveOrder)
 {
-JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listDirn), $saveOrderLink, false, true);
+    HTMLHelper::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listDirn), $saveOrderLink, false, true);
 }
 
 ?>
@@ -45,7 +49,7 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 
 		if (pressbutton == 'slides.delete')
 		{
-			var r = confirm('<?php echo JText::_("COM_REDSLIDER_SLIDES_DELETE")?>');
+			var r = confirm('<?php echo Text::_("COM_REDSLIDER_SLIDES_DELETE")?>');
 			if (r == true)    form.submit();
 			else return false;
 		}
@@ -68,14 +72,16 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 		)
 	);
 	?>
+    <br>
 	<?php if (empty($this->items)) : ?>
 	<div class="alert alert-info">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
 		<div class="pagination-centered">
-			<h3><?php echo JText::_('COM_REDSLIDER_NOTHING_TO_DISPLAY'); ?></h3>
+			<h3><?php echo Text::_('COM_REDSLIDER_NOTHING_TO_DISPLAY'); ?></h3>
 		</div>
 	</div>
 	<?php else : ?>
+        <div class="box">
 	<table class="table table-striped" id="table-items">
 		<thead>
 			<tr>
@@ -86,42 +92,42 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 					<?php if (version_compare(JVERSION, '3.0', 'lt')) : ?>
 						<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
 					<?php else : ?>
-						<?php echo JHTML::_('grid.checkall'); ?>
+						<?php echo HTMLHelper::_('grid.checkall'); ?>
 					<?php endif; ?>
 				</th>
 				<th width="30" nowrap="nowrap">
-					<?php echo JHTML::_('rsearchtools.sort', 'JSTATUS', 's.published', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('rsearchtools.sort', 'JSTATUS', 's.published', $listDirn, $listOrder); ?>
 				</th>
 				<?php if ($search == ''): ?>
 				<th width="30">
-					<?php echo JHTML::_('rsearchtools.sort', '<i class=\'icon-sort\'></i>', 's.ordering', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('rsearchtools.sort', '<i class=\'icon-sort\'></i>', 's.ordering', $listDirn, $listOrder); ?>
 				</th>
 				<?php endif; ?>
 				<th width="1" align="center">
 				</th>
 				<th class="title" width="auto">
-					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_SLIDE', 's.title', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('rsearchtools.sort', 'COM_REDSLIDER_SLIDE', 's.title', $listDirn, $listOrder); ?>
 				</th>
 				<th width="20">
-					<?php echo JText::_('COM_REDSLIDER_SLIDE_SECTION') ?>
+					<?php echo Text::_('COM_REDSLIDER_SLIDE_SECTION') ?>
 				</th>
 				<th class="title" width="auto">
-					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_GALLERY', 'gallery_title', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('rsearchtools.sort', 'COM_REDSLIDER_GALLERY', 'gallery_title', $listDirn, $listOrder); ?>
 				</th>
 				<th class="title" width="auto">
-					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_TEMPLATE', 'template_title', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('rsearchtools.sort', 'COM_REDSLIDER_TEMPLATE', 'template_title', $listDirn, $listOrder); ?>
 				</th>
 				<th class="title" width="auto">
-					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_LANGUAGE', 'language_title', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('rsearchtools.sort', 'COM_REDSLIDER_LANGUAGE', 'language_title', $listDirn, $listOrder); ?>
 				</th>
 				<th class="title" width="auto">
-					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_FIELD_PUBLISH_UP_LABEL', 'publish_up', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('rsearchtools.sort', 'COM_REDSLIDER_FIELD_PUBLISH_UP_LABEL', 'publish_up', $listDirn, $listOrder); ?>
 				</th>
 				<th class="title" width="auto">
-					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_FIELD_PUBLISH_DOWN_LABEL', 'publish_down', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('rsearchtools.sort', 'COM_REDSLIDER_FIELD_PUBLISH_DOWN_LABEL', 'publish_down', $listDirn, $listOrder); ?>
 				</th>
 				<th width="10" nowrap="nowrap">
-					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_ID', 's.id', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('rsearchtools.sort', 'COM_REDSLIDER_ID', 's.id', $listDirn, $listOrder); ?>
 				</th>
 			</tr>
 		</thead>
@@ -140,10 +146,10 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 
 				<tr>
 					<td><?php echo $this->pagination->getRowOffset($i); ?></td>
-					<td><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
+					<td><?php echo HTMLHelper::_('grid.id', $i, $row->id); ?></td>
 					<td>
 						<?php if ($canEditState): ?>
-							<?php echo JHtml::_('rgrid.published', $row->published, $i, 'slides.', true, 'cb'); ?>
+							<?php echo HTMLHelper::_('rslidergrid.published', $row->published, $i, 'slides.', true, 'cb'); ?>
 						<?php else: ?>
 							<?php if ($row->published) : ?>
 								<a class="btn btn-small disabled"><i class="icon-ok-sign icon-green"></i></a>
@@ -162,24 +168,24 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 					<?php endif; ?>
 					<td>
 						<?php if ($row->checked_out) : ?>
-							<?php echo JHtml::_('rgrid.checkedout', $i, $editor->name, $row->checked_out_time, 'slides.', $canCheckin) ?>
+							<?php echo HTMLHelper::_('rslidergrid.checkedout', $i, $editor->name, $row->checked_out_time, 'slides.', $canCheckin) ?>
 						<?php endif; ?>
 					</td>
 					<td>
 						<?php if ($canEdit) : ?>
-							<?php echo JHtml::_('link', 'index.php?option=com_redslider&task=slide.edit&id=' . $row->id, $row->title) ?>
+							<?php echo HTMLHelper::_('link', 'index.php?option=com_redslider&task=slide.edit&id=' . $row->id, $row->title) ?>
 						<?php else : ?>
 							<?php echo $this->escape($row->title); ?>
 						<?php endif; ?>
 					</td>
-					<td><?php echo JText::_('PLG_' . $row->section . '_NAME') ?></td>
+					<td><?php echo Text::_('PLG_' . $row->section . '_NAME') ?></td>
 					<td><?php echo $row->gallery_title ?></td>
 					<td><?php echo $row->template_title ?></td>
 					<td>
 						<?php if ($row->language == '*'): ?>
-							<?php $language = JText::alt('JALL', 'language'); ?>
+							<?php $language = Text::alt('JALL', 'language'); ?>
 						<?php else:?>
-							<?php $language = $row->language_title ? $this->escape($row->language_title) : JText::_('JUNDEFINED'); ?>
+							<?php $language = $row->language_title ? $this->escape($row->language_title) : Text::_('JUNDEFINED'); ?>
 						<?php endif;?>
 						<small><?php echo $language ?></small>
 					</td>
@@ -192,9 +198,10 @@ JHTML::_('rsortablelist.sortable', 'table-items', 'adminForm', strtolower($listD
 			<?php endforeach; ?>
 		</tbody>
 	</table>
-	<?php echo $this->pagination->getPaginationLinks(null, array('showLimitBox' => false)); ?>
+    </div>
+        <?php echo RLayoutHelper::render('list.pagination', ['pagination' => $this->pagination]) ?>
 	<?php endif; ?>
 	<input type="hidden" name="task" value=""/>
 	<input type="hidden" name="boxchecked" value="0"/>
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 </form>

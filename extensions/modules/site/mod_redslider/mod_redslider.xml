@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="2.5" client="site" method="upgrade">
     <name>MOD_REDSLIDER</name>
-    <version>2.0.48</version>
+    <version>2.1.0</version>
     <creationDate>15th May 2018</creationDate>
     <author>redCOMPONENT.com</author>
     <authorEmail>email@redcomponent.com</authorEmail>
@@ -10,16 +10,11 @@
     <description>MOD_REDSLIDER_DESC</description>
     <redcore version="1.8.0"/>
     <files>
+        <folder>language</folder>
         <filename module="mod_redslider">helper.php</filename>
         <filename module="mod_redslider">mod_redslider.php</filename>
         <filename module="mod_redslider">tmpl/default.php</filename>
     </files>
-    <languages>
-        <language tag="en-GB">language/en-GB/en-GB.mod_redslider.ini</language>
-        <language tag="en-GB">language/en-GB/en-GB.mod_redslider.sys.ini</language>
-        <language tag="da-DK">language/da-DK/da-DK.mod_redslider.ini</language>
-        <language tag="da-DK">language/da-DK/da-DK.mod_redslider.sys.ini</language>
-    </languages>
     <config>
         <fields name="params">
             <fieldset name="basic" addfieldpath="/libraries/redslider/form/fields">

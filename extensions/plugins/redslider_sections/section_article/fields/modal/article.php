@@ -7,6 +7,11 @@
  * @license     GNU General Public License version 2 or later, see LICENSE.
  */
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Form\FormField;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Session\Session;
+
 defined('JPATH_BASE') or die;
 
 /**
@@ -16,7 +21,7 @@ defined('JPATH_BASE') or die;
  * @subpackage  Fields
  * @since       2.0
  */
-class JFormFieldModal_Article extends JFormField
+class JFormFieldModal_Article extends FormField
 {
 	/**
 	 * The form field type.
@@ -35,24 +40,33 @@ class JFormFieldModal_Article extends JFormField
 	 */
 	protected function getInput()
 	{
-		// Load the modal behavior script.
-		JHtml::_('behavior.modal', 'a.modalArticleAjax');
-
 		// Build the script.
 		$script   = array();
 		$script[] = '	function jSelectArticle_' . $this->id . '(id, title, catid, object) {';
-		$script[] = '		document.id("' . $this->id . '_id").value = id;';
-		$script[] = '		document.id("' . $this->id . '_name").value = title;';
-		$script[] = '		SqueezeBox.close();';
+		$script[] = '		document.getElementById("' . $this->id . '_id").value = id;';
+		$script[] = '		document.getElementById("' . $this->id . '_name").value = title;';
+		$script[] = '		window.parent.jQuery("#article-button-modal-' . $this->id . '").modal("hide");';
 		$script[] = '	}';
+		$script[] = '	function showArticleButtonModal(el) {
+				var $el = jQuery(el);
+				var src = $el.data("link");
+				var id = $el.data("id");
+				var iframe = jQuery(\'<iframe/>\', {src : src, style: "width: 100%; height: 500px; border: 0;"});
+				var modal  = jQuery(\'#article-button-modal-\' + id);
+				modal.find(\'.modal-body\').html(iframe);
+				modal.modal(\'show\');
+
+				return false;
+			}';
 
 		// Add the script to the document head.
-		JFactory::getDocument()->addScriptDeclaration(implode("\n", $script));
+		Factory::getDocument()->addScriptDeclaration(implode("\n", $script));
 
 		// Setup variables for display.
-		$link = 'index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component&amp;function=jSelectArticle_' . $this->id;
+		$link = 'index.php?option=com_content&amp;view=articles&amp;layout=modal&amp;tmpl=component&amp;function=jSelectArticle_'
+			. $this->id . '&' . Session::getFormToken() . '=1';
 
-		$db    = JFactory::getDbo();
+		$db    = Factory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select($db->qn('title'))
 			->from($db->qn('#__content'))
@@ -68,7 +82,7 @@ class JFormFieldModal_Article extends JFormField
 
 		if (empty($title))
 		{
-			$title = JText::_('PLG_REDSLIDER_SECTION_ARTICLE_SELECT_ARTICLE');
+			$title = Text::_('PLG_REDSLIDER_SECTION_ARTICLE_SELECT_ARTICLE');
 		}
 
 		$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
@@ -76,12 +90,39 @@ class JFormFieldModal_Article extends JFormField
 		// The current user display field.
 
 		$html   = array();
-		$html[] = '<div class="input-prepend input-append">';
-		$html[] = '<input type="text" class="input-small" id="' . $this->id . '_name" value="' . $title . '" disabled="disabled"/>';
-		$html[] = '<a class="btn modalArticleAjax" title="' . JText::_('PLG_REDSLIDER_SECTION_ARTICLE_SELECT_ARTICLE_BUTTON') . '"
-			href="' . $link . '&amp;' . JSession::getFormToken() . '=1" rel="{handler: \'iframe\', size: {x: 800, y: 450}}">'
-			. JText::_('PLG_REDSLIDER_SECTION_ARTICLE_SELECT_ARTICLE_BUTTON') . '</a>';
-		$html[] = '</div>';
+		$html[] = '<div class="input-group">';
+		$html[] = '<input type="text" class="input-small form-control" id="' . $this->id . '_name" value="' . $title . '" disabled="disabled"/>';
+		$html[] = '<div class="input-group-btn"><button class="btn btn-default modalArticleAjax "'
+			 . ' data-link="' . $link . '"'
+			. ' data-id="' . $this->id . '"'
+			 . ' onclick="return showArticleButtonModal(this);">'
+			. Text::_('PLG_REDSLIDER_SECTION_ARTICLE_SELECT_ARTICLE_BUTTON') . '</button>';
+		$html[] = '</div></div>';
+
+		$modal = '<div id="article-button-modal-' . $this->id . '" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="' . Text::_('JTOOLBAR_CLOSE') . '">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body"></div>
+
+				<div class="modal-footer">
+					<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">' . Text::_('JTOOLBAR_CLOSE') . '</button>
+				</div>
+			</div>
+		</div>
+	</div>';
+
+		$app = Factory::getApplication();
+
+		// Move modal at the end of the document
+		$app->registerEvent('onAfterRender', function () use ($modal, $app) {
+			$app->setBody($app->getBody() . $modal);
+		});
 
 		// The active article id field.
 		if (0 === (int) $this->value)

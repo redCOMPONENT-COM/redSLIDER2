@@ -9,11 +9,9 @@
 
 // No direct access
 defined('_JEXEC') or die;
-JHtml::_('behavior.modal', 'a.modal-thumb');
 
 ?>
 <?php foreach ($this->form->getGroup('params') as $field) : ?>
-<div class="control-group">
 	<?php if ($field->type == 'Spacer') : ?>
 		<?php if (!$firstSpacer) : ?>
 			<hr />
@@ -24,12 +22,6 @@ JHtml::_('behavior.modal', 'a.modal-thumb');
 	<?php elseif ($field->hidden) : ?>
 		<?php echo $field->input; ?>
 	<?php else : ?>
-		<div class="control-label">
-			<?php echo $field->label; ?>
-		</div>
-		<div class="controls">
-			<?php echo $field->input; ?>
-		</div>
+		<?php echo $field->renderField() ?>
 	<?php endif; ?>
-</div>
 <?php endforeach; ?>

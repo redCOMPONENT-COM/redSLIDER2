@@ -14,20 +14,21 @@
 				default=""
 				label="COM_REDSLIDER_GALLERY_TITLE"
 				required="true"
-				class="input-normal"
+				class="form-control"
 				description="COM_REDSLIDER_GALLERY_TITLE_DESC"
 				message="COM_REDSLIDER_GALLERY_TITLE_DESC"
 				/>
 		<field
 				name="alias"
 				type="text"
-				class="input-normal"
+				class="form-control"
 				label="COM_REDSLIDER_GALLERY_ALIAS"
 				description="COM_REDSLIDER_GALLERY_ALIAS_DESC"
 				/>
-		<field name="published" type="radio"
+		<field name="published"
+			   type="list"
+			   class="form-control"
 			   label="JPUBLISHED"
-			   class="btn-group"
 			   default="1">
 			<option value="1">JPUBLISHED</option>
 			<option value="0">JUNPUBLISHED</option>

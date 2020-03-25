@@ -8,8 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-JHtml::_('rjquery.chosen', 'select');
-
 $isNew = true;
 $user  = JFactory::getUser();
 JPluginHelper::importPlugin('redslider_sections');
@@ -32,119 +30,27 @@ if ($this->item->id)
 </script>
 <form enctype="multipart/form-data"
       action="index.php?option=com_redslider&task=slide.edit&id=<?php echo $this->item->id; ?>"
-      method="post" name="adminForm" class="form-validate form-horizontal" id="adminForm">
-
-    <div class="row-fluid">
-        <div class="span4">
-            <div class="control-group">
-                <div class="control-label">
-					<?php echo $this->form->getLabel('section'); ?>
-                </div>
-                <div class="controls">
-					<?php echo $this->form->getInput('section'); ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-					<?php echo $this->form->getLabel('gallery_id'); ?>
-                </div>
-                <div class="controls">
-					<?php echo $this->form->getInput('gallery_id'); ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-					<?php echo $this->form->getLabel('template_id'); ?>
-                </div>
-                <div class="controls">
-					<?php echo $this->form->getInput('template_id'); ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-					<?php echo $this->form->getLabel('title'); ?>
-                </div>
-                <div class="controls">
-					<?php echo $this->form->getInput('title'); ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-					<?php echo $this->form->getLabel('alias'); ?>
-                </div>
-                <div class="controls">
-					<?php echo $this->form->getInput('alias'); ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-					<?php echo $this->form->getLabel('created_date'); ?>
-                </div>
-                <div class="controls">
-					<?php echo $this->form->getInput('created_date'); ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-					<?php echo $this->form->getLabel('created_by'); ?>
-                </div>
-                <div class="controls">
-					<?php echo $this->form->getInput('created_by'); ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-					<?php echo $this->form->getLabel('modified_date'); ?>
-                </div>
-                <div class="controls">
-					<?php echo $this->form->getInput('modified_date'); ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-					<?php echo $this->form->getLabel('modified_by'); ?>
-                </div>
-                <div class="controls">
-					<?php echo $this->form->getInput('modified_by'); ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-					<?php echo $this->form->getLabel('publish_up'); ?>
-                </div>
-                <div class="controls">
-					<?php echo $this->form->getInput('publish_up'); ?>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="control-label">
-					<?php echo $this->form->getLabel('publish_down'); ?>
-                </div>
-                <div class="controls">
-					<?php echo $this->form->getInput('publish_down'); ?>
-                </div>
-            </div>
+      method="post" name="adminForm" class="form-validate" id="adminForm">
+    <div class="box-body">
+    <div class="row">
+        <div class="col-md-5">
+	        <?php echo $this->form->renderField('section') ?>
+	        <?php echo $this->form->renderField('gallery_id') ?>
+	        <?php echo $this->form->renderField('template_id') ?>
+	        <?php echo $this->form->renderField('title') ?>
+	        <?php echo $this->form->renderField('alias') ?>
+	        <?php echo $this->form->renderField('created_date') ?>
+	        <?php echo $this->form->renderField('created_by') ?>
+	        <?php echo $this->form->renderField('modified_date') ?>
+	        <?php echo $this->form->renderField('modified_by') ?>
+	        <?php echo $this->form->renderField('publish_up') ?>
+	        <?php echo $this->form->renderField('publish_down') ?>
 			<?php echo $this->form->getInput('checked_out'); ?>
 			<?php echo $this->form->getInput('checked_out_time'); ?>
         </div>
-        <div class="span6">
-            <div class="control-group">
-                <div class="control-label">
-					<?php echo $this->form->getLabel('published'); ?>
-                </div>
-                <div class="controls">
-					<?php echo $this->form->getInput('published'); ?>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <div class="control-label">
-					<?php echo $this->form->getLabel('language'); ?>
-                </div>
-                <div class="controls">
-					<?php echo $this->form->getInput('language'); ?>
-                </div>
-            </div>
+        <div class="col-md-7">
+	        <?php echo $this->form->renderField('published') ?>
+	        <?php echo $this->form->renderField('language') ?>
 
 			<?php // Load template dynamically from plugin ?>
 			<?php if ($user->authorise('core.create', 'com_redslider') && $user->authorise('core.edit', 'com_redslider') && $user->authorise('core.edit.state', 'com_redslider')): ?>
@@ -159,7 +65,7 @@ if ($this->item->id)
 			<?php endif; ?>
         </div>
     </div>
-
+    </div>
 	<?php echo $this->form->getInput('id'); ?>
     <input type="hidden" name="task" value=""/>
 	<?php echo JHtml::_('form.token'); ?>

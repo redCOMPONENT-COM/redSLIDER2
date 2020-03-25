@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" client="site" type="plugin" group="redslider_addons" method="upgrade">
+    <name>PLG_REDSLIDER_ADDONS_AESIR_DAM</name>
+    <version>1.0.0</version>
+    <creationDate>March 2020</creationDate>
+    <author>redCOMPONENT.com</author>
+    <copyright>redCOMPONENT.com</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <description>PLG_REDSLIDER_ADDONS_AESIR_DAM_DESC</description>
+    <files>
+        <folder>language</folder>
+        <folder>form</folder>
+        <folder>layouts</folder>
+        <filename plugin="aesir_dam">aesir_dam.php</filename>
+        <filename plugin="aesir_dam">aesir_dam.xml</filename>
+    </files>
+</extension>

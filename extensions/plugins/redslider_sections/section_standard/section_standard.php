@@ -9,29 +9,35 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Language\Text;
 use Joomla\Registry\Registry;
+use Joomla\String\StringHelper;
+use Redslider\Plugin\AbstractRedsliderSection;
 
-jimport('joomla.plugin.plugin');
-jimport('redcore.bootstrap');
-
-require_once JPATH_ADMINISTRATOR . '/components/com_redslider/helpers/helper.php';
+JLoader::import('redslider.library');
 
 /**
  * Plugins RedSLIDER section standard
  *
  * @since  1.0
  */
-class PlgRedslider_SectionsSection_Standard extends JPlugin
+class PlgRedslider_SectionsSection_Standard extends AbstractRedsliderSection
 {
 	/**
 	 * @var string
 	 */
-	private $sectionId = 'SECTION_STANDARD';
+	protected $sectionId = 'SECTION_STANDARD';
 
 	/**
 	 * @var string
 	 */
-	private $sectionName;
+	protected $formName = 'fields_standard';
+
+	/**
+	 * @var string
+	 */
+	protected $templateName = 'standard';
 
 	/**
 	 * Constructor - note in Joomla 2.5 PHP4.x is no longer supported so we can use this.
@@ -42,37 +48,7 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	public function __construct(&$subject, $config)
 	{
 		parent::__construct($subject, $config);
-		$this->loadLanguage();
-		$this->sectionName = JText::_("PLG_SECTION_STANDARD_NAME");
-	}
-
-	/**
-	 * Get section name
-	 *
-	 * @return  object
-	 */
-	public function getSectionName()
-	{
-		$section       = new stdClass;
-		$section->id   = $this->sectionId;
-		$section->name = $this->sectionName;
-
-		return $section;
-	}
-
-	/**
-	 * Get section name by section Id
-	 *
-	 * @param   string $sectionId Section's ID
-	 *
-	 * @return  string
-	 */
-	public function getSectionNameById($sectionId)
-	{
-		if ($sectionId === $this->sectionId)
-		{
-			return $this->sectionName;
-		}
+		$this->sectionName = Text::_("PLG_SECTION_STANDARD_NAME");
 	}
 
 	/**
@@ -86,83 +62,16 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 	{
 		if ($sectionId === $this->sectionId)
 		{
-			$tags = array(
-				'{standard_description}' => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_DESCRIPTION_DESC"),
-				'{standard_link}'        => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_LINK_DESC"),
-				'{standard_linktext}'    => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_LINKTEXT_DESC"),
-				'{standard_title}'       => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_TITLE_DESC"),
-				'{standard_caption}'     => JText::_("COM_REDSLIDER_SECTION_STANDARD_TAG_CAPTION_DESC"),
+			return array(
+				'{standard_description}' => Text::_("COM_REDSLIDER_SECTION_STANDARD_TAG_DESCRIPTION_DESC"),
+				'{standard_link}'        => Text::_("COM_REDSLIDER_SECTION_STANDARD_TAG_LINK_DESC"),
+				'{standard_linktext}'    => Text::_("COM_REDSLIDER_SECTION_STANDARD_TAG_LINKTEXT_DESC"),
+				'{standard_title}'       => Text::_("COM_REDSLIDER_SECTION_STANDARD_TAG_TITLE_DESC"),
+				'{standard_caption}'     => Text::_("COM_REDSLIDER_SECTION_STANDARD_TAG_CAPTION_DESC"),
 			);
-
-			return $tags;
 		}
 
 		return array();
-	}
-
-	/**
-	 * Add forms fields of section to slide view
-	 *
-	 * @param   mixed  $form      joomla form object
-	 * @param   string $sectionId section's id
-	 *
-	 * @return  boolean
-	 */
-	public function onSlidePrepareForm($form, $sectionId)
-	{
-		if ($sectionId === $this->sectionId)
-		{
-			$return = false;
-
-			$app = JFactory::getApplication();
-
-			if ($app->isAdmin())
-			{
-				JForm::addFormPath(__DIR__ . '/forms/');
-				$return = $form->loadFile('fields_standard', false);
-			}
-
-			return $return;
-		}
-	}
-
-	/**
-	 * Add template of section to template slide
-	 *
-	 * @param   object $view      JView object
-	 * @param   string $sectionId section's id
-	 *
-	 * @return boolean
-	 */
-	public function onSlidePrepareTemplate($view, $sectionId)
-	{
-		if ($sectionId === $this->sectionId)
-		{
-			$return = false;
-
-			$app = JFactory::getApplication();
-
-			if ($app->isAdmin())
-			{
-				$view->addTemplatePath(__DIR__ . '/tmpl/');
-				$return = $view->loadTemplate('standard');
-			}
-
-			return $return;
-		}
-	}
-
-	/**
-	 * Event on store a slide
-	 *
-	 * @param   object $jtable JTable object
-	 * @param   object $jinput JForm data
-	 *
-	 * @return boolean
-	 */
-	public function onSlideStore($jtable, $jinput)
-	{
-		return true;
 	}
 
 	/**
@@ -181,14 +90,14 @@ class PlgRedslider_SectionsSection_Standard extends JPlugin
 		}
 
 		// Check if we need to load component's CSS or not
-		$useOwnCSS = JComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
+		$useOwnCSS = ComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
 
 		// Load stylesheet for each section
-		$css = 'redslider.' . JString::strtolower($this->sectionId) . '.min.css';
+		$css = 'redslider.' . StringHelper::strtolower($this->sectionId) . '.min.css';
 
 		if (!$useOwnCSS)
 		{
-			RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+			RHelperAsset::load($css, 'redslider_sections/' . StringHelper::strtolower($this->sectionId));
 		}
 
 		$params   = new Registry($slide->params);

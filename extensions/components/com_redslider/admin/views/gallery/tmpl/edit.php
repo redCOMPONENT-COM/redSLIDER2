@@ -8,8 +8,6 @@
  */
 defined('_JEXEC') or die;
 
-JHtml::_('rjquery.chosen', 'select');
-
 $isNew = true;
 
 if ($this->item->id)
@@ -32,32 +30,11 @@ if ($this->item->id)
 </script>
 <form enctype="multipart/form-data"
 	action="index.php?option=com_redslider&task=gallery.edit&id=<?php echo $this->item->id; ?>"
-	method="post" name="adminForm" class="form-validate form-horizontal" id="adminForm">
-	<div class="row-fluid">
-		<div class="control-group">
-			<div class="control-label">
-				<?php echo $this->form->getLabel('title'); ?>
-			</div>
-			<div class="controls">
-				<?php echo $this->form->getInput('title'); ?>
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="control-label">
-				<?php echo $this->form->getLabel('alias'); ?>
-			</div>
-			<div class="controls">
-				<?php echo $this->form->getInput('alias'); ?>
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="control-label">
-				<?php echo $this->form->getLabel('published'); ?>
-			</div>
-			<div class="controls">
-				<?php echo $this->form->getInput('published'); ?>
-			</div>
-		</div>
+	method="post" name="adminForm" class="form-validate" id="adminForm">
+	<div class="box-body">
+		<?php echo $this->form->renderField('title') ?>
+		<?php echo $this->form->renderField('alias') ?>
+		<?php echo $this->form->renderField('published') ?>
 	</div>
 	<?php echo $this->form->getInput('id'); ?>
 	<input type="hidden" name="task" value="" />

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" client="site" type="plugin" group="redslider_sections" method="upgrade">
 	<name>PLG_SECTION_VIDEO</name>
-	<version>2.0.42</version>
+	<version>2.1.0</version>
 	<creationDate>February 2016</creationDate>
 	<author>redCOMPONENT.com</author>
 	<copyright>redCOMPONENT.com</copyright>
@@ -12,11 +12,8 @@
 		<filename plugin="section_video">section_video.php</filename>
 		<folder plugin="section_video">forms</folder>
 		<folder plugin="section_video">tmpl</folder>
+		<folder plugin="section_video">language</folder>
 	</files>
-	<languages folder="language">
-		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_video.ini</language>
-		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_video.sys.ini</language>
-	</languages>
 	<media destination="redslider_sections/section_video" folder="media/redslider_sections">
        <folder>media</folder>
     </media>

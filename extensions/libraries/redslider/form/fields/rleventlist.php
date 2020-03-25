@@ -10,6 +10,7 @@ defined('_JEXEC') or die;
 
 JLoader::import('joomla.form.formfield');
 JFormHelper::loadFieldClass('list');
+JLoader::import('redevent.bootstrap');
 
 /**
  * RedSLIDER section select list
@@ -38,12 +39,10 @@ class JFormFieldRLEventList extends JFormFieldList
 	{
 		// Check if component redEVENT is not installed
 		$app = JFactory::getApplication();
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
 
 		if (!RedsliderHelper::checkExtension('com_redevent'))
 		{
-			$app->enqueueMessage(JText::_('PLG_REDSLIDER_SECTION_REDEVENT_INSTALL_COM_EVENT_FIRST'), 'warning');
+			$app->enqueueMessage(JText::_('PLG_REDSLIDER_SECTION_FORM_INSTALL_COM_EVENT_FIRST'), 'warning');
 
 			return;
 		}

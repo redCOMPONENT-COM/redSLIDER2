@@ -14,6 +14,7 @@
 			label="COM_REDSLIDER_SECTION_STANDARD_FIELD_CAPTION"
 			description="COM_REDSLIDER_SECTION_STANDARD_FIELD_CAPTION_DESC"
 			message="COM_REDSLIDER_SECTION_STANDARD_FIELD_CAPTION_DESC"
+			   class="form-control"
 		/>
 		<field name="description"
 			type="editor"
@@ -22,6 +23,7 @@
 			label="COM_REDSLIDER_SECTION_STANDARD_FIELD_DESCRIPTION"
 			description="COM_REDSLIDER_SECTION_STANDARD_FIELD_DESCRIPTION_DESC"
 			message="COM_REDSLIDER_SECTION_STANDARD_FIELD_DESCRIPTION_DESC"
+			   class="form-control"
 		/>
 		<field name="link"
 			type="text"
@@ -29,6 +31,7 @@
 			label="COM_REDSLIDER_SECTION_STANDARD_FIELD_LINK"
 			description="COM_REDSLIDER_SECTION_STANDARD_FIELD_LINK_DESC"
 			message="COM_REDSLIDER_SECTION_STANDARD_FIELD_LINK_DESC"
+			   class="form-control"
 		/>
 		<field name="linktext"
 			type="text"
@@ -36,9 +39,10 @@
 			label="COM_REDSLIDER_SECTION_STANDARD_FIELD_LINKTEXT"
 			description="COM_REDSLIDER_SECTION_STANDARD_FIELD_LINKTEXT_DESC"
 			message="COM_REDSLIDER_SECTION_STANDARD_FIELD_LINKTEXT_DESC"
+			   class="form-control"
 		/>
 		<field name="slide_class"
-			class="select2"
+			class="select2 form-control"
             type="list"
             label="COM_REDSLIDER_SECTION_STANDARD_FIELD_SUFFIX_CLASS"
             description="COM_REDSLIDER_SECTION_STANDARD_FIELD_SUFFIX_CLASS_DESC"

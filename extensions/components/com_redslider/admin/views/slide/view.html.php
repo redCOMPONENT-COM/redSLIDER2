@@ -25,6 +25,10 @@ class RedsliderViewSlide extends RedsliderView
 	 */
 	protected $displaySidebar = false;
 
+	public $basicFields = [];
+
+	public $outputFields = [];
+
 	/**
 	 * Display the slide edit page
 	 *
@@ -43,34 +47,6 @@ class RedsliderViewSlide extends RedsliderView
 		$this->item      = $this->get('Item');
 		$this->tags      = $this->get('Tags');
 		$this->sectionId = $app->getUserState('com_redslider.global.slide.section', '');
-
-		if ($this->sectionId)
-		{
-			// Add form field from plugin section
-			JPluginHelper::importPlugin('redslider_sections');
-			$dispatcher = RFactory::getDispatcher();
-			$dispatcher->trigger('onSlidePrepareForm', array($this->form, $this->sectionId));
-
-			$editData = $app->getUserState('com_redslider.edit.slide.data', array());
-
-			if (isset($editData['params']) && is_array($editData['params']))
-			{
-				foreach ($editData['params'] as $key => $value)
-				{
-					$this->form->setValue($key, 'params', $value);
-				}
-			}
-			elseif (isset($this->item->params))
-			{
-				$params = new JRegistry($this->item->params);
-				$params = $params->toArray();
-
-				foreach ($params as $key => $value)
-				{
-					$this->form->setValue($key, 'params', $value);
-				}
-			}
-		}
 
 		// Display the slide
 		parent::display($tpl);
