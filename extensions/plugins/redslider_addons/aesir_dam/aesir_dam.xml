@@ -7,6 +7,9 @@
     <copyright>redCOMPONENT.com</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <description>PLG_REDSLIDER_ADDONS_AESIR_DAM_DESC</description>
+    <media folder="media">
+        <folder>plg_redlider_addons_aesir_dam</folder>
+    </media>
     <files>
         <folder>language</folder>
         <folder>form</folder>

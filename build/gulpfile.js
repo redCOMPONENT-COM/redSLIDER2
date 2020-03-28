@@ -299,6 +299,7 @@ gulp.task('release:redslider', ['release:redslider:package'], function() {
 		'../extensions/media',
 		'../extensions/modules/site/*/media',
 		'../extensions/plugins/*/*/media',
+		'!../extensions/plugins/redslider_addons/aesir_dam/media',
 		'../extensions/redCORE'
 		],
 		{ force: true }
@@ -312,6 +313,7 @@ gulp.task('release:full_package', ['release:redslider:full_package'], function()
 		'../extensions/media',
 		'../extensions/modules/site/*/media',
 		'../extensions/plugins/*/*/media',
+		'!../extensions/plugins/redslider_addons/aesir/dam/media',
 		'../extensions/redCORE'
 		],
 		{ force: true }

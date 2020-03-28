@@ -6,6 +6,9 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
+
 defined('_JEXEC') or die;
 
 // Find redCORE installer to use it as base system
@@ -48,6 +51,17 @@ class Com_RedSliderInstallerScript extends Com_RedcoreInstallerScript
 		$this->installModules($parent);
 		$this->installPlugins($parent);
 		$this->copyAssets();
+
+		// Delete languages from Joomla root folder
+		$files = Folder::files(JPATH_ADMINISTRATOR . '/language', 'com_redslider(.sys)?.ini', true, true);
+
+		if (!empty($files))
+		{
+			foreach ($files as $file)
+			{
+				File::delete($file);
+			}
+		}
 
 		return true;
 	}
