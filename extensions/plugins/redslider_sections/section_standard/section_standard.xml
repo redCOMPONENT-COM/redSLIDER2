@@ -13,12 +13,9 @@
 	<files>
 		<filename plugin="section_standard">section_standard.php</filename>
 		<folder plugin="section_standard">forms</folder>
+		<folder plugin="section_standard">language</folder>
 		<folder plugin="section_standard">tmpl</folder>
 	</files>
-	<languages folder="language">
-		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_standard.ini</language>
-		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_standard.sys.ini</language>
-	</languages>
 	<media destination="redslider_sections/section_standard" folder="media/redslider_sections">
        <folder>media</folder>
     </media>

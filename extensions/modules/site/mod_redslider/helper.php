@@ -69,17 +69,6 @@ class ModredSLIDERHelper
 
 		foreach ($slides as $slide)
 		{
-			$results         = $dispatcher->trigger('onPrepareTemplateContent', array($slide->template_content, &$slide));
-			$results         = array_values(array_filter($results));
-			$templateContent = '';
-
-			if (!empty($results))
-			{
-				$templateContent = JHtml::_('content.prepare', $results[0]);
-			}
-
-			$slide->template_content = $templateContent;
-
 			$params = new Registry($slide->params);
 
 			$slide->background = '';
@@ -101,6 +90,17 @@ class ModredSLIDERHelper
 			{
 				$slide->class = $class;
 			}
+
+			$results         = $dispatcher->trigger('onPrepareTemplateContent', array($slide->template_content, &$slide));
+			$results         = array_values(array_filter($results));
+			$templateContent = '';
+
+			if (!empty($results))
+			{
+				$templateContent = JHtml::_('content.prepare', $results[0]);
+			}
+
+			$slide->template_content = $templateContent;
 		}
 
 		return $slides;

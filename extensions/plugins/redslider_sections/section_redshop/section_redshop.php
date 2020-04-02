@@ -7,39 +7,40 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
 use Joomla\Registry\Registry;
+use Joomla\String\StringHelper;
+use Redslider\Plugin\AbstractRedsliderSection;
 
 defined('_JEXEC') or die;
 
-jimport('joomla.plugin.plugin');
-jimport('redcore.bootstrap');
+JLoader::import('redslider.library');
 
 /**
  * Plugins RedSLIDER section redSHOP
  *
  * @since  1.0
  */
-class PlgRedslider_SectionsSection_Redshop extends JPlugin
+class PlgRedslider_SectionsSection_Redshop extends AbstractRedsliderSection
 {
 	/**
 	 * @var string
 	 */
-	private $sectionId = 'SECTION_REDSHOP';
+	protected $sectionId = 'SECTION_REDSHOP';
 
 	/**
 	 * @var string
 	 */
-	private $sectionName;
+	protected $extensionName = 'com_redshop';
 
-	/**
-	 * @var string
-	 */
-	private $extensionName = 'com_redshop';
+	protected $formName = 'fields_redshop';
 
-	/**
-	 * @var string
-	 */
-	private $msgLevel = 'Warning';
+	protected $templateName = 'redshop';
 
 	/**
 	 * Constructor - note in Joomla 2.5 PHP4.x is no longer supported so we can use this.
@@ -50,37 +51,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 	public function __construct(&$subject, $config)
 	{
 		parent::__construct($subject, $config);
-		$this->loadLanguage();
-		$this->sectionName = JText::_('PLG_SECTION_REDSHOP_NAME');
-	}
-
-	/**
-	 * Get section name
-	 *
-	 * @return  object
-	 */
-	public function getSectionName()
-	{
-		$section       = new stdClass;
-		$section->id   = $this->sectionId;
-		$section->name = $this->sectionName;
-
-		return $section;
-	}
-
-	/**
-	 * Get section name by section Id
-	 *
-	 * @param   string $sectionId Section's ID
-	 *
-	 * @return  string
-	 */
-	public function getSectionNameById($sectionId)
-	{
-		if ($sectionId === $this->sectionId)
-		{
-			return $this->sectionName;
-		}
+		$this->sectionName = Text::_('PLG_SECTION_REDSHOP_NAME');
 	}
 
 	/**
@@ -95,110 +66,34 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 	{
 		if ($sectionId === $this->sectionId)
 		{
-			$app = JFactory::getApplication();
+			$app = Factory::getApplication();
 
 			// Check if component redSHOP is not installed
 			if (!RedsliderHelper::checkExtension($this->extensionName))
 			{
-				$app->enqueueMessage(JText::_('PLG_REDSLIDER_SECTION_REDSHOP_INSTALL_COM_REDSHOP_FIRST'), $this->msgLevel);
+				$app->enqueueMessage(Text::_('PLG_REDSLIDER_SECTION_FORM_INSTALL_COM_REDSHOP_FIRST'), $this->msgLevel);
 			}
 
 			$tags = array(
-				'{product_name}'                                       => JText::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_NAME_DESC'),
-				'{product_link}'                                       => JText::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_LINK_DESC'),
-				'{product_short_description}'                          => JText::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_SHORT_DESCRIPTION_DESC'),
-				'{product_description}'                                => JText::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_DESCRIPTION_DESC'),
-				'{attribute_template:<em>template</em>}'               => JText::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_ATTRIBUTE_DESC'),
-				'{form_addtocart:<em>template</em>}'                   => JText::_('COM_REDSLIDER_TAG_REDSHOP_ADDTOCART_BUTTON_DESC'),
-				'{product_thumb_image|<em>width</em>|<em>height</em>}' => JText::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_THUMB_IMAGE_DESC'),
-				'{product_thumb_image_link}'                           => JText::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_THUMB_IMAGE_LINK_DESC'),
-				'{product_image|<em>width</em>|<em>height</em>}'       => JText::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_DESC'),
-				'{product_image_link}'                                 => JText::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_LINK_DESC'),
-				'{product_price}'                                      => JText::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_PRICE_DESC'),
-				'{redshop_caption}'                                    => JText::_('COM_REDSLIDER_TAG_REDSHOP_CAPTION_DESC'),
-				'{redshop_description}'                                => JText::_('COM_REDSLIDER_TAG_REDSHOP_DESCRIPTION_DESC')
+				'{product_name}'                                       => Text::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_NAME_DESC'),
+				'{product_link}'                                       => Text::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_LINK_DESC'),
+				'{product_short_description}'                          => Text::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_SHORT_DESCRIPTION_DESC'),
+				'{product_description}'                                => Text::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_DESCRIPTION_DESC'),
+				'{attribute_template:<em>template</em>}'               => Text::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_ATTRIBUTE_DESC'),
+				'{form_addtocart:<em>template</em>}'                   => Text::_('COM_REDSLIDER_TAG_REDSHOP_ADDTOCART_BUTTON_DESC'),
+				'{product_thumb_image|<em>width</em>|<em>height</em>}' => Text::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_THUMB_IMAGE_DESC'),
+				'{product_thumb_image_link}'                           => Text::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_THUMB_IMAGE_LINK_DESC'),
+				'{product_image|<em>width</em>|<em>height</em>}'       => Text::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_DESC'),
+				'{product_image_link}'                                 => Text::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_IMAGE_LINK_DESC'),
+				'{product_price}'                                      => Text::_('COM_REDSLIDER_TAG_REDSHOP_PRODUCT_PRICE_DESC'),
+				'{redshop_caption}'                                    => Text::_('COM_REDSLIDER_TAG_REDSHOP_CAPTION_DESC'),
+				'{redshop_description}'                                => Text::_('COM_REDSLIDER_TAG_REDSHOP_DESCRIPTION_DESC')
 			);
 
 			return $tags;
 		}
 
 		return array();
-	}
-
-	/**
-	 * Add forms fields of section to slide view
-	 *
-	 * @param   mixed  $form      joomla form object
-	 * @param   string $sectionId section's id
-	 *
-	 * @return  boolean
-	 * @throws  Exception
-	 */
-	public function onSlidePrepareForm($form, $sectionId)
-	{
-		if ($sectionId === $this->sectionId)
-		{
-			$return = false;
-
-			$app = JFactory::getApplication();
-
-			if ($app->isAdmin())
-			{
-				if (RedsliderHelper::checkExtension($this->extensionName))
-				{
-					JForm::addFormPath(__DIR__ . '/forms/');
-					$return = $form->loadFile('fields_redshop', false);
-				}
-				else
-				{
-					$app->enqueueMessage(JText::_('PLG_REDSLIDER_SECTION_REDSHOP_INSTALL_COM_REDSHOP_FIRST'), $this->msgLevel);
-				}
-			}
-
-			return $return;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Add template of section to template slide
-	 *
-	 * @param   object $view      JView object
-	 * @param   string $sectionId section's id
-	 *
-	 * @return  boolean
-	 * @throws  Exception
-	 */
-	public function onSlidePrepareTemplate($view, $sectionId)
-	{
-		if ($sectionId === $this->sectionId)
-		{
-			$return = false;
-
-			$app = JFactory::getApplication();
-
-			if ($app->isAdmin())
-			{
-				$view->addTemplatePath(__DIR__ . '/tmpl/');
-				$return = $view->loadTemplate('redshop');
-			}
-
-			return $return;
-		}
-	}
-
-	/**
-	 * Event on store a slide
-	 *
-	 * @param   object $jtable JTable object
-	 * @param   object $jinput JForm data
-	 *
-	 * @return boolean
-	 */
-	public function onSlideStore($jtable, $jinput)
-	{
-		return true;
 	}
 
 	/**
@@ -217,31 +112,31 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 		}
 
 		// Load redSHOP language file
-		JFactory::getLanguage()->load('com_redshop');
+		Factory::getLanguage()->load('com_redshop');
 
 		// Check if we need to load component's CSS or not
-		$useOwnCSS = JComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
+		$useOwnCSS = ComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
 
 		if (RedsliderHelper::checkExtension($this->extensionName))
 		{
 			// Load redSHOP's javascripts
-			JHtml::_('redshopjquery.framework');
-			JHtml::script('com_redshop/redbox.js', false, true);
-			JHtml::script('com_redshop/attribute.js', false, true);
-			JHtml::script('com_redshop/common.js', false, true);
+			HTMLHelper::_('redshopjquery.framework');
+			HTMLHelper::script('com_redshop/redbox.js', false, true);
+			HTMLHelper::script('com_redshop/attribute.js', false, true);
+			HTMLHelper::script('com_redshop/common.js', false, true);
 
 			// Load stylesheet for each section
-			$css = 'redslider.' . JString::strtolower($this->sectionId) . '.min.css';
+			$css = 'redslider.' . StringHelper::strtolower($this->sectionId) . '.min.css';
 
 			if (!$useOwnCSS)
 			{
-				RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+				RHelperAsset::load($css, 'redslider_sections/' . StringHelper::strtolower($this->sectionId));
 			}
 
 			$redConfiguration = new Redconfiguration;
 			$redConfiguration->defineDynamicVars();
 
-			$user          = JFactory::getUser();
+			$user          = Factory::getUser();
 			$params        = new Registry($slide->params);
 			$productHelper = new producthelper;
 			$rsHelper      = new redhelper;
@@ -252,8 +147,8 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 			$product->id          = (int) $params->get('product_id', '0');
 			$product->caption     = $params->get('caption');
 			$product->description = $params->get('description');
-			$product->background  = JString::trim($params->get('background_image', ''));
-			$product->slideClass  = JString::trim($params->get('redshop_slide_class', 'redshop_slide'));
+			$product->background  = StringHelper::trim($params->get('background_image', ''));
+			$product->slideClass  = StringHelper::trim($params->get('redshop_slide_class', 'redshop_slide'));
 			$product->folder      = '/components/com_redshop/assets/images/product/';
 
 			$product->instance = $productHelper->getProductById($product->id);
@@ -307,7 +202,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = JString::str_ireplace($match[0], $product->description, $content);
+							$content = StringHelper::str_ireplace($match[0], $product->description, $content);
 						}
 					}
 				}
@@ -318,7 +213,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = JString::str_ireplace($match[0], $product->caption, $content);
+							$content = StringHelper::str_ireplace($match[0], $product->caption, $content);
 						}
 					}
 				}
@@ -329,7 +224,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = JString::str_ireplace($match[0], $product->instance->product_name, $content);
+							$content = StringHelper::str_ireplace($match[0], $product->instance->product_name, $content);
 						}
 					}
 				}
@@ -348,7 +243,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 						$productItemId = $rsHelper->getItemid($product->product_id);
 					}
 
-					$link = JRoute::_(
+					$link = Route::_(
 						'index.php?option=com_redshop&view=product&pid=' .
 						$product->instance->product_id . '&cid=' . $categoryId . '&Itemid=' . $productItemId
 					);
@@ -357,7 +252,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = JString::str_ireplace($match[0], $link, $content);
+							$content = StringHelper::str_ireplace($match[0], $link, $content);
 						}
 					}
 				}
@@ -368,7 +263,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = JString::str_ireplace($match[0], $product->instance->product_s_desc, $content);
+							$content = StringHelper::str_ireplace($match[0], $product->instance->product_s_desc, $content);
 						}
 					}
 				}
@@ -379,7 +274,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 					{
 						if (count($match))
 						{
-							$content = JString::str_ireplace($match[0], $product->instance->product_desc, $content);
+							$content = StringHelper::str_ireplace($match[0], $product->instance->product_desc, $content);
 						}
 					}
 				}
@@ -397,7 +292,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 								$price = $productHelper->getProductFormattedPrice($product->prices['product_price']);
 							}
 
-							$content = JString::str_ireplace($match[0], $price, $content);
+							$content = StringHelper::str_ireplace($match[0], $price, $content);
 						}
 					}
 				}
@@ -411,11 +306,11 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 							if (isset($product->instance->product_full_image) && $product->instance->product_full_image)
 							{
 								$middleMan = strip_tags($match[0]);
-								$middleMan = JString::str_ireplace('{', '', $middleMan);
-								$middleMan = JString::str_ireplace('}', '', $middleMan);
+								$middleMan = StringHelper::str_ireplace('{', '', $middleMan);
+								$middleMan = StringHelper::str_ireplace('}', '', $middleMan);
 								$middleMan = explode('|', $middleMan);
 
-								$replaceString = '<img src="' . JURI::base() . $product->folder . $product->instance->product_full_image . '" ';
+								$replaceString = '<img src="' . Uri::base() . $product->folder . $product->instance->product_full_image . '" ';
 
 								if (isset($middleMan[1]) && is_numeric($middleMan[1]))
 								{
@@ -434,7 +329,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 								$replaceString = '';
 							}
 
-							$content = JString::str_ireplace($match[0], $replaceString, $content);
+							$content = StringHelper::str_ireplace($match[0], $replaceString, $content);
 						}
 					}
 				}
@@ -447,14 +342,14 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 						{
 							if (isset($product->instance->product_full_image) && $product->instance->product_full_image)
 							{
-								$replaceString = JURI::base() . $product->folder . $product->instance->product_full_image;
+								$replaceString = Uri::base() . $product->folder . $product->instance->product_full_image;
 							}
 							else
 							{
 								$replaceString = '';
 							}
 
-							$content = JString::str_ireplace($match[0], $replaceString, $content);
+							$content = StringHelper::str_ireplace($match[0], $replaceString, $content);
 						}
 					}
 				}
@@ -468,11 +363,11 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 							if (isset($product->instance->product_thumb_image) && $product->instance->product_thumb_image)
 							{
 								$middleMan = strip_tags($match[0]);
-								$middleMan = JString::str_ireplace('{', '', $middleMan);
-								$middleMan = JString::str_ireplace('}', '', $middleMan);
+								$middleMan = StringHelper::str_ireplace('{', '', $middleMan);
+								$middleMan = StringHelper::str_ireplace('}', '', $middleMan);
 								$middleMan = explode('|', $middleMan);
 
-								$replaceString = '<img src="' . JURI::base() . $product->folder . $product->instance->product_thumb_image . '" ';
+								$replaceString = '<img src="' . Uri::base() . $product->folder . $product->instance->product_thumb_image . '" ';
 
 								if (isset($middleMan[1]) && is_numeric($middleMan[1]))
 								{
@@ -491,7 +386,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 								$replaceString = '';
 							}
 
-							$content = JString::str_ireplace($match[0], $replaceString, $content);
+							$content = StringHelper::str_ireplace($match[0], $replaceString, $content);
 						}
 					}
 				}
@@ -504,14 +399,14 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 						{
 							if (isset($product->instance->product_thumb_image) && $product->instance->product_thumb_image)
 							{
-								$replaceString = JURI::base() . $product->folder . $product->instance->product_thumb_image;
+								$replaceString = Uri::base() . $product->folder . $product->instance->product_thumb_image;
 							}
 							else
 							{
 								$replaceString = '';
 							}
 
-							$content = JString::str_ireplace($match[0], $replaceString, $content);
+							$content = StringHelper::str_ireplace($match[0], $replaceString, $content);
 						}
 					}
 				}
@@ -536,7 +431,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 								$product->totalFields
 							);
 
-							$content = JString::str_ireplace($match[0], $replaceString, $content);
+							$content = StringHelper::str_ireplace($match[0], $replaceString, $content);
 						}
 					}
 				}
@@ -592,7 +487,7 @@ class PlgRedslider_SectionsSection_Redshop extends JPlugin
 								$product->instance->product_id, 0, 0, $attributes, $template, $attributeTemplate, $isChild
 							);
 
-							$content = JString::str_ireplace($match[0], $template, $content);
+							$content = StringHelper::str_ireplace($match[0], $template, $content);
 						}
 					}
 				}

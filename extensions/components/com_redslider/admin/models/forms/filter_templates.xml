@@ -6,13 +6,14 @@
 			type="text"
 			label="COM_REDCORE_FILTER_SEARCH_DESC"
 			placeholder="JSEARCH_FILTER"
-			class="js-enter-submits"
+			class="js-enter-submits form-control"
 			/>
 		<field
 			name="published"
 			type="rpublished"
 			onchange="this.form.submit();"
 			label="COM_REDSLIDER_FILTER_PUBLISHED"
+			class="form-control"
 			statuses="0,1"
 			>
 			<option value="">COM_REDSLIDER_FILTER_PUBLISHED</option>
@@ -23,6 +24,7 @@
 			required="true"
 			onchange="this.form.submit();"
 			description="COM_REDSLIDER_TEMPLATE_SECTION_DESC"
+			   class="form-control"
 			>
 			<option value="">COM_REDSLIDER_SELECT</option>
 		</field>

@@ -7,83 +7,53 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Multilanguage;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\Registry\Registry;
+use Joomla\String\StringHelper;
+use Redslider\Plugin\AbstractRedsliderSection;
+
 defined('_JEXEC') or die;
 
-jimport('joomla.plugin.plugin');
-jimport('redcore.bootstrap');
-
-require_once JPATH_SITE . '/components/com_content/helpers/route.php';
+JLoader::import('redslider.library');
 
 /**
  * Plugins RedSLIDER section article
  *
  * @since  1.0
  */
-class PlgRedslider_SectionsSection_Article extends JPlugin
+class PlgRedslider_SectionsSection_Article extends AbstractRedsliderSection
 {
 	/**
 	 * Section ID
 	 *
 	 * @var  string
 	 */
-	private $sectionId;
+	protected $sectionId = 'SECTION_ARTICLE';
 
-	/**
-	 * Section name
-	 *
-	 * @var  string
-	 */
-	private $sectionName;
+	protected $formName = 'fields_article';
+
+	protected $templateName = 'article';
 
 	/**
 	 * Constructor - note in Joomla 2.5 PHP4.x is no longer supported so we can use this.
 	 *
-	 * @param   object $subject The object to observe
-	 * @param   array  $config  An array that holds the plugin configuration
+	 * @param   object  $subject  The object to observe
+	 * @param   array   $config   An array that holds the plugin configuration
 	 */
 	public function __construct(&$subject, $config)
 	{
 		parent::__construct($subject, $config);
-		$this->loadLanguage();
-		$this->sectionId   = 'SECTION_ARTICLE';
-		$this->sectionName = JText::_('PLG_SECTION_ARTICLE_NAME');
-	}
-
-	/**
-	 * Get section name
-	 *
-	 * @return  object
-	 */
-	public function getSectionName()
-	{
-		$section       = new stdClass;
-		$section->id   = $this->sectionId;
-		$section->name = $this->sectionName;
-
-		return $section;
-	}
-
-	/**
-	 * Get section name by section Id
-	 *
-	 * @param   string $sectionId Section's ID
-	 *
-	 * @return  string
-	 */
-	public function getSectionNameById($sectionId)
-	{
-		if ($sectionId === $this->sectionId)
-		{
-			return $this->sectionName;
-		}
-
-		return '';
+		$this->sectionName = Text::_('PLG_SECTION_ARTICLE_NAME');
 	}
 
 	/**
 	 * Get section's tags name
 	 *
-	 * @param   string $sectionId Section's ID
+	 * @param   string  $sectionId  Section's ID
 	 *
 	 * @return  array
 	 */
@@ -95,74 +65,19 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 		}
 
 		return array(
-			'{article_title}'                    => JText::_('COM_REDSLIDER_TAG_ARTICLE_TITLE_DESC'),
-			'{article_introtext|<em>limit</em>}' => JText::_('COM_REDSLIDER_TAG_ARTICLE_INTROTEXT_DESC'),
-			'{article_fulltext|<em>limit</em>}'  => JText::_('COM_REDSLIDER_TAG_ARTICLE_FULLTEXT_DESC'),
-			'{article_date}'                     => JText::_('COM_REDSLIDER_TAG_ARTICLE_DATE_DESC'),
-			'{article_link}'                     => JText::_('COM_REDSLIDER_TAG_ARTICLE_LINK_DESC'),
+			'{article_title}'                    => Text::_('COM_REDSLIDER_TAG_ARTICLE_TITLE_DESC'),
+			'{article_introtext|<em>limit</em>}' => Text::_('COM_REDSLIDER_TAG_ARTICLE_INTROTEXT_DESC'),
+			'{article_fulltext|<em>limit</em>}'  => Text::_('COM_REDSLIDER_TAG_ARTICLE_FULLTEXT_DESC'),
+			'{article_date}'                     => Text::_('COM_REDSLIDER_TAG_ARTICLE_DATE_DESC'),
+			'{article_link}'                     => Text::_('COM_REDSLIDER_TAG_ARTICLE_LINK_DESC'),
 		);
-	}
-
-	/**
-	 * Add forms fields of section to slide view
-	 *
-	 * @param   mixed  $form      joomla form object
-	 * @param   string $sectionId section's id
-	 *
-	 * @return  boolean
-	 * @throws  Exception
-	 */
-	public function onSlidePrepareForm($form, $sectionId)
-	{
-		if ($sectionId != $this->sectionId || !JFactory::getApplication()->isAdmin())
-		{
-			return false;
-		}
-
-		JForm::addFormPath(__DIR__ . '/forms/');
-
-		return $form->loadFile('fields_article', false);
-	}
-
-	/**
-	 * Add template of section to template slide
-	 *
-	 * @param   object $view      JView object
-	 * @param   string $sectionId section's id
-	 *
-	 * @return  boolean
-	 * @throws  Exception
-	 */
-	public function onSlidePrepareTemplate($view, $sectionId)
-	{
-		if ($sectionId != $this->sectionId || !JFactory::getApplication()->isAdmin())
-		{
-			return false;
-		}
-
-		$view->addTemplatePath(__DIR__ . '/tmpl/');
-
-		return $view->loadTemplate('article');
-	}
-
-	/**
-	 * Event on store a slide
-	 *
-	 * @param   object $jtable JTable object
-	 * @param   object $jinput JForm data
-	 *
-	 * @return boolean
-	 */
-	public function onSlideStore($jtable, $jinput)
-	{
-		return true;
 	}
 
 	/**
 	 * Prepare content for slide show in module
 	 *
-	 * @param   string $content Template Content
-	 * @param   object $slide   Slide result object
+	 * @param   string  $content  Template Content
+	 * @param   object  $slide    Slide result object
 	 *
 	 * @return  string  $content  repaced content
 	 */
@@ -173,7 +88,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 			return '';
 		}
 
-		$params = new JRegistry($slide->params);
+		$params = new Registry($slide->params);
 
 		$id = (int) $params->get('article_id', 0);
 
@@ -183,14 +98,14 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 		}
 
 		// Check if we need to load component's CSS or not
-		$useOwnCSS = JComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
+		$useOwnCSS = ComponentHelper::getParams('com_redslider')->get('use_own_css', '0');
 
 		// Load stylesheet for each section
-		$css = 'redslider.' . JString::strtolower($this->sectionId) . '.min.css';
+		$css = 'redslider.' . StringHelper::strtolower($this->sectionId) . '.min.css';
 
 		if (!$useOwnCSS)
 		{
-			RHelperAsset::load($css, 'redslider_sections/' . JString::strtolower($this->sectionId));
+			RHelperAsset::load($css, 'redslider_sections/' . StringHelper::strtolower($this->sectionId));
 		}
 
 		$articleModel = RModel::getFrontInstance('Article', array('ignore_request' => false), 'com_content');
@@ -203,7 +118,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 			if (preg_match_all('/{article_title[^}]*}/i', $content, $matches) > 0)
 			{
 				$match   = $matches[0];
-				$content = JString::str_ireplace($match[0], $article->title, $content);
+				$content = StringHelper::str_ireplace($match[0], $article->title, $content);
 			}
 
 			if (preg_match_all('/{article_introtext[^}]*}/i', $content, $matches) > 0)
@@ -229,7 +144,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 				$match   = $matches[0];
 				$content = RedsliderHelper::replaceTagsHTML(
 					$match[0],
-					JRoute::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->language)),
+					Route::_(ContentHelperRoute::getArticleRoute($article->id, $article->catid, $article->language)),
 					$content
 				);
 			}
@@ -244,7 +159,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 				{
 					if (count($match))
 					{
-						$content = JString::str_ireplace($match[0], '', $content);
+						$content = StringHelper::str_ireplace($match[0], '', $content);
 					}
 				}
 			}
@@ -277,7 +192,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 				{
 					if (count($match))
 					{
-						$content = JString::str_ireplace($match[0], '', $content);
+						$content = StringHelper::str_ireplace($match[0], '', $content);
 					}
 				}
 			}
@@ -288,7 +203,7 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 				{
 					if (count($match))
 					{
-						$content = JString::str_ireplace($match[0], '', $content);
+						$content = StringHelper::str_ireplace($match[0], '', $content);
 					}
 				}
 			}
@@ -300,13 +215,13 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 	/**
 	 * Count article
 	 *
-	 * @param   int $articleId ID of article
+	 * @param   int  $articleId  ID of article
 	 *
 	 * @return  boolean
 	 */
 	public function canAccessArticle($articleId)
 	{
-		$db = JFactory::getDbo();
+		$db = Factory::getDbo();
 
 		$query = $db->getQuery(true)
 			->select('COUNT(*)')
@@ -314,9 +229,9 @@ class PlgRedslider_SectionsSection_Article extends JPlugin
 			->where($db->qn('state') . ' = 1')
 			->where($db->qn('id') . ' = ' . (int) $articleId);
 
-		if (JLanguageMultilang::isEnabled())
+		if (Multilanguage::isEnabled())
 		{
-			$query->where('language in (' . $db->quote(JFactory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
+			$query->where('language in (' . $db->quote(Factory::getLanguage()->getTag()) . ',' . $db->quote('*') . ')');
 		}
 
 		return (boolean) $db->setQuery($query)->loadResult();

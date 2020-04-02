@@ -13,6 +13,9 @@
 	<files>
 		<folder>form</folder>
 		<folder>helper</folder>
+		<folder>html</folder>
+		<folder>layouts</folder>
+		<folder>src</folder>
 		<folder>view</folder>
 		<filename>library.php</filename>
 		<filename>redslider.xml</filename>

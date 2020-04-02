@@ -7,7 +7,12 @@
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
+use Joomla\CMS\Plugin\PluginHelper;
+
 defined('_JEXEC') or die;
+
+PluginHelper::importPlugin('redslider_sections');
+
 /**
  * RedSLIDER Slide Model
  *
@@ -18,23 +23,6 @@ defined('_JEXEC') or die;
  */
 class RedsliderModelSlide extends RModelAdmin
 {
-	/**
-	 * Method to get the row form.
-	 *
-	 * @param   int  $pk  Primary key
-	 *
-	 * @return	mixed	A JForm object on success, false on failure
-	 *
-	 * @since	1.6
-	 */
-	public function getItem($pk = null)
-	{
-		$app = JFactory::getApplication();
-		$item = parent::getItem($pk);
-
-		return $item;
-	}
-
 	/**
 	 * Method for getting the form from the model.
 	 *

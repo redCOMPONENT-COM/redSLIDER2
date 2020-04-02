@@ -4,6 +4,7 @@
         <field
                 name="event_id"
                 type="rleventlist"
+                class="form-control"
                 label="COM_REDSLIDER_SECTION_REDEVENT_FIELD_REDEVENT_ID"
                 description="COM_REDSLIDER_SECTION_REDEVENT_FIELD_REDEVENT_ID_DESC"
         />
@@ -17,6 +18,7 @@
         <field
                 name="slide_class"
                 type="text"
+                class="form-control"
                 default="redevent_slide"
                 label="COM_REDSLIDER_SECTION_REDEVENT_FIELD_REDEVENT_SLIDE_CLASS"
                 description="COM_REDSLIDER_SECTION_REDEVENT_FIELD_REDEVENT_SLIDE_CLASS_DESC"
