@@ -1,0 +1,56 @@
+.select-assets-modal .thumbnail {
+  cursor: hand;
+  padding: 20px !important;
+}
+.select-assets-modal .thumbnail h5 {
+  font-weight: bold;
+  line-height: 1.1em;
+  height: 2.2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.select-assets-modal .thumbnail.selected {
+  background-color: #1ab395;
+}
+.select-assets-modal .well {
+  margin-bottom: 10px;
+}
+.select-assets-modal .modal-dialog {
+  width: 80%;
+  margin-left: 10%;
+}
+.select-assets-modal .thumbnails-wrapper {
+  min-height: 100px;
+}
+.select-assets-modal .thumbnails-wrapper .spinner {
+  top: 240px !important;
+}
+.selected-asset-control .name-selected {
+  margin-right: 10px;
+}
+.selected-asset-control .edit-selected {
+  cursor: pointer;
+  margin-right: 5px;
+}
+.selected-asset-control .remove-selected {
+  cursor: pointer;
+}
+.ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+}
+.switchButtonDAM {
+  margin-right: 20px;
+}
+.img-area {
+  height: 200px;
+  position: relative;
+}
+.img-area img {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 200px;
+}

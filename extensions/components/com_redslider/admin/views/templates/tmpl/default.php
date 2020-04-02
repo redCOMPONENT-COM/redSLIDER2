@@ -6,17 +6,20 @@
  * @copyright   Copyright (C) 2013 - 2020 redWEB.dk. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
 defined('_JEXEC') or die;
 
-JHtml::_('behavior.keepalive');
-JHtml::_('rdropdown.init');
-JHtml::_('rbootstrap.tooltip');
-JHtml::_('rjquery.chosen', 'select');
+HTMLHelper::_('behavior.keepalive');
+HTMLHelper::_('rdropdown.init');
+HTMLHelper::_('rbootstrap.tooltip');
 
-$listOrder	= $this->escape($this->state->get('list.ordering'));
-$listDirn	= $this->escape($this->state->get('list.direction'));
-$user = JFactory::getUser();
-$userId = $user->id;
+$listOrder = $this->escape($this->state->get('list.ordering'));
+$listDirn  = $this->escape($this->state->get('list.direction'));
+$user      = Factory::getUser();
+$userId    = $user->id;
 
 ?>
 <script type="text/javascript">
@@ -58,6 +61,8 @@ $userId = $user->id;
 		)
 	);
 	?>
+    <br>
+    <div class="box">
 	<?php if (empty($this->items)) : ?>
 	<div class="alert alert-info">
 		<button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -76,22 +81,22 @@ $userId = $user->id;
 					<?php if (version_compare(JVERSION, '3.0', 'lt')) : ?>
 						<input type="checkbox" name="toggle" value="" onclick="Joomla.checkAll(this);" />
 					<?php else : ?>
-						<?php echo JHTML::_('grid.checkall'); ?>
+						<?php echo HTMLHelper::_('grid.checkall'); ?>
 					<?php endif; ?>
 				</th>
 				<th width="30" nowrap="nowrap">
-					<?php echo JHTML::_('rsearchtools.sort', 'JSTATUS', 't.published', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('rsearchtools.sort', 'JSTATUS', 't.published', $listDirn, $listOrder); ?>
 				</th>
 				<th width="1" >
 				</th>
 				<th class="title" width="auto">
-					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_TEMPLATE', 't.title', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('rsearchtools.sort', 'COM_REDSLIDER_TEMPLATE', 't.title', $listDirn, $listOrder); ?>
 				</th>
 				<th class="title" width="auto">
 					<?php echo JText::_('COM_REDSLIDER_TEMPLATE_SECTION'); ?>
 				</th>
 				<th width="10" nowrap="nowrap">
-					<?php echo JHTML::_('rsearchtools.sort', 'COM_REDSLIDER_ID', 't.id', $listDirn, $listOrder); ?>
+					<?php echo HTMLHelper::_('rsearchtools.sort', 'COM_REDSLIDER_ID', 't.id', $listDirn, $listOrder); ?>
 				</th>
 			</tr>
 		</thead>
@@ -104,14 +109,14 @@ $userId = $user->id;
 			$canEditOwn		= $user->authorise('core.edit.own',		'com_redslider');
 			$canEditState	= $user->authorise('core.edit.state',		'com_redslider');
 			$canChange		= $canEditState && $canCheckin;
-			$editor 		= JFactory::getUser($row->checked_out);
+			$editor 		= Factory::getUser($row->checked_out);
 			?>
 			<tr>
 				<td><?php echo $this->pagination->getRowOffset($i); ?></td>
-				<td><?php echo JHtml::_('grid.id', $i, $row->id); ?></td>
+				<td><?php echo HTMLHelper::_('grid.id', $i, $row->id); ?></td>
 				<td>
 					<?php if ($canEditState): ?>
-						<?php echo JHtml::_('rgrid.published', $row->published, $i, 'templates.', true, 'cb'); ?>
+						<?php echo HTMLHelper::_('rslidergrid.published', $row->published, $i, 'templates.', true, 'cb'); ?>
 					<?php else: ?>
 						<?php if ($row->published) : ?>
 							<a class="btn btn-small disabled"><i class="icon-ok-sign icon-green"></i></a>
@@ -123,15 +128,15 @@ $userId = $user->id;
 				<td>
 					<?php if ($row->checked_out) : ?>
 						<?php
-						$editor = JFactory::getUser($row->checked_out);
+						$editor     = Factory::getUser($row->checked_out);
 						$canCheckin = $row->checked_out == $userId || $row->checked_out == 0;
-						echo JHtml::_('rgrid.checkedout', $i, $editor->name, $row->checked_out_time, 'templates.', $canCheckin);
+						echo HTMLHelper::_('rslidergrid.checkedout', $i, $editor->name, $row->checked_out_time, 'templates.', $canCheckin);
 						?>
 					<?php endif; ?>
 				</td>
 				<td>
 					<?php if ($canEdit) : ?>
-						<?php echo JHtml::_('link', 'index.php?option=com_redslider&task=template.edit&id=' . $row->id, $row->title); ?>
+						<?php echo HTMLHelper::_('link', 'index.php?option=com_redslider&task=template.edit&id=' . $row->id, $row->title); ?>
 					<?php else : ?>
 						<?php echo $this->escape($row->title); ?>
 					<?php endif; ?>
@@ -146,9 +151,10 @@ $userId = $user->id;
 		<?php endforeach; ?>
 		</tbody>
 	</table>
-	<?php echo $this->pagination->getPaginationLinks(null, array('showLimitBox' => false)); ?>
 	<?php endif; ?>
+    </div>
+	<?php echo RLayoutHelper::render('list.pagination', ['pagination' => $this->pagination]) ?>
 	<input type="hidden" name="task" value=""/>
 	<input type="hidden" name="boxchecked" value="0"/>
-	<?php echo JHtml::_('form.token'); ?>
+	<?php echo HTMLHelper::_('form.token'); ?>
 </form>

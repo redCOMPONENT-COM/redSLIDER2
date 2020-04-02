@@ -20,8 +20,8 @@ defined('_JEXEC') or die;
                         <li class="<?php echo $slide->class; ?>">
                             <div class="slide-content"><?php echo $slide->template_content ?></div>
                             <div class="slide-img">
-								<?php if (isset($slide->background)): ?>
-                                    <img src="<?php echo JUri::base() . $slide->background ?>"/>
+								<?php if (isset($slide->backgroundImage)): ?>
+                                    <img src="<?php echo $slide->backgroundImage ?>"/>
 								<?php endif; ?>
                             </div>
                         </li>
@@ -37,7 +37,7 @@ defined('_JEXEC') or die;
         <div class="carousel">
             <ul class="slides">
 				<?php foreach ($slides as $slide): ?>
-                    <li><img src="<?php echo JUri::base() . $slide->background ?>"/></li>
+                    <li><img src="<?php echo $slide->backgroundImage ?>"/></li>
 				<?php endforeach ?>
             </ul>
         </div>

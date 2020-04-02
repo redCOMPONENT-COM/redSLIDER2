@@ -5,14 +5,15 @@
         <field
                 name="vimeo_id"
                 type="text"
+                class="form-control"
                 default=""
                 label="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_ID"
                 description="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_ID_DESC"
         />
         <field
                 name="vimeo_portrait"
-                type="radio"
-                class="btn-group"
+                type="list"
+                class="form-control"
                 label="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_PORTRAIT"
                 description="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_PORTRAIT_DESC"
                 default="0">
@@ -21,8 +22,8 @@
         </field>
         <field
                 name="vimeo_title"
-                type="radio"
-                class="btn-group"
+                type="list"
+                class="form-control"
                 label="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_TITLE"
                 description="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_TITLE_DESC"
                 default="0">
@@ -31,8 +32,8 @@
         </field>
         <field
                 name="vimeo_byline"
-                type="radio"
-                class="btn-group"
+                type="list"
+                class="form-control"
                 label="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_BYLINE"
                 description="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_BYLINE_DESC"
                 default="0">
@@ -41,8 +42,8 @@
         </field>
         <field
                 name="vimeo_autoplay"
-                type="radio"
-                class="btn-group"
+                type="list"
+                class="form-control"
                 label="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_AUTOPLAY"
                 description="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_AUTOPLAY_DESC"
                 default="0">
@@ -51,8 +52,8 @@
         </field>
         <field
                 name="vimeo_loop"
-                type="radio"
-                class="btn-group"
+                type="list"
+                class="form-control"
                 label="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_LOOP"
                 description="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_LOOP_DESC"
                 default="0">
@@ -62,6 +63,7 @@
         <field
                 name="vimeo_color"
                 type="color"
+                class="form-control"
                 default="#FFFFFF"
                 label="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_COLOR"
                 description="COM_REDSLIDER_SECTION_VIDEO_FIELD_VIMEO_COLOR_DESC"
@@ -71,13 +73,14 @@
                 name="youtube_id"
                 type="text"
                 default=""
+                class="form-control"
                 label="COM_REDSLIDER_SECTION_VIDEO_FIELD_YOUTUBE_ID"
                 description="COM_REDSLIDER_SECTION_VIDEO_FIELD_YOUTUBE_ID_DESC"
         />
         <field
                 name="youtube_suggested"
-                type="radio"
-                class="btn-group"
+                type="list"
+                class="form-control"
                 label="COM_REDSLIDER_SECTION_VIDEO_FIELD_YOUTUBE_SUGGEST"
                 description="COM_REDSLIDER_SECTION_VIDEO_FIELD_YOUTUBE_SUGGEST_DESC"
                 default="0">
@@ -86,8 +89,8 @@
         </field>
         <field
                 sname="youtube_privacy_enhanced"
-                type="radio"
-                class="btn-group"
+                type="list"
+                class="form-control"
                 label="COM_REDSLIDER_SECTION_VIDEO_FIELD_YOUTUBE_PRIVACY_ENHANCE"
                 description="COM_REDSLIDER_SECTION_VIDEO_FIELD_YOUTUBE_PRIVACY_ENHANCE_DESC"
                 default="0">
@@ -102,12 +105,13 @@
                 default=""
                 label="COM_REDSLIDER_SECTION_VIDEO_FIELD_LOCAL_MEDIA"
                 description="COM_REDSLIDER_SECTION_VIDEO_FIELD_LOCAL_MEDIA_DESC"
-                preview="true"3
+                preview="true"
         />
         <field
                 name="local_width"
                 type="text"
                 default="500"
+                class="form-control"
                 label="COM_REDSLIDER_SECTION_VIDEO_FIELD_LOCAL_WIDTH"
                 description="COM_REDSLIDER_SECTION_VIDEO_FIELD_LOCAL_WIDTH_DESC"
         />
@@ -115,6 +119,7 @@
                 name="local_height"
                 type="text"
                 default="315"
+                class="form-control"
                 label="COM_REDSLIDER_SECTION_VIDEO_FIELD_LOCAL_HEIGHT"
                 description="COM_REDSLIDER_SECTION_VIDEO_FIELD_YOUTUBE_HEIGHT_DESC"
         />
@@ -122,6 +127,7 @@
         <field
                 name="other_iframe"
                 type="textarea"
+                class="form-control"
                 label="COM_REDSLIDER_SECTION_VIDEO_FIELD_OTHER_IFRAME"
                 description="COM_REDSLIDER_SECTION_VIDEO_FIELD_OTHER_IFRAME_DESC"
         />
@@ -137,6 +143,7 @@
         <field
                 name="slide_class"
                 type="text"
+                class="form-control"
                 default="video_slide"
                 label="COM_REDSLIDER_SECTION_VIDEO_FIELD_SLIDE_CLASS"
                 description="COM_REDSLIDER_SECTION_VIDEO_FIELD_SLIDE_CLASS_DESC"

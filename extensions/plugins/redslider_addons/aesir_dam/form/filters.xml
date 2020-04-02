@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fields name="filter">
+		<field
+			name="search"
+			type="text"
+			hint="JSEARCH_FILTER"
+			class="form-control"
+			label="PLG_AESIR_FIELD_AESIR_DAM_ASSET_SEARCH"
+		/>
+		<field
+			name="selected"
+			type="list"
+			class="form-control"
+			default="0"
+			label="PLG_AESIR_FIELD_AESIR_DAM_ASSET_SHOW_SELECTED_ONLY"
+		>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field
+			name="collection"
+			type="aesir_dam.collection"
+			default=""
+			class="form-control"
+			label="COM_AESIR_DAM_VIEW_FILTER_COLLECTION"
+			description="COM_AESIR_DAM_VIEW_FILTER_COLLECTION_DESC"
+		>
+			<option value="">JALL</option>
+		</field>
+		<field
+			name="file_type"
+			type="aesir_dam.file_type"
+			default=""
+			class="form-control"
+			label="COM_AESIR_DAM_VIEW_FILTER_FILE_TYPE"
+			description="COM_AESIR_DAM_VIEW_FILTER_FILE_TYPE_DESC"
+		>
+			<option value="">JALL</option>
+		</field>
+	</fields>
+	<fields name="upload">
+		<field
+				name="collection_id"
+				type="aesir_dam.collection"
+				default=""
+				class="form-control"
+				label="COM_AESIR_DAM_VIEW_FILTER_COLLECTION"
+				description="COM_AESIR_DAM_VIEW_FILTER_COLLECTION_DESC"
+				layout="aesir.field.select.default"
+		>
+		</field>
+		<field
+				name="content_type"
+				type="aesir_dam.content_type"
+				default=""
+				class="form-control"
+				label="COM_AESIR_DAM_VIEW_FILTER_CONTENT_TYPE"
+				description="COM_AESIR_DAM_VIEW_FILTER_CONTENT_TYPE_DESC"
+				layout="aesir.field.select.default"
+		>
+		</field>
+	</fields>
+</form>

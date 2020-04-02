@@ -15,11 +15,8 @@
 		<folder plugin="section_redform">forms</folder>
 		<folder plugin="section_redform">fields</folder>
 		<folder plugin="section_redform">tmpl</folder>
+		<folder plugin="section_redform">language</folder>
 	</files>
-	<languages folder="language">
-		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_redform.ini</language>
-		<language tag="en-GB">en-GB/en-GB.plg_redslider_sections_section_redform.sys.ini</language>
-	</languages>
 	<media destination="redslider_sections/section_redform" folder="media/redslider_sections">
        <folder>media</folder>
     </media>

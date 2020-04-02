@@ -4,12 +4,14 @@
         <field
                 name="product_id"
                 type="modal_product"
+                class="form-control"
                 label="COM_REDSLIDER_SECTION_REDSHOP_FIELD_PRODUCT_ID"
                 description="COM_REDSLIDER_SECTION_REDSHOP_FIELD_PRODUCT_ID_DESC"
         />
         <field name="caption"
                type="text"
                default=""
+               class="form-control"
                label="COM_REDSLIDER_SECTION_REDSHOP_FIELD_CAPTION"
                description="COM_REDSLIDER_SECTION_REDSHOP_FIELD_CAPTION_DESC"
                message="COM_REDSLIDER_SECTION_REDSHOP_FIELD_CAPTION_DESC"
@@ -18,6 +20,7 @@
                type="editor"
                cols="80"
                default=""
+               class="form-control"
                label="COM_REDSLIDER_SECTION_REDSHOP_FIELD_DESCRIPTION"
                description="COM_REDSLIDER_SECTION_REDSHOP_FIELD_DESCRIPTION_DESC"
                message="COM_REDSLIDER_SECTION_REDSHOP_FIELD_DESCRIPTION_DESC"
@@ -32,6 +35,7 @@
         <field
                 name="slide_class"
                 type="text"
+                class="form-control"
                 default="redshop_slide"
                 label="COM_REDSLIDER_SECTION_REDSHOP_FIELD_REDSHOP_SLIDE_CLASS"
                 description="COM_REDSLIDER_SECTION_REDSHOP_FIELD_REDSHOP_SLIDE_CLASS_DESC"

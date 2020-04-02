@@ -11,6 +11,7 @@
 		<field
 			name="slide_class"
 			type="text"
+			class="form-control"
 			default="redform_slide"
 			label="COM_REDSLIDER_SECTION_REDFORM_FIELD_REDFORM_SLIDE_CLASS"
 			description="COM_REDSLIDER_SECTION_REDFORM_FIELD_REDFORM_SLIDE_CLASS_DESC"

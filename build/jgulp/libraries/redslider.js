@@ -50,22 +50,8 @@ gulp.task('copy:' + baseTask + ':manifest', ['clean:' + baseTask + ':manifest'],
 		.pipe(gulp.dest(config.wwwDir + '/administrator/manifests/libraries'));
 });
 
-// Composer
-gulp.task('composer:' + baseTask, function(cb) {
-	// We will use a composer file to see if composer has been executed
-	var composerCheckFile = extPath + '/vendor/imagine/imagine/composer.json';
-
-	fs.stat(composerCheckFile, function(err, stat){
-		if (null !== err) {
-			composer({ cwd: extPath, bin: 'php ./composer.phar'}).on('end', cb);
-		} else {
-			cb();
-		}
-	});
-});
-
 // Copy: redSLIDER2 Library
-gulp.task('copy:' + baseTask + ':library', ['composer:' + baseTask], function() {
+gulp.task('copy:' + baseTask + ':library', [], function() {
 	return gulp.src([
 		extPath + '/**',
 		'!' + extPath + '/redslider.xml',

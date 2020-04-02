@@ -6,13 +6,14 @@
             type="text"
             label="COM_REDCORE_FILTER_SEARCH_DESC"
             placeholder="JSEARCH_FILTER"
-            class="js-enter-submits"
+            class="js-enter-submits form-control"
             />
         <field
             name="published"
             type="rpublished"
             onchange="this.form.submit();"
             label="COM_REDSLIDER_FILTER_PUBLISHED"
+            class="form-control"
             statuses="0,1"
             >
             <option value="">COM_REDSLIDER_FILTER_PUBLISHED</option>
@@ -22,6 +23,7 @@
             label="COM_REDSLIDER_SLIDE_GALLERY"
             onchange="this.form.submit();"
             required="true"
+               class="form-control"
             description="COM_REDSLIDER_SLIDE_GALLERY_DESC"
             >
             <option value="">COM_REDSLIDER_SELECT</option>
@@ -32,6 +34,7 @@
                 label="COM_REDSLIDER_SLIDE_SECTION_LANGUAGE"
                 description="COM_REDSLIDER_SLIDE_SECTION_LANGUAGE_DESC"
                 onchange="this.form.submit();"
+                class="form-control"
                 >
             <option value="">COM_REDSLIDER_SLIDE_FILTER_SELECT_LANGUAGE</option>
             <option value="*">JALL</option>

@@ -42,12 +42,10 @@ class RedSliderViewCpanel extends RedsliderView
 		$this->user->usertype = $userType[0];
 		$this->user->gid      = $this->user->groups[$this->user->usertype];
 
-		require_once JPATH_COMPONENT_ADMINISTRATOR . '/helpers/cpanel_icons.php';
-
 		// Get stats
 		$this->stats            = $this->get('Stats');
 		$this->redsliderversion = $this->get('Version');
-		$this->iconArray        = RedsliderHelperCpanelIcons::getIconArray();
+		$this->iconArray        = RedsliderHelpersCpanel_Icons::getIconArray();
 
 		$layout       = JFactory::getApplication()->input->getCmd('layout');
 		$this->layout = $layout;
