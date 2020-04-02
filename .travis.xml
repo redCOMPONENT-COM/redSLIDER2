@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="redSLIDER2" default="travis" basedir=".">
+<project name="redSLIDER" default="travis" basedir=".">
 
 	<property name="basedir" value="." />
 
