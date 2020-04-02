@@ -3,7 +3,7 @@
  * @package     RedSlider
  * @subpackage  Plugin
  *
- * @copyright   Copyright (C) 2008 - 2020 redCOMPONENT.com. All rights reserved.
+ * @copyright   Copyright (C) 2013 - 2020 redWEB.dk. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -20,7 +20,7 @@ JLoader::import('aesir_dam.library');
 
 /**
  * Class PlgRedslider_AddonsAesir_Dam
- * @since __DEPLOY_VERSION__
+ * @since 2.0.0
  */
 class PlgRedslider_AddonsAesir_Dam extends CMSPlugin
 {
@@ -33,7 +33,7 @@ class PlgRedslider_AddonsAesir_Dam extends CMSPlugin
 	 * @param   string  $content  Content
 	 * @param   object  $slide    Slide
 	 *
-	 * @since __DEPLOY_VERSION__
+	 * @since 2.0.0
 	 * @return void
 	 */
 	public function onPrepareTemplateContent($content, $slide)
@@ -82,7 +82,7 @@ class PlgRedslider_AddonsAesir_Dam extends CMSPlugin
 	 * @param   array  $data  Data
 	 *
 	 * @return void
-	 * @since __DEPLOY_VERSION__
+	 * @since 2.0.0
 	 */
 	public function onRedSliderAfterContentPrepareForm(Form $form, $data = [])
 	{
@@ -135,7 +135,7 @@ class PlgRedslider_AddonsAesir_Dam extends CMSPlugin
 	 * @param   string            $position  Position
 	 *
 	 * @return void
-	 * @since __DEPLOY_VERSION__
+	 * @since 2.0.0
 	 */
 	protected function simpleXMLInsert(SimpleXMLElement $insert, SimpleXMLElement $target, $position = 'after')
 	{

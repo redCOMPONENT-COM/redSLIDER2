@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
 /**
  * Class Document
  * @package Redslider\Document
- * @since __DEPLOY_VERSION__
+ * @since 2.0.0
  */
 class Document
 {
@@ -61,7 +61,7 @@ class Document
 	 * Gets an instance or create it.
 	 *
 	 * @return  static
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	public static function getInstance()
 	{
@@ -90,7 +90,7 @@ class Document
 	 * @param   boolean  $async  Adds the async attribute.
 	 *
 	 * @return  $this
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	public function addTopScript($url, $type = "text/javascript", $defer = false, $async = false)
 	{
@@ -114,7 +114,7 @@ class Document
 	 * @param   array   $attribs  Array of attributes
 	 *
 	 * @return  $this
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	public function addTopStylesheet($url, $type = 'text/css', $media = null, $attribs = array())
 	{
@@ -133,7 +133,7 @@ class Document
 	 * Clean header assets
 	 *
 	 * @return  void
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	public function cleanHeader()
 	{
@@ -147,7 +147,7 @@ class Document
 	 * Injects the pending scripts on the top of the scripts
 	 *
 	 * @return  $this
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	protected function injectTopScripts()
 	{
@@ -167,7 +167,7 @@ class Document
 	 * Injects the top stylesheets on the top of the document stylesheets
 	 *
 	 * @return  $this
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	protected function injectTopStylesheets()
 	{
@@ -187,7 +187,7 @@ class Document
 	 * Clear all the scripts marked as disabled
 	 *
 	 * @return  void
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	protected function cleanHeaderScripts()
 	{
@@ -204,7 +204,7 @@ class Document
 	 * Clear all the stylesheets marked as disabled
 	 *
 	 * @return  void
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	protected function cleanHeaderStylesheets()
 	{
@@ -224,7 +224,7 @@ class Document
 	 * @param   boolean  $disableOnDebug  Disable also uncompressed version
 	 *
 	 * @return  void
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	public function disableScript($script, $disableOnDebug = true)
 	{
@@ -248,7 +248,7 @@ class Document
 	 * @param   boolean  $disableOnDebug  Disable also uncompressed version
 	 *
 	 * @return  void
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	public function disableStylesheet($stylesheet, $disableOnDebug = true)
 	{
@@ -272,7 +272,7 @@ class Document
 	 * @param   array   $array   Values to filter
 	 *
 	 * @return  array|false
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	protected function fnmatchFilter($filter, $array)
 	{
@@ -294,7 +294,7 @@ class Document
 	 * @param   string  $assetPath  Path to the asset
 	 *
 	 * @return  string
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	protected function getUncompressedPath($assetPath)
 	{
@@ -322,7 +322,7 @@ class Document
 	 * @param   string  $script  Script path
 	 *
 	 * @return  void
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	public function removeScript($script)
 	{
@@ -376,7 +376,7 @@ class Document
 	 * @param   string  $stylesheet  URL to the stylesheet (both global/relative should work)
 	 *
 	 * @return  void
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	public function removeStylesheet($stylesheet)
 	{
@@ -431,7 +431,7 @@ class Document
 	 * @param   array   $arguments  Arguments passed to the method
 	 *
 	 * @return  mixed
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	public function __call($method, $arguments)
 	{

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="RedSLIDER2" default="site" basedir=".">
+<project name="RedSLIDER" default="site" basedir=".">
     <includepath classpath="./phingtasks" />
     <taskdef name="lessc" classname="rych.tasks.LessCompilerTask" />
     <taskdef name="yuic" classname="rych.tasks.YuiCompressorTask" />

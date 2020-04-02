@@ -27,7 +27,7 @@ PluginHelper::importPlugin('redslider_addons');
 /**
  * Class AbstractRedsliderSection
  * @package Redslider
- * @since  __DEPLOY_VERSION__
+ * @since  2.0.0
  */
 abstract class AbstractRedsliderSection extends CMSPlugin
 {
@@ -70,7 +70,7 @@ abstract class AbstractRedsliderSection extends CMSPlugin
 	 * Get section name
 	 *
 	 * @return  object
-	 * @since  __DEPLOY_VERSION__
+	 * @since  2.0.0
 	 */
 	public function getSectionName()
 	{
@@ -87,7 +87,7 @@ abstract class AbstractRedsliderSection extends CMSPlugin
 	 * @param   string $sectionId Section's ID
 	 *
 	 * @return  string
-	 * @since  __DEPLOY_VERSION__
+	 * @since  2.0.0
 	 */
 	public function getSectionNameById($sectionId)
 	{
@@ -102,7 +102,7 @@ abstract class AbstractRedsliderSection extends CMSPlugin
 	 * @param   array  $data  Data
 	 *
 	 * @return boolean
-	 * @since  __DEPLOY_VERSION__
+	 * @since  2.0.0
 	 * @throws \Exception
 	 */
 	public function onContentPrepareForm(Form $form, $data = [])
@@ -144,7 +144,7 @@ abstract class AbstractRedsliderSection extends CMSPlugin
 	 * @param   string  $sectionId  section's id
 	 *
 	 * @return boolean
-	 * @since  __DEPLOY_VERSION__
+	 * @since  2.0.0
 	 */
 	public function onSlidePrepareTemplate($view, $sectionId)
 	{
@@ -171,7 +171,7 @@ abstract class AbstractRedsliderSection extends CMSPlugin
 	 * @param   object  $jinput  JForm data
 	 *
 	 * @return boolean
-	 * @since  __DEPLOY_VERSION__
+	 * @since  2.0.0
 	 */
 	public function onSlideStore($jtable, $jinput)
 	{

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- ==================================================================  -->
-<!-- redSLIDER 2.0 packager                                              -->
-<!-- This PHING build file generates the redSLIDER 2.0 Plugins package   -->
+<!-- redSLIDER.0 packager                                              -->
+<!-- This PHING build file generates the redSLIDER.0 Plugins package   -->
 <!-- To use in your environment do the following steps:                  -->
 <!--    Change the following variables in build.properties file          -->
 <!--            (copy variables from build.properties.dist )             -->

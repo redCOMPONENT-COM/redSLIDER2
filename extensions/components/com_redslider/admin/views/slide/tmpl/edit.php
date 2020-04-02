@@ -3,7 +3,7 @@
  * @package     RedSHOP.Backend
  * @subpackage  Slide
  *
- * @copyright   Copyright (C) 2005 - 2013 redCOMPONENT.com. All rights reserved.
+ * @copyright   Copyright (C) 2013 - 2020 redWEB.dk. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 defined('_JEXEC') or die;

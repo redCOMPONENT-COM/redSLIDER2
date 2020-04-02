@@ -1,5 +1,5 @@
 {
-    "name": "redcomponent/redslider2",
+    "name": "redcomponent/redslider",
     "description": "carroussel extension for joomla that displays images, videos, articles, redshop products, events...",
     "require-dev": {
         "codegyre/robo": "^0.5.3",

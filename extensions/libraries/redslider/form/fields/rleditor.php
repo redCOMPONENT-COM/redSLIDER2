@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
  *
  * @package     RedSLIDER.Backend
  *
- * @since       __DEPLOY_VERSION__
+ * @since       2.0.0
  */
 class JFormFieldRLEditor extends EditorField
 {
@@ -25,13 +25,13 @@ class JFormFieldRLEditor extends EditorField
 	 * The form field type.
 	 *
 	 * @var   string
-	 * @since __DEPLOY_VERSION__
+	 * @since 2.0.0
 	 */
 	public $type = 'RLEditor';
 
 	/**
 	 * @var array
-	 * since __DEPLOY_VERSION__
+	 * since 2.0.0
 	 */
 	protected $layoutData = [];
 
@@ -39,7 +39,7 @@ class JFormFieldRLEditor extends EditorField
 	 * Name of the layout being used to render the field
 	 *
 	 * @var    string
-	 * @since  __DEPLOY_VERSION__
+	 * @since  2.0.0
 	 */
 	protected $layout = 'joomla.form.field.rleditor';
 
@@ -49,7 +49,7 @@ class JFormFieldRLEditor extends EditorField
 	 *
 	 * @return  string  The field input markup.
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	protected function getInput()
 	{
@@ -62,7 +62,7 @@ class JFormFieldRLEditor extends EditorField
 	 * Get the layout paths.
 	 *
 	 * @return  array
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	protected function getLayoutPaths()
 	{
@@ -76,7 +76,7 @@ class JFormFieldRLEditor extends EditorField
 	 *
 	 * @return  RLayoutFile
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	protected function getRenderer($layoutId = 'default')
 	{
@@ -98,7 +98,7 @@ class JFormFieldRLEditor extends EditorField
 	 * Get the data that is going to be passed to the layout
 	 *
 	 * @return  array
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	protected function getLayoutData()
 	{

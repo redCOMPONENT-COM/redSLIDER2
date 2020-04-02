@@ -54,6 +54,6 @@ packages/*
 !index.html
 !index.php
 
-/vendor/*
+extensions/libraries/redslider/vendor/
 tests/vendor/
 releases/

@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="2.5" client="site" type="plugin" group="redslider_addons" method="upgrade">
+<extension version="3.9" client="site" type="plugin" group="redslider_addons" method="upgrade">
     <name>PLG_REDSLIDER_ADDONS_AESIR_DAM</name>
-    <version>1.0.0</version>
-    <creationDate>March 2020</creationDate>
-    <author>redCOMPONENT.com</author>
-    <copyright>redCOMPONENT.com</copyright>
-    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <creationDate>April 2020</creationDate>
+    <author>redWEB.dk</author>
+    <authorEmail>email@redweb.dk</authorEmail>
+    <authorUrl>redweb.dk</authorUrl>
+    <copyright>Copyright (C) 2013 - 2020 redWEB.dk. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later, see LICENSE.</license>
+    <version>3.0.0</version>
     <description>PLG_REDSLIDER_ADDONS_AESIR_DAM_DESC</description>
     <media folder="media">
         <folder>plg_redlider_addons_aesir_dam</folder>

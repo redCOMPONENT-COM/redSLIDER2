@@ -3,7 +3,7 @@
  * @package     RedSlider
  * @subpackage  Plugin
  *
- * @copyright   Copyright (C) 2008 - 2020 redCOMPONENT.com. All rights reserved.
+ * @copyright   Copyright (C) 2013 - 2020 redWEB.dk. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -17,7 +17,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Aesir DAM Asset field.
  *
- * @since  __DEPLOY_VERSION__
+ * @since  2.0.0
  */
 class JFormFieldAesir_Dam_Asset extends FormField
 {
@@ -57,7 +57,7 @@ class JFormFieldAesir_Dam_Asset extends FormField
 	 *
 	 * @return  RLayoutFile
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	protected function getRenderer($layoutId = 'default')
 	{
@@ -79,7 +79,7 @@ class JFormFieldAesir_Dam_Asset extends FormField
 	 * Get the data that is going to be passed to the layout
 	 *
 	 * @return  array
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	protected function getLayoutData()
 	{
@@ -101,7 +101,7 @@ class JFormFieldAesir_Dam_Asset extends FormField
 	 * Gets the form.
 	 *
 	 * @return  \JForm
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	private function getFilterForm()
 	{
@@ -117,7 +117,7 @@ class JFormFieldAesir_Dam_Asset extends FormField
 	 *
 	 * @return  string  The name to be used for the field input tag.
 	 *
-	 * @since   __DEPLOY_VERSION__
+	 * @since   2.0.0
 	 */
 	protected function getName($fieldName)
 	{
