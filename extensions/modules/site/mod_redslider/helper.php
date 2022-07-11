@@ -67,6 +67,11 @@ class ModredSLIDERHelper
 		$dispatcher = RFactory::getDispatcher();
 		JPluginHelper::importPlugin('redslider_sections');
 
+		$dispatcher->trigger(
+			'onBeforePrepareRedSliderTemplateContent',
+			[$slides]
+		);
+
 		foreach ($slides as $slide)
 		{
 			$params = new Registry($slide->params);
@@ -91,7 +96,7 @@ class ModredSLIDERHelper
 				$slide->class = $class;
 			}
 
-			$results         = $dispatcher->trigger('onPrepareTemplateContent', array($slide->template_content, &$slide));
+			$results         = $dispatcher->trigger('onPrepareTemplateContent', array($slide->template_content, $slide));
 			$results         = array_values(array_filter($results));
 			$templateContent = '';
 
