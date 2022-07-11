@@ -30,6 +30,68 @@ class PlgRedslider_AddonsAesir_Dam extends CMSPlugin
 	protected $autoloadLanguage = true;
 
 	/**
+	 * @var Registry
+	 */
+	protected $blankRegistry;
+
+	/**
+	 * @param   object  $subject  Subject
+	 * @param   array   $config   Config
+	 */
+	public function __construct(&$subject, $config = [])
+	{
+		parent::__construct($subject, $config);
+		$this->blankRegistry = new Registry;
+	}
+
+	/**
+	 * @param   array  $sliders  Sliders
+	 *
+	 * @return void
+	 * @since  __DEPLOY_VERSION__
+	 */
+	public function onBeforePrepareRedSliderTemplateContent(array $sliders): void
+	{
+		$dams = [];
+
+		foreach ($sliders as $slide)
+		{
+			$params = (clone $this->blankRegistry)
+				->loadString($slide->params);
+
+			if ($params->get('file_source') !== 'dam'
+				|| empty($params->get('dam')))
+			{
+				continue;
+			}
+
+			$dam = json_decode($params->get('dam'), true);
+
+			if (empty($dam[0]['id']))
+			{
+				return;
+			}
+
+			$dams[] = $dam[0]['id'];
+		}
+
+		if (empty($dams))
+		{
+			return;
+		}
+
+		RModel::getAdminInstance('assets', [], 'com_aesir_dam')
+			->searchCollection(
+				[
+					'filter.id' => $dams,
+				],
+				[
+					'viewports',
+				]
+			);
+	}
+
+	/**
 	 * @param   string  $content  Content
 	 * @param   object  $slide    Slide
 	 *
@@ -38,7 +100,8 @@ class PlgRedslider_AddonsAesir_Dam extends CMSPlugin
 	 */
 	public function onPrepareTemplateContent($content, $slide)
 	{
-		$params = new Registry($slide->params);
+		$params = (clone $this->blankRegistry)
+			->loadString($slide->params);
 
 		if (!empty($slide->background))
 		{
